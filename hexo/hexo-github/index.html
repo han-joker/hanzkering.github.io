@@ -14,19 +14,20 @@
 <meta property="og:site_name" content="小韩说理">
 <meta property="og:description" content="1 需求博客之前是wordpress搭建的，也很好用。现在想使用一个基于markdown文件为中心的博客系统，就锁定了hexo这个项目。hexo是基于Node.js的，提供markdown支持，草稿，单页，分类，标签，主题，i18n，永久链接，静态生成，部署等很常用的博客系统功能。其主页地址为：Hexo，大家可以获取更详细的信息。下面就和大家说说过程，大致有博客搭建，部署到github，还有另一个">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://blog.hellokang.net/images/posts/hexo-init.png">
-<meta property="og:image" content="http://blog.hellokang.net/images/posts/github-new-repository.png">
-<meta property="og:image" content="http://blog.hellokang.net/images/posts/github-sshkey-new.png">
-<meta property="og:image" content="http://blog.hellokang.net/images/posts/github-sshkey-set.png">
-<meta property="og:image" content="http://blog.hellokang.net/images/posts/github-signin.png">
-<meta property="og:image" content="http://blog.hellokang.net/images/posts/github-deploy-done.png">
-<meta property="og:image" content="http://blog.hellokang.net/images/posts/github-deploy-done-code.png">
-<meta property="og:image" content="http://blog.hellokang.net/images/posts/github-blog.png">
-<meta property="og:updated_time" content="2018-10-12T05:45:06.057Z">
+<meta property="og:image" content="http://www.hellokang.net/images/posts/hexo-init.png">
+<meta property="og:image" content="http://www.hellokang.net/images/posts/github-new-repository.png">
+<meta property="og:image" content="http://www.hellokang.net/images/posts/github-sshkey-new.png">
+<meta property="og:image" content="http://www.hellokang.net/images/posts/github-sshkey-set.png">
+<meta property="og:image" content="http://www.hellokang.net/images/posts/github-signin.png">
+<meta property="og:image" content="http://www.hellokang.net/images/posts/github-deploy-done.png">
+<meta property="og:image" content="http://www.hellokang.net/images/posts/github-deploy-done-code.png">
+<meta property="og:image" content="http://www.hellokang.net/images/posts/github-blog.png">
+<meta property="og:image" content="http://www.hellokang.net/images/posts/github-custom-domain.png">
+<meta property="og:updated_time" content="2018-10-12T05:58:57.884Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo搭建博客，发布到GitHub">
 <meta name="twitter:description" content="1 需求博客之前是wordpress搭建的，也很好用。现在想使用一个基于markdown文件为中心的博客系统，就锁定了hexo这个项目。hexo是基于Node.js的，提供markdown支持，草稿，单页，分类，标签，主题，i18n，永久链接，静态生成，部署等很常用的博客系统功能。其主页地址为：Hexo，大家可以获取更详细的信息。下面就和大家说说过程，大致有博客搭建，部署到github，还有另一个">
-<meta name="twitter:image" content="http://blog.hellokang.net/images/posts/hexo-init.png">
+<meta name="twitter:image" content="http://www.hellokang.net/images/posts/hexo-init.png">
   
     <link rel="alternative" href="/atom.xml" title="小韩说理" type="application/atom+xml">
   
@@ -122,42 +123,48 @@
 <p>此时一个基本的博客已经建立完毕了。</p>
 <h3 id="2-6-运行Hexo博客"><a href="#2-6-运行Hexo博客" class="headerlink" title="2.6 运行Hexo博客"></a>2.6 运行Hexo博客</h3><p>进入博客目录，执行 <code>hexo server</code> 即可运行hexo服务器。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">D:\projects\practice\blog&gt; hexo server</span><br><span class="line">INFO  Start processing</span><br><span class="line">INFO  Hexo is running at http://localhost:4000 . Press Ctrl+C to stop.</span><br></pre></td></tr></table></figure></p>
 <p>此时，浏览器访问<code>http://localhost:4000</code>，即可看到你的博客。效果如下：</p>
-<p><img src="/images/posts/hexo-init.png" alt="hexo默认博客首页" title="&#39;hexo默认博客首页&#39;"></p>
+<p><img src="http://www.hellokang.net/images/posts/hexo-init.png" alt="hexo默认博客首页" title="&#39;hexo默认博客首页&#39;"></p>
 <p>至此，hexo搭建的博客已经完成。该博客使用方法，如何发文章，分类，标签等操作请参考<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">Hexo文档</a>，本文不再赘述。</p>
 <h2 id="3-发布到GitHub"><a href="#3-发布到GitHub" class="headerlink" title="3.发布到GitHub"></a>3.发布到GitHub</h2><p>GitHub上允许我们搭建自己的静态站点，在不购买自己的服务器情况下，可以有自己的博客。<br>需要用到Hexo提供的发布相关功能，同时需要在github上做一定的配置。</p>
 <h3 id="3-1-注册GitHub"><a href="#3-1-注册GitHub" class="headerlink" title="3.1 注册GitHub"></a>3.1 注册GitHub</h3><blockquote>
 <p>已有账号的跳过此步骤</p>
 </blockquote>
 <p>注册操作，跟着GitHub引导完成即可，<a href="https://github.com/join?source=header-home" target="_blank" rel="noopener">GitHub注册</a></p>
-<h3 id="3-2-创建版本库"><a href="#3-2-创建版本库" class="headerlink" title="3.2 创建版本库"></a>3.2 创建版本库</h3><p>登录后，<a href="https://github.com/new" target="_blank" rel="noopener">创建新版本库https://github.com/new</a><br><img src="/images/posts/github-new-repository.png" alt="新建版本库"></p>
+<h3 id="3-2-创建版本库"><a href="#3-2-创建版本库" class="headerlink" title="3.2 创建版本库"></a>3.2 创建版本库</h3><p>登录后，<a href="https://github.com/new" target="_blank" rel="noopener">创建新版本库https://github.com/new</a><br><img src="http://www.hellokang.net/images/posts/github-new-repository.png" alt="新建版本库"></p>
 <p><em>注意：版本库名字强烈建议是 <code>&lt;你的用户&gt;.github.io</code> 这种格式</em><br>创建完毕后，就可以使用 <code>&lt;你的用户&gt;.github.io</code> 这种方式访问你的github博客地址，但现在访问应该不会成功，因为是一个新创建的版本库，是空的，一无所有….。接下来就把我们本地的博客内容部署到这个github版本库上。</p>
-<h3 id="3-3-部署到GitHub"><a href="#3-3-部署到GitHub" class="headerlink" title="3.3 部署到GitHub"></a>3.3 部署到GitHub</h3><p>回到我们本地的博客项目中，hexo对于基于git的部署提供了一个工具<a href="https://github.com/hexojs/hexo-deployer-git" target="_blank" rel="noopener">hexo-deployer-git</a>，我们直接安装使即可。</p>
-<p>安装 hexo-deployer-git<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure></p>
-<h3 id="3-4-GitHub的SSH-keys设置"><a href="#3-4-GitHub的SSH-keys设置" class="headerlink" title="3.4 GitHub的SSH keys设置"></a>3.4 GitHub的SSH keys设置</h3><p>在部署之前，需要保证GitHub可以验证我们的机器，需要将本地的RAS-publicKey告知给GitHub，步骤如下：</p>
-<h4 id="3-4-1-本地RAS密钥对生成"><a href="#3-4-1-本地RAS密钥对生成" class="headerlink" title="3.4.1 本地RAS密钥对生成"></a>3.4.1 本地RAS密钥对生成</h4><p>进入到 用户目录/.ssh目录下，查看是否已经存在了， 私钥<code>id_rsa</code> 公钥<code>id_rsa.pub</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Kang&gt; cd .ssh</span><br><span class="line">C:\Users\Kang\.ssh&gt; dir</span><br><span class="line">-a----       2018/10/10     19:46           1679 id_rsa</span><br><span class="line">-a----       2018/10/10     19:46            403 id_rsa.pub</span><br></pre></td></tr></table></figure></p>
+<h3 id="3-3-GitHub的SSH-keys设置"><a href="#3-3-GitHub的SSH-keys设置" class="headerlink" title="3.3 GitHub的SSH keys设置"></a>3.3 GitHub的SSH keys设置</h3><p>在部署之前，需要保证GitHub可以验证我们的机器，需要将本地的RAS-publicKey告知给GitHub，步骤如下：</p>
+<h4 id="3-3-1-本地RAS密钥对生成"><a href="#3-3-1-本地RAS密钥对生成" class="headerlink" title="3.3.1 本地RAS密钥对生成"></a>3.3.1 本地RAS密钥对生成</h4><p>进入到 用户目录/.ssh目录下，查看是否已经存在了， 私钥<code>id_rsa</code> 公钥<code>id_rsa.pub</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Kang&gt; cd .ssh</span><br><span class="line">C:\Users\Kang\.ssh&gt; dir</span><br><span class="line">-a----       2018/10/10     19:46           1679 id_rsa</span><br><span class="line">-a----       2018/10/10     19:46            403 id_rsa.pub</span><br></pre></td></tr></table></figure></p>
 <p>上面的输出表示已经存在。若不存在，执行 <code>ssh-keygen</code> 生成即可（持续回车即可）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Kang\.ssh&gt; ssh-keygen.exe -t rsa</span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line">Enter file in which to save the key (C:\Users\Kang/.ssh/id_rsa):</span><br><span class="line">Enter passphrase (empty for no passphrase):</span><br><span class="line">Enter same passphrase again:</span><br><span class="line">Your identification has been saved in C:\Users\Kang/.ssh/id_rsa.</span><br><span class="line">Your public key has been saved in C:\Users\Kang/.ssh/id_rsa.pub.</span><br><span class="line">The key fingerprint is:</span><br><span class="line">SHA256:ymf2laAmgHVsGakavggdXrzORtVRNxkuKYq444C5Irs kang@V1N3RYQG70NI7YD</span><br><span class="line">The key&apos;s randomart image is:</span><br><span class="line">+---[RSA 2048]----+</span><br><span class="line">|      .. .. +o   |</span><br><span class="line">|     ..o.  +..   |</span><br><span class="line">|   ...=...o .    |</span><br><span class="line">|  o+++.... .     |</span><br><span class="line">| +o=oo. S .      |</span><br><span class="line">|o.=.oo . . . .   |</span><br><span class="line">|=.o=  + *   o    |</span><br><span class="line">|++..+  * . .     |</span><br><span class="line">|Eo..      .      |</span><br><span class="line">+----[SHA256]-----+</span><br></pre></td></tr></table></figure></p>
 <blockquote>
 <p>-t rsa 表示使用的加密类型。生成过程可以输入一些信息，简单起见，全部回车即可。</p>
 </blockquote>
 <p>生成完毕后，目录中应该存在相应文件了。</p>
-<h4 id="3-4-2-告知GitHub公钥"><a href="#3-4-2-告知GitHub公钥" class="headerlink" title="3.4.2 告知GitHub公钥"></a>3.4.2 告知GitHub公钥</h4><p>在GitHub的用户设置中，找到ssh key的设置：<a href="https://github.com/settings/keys" target="_blank" rel="noopener">SSH Keys</a><br>点击 New SSH Key 新建<br><img src="/images/posts/github-sshkey-new.png" alt=""><br>将生成的公钥id_rsa.pub内容拷贝到输入框中，起名标志即可。<br><img src="/images/posts/github-sshkey-set.png" alt=""><br>保存即可。此时GitHub已经和我们本地电脑建立的信任关系。我们就可以将内容发布到GitHub上了。</p>
+<h4 id="3-3-2-告知GitHub公钥"><a href="#3-3-2-告知GitHub公钥" class="headerlink" title="3.3.2 告知GitHub公钥"></a>3.3.2 告知GitHub公钥</h4><p>在GitHub的用户设置中，找到ssh key的设置：<a href="https://github.com/settings/keys" target="_blank" rel="noopener">SSH Keys</a><br>点击 New SSH Key 新建<br><img src="http://www.hellokang.net/images/posts/github-sshkey-new.png" alt=""><br>将生成的公钥id_rsa.pub内容拷贝到输入框中，起名标志即可。<br><img src="http://www.hellokang.net/images/posts/github-sshkey-set.png" alt=""><br>保存即可。此时GitHub已经和我们本地电脑建立的信任关系。我们就可以将内容发布到GitHub上了。</p>
+<h3 id="3-4-部署到GitHub"><a href="#3-4-部署到GitHub" class="headerlink" title="3.4 部署到GitHub"></a>3.4 部署到GitHub</h3><p>回到我们本地的博客项目中，hexo对于基于git的部署提供了一个工具<a href="https://github.com/hexojs/hexo-deployer-git" target="_blank" rel="noopener">hexo-deployer-git</a>，我们直接安装使即可。</p>
+<p>安装 hexo-deployer-git<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure></p>
 <h3 id="3-5-修改博客的部署配置"><a href="#3-5-修改博客的部署配置" class="headerlink" title="3.5 修改博客的部署配置"></a>3.5 修改博客的部署配置</h3><p>需要指定部署类型，版本库地址，分支，消息等信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/_config.yml</span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: https://github.com/yourusername/yourusername.github.io</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure></p>
 <h3 id="3-6-执行部署"><a href="#3-6-执行部署" class="headerlink" title="3.6 执行部署"></a>3.6 执行部署</h3><p>部署的过程，是将本地博客先生成静态文件，然后将静态文件发布到指定的版本库中。<br>因此总的过程应该是，清理之前的静态文件，生成新静态文件，发布到版本库 这个步骤，执行下面的代码即可：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hexo clean</span><br><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure></p>
 <blockquote>
 <p>部署deploy时会自动生成，因此可以省略 <code>$ hexo generate</code> 操作。</p>
 </blockquote>
-<p>第一次部署的过程中，会出现要求输入GitHub账号信息的步骤，请输入即可：<br><img src="/images/posts/github-signin.png" alt="GitHub登录"></p>
-<p>等等过后，如果出现 <code>Deploy done</code>，类似的信息，说明部署完成。<br><img src="/images/posts/github-deploy-done.png" alt="GitHub部署成功"></p>
-<p>也可以去版本库中查看是否已经存在代码了，版本库地址就是：<a href="https://github.com/yourusername/yourusername.github.io" target="_blank" rel="noopener">https://github.com/yourusername/yourusername.github.io</a><br><img src="/images/posts/github-deploy-done-code.png" alt="GitHub部署成功"></p>
-<p>部署完毕，就可以在 <code>yourusername.github.io</code> 看到你的博客了。<br><img src="/images/posts/github-blog.png" alt="GitHub博客"></p>
-<h3 id="3-6-绑定域名"><a href="#3-6-绑定域名" class="headerlink" title="3.6 绑定域名"></a>3.6 绑定域名</h3><h2 id="4-总述"><a href="#4-总述" class="headerlink" title="4 总述"></a>4 总述</h2><p>完成以上部署后，博客完毕。写作流程就是，本地编辑md文件，本地预览ok后，发布到github即可！<br>写作过程，请参考：<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">Hexo文档</a>。</p>
+<p>第一次部署的过程中，会出现要求输入GitHub账号信息的步骤，请输入即可：<br><img src="http://www.hellokang.net/images/posts/github-signin.png" alt="GitHub登录"></p>
+<p>等等过后，如果出现 <code>Deploy done</code>，类似的信息，说明部署完成。<br><img src="http://www.hellokang.net/images/posts/github-deploy-done.png" alt="GitHub部署成功"></p>
+<p>也可以去版本库中查看是否已经存在代码了，版本库地址就是：<a href="https://github.com/yourusername/yourusername.github.io" target="_blank" rel="noopener">https://github.com/yourusername/yourusername.github.io</a><br><img src="http://www.hellokang.net/images/posts/github-deploy-done-code.png" alt="GitHub部署成功"></p>
+<p>部署完毕，就可以在 <code>yourusername.github.io</code> 看到你的博客了。<br><img src="http://www.hellokang.net/images/posts/github-blog.png" alt="GitHub博客"></p>
+<h3 id="3-6-绑定域名"><a href="#3-6-绑定域名" class="headerlink" title="3.6 绑定域名"></a>3.6 绑定域名</h3><p>过程如下：</p>
+<ul>
+<li>1 申请域名，在域名供应商申请，例如万网（阿里云）。</li>
+<li>2 添加解析到GitHub到IP，可以通过ping yourusername.github.io 获取，例如是：185.199.109.153。在域名供应商设置，例如万网（阿里云）。</li>
+<li>3 在版本库中，增加一个CNAME。进入yourusername.github.io版本库，右上角setting，找到 Custom domain，设置好自己的域名即可。<br><img src="http://www.hellokang.net/images/posts/github-custom-domain.png" alt=""></li>
+</ul>
+<h2 id="4-总述"><a href="#4-总述" class="headerlink" title="4 总述"></a>4 总述</h2><p>完成以上部署后，博客完毕。写作流程就是，本地编辑md文件，本地预览ok后，发布到github即可！<br>写作过程，请参考：<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">Hexo文档</a>。</p>
 <p>有问题，欢迎留言讨论！</p>
 
       
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/hexo/hexo-github/" data-id="cjn5l8ve7000070uove7suwqr" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/hexo/hexo-github/" data-id="cjn5ltfu30000s0uotfximqia" class="article-share-link">分享到</a> -->
       
 
       
@@ -175,7 +182,7 @@
 
   <section class="changyan" id="comments">
 <!--PC和WAP自适应版-->
-<div id="SOHUCS" sid="cjn5l8ve7000070uove7suwqr"></div> 
+<div id="SOHUCS" sid="cjn5ltfu30000s0uotfximqia"></div> 
 <script type="text/javascript"> 
 	(function(){ 
 		var appid = 'cyt64TYiv'; 
