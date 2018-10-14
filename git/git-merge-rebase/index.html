@@ -1,0 +1,309 @@
+
+<!DOCTYPE html>
+<html  xmlns:wb="http://open.weibo.com/wb">
+<head>
+  <meta charset="utf-8">
+  
+  <title>git中使用merge和rebase的区别 | 小韩说理</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1 需求今天和朋友讨论了一下 分支间的整合方案，merge和rebase。以及pull操作模式。下面整理如下： 2 git pull做了什么 git-pull - Fetch from and integrate with another repository or a local branch译：从另一个版本库或本地分支拉取并与其整合  文档如上说，可见pull（拉取）执行了两个操作，他们是fe">
+<meta name="keywords" content="git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git中使用merge和rebase的区别">
+<meta property="og:url" content="http://blog.hellokang.net/git/git-merge-rebase/index.html">
+<meta property="og:site_name" content="小韩说理">
+<meta property="og:description" content="1 需求今天和朋友讨论了一下 分支间的整合方案，merge和rebase。以及pull操作模式。下面整理如下： 2 git pull做了什么 git-pull - Fetch from and integrate with another repository or a local branch译：从另一个版本库或本地分支拉取并与其整合  文档如上说，可见pull（拉取）执行了两个操作，他们是fe">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.hellokang.net/images/posts/git-merge.png">
+<meta property="og:image" content="http://www.hellokang.net/images/posts/git-rebase.png">
+<meta property="og:updated_time" content="2018-10-14T15:55:51.739Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="git中使用merge和rebase的区别">
+<meta name="twitter:description" content="1 需求今天和朋友讨论了一下 分支间的整合方案，merge和rebase。以及pull操作模式。下面整理如下： 2 git pull做了什么 git-pull - Fetch from and integrate with another repository or a local branch译：从另一个版本库或本地分支拉取并与其整合  文档如上说，可见pull（拉取）执行了两个操作，他们是fe">
+<meta name="twitter:image" content="http://www.hellokang.net/images/posts/git-merge.png">
+  
+    <link rel="alternative" href="/atom.xml" title="小韩说理" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+  <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<div id="container">
+  <div id="wrap">
+    <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">小韩说理</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <!-- <a id="nav-search-btn" class="nav-icon" title="Search"></a> -->
+      </nav>
+<!--       <div id="search-form-wrap">
+        <form action="#" method="get" accept-charset="utf-8" class="search-form" id="local-search-form">
+          <input type="text" id="local-search-input" class="search-form-input" placeholder="Search" /> 
+          <input type="submit" class="search-form-submit">
+          <div id="local-search-result"></div>
+        </form>
+      </div> -->
+    </div>
+  </div>
+</header>
+    <div class="outer">
+      <section id="main"><article id="post-git-merge-rebase" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/git/git-merge-rebase/" class="article-date">
+  <time datetime="2018-10-14T12:29:30.000Z" itemprop="datePublished">2018-10-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/git/">git</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      git中使用merge和rebase的区别
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-需求"><a href="#1-需求" class="headerlink" title="1 需求"></a>1 需求</h2><p>今天和朋友讨论了一下 分支间的整合方案，merge和rebase。以及pull操作模式。<br>下面整理如下：</p>
+<h2 id="2-git-pull做了什么"><a href="#2-git-pull做了什么" class="headerlink" title="2 git pull做了什么"></a>2 git pull做了什么</h2><blockquote>
+<p>git-pull - Fetch from and integrate with another repository or a local branch<br>译：从另一个版本库或本地分支拉取并与其整合</p>
+</blockquote>
+<p>文档如上说，可见<code>pull</code>（拉取）执行了两个操作，他们是<code>fetch</code>（获取）和<code>integrate</code>（整合）。<br>拉取就是将版本从远程拉取到本地，可以理解成下载。而整合指的是将拉取的版本与本地版本合并到一起。<br>这个合并的操作，通常会有两种模式来实现，就是<code>merge</code>和<code>rebase</code>。</p>
+<h2 id="3-git-merge合并"><a href="#3-git-merge合并" class="headerlink" title="3 git merge合并"></a>3 git merge合并</h2><blockquote>
+<p>git-merge - Join two or more development histories together<br>译：将两个或多个开发历史合并一起</p>
+</blockquote>
+<p>merge，合并模式。指的是合并两个分支，最终的合并代码形成一个新的版本，两个分支的版本日志按照时间顺序合并到一起即可。 演示如下，<code>git merge dev</code>：<br><img src="http://www.hellokang.net/images/posts/git-merge.png" alt="git-merge"></p>
+<p>合并过程是，git会自动根据两个分支的共同祖先即v2，与两个分支的最新提交即master的v6和dev的v5进行一个三方合并，然后将合并中更新的内容生成一个新的版本即v6，内容合并完成后，会成立版本日志并记录。</p>
+<p>merge的好处是版本不会出现错乱的情况（一会可以对比rebase，你会发现有错乱的情况），但多了一个额外的版本。（其实无所谓啦）<br>再看rebase模式。</p>
+<h2 id="4-git-rebase变基"><a href="#4-git-rebase变基" class="headerlink" title="4 git rebase变基"></a>4 git rebase变基</h2><blockquote>
+<p>git-pull - Reapply commits on top of another base tip<br>译：在另一个的基本上重新应用提交</p>
+</blockquote>
+<p>rebase，重设基础。指的是整合时，以另一个为基础（dev），将当前的（master）应用上去。演示如下，<code>git rebase dev</code>：<br><img src="http://www.hellokang.net/images/posts/git-rebase.png" alt="git-rebaes"></p>
+<p>合并过程为，git会从两个分支的共同祖先即v2开始提取当前分支即master上的提交版本即v4和v5，将提取的修改v4和v6依次应用到目标分支dev的最新提交的后面。将master指向最新的合并版本。</p>
+<p>从合并结果上看，rebase导致版本变为了：<em>v1-&gt;v2-&gt;v3-&gt;v5-&gt;v4-&gt;v6</em>，与真实的版本提交时间不一致了，就是发生了错乱。但rebase不会生成新的版本。</p>
+<h2 id="5-merge-VS-rebase"><a href="#5-merge-VS-rebase" class="headerlink" title="5 merge VS rebase"></a>5 merge VS rebase</h2><p>该如何选择他们？</p>
+<ul>
+<li>当某个分支不再需要了（例如一个本地的bug分支，修复完毕就不在需要了），那么我们选择merge是合理的。</li>
+<li>当我们的项目重启了，代码依赖的基础发生升级了，那么我们就可以rebase到这个升级之后的基础上继续开发。</li>
+<li>rebase -i，一个交互式的rebase，可以用来编辑版本信息，可以获得更加整洁的版本日志。</li>
+<li>千万不要在主体分支上使用rebase，否则会导致历史胡乱的。</li>
+</ul>
+<p>如果<code>git pull</code>的时候，出现 <code>error: failed to push some refs to &#39;版本库&#39;</code>， 可以<code>git pull --rebase</code>来解决下，后面说明原因。</p>
+<p>这个还需要再总结一下。</p>
+<h2 id="6-结束"><a href="#6-结束" class="headerlink" title="6 结束"></a>6 结束</h2><p>有问题，欢迎留言讨论！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <!-- <a data-url="http://blog.hellokang.net/git/git-merge-rebase/" data-id="cjn91y4wf00004wuo1fuiitqb" class="article-share-link">分享到</a> -->
+      
+
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/hexo/hexo-github/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">Hexo搭建博客，发布到GitHub</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+  <section class="changyan" id="comments">
+<!--PC和WAP自适应版-->
+<div id="SOHUCS" sid="cjn91y4wf00004wuo1fuiitqb"></div> 
+<script type="text/javascript"> 
+	(function(){ 
+		var appid = 'cyt64TYiv'; 
+		var conf = 'prod_8144667773d887f47faa11a45cb29175'; 
+		var width = window.innerWidth || document.documentElement.clientWidth; 
+		if (width < 960) { 
+			window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })(); </script>
+</section>
+ </section>
+      
+      <aside id="sidebar">
+  
+      <div class="widget-wrap author">
+    <h3 class="widget-title">&nbsp;</h3>
+    <div class="widget">
+      <div class="avatar">
+        <img src="/images/avatar.png" >
+      </div>
+      <div class="info">
+        <ul>
+          <li>
+            <h3>韩忠康</h3>
+            <wb:follow-button uid="5846559498" type="red_1" width="67" height="24" ></wb:follow-button>
+            <a href="https://github.com/hanzkering" class="fa-icon fa-github" > GitHub</a>
+          </li>
+          <li>程序员，培训讲师</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+    <div class="widget-wrap author">
+  <h3 class="widget-title">微信关注</h3>    
+  <div class="widget">
+    <img src="/images/wechat_subscription.jpg">
+  </div>
+</div>
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/">blog</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/">ssh</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">近期文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/git/git-merge-rebase/">git中使用merge和rebase的区别</a>
+          </li>
+        
+          <li>
+            <a href="/hexo/hexo-github/">Hexo搭建博客，发布到GitHub</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">友情链接</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="https://github.com/hanzkering" target="_blank">GibHub</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 韩忠康<br>
+      Powered by <a href="//hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+  </div>
+  <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+  <!-- totop start -->
+<div id="totop">
+<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+</div>
+
+<!-- totop end -->
+
+
+<!-- 百度分享 start -->
+
+<!-- 百度分享 end -->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>
