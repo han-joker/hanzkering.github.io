@@ -25,4 +25,92 @@
         <tag>ssh</tag>
       </tags>
   </entry>
+  <entry>
+    <title><![CDATA[Go提供的常用命令]]></title>
+    <url>%2Fgo%2Fgo-command%2F</url>
+    <content type="text"></content>
+      <categories>
+        <category>go</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[Go语言使用strut处理面向对象]]></title>
+    <url>%2Fgo%2Fgo-stuct%2F</url>
+    <content type="text"></content>
+      <categories>
+        <category>go</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[Go语言中的一等公民——函数]]></title>
+    <url>%2Fgo%2Fgo-function%2F</url>
+    <content type="text"></content>
+      <categories>
+        <category>go</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[Go语言中指针的处理]]></title>
+    <url>%2Fgo%2Fgo-point%2F</url>
+    <content type="text"></content>
+      <categories>
+        <category>go</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[使用vim编写Go语言]]></title>
+    <url>%2Fgo%2Fgo-editor-vim%2F</url>
+    <content type="text"></content>
+      <categories>
+        <category>go</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[Go语言的反射机制]]></title>
+    <url>%2Fgo%2Fgo-reflect%2F</url>
+    <content type="text"></content>
+      <categories>
+        <category>go</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[使用goland编写Go语言]]></title>
+    <url>%2Fgo%2Fgo-editor-goland%2F</url>
+    <content type="text"></content>
+      <categories>
+        <category>go</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[Go语言使用类型管道channel处理并发]]></title>
+    <url>%2Fgo%2Fgo-channel%2F</url>
+    <content type="text"></content>
+      <categories>
+        <category>go</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[Go语言的内存模型]]></title>
+    <url>%2Fgo%2Fgo-memory-model%2F</url>
+    <content type="text"></content>
+      <categories>
+        <category>go</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[Go语言使用类型管道goroutine处理并发]]></title>
+    <url>%2Fgo%2Fgo-goroutine%2F</url>
+    <content type="text"></content>
+      <categories>
+        <category>go</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[Go语言模块化项目管理]]></title>
+    <url>%2Fgo%2Fgo-module%2F</url>
+    <content type="text"></content>
+      <categories>
+        <category>go</category>
+      </categories>
+  </entry>
 </search>

@@ -16,7 +16,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://www.hellokang.net/images/posts/git-merge.png">
 <meta property="og:image" content="http://www.hellokang.net/images/posts/git-rebase.png">
-<meta property="og:updated_time" content="2018-10-14T15:55:51.739Z">
+<meta property="og:updated_time" content="2018-10-14T16:15:29.200Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="git中使用merge和rebase的区别">
 <meta name="twitter:description" content="1 需求今天和朋友讨论了一下 分支间的整合方案，merge和rebase。以及pull操作模式。下面整理如下： 2 git pull做了什么 git-pull - Fetch from and integrate with another repository or a local branch译：从另一个版本库或本地分支拉取并与其整合  文档如上说，可见pull（拉取）执行了两个操作，他们是fe">
@@ -42,6 +42,10 @@
       <h1 id="logo-wrap">
         <a href="/" id="logo">小韩说理</a>
       </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">韩忠康的站点</a>
+        </h2>
       
     </div>
     <div id="header-inner" class="inner">
@@ -104,13 +108,15 @@
 <h2 id="3-git-merge合并"><a href="#3-git-merge合并" class="headerlink" title="3 git merge合并"></a>3 git merge合并</h2><blockquote>
 <p>git-merge - Join two or more development histories together<br>译：将两个或多个开发历史合并一起</p>
 </blockquote>
-<p>merge，合并模式。指的是合并两个分支，最终的合并代码形成一个新的版本，两个分支的版本日志按照时间顺序合并到一起即可。 演示如下，<code>git merge dev</code>：<br><img src="http://www.hellokang.net/images/posts/git-merge.png" alt="git-merge"></p>
+<p>merge，合并模式。指的是合并两个分支，最终的合并代码形成一个新的版本，两个分支的版本日志按照时间顺序合并到一起即可。 演示如下，<code>git merge dev</code>：</p>
+<p><img src="http://www.hellokang.net/images/posts/git-merge.png" alt="git-merge"></p>
 <p>合并过程是，git会自动根据两个分支的共同祖先即v2，与两个分支的最新提交即master的v6和dev的v5进行一个三方合并，然后将合并中更新的内容生成一个新的版本即v6，内容合并完成后，会成立版本日志并记录。</p>
 <p>merge的好处是版本不会出现错乱的情况（一会可以对比rebase，你会发现有错乱的情况），但多了一个额外的版本。（其实无所谓啦）<br>再看rebase模式。</p>
 <h2 id="4-git-rebase变基"><a href="#4-git-rebase变基" class="headerlink" title="4 git rebase变基"></a>4 git rebase变基</h2><blockquote>
 <p>git-pull - Reapply commits on top of another base tip<br>译：在另一个的基本上重新应用提交</p>
 </blockquote>
-<p>rebase，重设基础。指的是整合时，以另一个为基础（dev），将当前的（master）应用上去。演示如下，<code>git rebase dev</code>：<br><img src="http://www.hellokang.net/images/posts/git-rebase.png" alt="git-rebaes"></p>
+<p>rebase，重设基础。指的是整合时，以另一个为基础（dev），将当前的（master）应用上去。演示如下，<code>git rebase dev</code>：</p>
+<p><img src="http://www.hellokang.net/images/posts/git-rebase.png" alt="git-rebaes"></p>
 <p>合并过程为，git会从两个分支的共同祖先即v2开始提取当前分支即master上的提交版本即v4和v5，将提取的修改v4和v6依次应用到目标分支dev的最新提交的后面。将master指向最新的合并版本。</p>
 <p>从合并结果上看，rebase导致版本变为了：<em>v1-&gt;v2-&gt;v3-&gt;v5-&gt;v4-&gt;v6</em>，与真实的版本提交时间不一致了，就是发生了错乱。但rebase不会生成新的版本。</p>
 <h2 id="5-merge-VS-rebase"><a href="#5-merge-VS-rebase" class="headerlink" title="5 merge VS rebase"></a>5 merge VS rebase</h2><p>该如何选择他们？</p>
@@ -128,7 +134,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/git/git-merge-rebase/" data-id="cjn91y4wf00004wuo1fuiitqb" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/git/git-merge-rebase/" data-id="cjn9sig1x0003wkuoh51mm612" class="article-share-link">分享到</a> -->
       
 
       
@@ -156,7 +162,7 @@
 
   <section class="changyan" id="comments">
 <!--PC和WAP自适应版-->
-<div id="SOHUCS" sid="cjn91y4wf00004wuo1fuiitqb"></div> 
+<div id="SOHUCS" sid="cjn9sig1x0003wkuoh51mm612"></div> 
 <script type="text/javascript"> 
 	(function(){ 
 		var appid = 'cyt64TYiv'; 
@@ -199,7 +205,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -226,7 +232,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -243,6 +249,18 @@
         
           <li>
             <a href="/hexo/hexo-github/">Hexo搭建博客，发布到GitHub</a>
+          </li>
+        
+          <li>
+            <a href="/go/go-command/">Go提供的常用命令</a>
+          </li>
+        
+          <li>
+            <a href="/go/go-stuct/">Go语言使用strut处理面向对象</a>
+          </li>
+        
+          <li>
+            <a href="/go/go-function/">Go语言中的一等公民——函数</a>
           </li>
         
       </ul>
