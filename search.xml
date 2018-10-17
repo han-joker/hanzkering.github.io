@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Go语言中的常量]]></title>
+    <url>%2Fgo%2Fgo-constant%2F</url>
+    <content type="text"><![CDATA[1 概述常量，一经定义不可更改的量。功能角度看，当出现不需要被更改的数据时，应该使用常量进行存储，例如圆周率。从语法的角度看，使用常量可以保证数据，在整个运行期间内，不会被更改。例如当前处理器的架构类型，可以保证不被更改。 语法如下 2 定义单个常量const 常量名 &lt;可选的类型&gt; = 常量值1const c1 int = 1000 Go语言中，标识符（常量名）是否大小写，取决于是否需要在导出时被识别。 常量的值仅仅支持，基础类型，字符串，字符，整型，浮点，布尔。 3 类型推导类型可以通过值推导出来，大多数情况可以省略类型，例如1const c2 = 1000 除非你想使用例如，int8, byte，float32这些非默认类型时，需要指定类型，例如1const c3 int16 = 1000 4 定义多个常量可以一行定义多个常量，例如：1const c4, c5 = 42, 1000 也可以使用 const()定义块，定义多个，每个常量单独一行，例如1234const ( c6 = 42 c7 = 1000) 推荐使用const()块语法，一次性定义多个。 const()块定义时，如果常量未给出定义，则延续上面的定义规则，例如：12345const ( c7 = 42 c8 // c8 = 42 c9 // c9 = 42) 此时，c8, c9, 值都是42。 5 iota迭代定义常量const配合iota关键字使用，可以定义一组由0开始+1迭代的常量演示语法：12345const ( gender_secret = iota gender_male // = iota gender_female // = iota) 此时，三个常量值，分别是,0, 1, 2iota的规则是：若iota出现在const()中，那么const()定义的第一行的iota就是0，第二行就是0+1=1，不论iota是否被常量使用。演示如下：12345678const ( c1 = 42 // iota = 0，虽然未使用iota，但后边（const()中）有使用，此时iota被初始化为0，下面每行累加1 c2 = iota // iota = 1，iota继续累加，使用了iota c3 = 1024 // iota = 2，同样未使用，但iota的值继续累加。c3 被定义为1024 c4 // iota = 3，c4延续上面的定义c4=1024，iota继续累加 c5 = iota // iota = 4，iota继续累加，使用了iota c6 = iota // iota = 5，iota继续累加，使用了iota) 此时结果为：42, 1, 1024, 1024, 4, 5 6 常量在编译时确定编译时确定，因此不能使用变量为其赋值。可以使用，确定的字面量，字面量运算，内置函数运算，其他定义常量，这些在编译时可以确定的内容为常量赋值，演示为：123456const c1 = &quot;hank&quot;const ( c2 = c1 c3 = 42 + 1024 c4 = len(&quot;hank&quot;)) 以上语法都可以！ 7 常量的作用 将特殊的值，语义化。使用时，可以知道其具体含义。 数据的集中管理，更改常量定义，即可完成全部的修改。 保证不被程序的其他代码所更改。 一家之言，欢迎讨论！]]></content>
+      <categories>
+        <category>go</category>
+      </categories>
+      <tags>
+        <tag>go</tag>
+        <tag>iota</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[go-editor-sublime]]></title>
+    <url>%2Funcategorized%2Fgo-editor-sublime%2F</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
     <title><![CDATA[git中使用merge和rebase的区别]]></title>
     <url>%2Fgit%2Fgit-merge-rebase%2F</url>
     <content type="text"><![CDATA[1 需求今天和朋友讨论了一下 分支间的整合方案，merge和rebase。以及pull操作模式。下面整理如下： 2 git pull做了什么 git-pull - Fetch from and integrate with another repository or a local branch译：从另一个版本库或本地分支拉取并与其整合 文档如上说，可见pull（拉取）执行了两个操作，他们是fetch（获取）和integrate（整合）。拉取就是将版本从远程拉取到本地，可以理解成下载。而整合指的是将拉取的版本与本地版本合并到一起。这个合并的操作，通常会有两种模式来实现，就是merge和rebase。 3 git merge合并 git-merge - Join two or more development histories together译：将两个或多个开发历史合并一起 merge，合并模式。指的是合并两个分支，最终的合并代码形成一个新的版本，两个分支的版本日志按照时间顺序合并到一起即可。 演示如下，git merge dev： 合并过程是，git会自动根据两个分支的共同祖先即v2，与两个分支的最新提交即master的v6和dev的v5进行一个三方合并，然后将合并中更新的内容生成一个新的版本即v6，内容合并完成后，会成立版本日志并记录。 merge的好处是版本不会出现错乱的情况（一会可以对比rebase，你会发现有错乱的情况），但多了一个额外的版本。（其实无所谓啦）再看rebase模式。 4 git rebase变基 git-pull - Reapply commits on top of another base tip译：在另一个的基本上重新应用提交 rebase，重设基础。指的是整合时，以另一个为基础（dev），将当前的（master）应用上去。演示如下，git rebase dev： 合并过程为，git会从两个分支的共同祖先即v2开始提取当前分支即master上的提交版本即v4和v5，将提取的修改v4和v6依次应用到目标分支dev的最新提交的后面。将master指向最新的合并版本。 从合并结果上看，rebase导致版本变为了：v1-&gt;v2-&gt;v3-&gt;v5-&gt;v4-&gt;v6，与真实的版本提交时间不一致了，就是发生了错乱。但rebase不会生成新的版本。 5 merge VS rebase该如何选择他们？ 当某个分支不再需要了（例如一个本地的bug分支，修复完毕就不在需要了），那么我们选择merge是合理的。 当我们的项目重启了，代码依赖的基础发生升级了，那么我们就可以rebase到这个升级之后的基础上继续开发。 rebase -i，一个交互式的rebase，可以用来编辑版本信息，可以获得更加整洁的版本日志。 千万不要在主体分支上使用rebase，否则会导致历史胡乱的。 如果git pull的时候，出现 error: failed to push some refs to &#39;版本库&#39;， 可以git pull --rebase来解决下，后面说明原因。 这个还需要再总结一下。 6 结束有问题，欢迎留言讨论！]]></content>

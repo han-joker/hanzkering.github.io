@@ -1,0 +1,322 @@
+
+<!DOCTYPE html>
+<html  xmlns:wb="http://open.weibo.com/wb">
+<head>
+  <meta charset="utf-8">
+  
+  <title>Go语言中的常量 | 小韩说理</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1 概述常量，一经定义不可更改的量。功能角度看，当出现不需要被更改的数据时，应该使用常量进行存储，例如圆周率。从语法的角度看，使用常量可以保证数据，在整个运行期间内，不会被更改。例如当前处理器的架构类型，可以保证不被更改。 语法如下 2 定义单个常量const 常量名 &amp;lt;可选的类型&amp;gt; = 常量值1const c1 int = 1000  Go语言中，标识符（常量名）是否大小写，取决于是">
+<meta name="keywords" content="go,iota">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go语言中的常量">
+<meta property="og:url" content="http://blog.hellokang.net/go/go-constant/index.html">
+<meta property="og:site_name" content="小韩说理">
+<meta property="og:description" content="1 概述常量，一经定义不可更改的量。功能角度看，当出现不需要被更改的数据时，应该使用常量进行存储，例如圆周率。从语法的角度看，使用常量可以保证数据，在整个运行期间内，不会被更改。例如当前处理器的架构类型，可以保证不被更改。 语法如下 2 定义单个常量const 常量名 &amp;lt;可选的类型&amp;gt; = 常量值1const c1 int = 1000  Go语言中，标识符（常量名）是否大小写，取决于是">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-17T15:30:06.286Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Go语言中的常量">
+<meta name="twitter:description" content="1 概述常量，一经定义不可更改的量。功能角度看，当出现不需要被更改的数据时，应该使用常量进行存储，例如圆周率。从语法的角度看，使用常量可以保证数据，在整个运行期间内，不会被更改。例如当前处理器的架构类型，可以保证不被更改。 语法如下 2 定义单个常量const 常量名 &amp;lt;可选的类型&amp;gt; = 常量值1const c1 int = 1000  Go语言中，标识符（常量名）是否大小写，取决于是">
+  
+    <link rel="alternative" href="/atom.xml" title="小韩说理" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+  <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<div id="container">
+  <div id="wrap">
+    <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">小韩说理</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">韩忠康的站点</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <!-- <a id="nav-search-btn" class="nav-icon" title="Search"></a> -->
+      </nav>
+<!--       <div id="search-form-wrap">
+        <form action="#" method="get" accept-charset="utf-8" class="search-form" id="local-search-form">
+          <input type="text" id="local-search-input" class="search-form-input" placeholder="Search" /> 
+          <input type="submit" class="search-form-submit">
+          <div id="local-search-result"></div>
+        </form>
+      </div> -->
+    </div>
+  </div>
+</header>
+    <div class="outer">
+      <section id="main"><article id="post-go-constant" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/go/go-constant/" class="article-date">
+  <time datetime="2018-10-17T14:50:38.000Z" itemprop="datePublished">2018-10-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/go/">go</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Go语言中的常量
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h2><p>常量，一经定义不可更改的量。功能角度看，当出现不需要被更改的数据时，应该使用常量进行存储，例如圆周率。从语法的角度看，使用常量可以保证数据，在整个运行期间内，不会被更改。例如当前处理器的架构类型，可以保证不被更改。</p>
+<p>语法如下</p>
+<h2 id="2-定义单个常量"><a href="#2-定义单个常量" class="headerlink" title="2 定义单个常量"></a>2 定义单个常量</h2><p>const 常量名 &lt;可选的类型&gt; = 常量值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const c1 int = 1000</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>Go语言中，标识符（常量名）是否大小写，取决于是否需要在导出时被识别。</p>
+</blockquote>
+<p>常量的值仅仅支持，基础类型，字符串，字符，整型，浮点，布尔。</p>
+<h2 id="3-类型推导"><a href="#3-类型推导" class="headerlink" title="3 类型推导"></a>3 类型推导</h2><p>类型可以通过值推导出来，大多数情况可以省略类型，例如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const c2 = 1000</span><br></pre></td></tr></table></figure></p>
+<p>除非你想使用例如，int8, byte，float32这些非默认类型时，需要指定类型，例如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const c3 int16 = 1000</span><br></pre></td></tr></table></figure></p>
+<h2 id="4-定义多个常量"><a href="#4-定义多个常量" class="headerlink" title="4 定义多个常量"></a>4 定义多个常量</h2><p>可以一行定义多个常量，例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const c4, c5 = 42, 1000</span><br></pre></td></tr></table></figure></p>
+<p>也可以使用 const()定义块，定义多个，每个常量单独一行，例如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const (</span><br><span class="line">  c6 = 42</span><br><span class="line">  c7 = 1000</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>推荐使用const()块语法，一次性定义多个。</p>
+</blockquote>
+<p>const()块定义时，如果常量未给出定义，则延续上面的定义规则，例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const (</span><br><span class="line">  c7 = 42</span><br><span class="line">  c8 // c8 = 42</span><br><span class="line">  c9 // c9 = 42</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<p>此时，c8, c9, 值都是42。</p>
+<h2 id="5-iota迭代定义常量"><a href="#5-iota迭代定义常量" class="headerlink" title="5 iota迭代定义常量"></a>5 iota迭代定义常量</h2><p>const配合iota关键字使用，可以定义一组由0开始+1迭代的常量<br>演示语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const (</span><br><span class="line">  gender_secret = iota</span><br><span class="line">  gender_male // = iota</span><br><span class="line">  gender_female // = iota</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<p>此时，三个常量值，分别是,0, 1, 2<br>iota的规则是：若iota出现在const()中，那么const()定义的第一行的iota就是0，第二行就是0+1=1，不论iota是否被常量使用。演示如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">const (</span><br><span class="line">  c1 = 42 // iota = 0，虽然未使用iota，但后边（const()中）有使用，此时iota被初始化为0，下面每行累加1</span><br><span class="line">  c2 = iota      // iota = 1，iota继续累加，使用了iota</span><br><span class="line">  c3 = 1024      // iota = 2，同样未使用，但iota的值继续累加。c3 被定义为1024</span><br><span class="line">  c4             // iota = 3，c4延续上面的定义c4=1024，iota继续累加</span><br><span class="line">  c5 = iota      // iota = 4，iota继续累加，使用了iota</span><br><span class="line">  c6 = iota      // iota = 5，iota继续累加，使用了iota</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<p>此时结果为：42, 1, 1024, 1024, 4, 5</p>
+<h2 id="6-常量在编译时确定"><a href="#6-常量在编译时确定" class="headerlink" title="6 常量在编译时确定"></a>6 常量在编译时确定</h2><p>编译时确定，因此不能使用变量为其赋值。可以使用，确定的字面量，字面量运算，内置函数运算，其他定义常量，这些在编译时可以确定的内容为常量赋值，演示为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">const c1 = &quot;hank&quot;</span><br><span class="line">const (</span><br><span class="line">  c2 = c1</span><br><span class="line">  c3 = 42 + 1024</span><br><span class="line">  c4 = len(&quot;hank&quot;)</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<p>以上语法都可以！</p>
+<h2 id="7-常量的作用"><a href="#7-常量的作用" class="headerlink" title="7 常量的作用"></a>7 常量的作用</h2><ul>
+<li>将特殊的值，语义化。使用时，可以知道其具体含义。</li>
+<li>数据的集中管理，更改常量定义，即可完成全部的修改。</li>
+<li>保证不被程序的其他代码所更改。</li>
+</ul>
+<p>一家之言，欢迎讨论！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <!-- <a data-url="http://blog.hellokang.net/go/go-constant/" data-id="cjndbccz70001dcuoskhkphod" class="article-share-link">分享到</a> -->
+      
+
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iota/">iota</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/uncategorized/go-editor-sublime/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">go-editor-sublime</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+  <section class="changyan" id="comments">
+<!--PC和WAP自适应版-->
+<div id="SOHUCS" sid="cjndbccz70001dcuoskhkphod"></div> 
+<script type="text/javascript"> 
+	(function(){ 
+		var appid = 'cyt64TYiv'; 
+		var conf = 'prod_8144667773d887f47faa11a45cb29175'; 
+		var width = window.innerWidth || document.documentElement.clientWidth; 
+		if (width < 960) { 
+			window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })(); </script>
+</section>
+ </section>
+      
+      <aside id="sidebar">
+  
+      <div class="widget-wrap author">
+    <h3 class="widget-title">&nbsp;</h3>
+    <div class="widget">
+      <div class="avatar">
+        <img src="/images/avatar.png" >
+      </div>
+      <div class="info">
+        <ul>
+          <li>
+            <h3>韩忠康</h3>
+            <wb:follow-button uid="5846559498" type="red_1" width="67" height="24" ></wb:follow-button>
+            <a href="https://github.com/hanzkering" class="fa-icon fa-github" > GitHub</a>
+          </li>
+          <li>程序员，培训讲师</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+    <div class="widget-wrap author">
+  <h3 class="widget-title">微信关注</h3>    
+  <div class="widget">
+    <img src="/images/wechat_subscription.jpg">
+  </div>
+</div>
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/">blog</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iota/">iota</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/">ssh</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/go/" style="font-size: 10px;">go</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iota/" style="font-size: 10px;">iota</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">近期文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/go/go-constant/">Go语言中的常量</a>
+          </li>
+        
+          <li>
+            <a href="/uncategorized/go-editor-sublime/">go-editor-sublime</a>
+          </li>
+        
+          <li>
+            <a href="/git/git-merge-rebase/">git中使用merge和rebase的区别</a>
+          </li>
+        
+          <li>
+            <a href="/hexo/hexo-github/">Hexo搭建博客，发布到GitHub</a>
+          </li>
+        
+          <li>
+            <a href="/go/go-command/">Go提供的常用命令</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">友情链接</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="https://github.com/hanzkering" target="_blank">GibHub</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 韩忠康<br>
+      Powered by <a href="//hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+  </div>
+  <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+  <!-- totop start -->
+<div id="totop">
+<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+</div>
+
+<!-- totop end -->
+
+
+<!-- 百度分享 start -->
+
+<!-- 百度分享 end -->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>

@@ -72,6 +72,119 @@
     <div class="outer">
       <section id="main">
   
+    <article id="post-go-constant" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/go/go-constant/" class="article-date">
+  <time datetime="2018-10-17T14:50:38.000Z" itemprop="datePublished">2018-10-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/go/">go</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/go/go-constant/">Go语言中的常量</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h2><p>常量，一经定义不可更改的量。功能角度看，当出现不需要被更改的数据时，应该使用常量进行存储，例如圆周率。从语法的角度看，使用常量可以保证数据，在整个运行期间内，不会被更改。例如当前处理器的架构类型，可以保证不被更改。</p>
+<p>语法如下</p>
+<h2 id="2-定义单个常量"><a href="#2-定义单个常量" class="headerlink" title="2 定义单个常量"></a>2 定义单个常量</h2><p>const 常量名 &lt;可选的类型&gt; = 常量值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const c1 int = 1000</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>Go语言中，标识符（常量名）是否大小写，取决于是否需要在导出时被识别。</p>
+</blockquote>
+<p>常量的值仅仅支持，基础类型，字符串，字符，整型，浮点，布尔。</p>
+<h2 id="3-类型推导"><a href="#3-类型推导" class="headerlink" title="3 类型推导"></a>3 类型推导</h2><p>类型可以通过值推导出来，大多数情况可以省略类型，例如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const c2 = 1000</span><br></pre></td></tr></table></figure></p>
+<p>除非你想使用例如，int8, byte，float32这些非默认类型时，需要指定类型，例如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const c3 int16 = 1000</span><br></pre></td></tr></table></figure></p>
+<h2 id="4-定义多个常量"><a href="#4-定义多个常量" class="headerlink" title="4 定义多个常量"></a>4 定义多个常量</h2><p>可以一行定义多个常量，例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const c4, c5 = 42, 1000</span><br></pre></td></tr></table></figure></p>
+<p>也可以使用 const()定义块，定义多个，每个常量单独一行，例如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const (</span><br><span class="line">  c6 = 42</span><br><span class="line">  c7 = 1000</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>推荐使用const()块语法，一次性定义多个。</p>
+</blockquote>
+<p>const()块定义时，如果常量未给出定义，则延续上面的定义规则，例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const (</span><br><span class="line">  c7 = 42</span><br><span class="line">  c8 // c8 = 42</span><br><span class="line">  c9 // c9 = 42</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<p>此时，c8, c9, 值都是42。</p>
+<h2 id="5-iota迭代定义常量"><a href="#5-iota迭代定义常量" class="headerlink" title="5 iota迭代定义常量"></a>5 iota迭代定义常量</h2><p>const配合iota关键字使用，可以定义一组由0开始+1迭代的常量<br>演示语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const (</span><br><span class="line">  gender_secret = iota</span><br><span class="line">  gender_male // = iota</span><br><span class="line">  gender_female // = iota</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<p>此时，三个常量值，分别是,0, 1, 2<br>iota的规则是：若iota出现在const()中，那么const()定义的第一行的iota就是0，第二行就是0+1=1，不论iota是否被常量使用。演示如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">const (</span><br><span class="line">  c1 = 42 // iota = 0，虽然未使用iota，但后边（const()中）有使用，此时iota被初始化为0，下面每行累加1</span><br><span class="line">  c2 = iota      // iota = 1，iota继续累加，使用了iota</span><br><span class="line">  c3 = 1024      // iota = 2，同样未使用，但iota的值继续累加。c3 被定义为1024</span><br><span class="line">  c4             // iota = 3，c4延续上面的定义c4=1024，iota继续累加</span><br><span class="line">  c5 = iota      // iota = 4，iota继续累加，使用了iota</span><br><span class="line">  c6 = iota      // iota = 5，iota继续累加，使用了iota</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<p>此时结果为：42, 1, 1024, 1024, 4, 5</p>
+<h2 id="6-常量在编译时确定"><a href="#6-常量在编译时确定" class="headerlink" title="6 常量在编译时确定"></a>6 常量在编译时确定</h2><p>编译时确定，因此不能使用变量为其赋值。可以使用，确定的字面量，字面量运算，内置函数运算，其他定义常量，这些在编译时可以确定的内容为常量赋值，演示为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">const c1 = &quot;hank&quot;</span><br><span class="line">const (</span><br><span class="line">  c2 = c1</span><br><span class="line">  c3 = 42 + 1024</span><br><span class="line">  c4 = len(&quot;hank&quot;)</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<p>以上语法都可以！</p>
+<h2 id="7-常量的作用"><a href="#7-常量的作用" class="headerlink" title="7 常量的作用"></a>7 常量的作用</h2><ul>
+<li>将特殊的值，语义化。使用时，可以知道其具体含义。</li>
+<li>数据的集中管理，更改常量定义，即可完成全部的修改。</li>
+<li>保证不被程序的其他代码所更改。</li>
+</ul>
+<p>一家之言，欢迎讨论！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <!-- <a data-url="http://blog.hellokang.net/go/go-constant/" data-id="cjndbccz70001dcuoskhkphod" class="article-share-link">分享到</a> -->
+      
+
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iota/">iota</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+ 
+  
+    <article id="post-go-editor-sublime" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/uncategorized/go-editor-sublime/" class="article-date">
+  <time datetime="2018-10-15T12:13:04.000Z" itemprop="datePublished">2018-10-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/uncategorized/go-editor-sublime/">go-editor-sublime</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+        <!-- <a data-url="http://blog.hellokang.net/uncategorized/go-editor-sublime/" data-id="cjndbcczl0008dcuou1aneblv" class="article-share-link">分享到</a> -->
+      
+
+      
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+ 
+  
     <article id="post-git-merge-rebase" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/git/git-merge-rebase/" class="article-date">
@@ -132,7 +245,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/git/git-merge-rebase/" data-id="cjn9sig1x0003wkuoh51mm612" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/git/git-merge-rebase/" data-id="cjndbcczb0003dcuodvju40zz" class="article-share-link">分享到</a> -->
       
 
       
@@ -234,7 +347,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/hexo/hexo-github/" data-id="cjn9sig2j000owkuotba98o0k" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/hexo/hexo-github/" data-id="cjndbcd08000xdcuo7s4yqh2z" class="article-share-link">分享到</a> -->
       
 
       
@@ -280,7 +393,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-command/" data-id="cjn9sig1p0000wkuoanzi99yp" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-command/" data-id="cjndbcczh0006dcuo553k3slq" class="article-share-link">分享到</a> -->
       
 
       
@@ -324,7 +437,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-stuct/" data-id="cjn9sig2d000iwkuonrcmc3tg" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-stuct/" data-id="cjndbcd04000tdcuoimhqufqo" class="article-share-link">分享到</a> -->
       
 
       
@@ -368,7 +481,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-function/" data-id="cjn9sig2b000ewkuopxpxi08r" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-function/" data-id="cjndbcczs000gdcuogzyqltdo" class="article-share-link">分享到</a> -->
       
 
       
@@ -412,7 +525,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-point/" data-id="cjn9sig2f000kwkuo42rojt8d" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-point/" data-id="cjndbcd02000rdcuonrjgrndv" class="article-share-link">分享到</a> -->
       
 
       
@@ -456,7 +569,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-editor-vim/" data-id="cjn9sig220006wkuohoj6mkvu" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-editor-vim/" data-id="cjndbcczp000ddcuo4p8r0ndo" class="article-share-link">分享到</a> -->
       
 
       
@@ -500,95 +613,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-reflect/" data-id="cjn9sig2h000mwkuoupxvmniu" class="article-share-link">分享到</a> -->
-      
-
-      
-
-      
-    </footer>
-  </div>
-  
-</article>
-
- 
-  
-    <article id="post-go-editor-goland" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/go/go-editor-goland/" class="article-date">
-  <time datetime="2018-09-17T03:54:42.000Z" itemprop="datePublished">2018-09-17</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/go/">go</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/go/go-editor-goland/">使用goland编写Go语言</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-        <!-- <a data-url="http://blog.hellokang.net/go/go-editor-goland/" data-id="cjn9sig250009wkuol0tlhzjn" class="article-share-link">分享到</a> -->
-      
-
-      
-
-      
-    </footer>
-  </div>
-  
-</article>
-
- 
-  
-    <article id="post-go-channel" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/go/go-channel/" class="article-date">
-  <time datetime="2018-09-15T03:54:06.000Z" itemprop="datePublished">2018-09-15</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/go/">go</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/go/go-channel/">Go语言使用类型管道channel处理并发</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-        <!-- <a data-url="http://blog.hellokang.net/go/go-channel/" data-id="cjn9sig1z0004wkuojs5h8zve" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-reflect/" data-id="cjndbcd06000vdcuoc1a0g7sl" class="article-share-link">分享到</a> -->
       
 
       
@@ -640,7 +665,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -649,7 +674,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/">blog</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/">ssh</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/">blog</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iota/">iota</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/">ssh</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -658,7 +683,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a>
+      <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/go/" style="font-size: 10px;">go</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iota/" style="font-size: 10px;">iota</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a>
     </div>
   </div>
 
@@ -667,7 +692,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -679,6 +704,14 @@
       <ul>
         
           <li>
+            <a href="/go/go-constant/">Go语言中的常量</a>
+          </li>
+        
+          <li>
+            <a href="/uncategorized/go-editor-sublime/">go-editor-sublime</a>
+          </li>
+        
+          <li>
             <a href="/git/git-merge-rebase/">git中使用merge和rebase的区别</a>
           </li>
         
@@ -688,14 +721,6 @@
         
           <li>
             <a href="/go/go-command/">Go提供的常用命令</a>
-          </li>
-        
-          <li>
-            <a href="/go/go-stuct/">Go语言使用strut处理面向对象</a>
-          </li>
-        
-          <li>
-            <a href="/go/go-function/">Go语言中的一等公民——函数</a>
           </li>
         
       </ul>

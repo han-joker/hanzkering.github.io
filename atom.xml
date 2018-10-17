@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.hellokang.net/"/>
-  <updated>2018-10-14T16:15:29.200Z</updated>
+  <updated>2018-10-17T15:30:06.286Z</updated>
   <id>http://blog.hellokang.net/</id>
   
   <author>
@@ -15,6 +15,48 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Go语言中的常量</title>
+    <link href="http://blog.hellokang.net/go/go-constant/"/>
+    <id>http://blog.hellokang.net/go/go-constant/</id>
+    <published>2018-10-17T14:50:38.000Z</published>
+    <updated>2018-10-17T15:30:06.286Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1
+        
+      
+    
+    </summary>
+    
+      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
+    
+    
+      <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
+    
+      <category term="iota" scheme="http://blog.hellokang.net/tags/iota/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>go-editor-sublime</title>
+    <link href="http://blog.hellokang.net/uncategorized/go-editor-sublime/"/>
+    <id>http://blog.hellokang.net/uncategorized/go-editor-sublime/</id>
+    <published>2018-10-15T12:13:04.000Z</published>
+    <updated>2018-10-15T12:13:04.909Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>git中使用merge和rebase的区别</title>
