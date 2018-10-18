@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.hellokang.net/"/>
-  <updated>2018-10-18T12:05:39.890Z</updated>
+  <updated>2018-10-18T12:17:42.997Z</updated>
   <id>http://blog.hellokang.net/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://blog.hellokang.net/go/go-variable/"/>
     <id>http://blog.hellokang.net/go/go-variable/</id>
     <published>2018-10-18T10:51:32.000Z</published>
-    <updated>2018-10-18T12:05:39.890Z</updated>
+    <updated>2018-10-18T12:17:42.997Z</updated>
     
     <summary type="html">
     
@@ -29,7 +29,11 @@
       
         
         
-          &lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1
+          &lt;!-- toc --&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#1-概述&quot;&gt;1 概述&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#2-定义声明和初始化&quot;&gt;2 定义：声明和初始化&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#3-类型默认值零值&quot;&gt;3
         
       
     
@@ -51,7 +55,7 @@
     <link href="http://blog.hellokang.net/go/go-constant/"/>
     <id>http://blog.hellokang.net/go/go-constant/</id>
     <published>2018-10-17T14:50:38.000Z</published>
-    <updated>2018-10-18T10:55:03.553Z</updated>
+    <updated>2018-10-18T12:17:49.271Z</updated>
     
     <summary type="html">
     
@@ -59,7 +63,12 @@
       
         
         
-          &lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1
+          &lt;!-- toc --&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#1-概述&quot;&gt;1 概述&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#2-定义单个常量&quot;&gt;2 定义单个常量&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#3-类型推导&quot;&gt;3 类型推导&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a
         
       
     
