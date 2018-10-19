@@ -6,20 +6,20 @@
   
   <title>Go语言的数据类型 | 小韩说课</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1 概述Go语言作为类C语言，支持常规的基础数据类型的的同时，支持常用的高级数据类型。他们是：  整数，int，uint，int8，uint8，int16，uint16，int32，uint32，int64，uint64 浮点（小数），float32，float64 复数，complex 字符，byte，rune 字符串，string 布尔，bool 指针，pointor 数组，array nil">
+  <meta name="description" content="1 概述 2 整数 3 浮点数 4 复数 5 字符 6 字符串 7 布尔型 8 指针 9 数组 10 nil 11 切片   1 概述Go语言作为类C语言，支持常规的基础数据类型的的同时，支持常用的高级数据类型。他们是：  整数，int，uint，int8，uint8，int16，uint16，int32，uint32，int64，uint64 浮点（小数），float32，float64 复">
 <meta name="keywords" content="go,go-guide">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go语言的数据类型">
 <meta property="og:url" content="http://blog.hellokang.net/go/go-type/index.html">
 <meta property="og:site_name" content="小韩说课">
-<meta property="og:description" content="1 概述Go语言作为类C语言，支持常规的基础数据类型的的同时，支持常用的高级数据类型。他们是：  整数，int，uint，int8，uint8，int16，uint16，int32，uint32，int64，uint64 浮点（小数），float32，float64 复数，complex 字符，byte，rune 字符串，string 布尔，bool 指针，pointor 数组，array nil">
+<meta property="og:description" content="1 概述 2 整数 3 浮点数 4 复数 5 字符 6 字符串 7 布尔型 8 指针 9 数组 10 nil 11 切片   1 概述Go语言作为类C语言，支持常规的基础数据类型的的同时，支持常用的高级数据类型。他们是：  整数，int，uint，int8，uint8，int16，uint16，int32，uint32，int64，uint64 浮点（小数），float32，float64 复">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://www.hellokang.net/images/posts/go-pointer.png">
 <meta property="og:image" content="http://www.hellokang.net/images/posts/go-slice.png">
-<meta property="og:updated_time" content="2018-10-19T16:03:13.622Z">
+<meta property="og:updated_time" content="2018-10-19T16:06:03.271Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Go语言的数据类型">
-<meta name="twitter:description" content="1 概述Go语言作为类C语言，支持常规的基础数据类型的的同时，支持常用的高级数据类型。他们是：  整数，int，uint，int8，uint8，int16，uint16，int32，uint32，int64，uint64 浮点（小数），float32，float64 复数，complex 字符，byte，rune 字符串，string 布尔，bool 指针，pointor 数组，array nil">
+<meta name="twitter:description" content="1 概述 2 整数 3 浮点数 4 复数 5 字符 6 字符串 7 布尔型 8 指针 9 数组 10 nil 11 切片   1 概述Go语言作为类C语言，支持常规的基础数据类型的的同时，支持常用的高级数据类型。他们是：  整数，int，uint，int8，uint8，int16，uint16，int32，uint32，int64，uint64 浮点（小数），float32，float64 复">
 <meta name="twitter:image" content="http://www.hellokang.net/images/posts/go-pointer.png">
   
     <link rel="alternative" href="/atom.xml" title="小韩说课" type="application/atom+xml">
@@ -100,7 +100,22 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2><span id="1-概述">1 概述</span></h2><p>Go语言作为类C语言，支持常规的基础数据类型的的同时，支持常用的高级数据类型。他们是：</p>
+        <!-- toc -->
+<ul>
+<li><a href="#1-概述">1 概述</a></li>
+<li><a href="#2-整数">2 整数</a></li>
+<li><a href="#3-浮点数">3 浮点数</a></li>
+<li><a href="#4-复数">4 复数</a></li>
+<li><a href="#5-字符">5 字符</a></li>
+<li><a href="#6-字符串">6 字符串</a></li>
+<li><a href="#7-布尔型">7 布尔型</a></li>
+<li><a href="#8-指针">8 指针</a></li>
+<li><a href="#9-数组">9 数组</a></li>
+<li><a href="#10-nil">10 nil</a></li>
+<li><a href="#11-切片">11 切片</a></li>
+</ul>
+<!-- tocstop -->
+<h2><span id="1-概述">1 概述</span></h2><p>Go语言作为类C语言，支持常规的基础数据类型的的同时，支持常用的高级数据类型。他们是：</p>
 <ul>
 <li>整数，int，uint，int8，uint8，int16，uint16，int32，uint32，int64，uint64</li>
 <li>浮点（小数），float32，float64</li>
@@ -184,7 +199,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjng7eduw000w5suo0zncwh8k" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjng7ij16000y5wuo188ozovf" class="article-share-link">分享到</a> -->
       
 
       
@@ -212,7 +227,7 @@
 
   <section class="changyan" id="comments">
 <!--PC和WAP自适应版-->
-<div id="SOHUCS" sid="cjng7eduw000w5suo0zncwh8k"></div> 
+<div id="SOHUCS" sid="cjng7ij16000y5wuo188ozovf"></div> 
 <script type="text/javascript"> 
 	(function(){ 
 		var appid = 'cyt64TYiv'; 

@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.hellokang.net/"/>
-  <updated>2018-10-19T16:03:13.622Z</updated>
+  <updated>2018-10-19T16:06:03.271Z</updated>
   <id>http://blog.hellokang.net/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://blog.hellokang.net/go/go-type/"/>
     <id>http://blog.hellokang.net/go/go-type/</id>
     <published>2018-10-19T09:59:26.000Z</published>
-    <updated>2018-10-19T16:03:13.622Z</updated>
+    <updated>2018-10-19T16:06:03.271Z</updated>
     
     <summary type="html">
     
@@ -29,7 +29,12 @@
       
         
         
-          &lt;h2&gt;&lt;span id=&quot;1-概述&quot;&gt;1
+          &lt;!-- toc --&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#1-概述&quot;&gt;1 概述&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#2-整数&quot;&gt;2 整数&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#3-浮点数&quot;&gt;3 浮点数&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a
         
       
     
