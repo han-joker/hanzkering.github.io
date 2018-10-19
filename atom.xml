@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.hellokang.net/"/>
-  <updated>2018-10-18T12:17:42.997Z</updated>
+  <updated>2018-10-19T16:02:06.031Z</updated>
   <id>http://blog.hellokang.net/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Go语言的数据类型</title>
+    <link href="http://blog.hellokang.net/go/go-type/"/>
+    <id>http://blog.hellokang.net/go/go-type/</id>
+    <published>2018-10-19T09:59:26.000Z</published>
+    <updated>2018-10-19T16:02:06.031Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2&gt;&lt;span id=&quot;1-概述&quot;&gt;1
+        
+      
+    
+    </summary>
+    
+      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
+    
+    
+      <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
+    
+      <category term="go-guide" scheme="http://blog.hellokang.net/tags/go-guide/"/>
+    
+  </entry>
   
   <entry>
     <title>Go语言中的变量</title>
@@ -55,7 +83,7 @@
     <link href="http://blog.hellokang.net/go/go-constant/"/>
     <id>http://blog.hellokang.net/go/go-constant/</id>
     <published>2018-10-17T14:50:38.000Z</published>
-    <updated>2018-10-18T12:17:49.271Z</updated>
+    <updated>2018-10-18T12:49:41.743Z</updated>
     
     <summary type="html">
     
@@ -112,7 +140,8 @@
       
         
         
-          &lt;h2 id=&quot;1-需求&quot;&gt;&lt;a href=&quot;#1-需求&quot; class=&quot;headerlink&quot; title=&quot;1 需求&quot;&gt;&lt;/a&gt;1 需求&lt;/h2&gt;&lt;p&gt;今天和朋友讨论了一下
+          &lt;h2&gt;&lt;span id=&quot;1-需求&quot;&gt;1 需求&lt;/span&gt;&lt;/h2&gt;&lt;p&gt;今天和朋友讨论了一下 分支间的整合方案，merge和rebase。以及pull操作模式。&lt;br&gt;下面整理如下：&lt;/p&gt;
+&lt;h2&gt;&lt;span id=&quot;2-git-pull做了什么&quot;&gt;2 git
         
       
     
@@ -138,7 +167,7 @@
       
         
         
-          &lt;h2 id=&quot;1-需求&quot;&gt;&lt;a href=&quot;#1-需求&quot; class=&quot;headerlink&quot; title=&quot;1 需求&quot;&gt;&lt;/a&gt;1
+          &lt;h2&gt;&lt;span id=&quot;1-需求&quot;&gt;1
         
       
     

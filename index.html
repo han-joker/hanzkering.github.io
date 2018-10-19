@@ -72,6 +72,131 @@
     <div class="outer">
       <section id="main">
   
+    <article id="post-go-type" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/go/go-type/" class="article-date">
+  <time datetime="2018-10-19T09:59:26.000Z" itemprop="datePublished">2018-10-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/go/">go</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/go/go-type/">Go语言的数据类型</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2><span id="1-概述">1 概述</span></h2><p>Go语言作为类C语言，支持常规的基础数据类型的的同时，支持常用的高级数据类型。他们是：</p>
+<ul>
+<li>整数，int，uint，int8，uint8，int16，uint16，int32，uint32，int64，uint64</li>
+<li>浮点（小数），float32，float64</li>
+<li>复数，complex</li>
+<li>字符，byte，rune</li>
+<li>字符串，string</li>
+<li>布尔，bool</li>
+<li>指针，pointor</li>
+<li>数组，array</li>
+<li>nil</li>
+<li>切片，slice。（引用类型）</li>
+<li>映射，map</li>
+<li>结构体，stuct</li>
+<li>接口，interface</li>
+<li>通道，channel</li>
+<li>函数，func()</li>
+</ul>
+<h2><span id="2-整数">2 整数</span></h2><p>支持的整型分类很细，主要差异是占用的存储空间不同。基于有无符号列出为：<br>有符号的：int，int8，int16，int32，int64<br>无符号的：uint，uint8，uint16，uint32，uint64</p>
+<p>其中int, unit是基于处理器架构的。意味着会根据处理器来确定是32bit还是64bit。<br>使用时，常常使用int。或者使用int32保证兼容。<br>在类型推导时，推导的整型为int，其他长度整型需要在定义变量时强制声明。<br>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">42</span><br><span class="line">1024</span><br><span class="line">-36</span><br></pre></td></tr></table></figure></p>
+<p>整型的默认值为0。</p>
+<h2><span id="3-浮点数">3 浮点数</span></h2><p>支持IEEE-754标准浮点数。支持32bit和64bit的浮点数float32和float64。<br>在类型推导时，推导的浮点型为float64。float32需要在定义变量时强制声明。<br>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.0</span><br><span class="line">3.14</span><br><span class="line">0.618</span><br><span class="line">4.2E10 // 4.2*10^10</span><br></pre></td></tr></table></figure></p>
+<p>浮点数的默认值为0。</p>
+<h2><span id="4-复数">4 复数</span></h2><p>原生支持复数。<br>支持32bit+32bit复数complex64，和64bit+64bit的复数complex128。</p>
+<h2><span id="5-字符">5 字符</span></h2><p>使用单引号定义字符型数据，字符指的是单个字符。有两种byte和rune：<br>byte：单字节字符，是uint8的别名。用于存储ASCII字符集字符<br>rune：多字节字符，是int32的别名。用于存储unicode字符集字符。<br>在类型推导时，推导的字符型为rune。byte需要在定义变量时强制声明。<br>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&apos;c&apos;</span><br><span class="line">&apos;康&apos;</span><br></pre></td></tr></table></figure></p>
+<p>字符的默认值是0。字符的本质就是整数型，根据字符集得到对应的字符。</p>
+<h2><span id="6-字符串">6 字符串</span></h2><p>原生支持字符串。使用双引号(“”)或反引号(``)定义，内部是unicode编码。<br>双引号：””, 用于单行字符串。<br>反引号：``，用于定义多行字符串，内部会原样解析。<br>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 单行</span><br><span class="line">&quot;心有猛虎，细嗅蔷薇&quot;</span><br><span class="line">// 多行</span><br><span class="line">`</span><br><span class="line">大风歌</span><br><span class="line">大风起兮云飞扬。</span><br><span class="line">威加海内兮归故乡。</span><br><span class="line">安得猛士兮守四方！</span><br><span class="line">`</span><br></pre></td></tr></table></figure></p>
+<p>字符串支持转义字符，列表如下：<br>转移符 含  义</p>
+<ul>
+<li>\r  回车符（返回行首）</li>
+<li>\n  换行符（直接跳到下一行的同列位置）</li>
+<li>\t  制表符</li>
+<li>\’  单引号</li>
+<li>\”  双引号</li>
+<li>\  反斜杠</li>
+<li>\uXXXX  Unicode字符码值转义</li>
+</ul>
+<h2><span id="7-布尔型">7 布尔型</span></h2><p>布尔型的值只可以是常量 true 或者 false。<br>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var (</span><br><span class="line">  isFinished = false</span><br><span class="line">  )</span><br></pre></td></tr></table></figure></p>
+<h2><span id="8-指针">8 指针</span></h2><p>指针类型用于存储变量地址。使用运算符&amp;,<em>完成操作。<br>使用运算符p:=&amp;v可以获取v变量的地址。p中的数据格式类似<code>0xc0000b9528</code>，是一个内存地址的16进制表示。<br>使用运算符</em>p可以获取指针p指向变量v的值。<br>如图所示：</p>
+<p><img src="/images/posts/go-pointer.png" alt="指针"></p>
+<p>在Go语言中，指针主要用于：</p>
+<ul>
+<li>类型指针，对指针指向的数据进行修改。函数调用时传递参数使用指针，避免值传递拷贝额外数据。注意类型指针不能进行偏移和运算。</li>
+<li>切片，由指向起始元素的原始指针、元素数量和容量组成。<br>示例：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">p := 42</span><br><span class="line">pv := &amp;p</span><br><span class="line">*pv ++</span><br><span class="line">// p == 43</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2><span id="9-数组">9 数组</span></h2><p>数组是一段固定长度的连续内存区域。是具有相同类型数据元素序列。元素类型支持任意内置类型。<br>数组从声明时就确定长度，可以修改数组元素，但是数组不可修改长度。<br>使用 <code>[长度]类型</code> 进行数组的声明。<br>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 默认值初始化</span><br><span class="line">var nums [4]int // [0 0 0 0]</span><br><span class="line">// 指定初始值</span><br><span class="line">var position = [4]string&#123;&quot;east&quot;, &quot;south&quot;, &quot;west&quot;, &quot;north&quot;&#125;</span><br><span class="line">// 自动确定长度</span><br><span class="line">var position = [...]string&#123;&quot;east&quot;, &quot;south&quot;, &quot;west&quot;, &quot;north&quot;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>会使用类型默认值初始化元素。<br>数组不是引用类型，变量间为值传递。</p>
+<p>可以使用range配合循环结构完成遍历，示例如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">for k, v := range position &#123;</span><br><span class="line">    fmt.Println(k, v)</span><br><span class="line">&#125;</span><br><span class="line">// 结果</span><br><span class="line">0 east</span><br><span class="line">1 south</span><br><span class="line">2 west</span><br><span class="line">3 north</span><br></pre></td></tr></table></figure></p>
+<h2><span id="10-nil">10 nil</span></h2><p>nil，可以理解为未初始化引用。是以下类型的默认初始值：</p>
+<ul>
+<li>pointers -&gt; nil</li>
+<li>slices -&gt; nil</li>
+<li>maps -&gt; nil</li>
+<li>channels -&gt; nil</li>
+<li>functions -&gt; nil</li>
+<li>interfaces -&gt; nil</li>
+</ul>
+<h2><span id="11-切片">11 切片</span></h2><p>切片是一个拥有相同类型元素的可变长度的序列。与数组的固定长度不同，切片也被称之为动态数组。<br>Go提供了4中方案定义切片：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">make ( []Type ,length, capacity )</span><br><span class="line">make ( []Type, length)</span><br><span class="line">[]Type&#123;&#125;</span><br><span class="line">[]Type&#123;value1 , value2 , ... , valueN &#125;</span><br></pre></td></tr></table></figure></p>
+<p>或者从数组或切片生成新切片：<br>slice [开始索引:结束索引]</p>
+<ul>
+<li>slice 表示目标切片对象。</li>
+<li>开始索引和结束索引对应目标切片的索引。</li>
+<li>不包含结束索引对应的元素</li>
+<li>缺省开始索引，表示从头到结束索引。</li>
+<li>缺省结束索引，表示从开始索引到末尾。</li>
+<li>两者同时缺省时，全部切取，与切片本身等效。</li>
+<li>两者同时为0时，等效于空切片，一般用于切片复位。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var arr = [4]string&#123;&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;&#125;</span><br><span class="line">var sli = arr[1:3] // [&quot;b&quot;, &quot;c&quot;]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>以从数组创建切片为例，理解切片，定义语法如上所示，下图为slice:</p>
+<p><img src="/images/posts/go-slice.png" alt="slice示意"></p>
+<p>切片的实现是由一个底层数组以及其上面的动态位置，尺寸来实现。由内部由指向起始元素的指针、元素数量length和容量capacity组成。其中：</p>
+<ul>
+<li>指针ptr，用于指向切片在底层数组的起始位置。</li>
+<li>尺寸len，用于记录切片内元素数量。</li>
+<li>容量cap，当前切片最大容量，也就是底层数组的容量。可以动态分配。</li>
+</ul>
+<p>切片为引用类型。<br>切片的默认初始值为nil。<br>切片支持: len()尺寸, cap()容量, append()追加元素等操作。详见切片的使用。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjnfuefzx001kmcuonlgz1l46" class="article-share-link">分享到</a> -->
+      
+
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go-guide/">go-guide</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+ 
+  
     <article id="post-go-variable" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/go/go-variable/" class="article-date">
@@ -146,7 +271,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-variable/" data-id="cjnejpw31000ys4uojsrqc1ow" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-variable/" data-id="cjnfucj5b000umcuodi9rojma" class="article-share-link">分享到</a> -->
       
 
       
@@ -230,7 +355,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-constant/" data-id="cjnejpw2d0006s4uo1l0cxr05" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-constant/" data-id="cjnfucj4o0009mcuo8tat5pn9" class="article-share-link">分享到</a> -->
       
 
       
@@ -272,7 +397,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/uncategorized/go-editor-sublime/" data-id="cjnejpw2l000es4uo6k5duhun" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/uncategorized/go-editor-sublime/" data-id="cjnfucj4j0005mcuotjrdbxkk" class="article-share-link">分享到</a> -->
       
 
       
@@ -311,26 +436,26 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="1-需求"><a href="#1-需求" class="headerlink" title="1 需求"></a>1 需求</h2><p>今天和朋友讨论了一下 分支间的整合方案，merge和rebase。以及pull操作模式。<br>下面整理如下：</p>
-<h2 id="2-git-pull做了什么"><a href="#2-git-pull做了什么" class="headerlink" title="2 git pull做了什么"></a>2 git pull做了什么</h2><blockquote>
+        <h2><span id="1-需求">1 需求</span></h2><p>今天和朋友讨论了一下 分支间的整合方案，merge和rebase。以及pull操作模式。<br>下面整理如下：</p>
+<h2><span id="2-git-pull做了什么">2 git pull做了什么</span></h2><blockquote>
 <p>git-pull - Fetch from and integrate with another repository or a local branch<br>译：从另一个版本库或本地分支拉取并与其整合</p>
 </blockquote>
 <p>文档如上说，可见<code>pull</code>（拉取）执行了两个操作，他们是<code>fetch</code>（获取）和<code>integrate</code>（整合）。<br>拉取就是将版本从远程拉取到本地，可以理解成下载。而整合指的是将拉取的版本与本地版本合并到一起。<br>这个合并的操作，通常会有两种模式来实现，就是<code>merge</code>和<code>rebase</code>。</p>
-<h2 id="3-git-merge合并"><a href="#3-git-merge合并" class="headerlink" title="3 git merge合并"></a>3 git merge合并</h2><blockquote>
+<h2><span id="3-git-merge合并">3 git merge合并</span></h2><blockquote>
 <p>git-merge - Join two or more development histories together<br>译：将两个或多个开发历史合并一起</p>
 </blockquote>
 <p>merge，合并模式。指的是合并两个分支，最终的合并代码形成一个新的版本，两个分支的版本日志按照时间顺序合并到一起即可。 演示如下，<code>git merge dev</code>：</p>
 <p><img src="http://www.hellokang.net/images/posts/git-merge.png" alt="git-merge"></p>
 <p>合并过程是，git会自动根据两个分支的共同祖先即v2，与两个分支的最新提交即master的v6和dev的v5进行一个三方合并，然后将合并中更新的内容生成一个新的版本即v6，内容合并完成后，会成立版本日志并记录。</p>
 <p>merge的好处是版本不会出现错乱的情况（一会可以对比rebase，你会发现有错乱的情况），但多了一个额外的版本。（其实无所谓啦）<br>再看rebase模式。</p>
-<h2 id="4-git-rebase变基"><a href="#4-git-rebase变基" class="headerlink" title="4 git rebase变基"></a>4 git rebase变基</h2><blockquote>
+<h2><span id="4-git-rebase变基">4 git rebase变基</span></h2><blockquote>
 <p>git-pull - Reapply commits on top of another base tip<br>译：在另一个的基本上重新应用提交</p>
 </blockquote>
 <p>rebase，重设基础。指的是整合时，以另一个为基础（dev），将当前的（master）应用上去。演示如下，<code>git rebase dev</code>：</p>
 <p><img src="http://www.hellokang.net/images/posts/git-rebase.png" alt="git-rebaes"></p>
 <p>合并过程为，git会从两个分支的共同祖先即v2开始提取当前分支即master上的提交版本即v4和v5，将提取的修改v4和v6依次应用到目标分支dev的最新提交的后面。将master指向最新的合并版本。</p>
 <p>从合并结果上看，rebase导致版本变为了：<em>v1-&gt;v2-&gt;v3-&gt;v5-&gt;v4-&gt;v6</em>，与真实的版本提交时间不一致了，就是发生了错乱。但rebase不会生成新的版本。</p>
-<h2 id="5-merge-VS-rebase"><a href="#5-merge-VS-rebase" class="headerlink" title="5 merge VS rebase"></a>5 merge VS rebase</h2><p>该如何选择他们？</p>
+<h2><span id="5-merge-vs-rebase">5 merge VS rebase</span></h2><p>该如何选择他们？</p>
 <ul>
 <li>当某个分支不再需要了（例如一个本地的bug分支，修复完毕就不在需要了），那么我们选择merge是合理的。</li>
 <li>当我们的项目重启了，代码依赖的基础发生升级了，那么我们就可以rebase到这个升级之后的基础上继续开发。</li>
@@ -339,13 +464,13 @@
 </ul>
 <p>如果<code>git pull</code>的时候，出现 <code>error: failed to push some refs to &#39;版本库&#39;</code>， 可以<code>git pull --rebase</code>来解决下，后面说明原因。</p>
 <p>这个还需要再总结一下。</p>
-<h2 id="6-结束"><a href="#6-结束" class="headerlink" title="6 结束"></a>6 结束</h2><p>有问题，欢迎留言讨论！</p>
+<h2><span id="6-结束">6 结束</span></h2><p>有问题，欢迎留言讨论！</p>
 
       
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/git/git-merge-rebase/" data-id="cjnejpw200000s4uounahab04" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/git/git-merge-rebase/" data-id="cjnfucj470000mcuoazfk7qug" class="article-share-link">分享到</a> -->
       
 
       
@@ -386,47 +511,47 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="1-需求"><a href="#1-需求" class="headerlink" title="1 需求"></a>1 需求</h2><p>博客之前是wordpress搭建的，也很好用。现在想使用一个基于markdown文件为中心的博客系统，就锁定了hexo这个项目。hexo是基于Node.js的，提供markdown支持，草稿，单页，分类，标签，主题，i18n，永久链接，静态生成，部署等很常用的博客系统功能。其主页地址为：<a href="https://hexo.io/zh-cn/" target="_blank" rel="noopener">Hexo</a>，大家可以获取更详细的信息。<br>下面就和大家说说过程，大致有博客搭建，部署到github，还有另一个git服务器（个人的服务器）上的过程。</p>
+        <h2><span id="1-需求">1 需求</span></h2><p>博客之前是wordpress搭建的，也很好用。现在想使用一个基于markdown文件为中心的博客系统，就锁定了hexo这个项目。hexo是基于Node.js的，提供markdown支持，草稿，单页，分类，标签，主题，i18n，永久链接，静态生成，部署等很常用的博客系统功能。其主页地址为：<a href="https://hexo.io/zh-cn/" target="_blank" rel="noopener">Hexo</a>，大家可以获取更详细的信息。<br>下面就和大家说说过程，大致有博客搭建，部署到github，还有另一个git服务器（个人的服务器）上的过程。</p>
 <blockquote>
 <p>下面的操作的个人电脑为windows系统（win10)。</p>
 </blockquote>
-<h2 id="2-hexo搭建博客"><a href="#2-hexo搭建博客" class="headerlink" title="2 hexo搭建博客"></a>2 hexo搭建博客</h2><p>此步骤完成后，可以在自己本地电脑上，看到完整的博客系统了。</p>
-<h3 id="2-1-快速开始"><a href="#2-1-快速开始" class="headerlink" title="2.1 快速开始"></a>2.1 快速开始</h3><p>在安装好 Node.js, Git的基础上，执行下面代码即可<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> npm install -g hexo-cli</span><br><span class="line"><span class="meta">$</span> hexo init &lt;folder&gt;</span><br><span class="line"><span class="meta">$</span> cd &lt;folder&gt;</span><br><span class="line"><span class="meta">$</span> npm install</span><br><span class="line"><span class="meta">$</span> hexo server</span><br></pre></td></tr></table></figure></p>
+<h2><span id="2-hexo搭建博客">2 hexo搭建博客</span></h2><p>此步骤完成后，可以在自己本地电脑上，看到完整的博客系统了。</p>
+<h3><span id="21-快速开始">2.1 快速开始</span></h3><p>在安装好 Node.js, Git的基础上，执行下面代码即可<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> npm install -g hexo-cli</span><br><span class="line"><span class="meta">$</span> hexo init &lt;folder&gt;</span><br><span class="line"><span class="meta">$</span> cd &lt;folder&gt;</span><br><span class="line"><span class="meta">$</span> npm install</span><br><span class="line"><span class="meta">$</span> hexo server</span><br></pre></td></tr></table></figure></p>
 <p>浏览器访问<code>http://localhost:4000</code>，即可看到你的博客。</p>
 <p>如果没有Node.js或Git，请按照下面的步骤执行。</p>
-<h3 id="2-2-安装Node-js"><a href="#2-2-安装Node-js" class="headerlink" title="2.2 安装Node.js"></a>2.2 安装Node.js</h3><p>Node.js是基于Chrome V8 JavaScript引擎的JavaScript运行环境(runtime built)。安装方式请参考<a href="https://nodejs.org/" target="_blank" rel="noopener">Node.js官网</a> ，或者<a href="/categories/nodejs/">本站的Node.js相关内容</a>。<br>安装完毕后，应出现如下效果，表示安装成功：<br><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">C:\<span class="title">Users</span>\<span class="title">Kang</span>&gt; <span class="title">node</span> -<span class="title">v</span></span></span><br><span class="line"><span class="function"><span class="title">v8</span>.12.0</span></span><br><span class="line"><span class="function"><span class="title">PS</span> <span class="title">C</span>:\<span class="title">Users</span>\<span class="title">Kang</span>&gt; <span class="title">npm</span> -<span class="title">v</span></span></span><br><span class="line"><span class="function">6.4.1</span></span><br></pre></td></tr></table></figure></p>
+<h3><span id="22-安装nodejs">2.2 安装Node.js</span></h3><p>Node.js是基于Chrome V8 JavaScript引擎的JavaScript运行环境(runtime built)。安装方式请参考<a href="https://nodejs.org/" target="_blank" rel="noopener">Node.js官网</a> ，或者<a href="/categories/nodejs/">本站的Node.js相关内容</a>。<br>安装完毕后，应出现如下效果，表示安装成功：<br><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">C:\<span class="title">Users</span>\<span class="title">Kang</span>&gt; <span class="title">node</span> -<span class="title">v</span></span></span><br><span class="line"><span class="function"><span class="title">v8</span>.12.0</span></span><br><span class="line"><span class="function"><span class="title">PS</span> <span class="title">C</span>:\<span class="title">Users</span>\<span class="title">Kang</span>&gt; <span class="title">npm</span> -<span class="title">v</span></span></span><br><span class="line"><span class="function">6.4.1</span></span><br></pre></td></tr></table></figure></p>
 <blockquote>
 <p>安装Node.js还可以使用nvm（Node Version Manager，Node.js的版本管理工具）。使用nvm可以方便的安装Node.js的各种版本，以及在版本间进行切换。安装使用方式请参考<a href="https://github.com/coreybutler/nvm-windows" target="_blank" rel="noopener">windows下的nvm</a>和<a href="https://github.com/creationix/nvm" target="_blank" rel="noopener">linux下的nvm</a>或者<a href="/categories/nodejs/">本站的Node.js相关内容</a>。</p>
 </blockquote>
-<h3 id="2-3-安装Git"><a href="#2-3-安装Git" class="headerlink" title="2.3 安装Git"></a>2.3 安装Git</h3><p>Git是开源免费的分布式版本控制系统是用来处理代码量由小到大相关问题的。安装方式请参考<a href="https://git-scm.com/" target="_blank" rel="noopener">Git官网</a>，或者<a href="/categories/git/">本站的Git相关内容</a>。<br>安装完毕后，应出现如下效果，表示安装成功：<br><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">C:\<span class="title">Users</span>\<span class="title">Kang</span>&gt; <span class="title">git</span> <span class="title">version</span></span></span><br><span class="line"><span class="function"><span class="title">git</span> <span class="title">version</span> 2.19.1.<span class="title">windows</span>.1</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="2-4-安装Hexo"><a href="#2-4-安装Hexo" class="headerlink" title="2.4 安装Hexo"></a>2.4 安装Hexo</h3><p>使用npm按照hexo即可，运行如下代码全局按照hexo-cli这个hexo的命令行工具<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> npm install -g hexo-cli</span><br></pre></td></tr></table></figure></p>
+<h3><span id="23-安装git">2.3 安装Git</span></h3><p>Git是开源免费的分布式版本控制系统是用来处理代码量由小到大相关问题的。安装方式请参考<a href="https://git-scm.com/" target="_blank" rel="noopener">Git官网</a>，或者<a href="/categories/git/">本站的Git相关内容</a>。<br>安装完毕后，应出现如下效果，表示安装成功：<br><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">C:\<span class="title">Users</span>\<span class="title">Kang</span>&gt; <span class="title">git</span> <span class="title">version</span></span></span><br><span class="line"><span class="function"><span class="title">git</span> <span class="title">version</span> 2.19.1.<span class="title">windows</span>.1</span></span><br></pre></td></tr></table></figure></p>
+<h3><span id="24-安装hexo">2.4 安装Hexo</span></h3><p>使用npm按照hexo即可，运行如下代码全局按照hexo-cli这个hexo的命令行工具<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> npm install -g hexo-cli</span><br></pre></td></tr></table></figure></p>
 <p>安装完毕后，应出现如下效果，表示安装成功：<br><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">C:\<span class="title">Users</span>\<span class="title">Kang</span>&gt; <span class="title">hexo</span> -<span class="title">v</span></span></span><br><span class="line"><span class="function"><span class="title">hexo</span>-<span class="title">cli</span>: 1.1.0</span></span><br><span class="line"><span class="function"><span class="title">os</span>: <span class="title">Windows_NT</span> 10.0.17134 <span class="title">win32</span> <span class="title">x64</span></span></span><br><span class="line"><span class="function"><span class="title">http_parser</span>: 2.8.0</span></span><br><span class="line"><span class="function"><span class="title">node</span>: 8.12.0</span></span><br><span class="line"><span class="function"><span class="title">v8</span>: 6.2.414.66</span></span><br><span class="line"><span class="function"><span class="title">uv</span>: 1.19.2</span></span><br><span class="line"><span class="function"><span class="title">zlib</span>: 1.2.11</span></span><br><span class="line"><span class="function"><span class="title">ares</span>: 1.10.1-<span class="title">DEV</span></span></span><br><span class="line"><span class="function"><span class="title">modules</span>: 57</span></span><br><span class="line"><span class="function"><span class="title">nghttp2</span>: 1.32.0</span></span><br><span class="line"><span class="function"><span class="title">napi</span>: 3</span></span><br><span class="line"><span class="function"><span class="title">openssl</span>: 1.0.2<span class="title">p</span></span></span><br><span class="line"><span class="function"><span class="title">icu</span>: 60.1</span></span><br><span class="line"><span class="function"><span class="title">unicode</span>: 10.0</span></span><br><span class="line"><span class="function"><span class="title">cldr</span>: 32.0</span></span><br><span class="line"><span class="function"><span class="title">tz</span>: 2017<span class="title">c</span></span></span><br></pre></td></tr></table></figure></p>
-<h3 id="2-5-Hexo建站"><a href="#2-5-Hexo建站" class="headerlink" title="2.5 Hexo建站"></a>2.5 Hexo建站</h3><p>安装 Hexo 完成后，请执行下列命令，Hexo 将会在指定文件夹中新建所需要的文件：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> hexo init &lt;folder&gt;</span><br><span class="line"><span class="meta">$</span> cd &lt;folder&gt;</span><br><span class="line"><span class="meta">$</span> npm install</span><br></pre></td></tr></table></figure></p>
+<h3><span id="25-hexo建站">2.5 Hexo建站</span></h3><p>安装 Hexo 完成后，请执行下列命令，Hexo 将会在指定文件夹中新建所需要的文件：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> hexo init &lt;folder&gt;</span><br><span class="line"><span class="meta">$</span> cd &lt;folder&gt;</span><br><span class="line"><span class="meta">$</span> npm install</span><br></pre></td></tr></table></figure></p>
 <p>选择好需要的站点目录（目录地址不要有中文）。例如选择 <code>D:\projects\practice\blog&gt;</code> 作为建站目录，那么执行如下操作即可：<br><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">C:\<span class="title">Users</span>\<span class="title">Kang</span>&gt; <span class="title">d</span>:</span></span><br><span class="line"><span class="function"><span class="title">D</span>:\&gt; <span class="title">cd</span> .\<span class="title">projects</span>\<span class="title">practice</span></span></span><br><span class="line"><span class="function"><span class="title">D</span>:\<span class="title">projects</span>\<span class="title">practice</span>&gt; <span class="title">hexo</span> <span class="title">init</span> <span class="title">blog</span></span></span><br><span class="line"><span class="function"><span class="title">D</span>:\<span class="title">projects</span>\<span class="title">practice</span>&gt; <span class="title">cd</span> <span class="title">blog</span></span></span><br><span class="line"><span class="function"><span class="title">D</span>:\<span class="title">projects</span>\<span class="title">practice</span>\<span class="title">blog</span>&gt; <span class="title">npm</span> <span class="title">install</span></span></span><br></pre></td></tr></table></figure></p>
 <p>此时一个基本的博客已经建立完毕了。</p>
-<h3 id="2-6-运行Hexo博客"><a href="#2-6-运行Hexo博客" class="headerlink" title="2.6 运行Hexo博客"></a>2.6 运行Hexo博客</h3><p>进入博客目录，执行 <code>hexo server</code> 即可运行hexo服务器。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">D:\projects\practice\blog&gt; hexo server</span><br><span class="line">INFO  Start processing</span><br><span class="line">INFO  Hexo is running at http://localhost:4000 . Press Ctrl+C to stop.</span><br></pre></td></tr></table></figure></p>
+<h3><span id="26-运行hexo博客">2.6 运行Hexo博客</span></h3><p>进入博客目录，执行 <code>hexo server</code> 即可运行hexo服务器。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">D:\projects\practice\blog&gt; hexo server</span><br><span class="line">INFO  Start processing</span><br><span class="line">INFO  Hexo is running at http://localhost:4000 . Press Ctrl+C to stop.</span><br></pre></td></tr></table></figure></p>
 <p>此时，浏览器访问<code>http://localhost:4000</code>，即可看到你的博客。效果如下：</p>
 <p><img src="http://www.hellokang.net/images/posts/hexo-init.png" alt="hexo默认博客首页" title="&#39;hexo默认博客首页&#39;"></p>
 <p>至此，hexo搭建的博客已经完成。该博客使用方法，如何发文章，分类，标签等操作请参考<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">Hexo文档</a>，本文不再赘述。</p>
-<h2 id="3-发布到GitHub"><a href="#3-发布到GitHub" class="headerlink" title="3.发布到GitHub"></a>3.发布到GitHub</h2><p>GitHub上允许我们搭建自己的静态站点，在不购买自己的服务器情况下，可以有自己的博客。<br>需要用到Hexo提供的发布相关功能，同时需要在github上做一定的配置。</p>
-<h3 id="3-1-注册GitHub"><a href="#3-1-注册GitHub" class="headerlink" title="3.1 注册GitHub"></a>3.1 注册GitHub</h3><blockquote>
+<h2><span id="3发布到github">3.发布到GitHub</span></h2><p>GitHub上允许我们搭建自己的静态站点，在不购买自己的服务器情况下，可以有自己的博客。<br>需要用到Hexo提供的发布相关功能，同时需要在github上做一定的配置。</p>
+<h3><span id="31-注册github">3.1 注册GitHub</span></h3><blockquote>
 <p>已有账号的跳过此步骤</p>
 </blockquote>
 <p>注册操作，跟着GitHub引导完成即可，<a href="https://github.com/join?source=header-home" target="_blank" rel="noopener">GitHub注册</a></p>
-<h3 id="3-2-创建版本库"><a href="#3-2-创建版本库" class="headerlink" title="3.2 创建版本库"></a>3.2 创建版本库</h3><p>登录后，<a href="https://github.com/new" target="_blank" rel="noopener">创建新版本库https://github.com/new</a><br><img src="http://www.hellokang.net/images/posts/github-new-repository.png" alt="新建版本库"></p>
+<h3><span id="32-创建版本库">3.2 创建版本库</span></h3><p>登录后，<a href="https://github.com/new" target="_blank" rel="noopener">创建新版本库https://github.com/new</a><br><img src="http://www.hellokang.net/images/posts/github-new-repository.png" alt="新建版本库"></p>
 <p><em>注意：版本库名字强烈建议是 <code>&lt;你的用户&gt;.github.io</code> 这种格式</em><br>创建完毕后，就可以使用 <code>&lt;你的用户&gt;.github.io</code> 这种方式访问你的github博客地址，但现在访问应该不会成功，因为是一个新创建的版本库，是空的，一无所有….。接下来就把我们本地的博客内容部署到这个github版本库上。</p>
-<h3 id="3-3-GitHub的SSH-keys设置"><a href="#3-3-GitHub的SSH-keys设置" class="headerlink" title="3.3 GitHub的SSH keys设置"></a>3.3 GitHub的SSH keys设置</h3><p>在部署之前，需要保证GitHub可以验证我们的机器，需要将本地的RAS-publicKey告知给GitHub，步骤如下：</p>
-<h4 id="3-3-1-本地RAS密钥对生成"><a href="#3-3-1-本地RAS密钥对生成" class="headerlink" title="3.3.1 本地RAS密钥对生成"></a>3.3.1 本地RAS密钥对生成</h4><p>进入到 用户目录/.ssh目录下，查看是否已经存在了， 私钥<code>id_rsa</code> 公钥<code>id_rsa.pub</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Kang&gt; cd .ssh</span><br><span class="line">C:\Users\Kang\.ssh&gt; dir</span><br><span class="line">-a----       2018/10/10     19:46           1679 id_rsa</span><br><span class="line">-a----       2018/10/10     19:46            403 id_rsa.pub</span><br></pre></td></tr></table></figure></p>
+<h3><span id="33-github的ssh-keys设置">3.3 GitHub的SSH keys设置</span></h3><p>在部署之前，需要保证GitHub可以验证我们的机器，需要将本地的RAS-publicKey告知给GitHub，步骤如下：</p>
+<h4><span id="331-本地ras密钥对生成">3.3.1 本地RAS密钥对生成</span></h4><p>进入到 用户目录/.ssh目录下，查看是否已经存在了， 私钥<code>id_rsa</code> 公钥<code>id_rsa.pub</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Kang&gt; cd .ssh</span><br><span class="line">C:\Users\Kang\.ssh&gt; dir</span><br><span class="line">-a----       2018/10/10     19:46           1679 id_rsa</span><br><span class="line">-a----       2018/10/10     19:46            403 id_rsa.pub</span><br></pre></td></tr></table></figure></p>
 <p>上面的输出表示已经存在。若不存在，执行 <code>ssh-keygen</code> 生成即可（持续回车即可）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Kang\.ssh&gt; ssh-keygen.exe -t rsa</span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line">Enter file in which to save the key (C:\Users\Kang/.ssh/id_rsa):</span><br><span class="line">Enter passphrase (empty for no passphrase):</span><br><span class="line">Enter same passphrase again:</span><br><span class="line">Your identification has been saved in C:\Users\Kang/.ssh/id_rsa.</span><br><span class="line">Your public key has been saved in C:\Users\Kang/.ssh/id_rsa.pub.</span><br><span class="line">The key fingerprint is:</span><br><span class="line">SHA256:ymf2laAmgHVsGakavggdXrzORtVRNxkuKYq444C5Irs kang@V1N3RYQG70NI7YD</span><br><span class="line">The key&apos;s randomart image is:</span><br><span class="line">+---[RSA 2048]----+</span><br><span class="line">|      .. .. +o   |</span><br><span class="line">|     ..o.  +..   |</span><br><span class="line">|   ...=...o .    |</span><br><span class="line">|  o+++.... .     |</span><br><span class="line">| +o=oo. S .      |</span><br><span class="line">|o.=.oo . . . .   |</span><br><span class="line">|=.o=  + *   o    |</span><br><span class="line">|++..+  * . .     |</span><br><span class="line">|Eo..      .      |</span><br><span class="line">+----[SHA256]-----+</span><br></pre></td></tr></table></figure></p>
 <blockquote>
 <p>-t rsa 表示使用的加密类型。生成过程可以输入一些信息，简单起见，全部回车即可。</p>
 </blockquote>
 <p>生成完毕后，目录中应该存在相应文件了。</p>
-<h4 id="3-3-2-告知GitHub公钥"><a href="#3-3-2-告知GitHub公钥" class="headerlink" title="3.3.2 告知GitHub公钥"></a>3.3.2 告知GitHub公钥</h4><p>在GitHub的用户设置中，找到ssh key的设置：<a href="https://github.com/settings/keys" target="_blank" rel="noopener">SSH Keys</a><br>点击 New SSH Key 新建<br><img src="http://www.hellokang.net/images/posts/github-sshkey-new.png" alt=""><br>将生成的公钥id_rsa.pub内容拷贝到输入框中，起名标志即可。<br><img src="http://www.hellokang.net/images/posts/github-sshkey-set.png" alt=""><br>保存即可。此时GitHub已经和我们本地电脑建立的信任关系。我们就可以将内容发布到GitHub上了。</p>
-<h3 id="3-4-部署到GitHub"><a href="#3-4-部署到GitHub" class="headerlink" title="3.4 部署到GitHub"></a>3.4 部署到GitHub</h3><p>回到我们本地的博客项目中，hexo对于基于git的部署提供了一个工具<a href="https://github.com/hexojs/hexo-deployer-git" target="_blank" rel="noopener">hexo-deployer-git</a>，我们直接安装使即可。</p>
+<h4><span id="332-告知github公钥">3.3.2 告知GitHub公钥</span></h4><p>在GitHub的用户设置中，找到ssh key的设置：<a href="https://github.com/settings/keys" target="_blank" rel="noopener">SSH Keys</a><br>点击 New SSH Key 新建<br><img src="http://www.hellokang.net/images/posts/github-sshkey-new.png" alt=""><br>将生成的公钥id_rsa.pub内容拷贝到输入框中，起名标志即可。<br><img src="http://www.hellokang.net/images/posts/github-sshkey-set.png" alt=""><br>保存即可。此时GitHub已经和我们本地电脑建立的信任关系。我们就可以将内容发布到GitHub上了。</p>
+<h3><span id="34-部署到github">3.4 部署到GitHub</span></h3><p>回到我们本地的博客项目中，hexo对于基于git的部署提供了一个工具<a href="https://github.com/hexojs/hexo-deployer-git" target="_blank" rel="noopener">hexo-deployer-git</a>，我们直接安装使即可。</p>
 <p>安装 hexo-deployer-git<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure></p>
-<h3 id="3-5-修改博客的部署配置"><a href="#3-5-修改博客的部署配置" class="headerlink" title="3.5 修改博客的部署配置"></a>3.5 修改博客的部署配置</h3><p>需要指定部署类型，版本库地址，分支，消息等信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/_config.yml</span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: https://github.com/yourusername/yourusername.github.io</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure></p>
-<h3 id="3-6-执行部署"><a href="#3-6-执行部署" class="headerlink" title="3.6 执行部署"></a>3.6 执行部署</h3><p>部署的过程，是将本地博客先生成静态文件，然后将静态文件发布到指定的版本库中。<br>因此总的过程应该是，清理之前的静态文件，生成新静态文件，发布到版本库 这个步骤，执行下面的代码即可：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hexo clean</span><br><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure></p>
+<h3><span id="35-修改博客的部署配置">3.5 修改博客的部署配置</span></h3><p>需要指定部署类型，版本库地址，分支，消息等信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/_config.yml</span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: https://github.com/yourusername/yourusername.github.io</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure></p>
+<h3><span id="36-执行部署">3.6 执行部署</span></h3><p>部署的过程，是将本地博客先生成静态文件，然后将静态文件发布到指定的版本库中。<br>因此总的过程应该是，清理之前的静态文件，生成新静态文件，发布到版本库 这个步骤，执行下面的代码即可：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hexo clean</span><br><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure></p>
 <blockquote>
 <p>部署deploy时会自动生成，因此可以省略 <code>$ hexo generate</code> 操作。</p>
 </blockquote>
@@ -434,20 +559,20 @@
 <p>等等过后，如果出现 <code>Deploy done</code>，类似的信息，说明部署完成。<br><img src="http://www.hellokang.net/images/posts/github-deploy-done.png" alt="GitHub部署成功"></p>
 <p>也可以去版本库中查看是否已经存在代码了，版本库地址就是：<a href="https://github.com/yourusername/yourusername.github.io" target="_blank" rel="noopener">https://github.com/yourusername/yourusername.github.io</a><br><img src="http://www.hellokang.net/images/posts/github-deploy-done-code.png" alt="GitHub部署成功"></p>
 <p>部署完毕，就可以在 <code>yourusername.github.io</code> 看到你的博客了。<br><img src="http://www.hellokang.net/images/posts/github-blog.png" alt="GitHub博客"></p>
-<h3 id="3-6-绑定域名"><a href="#3-6-绑定域名" class="headerlink" title="3.6 绑定域名"></a>3.6 绑定域名</h3><p>过程如下：</p>
+<h3><span id="36-绑定域名">3.6 绑定域名</span></h3><p>过程如下：</p>
 <ul>
 <li>1 申请域名，在域名供应商申请，例如万网（阿里云）。</li>
 <li>2 添加解析到GitHub到IP，可以通过ping yourusername.github.io 获取，例如是：185.199.109.153。在域名供应商设置，例如万网（阿里云）。</li>
 <li>3 在版本库中，增加一个CNAME。进入yourusername.github.io版本库，右上角setting，找到 Custom domain，设置好自己的域名即可。<br><img src="http://www.hellokang.net/images/posts/github-custom-domain.png" alt=""></li>
 </ul>
-<h2 id="4-总述"><a href="#4-总述" class="headerlink" title="4 总述"></a>4 总述</h2><p>完成以上部署后，博客完毕。写作流程就是，本地编辑md文件，本地预览ok后，发布到github即可！<br>写作过程，请参考：<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">Hexo文档</a>。</p>
+<h2><span id="4-总述">4 总述</span></h2><p>完成以上部署后，博客完毕。写作流程就是，本地编辑md文件，本地预览ok后，发布到github即可！<br>写作过程，请参考：<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">Hexo文档</a>。</p>
 <p>有问题，欢迎留言讨论！</p>
 
       
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/hexo/hexo-github/" data-id="cjnejpw330011s4uo11bdhewi" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/hexo/hexo-github/" data-id="cjnfucj5d000xmcuosdbe3tyt" class="article-share-link">分享到</a> -->
       
 
       
@@ -493,7 +618,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-command/" data-id="cjnejpw2g0009s4uo4eej4ogh" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-command/" data-id="cjnfucj4b0001mcuohw9g2vsy" class="article-share-link">分享到</a> -->
       
 
       
@@ -537,7 +662,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-stuct/" data-id="cjnejpw30000vs4uohbdlmcy8" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-stuct/" data-id="cjnfucj5a000smcuop4qni9fu" class="article-share-link">分享到</a> -->
       
 
       
@@ -581,7 +706,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-function/" data-id="cjnejpw2n000fs4uoy9jhvb3o" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-function/" data-id="cjnfucj4x000imcuoon0kcm52" class="article-share-link">分享到</a> -->
       
 
       
@@ -625,51 +750,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-point/" data-id="cjnejpw2v000os4uoopw628r2" class="article-share-link">分享到</a> -->
-      
-
-      
-
-      
-    </footer>
-  </div>
-  
-</article>
-
- 
-  
-    <article id="post-go-editor-vim" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/go/go-editor-vim/" class="article-date">
-  <time datetime="2018-09-18T03:54:36.000Z" itemprop="datePublished">2018-09-18</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/go/">go</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/go/go-editor-vim/">使用vim编写Go语言</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-        <!-- <a data-url="http://blog.hellokang.net/go/go-editor-vim/" data-id="cjnejpw2i000bs4uoe3doath7" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-point/" data-id="cjnfucj57000nmcuovkb845vq" class="article-share-link">分享到</a> -->
       
 
       
@@ -721,7 +802,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -730,7 +811,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/">blog</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-guide/">go-guide</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iota/">iota</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/">ssh</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/">blog</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-guide/">go-guide</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iota/">iota</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/">ssh</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -739,7 +820,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/go/" style="font-size: 20px;">go</a> <a href="/tags/go-guide/" style="font-size: 20px;">go-guide</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iota/" style="font-size: 20px;">iota</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a>
+      <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/go/" style="font-size: 20px;">go</a> <a href="/tags/go-guide/" style="font-size: 20px;">go-guide</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iota/" style="font-size: 15px;">iota</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a>
     </div>
   </div>
 
@@ -748,7 +829,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -758,6 +839,10 @@
     <h3 class="widget-title">近期文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/go/go-type/">Go语言的数据类型</a>
+          </li>
         
           <li>
             <a href="/go/go-variable/">Go语言中的变量</a>
@@ -773,10 +858,6 @@
         
           <li>
             <a href="/git/git-merge-rebase/">git中使用merge和rebase的区别</a>
-          </li>
-        
-          <li>
-            <a href="/hexo/hexo-github/">Hexo搭建博客，发布到GitHub</a>
           </li>
         
       </ul>
