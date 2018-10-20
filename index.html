@@ -101,16 +101,20 @@
         <!-- toc -->
 <ul>
 <li><a href="#1-概述">1 概述</a></li>
-<li><a href="#2-整数">2 整数</a></li>
-<li><a href="#3-浮点数">3 浮点数</a></li>
-<li><a href="#4-复数">4 复数</a></li>
-<li><a href="#5-字符">5 字符</a></li>
-<li><a href="#6-字符串">6 字符串</a></li>
-<li><a href="#7-布尔型">7 布尔型</a></li>
-<li><a href="#8-指针">8 指针</a></li>
-<li><a href="#9-数组">9 数组</a></li>
+<li><a href="#2-整数int">2 整数，int</a></li>
+<li><a href="#3-浮点数float">3 浮点数，float</a></li>
+<li><a href="#4-复数complex32complex64">4 复数，complex32,complex64</a></li>
+<li><a href="#5-字符byterune">5 字符，byte，rune</a></li>
+<li><a href="#6-字符串string">6 字符串，string</a></li>
+<li><a href="#7-布尔型bool">7 布尔型，bool</a></li>
+<li><a href="#8-指针pointer">8 指针，pointer</a></li>
+<li><a href="#9-数组array">9 数组，array</a></li>
 <li><a href="#10-nil">10 nil</a></li>
-<li><a href="#11-切片">11 切片</a></li>
+<li><a href="#11-切片slice">11 切片，slice</a></li>
+<li><a href="#12-映射map">12 映射，map</a></li>
+<li><a href="#13-结构体struct">13 结构体，struct</a></li>
+<li><a href="#14-接口interface">14 接口，interface</a></li>
+<li><a href="#15-函数func">15 函数，func()</a></li>
 </ul>
 <!-- tocstop -->
 <h2><span id="1-概述">1 概述</span></h2><p>Go语言作为类C语言，支持常规的基础数据类型的的同时，支持常用的高级数据类型。他们是：</p>
@@ -126,20 +130,20 @@
 <li>nil</li>
 <li>切片，slice。（引用类型）</li>
 <li>映射，map</li>
-<li>结构体，stuct</li>
+<li>结构体，struct</li>
 <li>接口，interface</li>
-<li>通道，channel</li>
 <li>函数，func()</li>
 </ul>
-<h2><span id="2-整数">2 整数</span></h2><p>支持的整型分类很细，主要差异是占用的存储空间不同。基于有无符号列出为：<br>有符号的：int，int8，int16，int32，int64<br>无符号的：uint，uint8，uint16，uint32，uint64</p>
+<p>本篇相当于一个类型索引。包含了Go语言中的全部类型。具体每种类型的操作，请参见具体章节！</p>
+<h2><span id="2-整数int">2 整数，int</span></h2><p>支持的整型分类很细，主要差异是占用的存储空间不同。基于有无符号列出为：<br>有符号的：int，int8，int16，int32，int64<br>无符号的：uint，uint8，uint16，uint32，uint64</p>
 <p>其中int, unit是基于处理器架构的。意味着会根据处理器来确定是32bit还是64bit。<br>使用时，常常使用int。或者使用int32保证兼容。<br>在类型推导时，推导的整型为int，其他长度整型需要在定义变量时强制声明。<br>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">42</span><br><span class="line">1024</span><br><span class="line">-36</span><br></pre></td></tr></table></figure></p>
 <p>整型的默认值为0。</p>
-<h2><span id="3-浮点数">3 浮点数</span></h2><p>支持IEEE-754标准浮点数。支持32bit和64bit的浮点数float32和float64。<br>在类型推导时，推导的浮点型为float64。float32需要在定义变量时强制声明。<br>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.0</span><br><span class="line">3.14</span><br><span class="line">0.618</span><br><span class="line">4.2E10 // 4.2*10^10</span><br></pre></td></tr></table></figure></p>
+<h2><span id="3-浮点数float">3 浮点数，float</span></h2><p>支持IEEE-754标准浮点数。支持32bit和64bit的浮点数float32和float64。<br>在类型推导时，推导的浮点型为float64。float32需要在定义变量时强制声明。<br>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.0</span><br><span class="line">3.14</span><br><span class="line">0.618</span><br><span class="line">4.2E10 // 4.2*10^10</span><br></pre></td></tr></table></figure></p>
 <p>浮点数的默认值为0。</p>
-<h2><span id="4-复数">4 复数</span></h2><p>原生支持复数。<br>支持32bit+32bit复数complex64，和64bit+64bit的复数complex128。</p>
-<h2><span id="5-字符">5 字符</span></h2><p>使用单引号定义字符型数据，字符指的是单个字符。有两种byte和rune：<br>byte：单字节字符，是uint8的别名。用于存储ASCII字符集字符<br>rune：多字节字符，是int32的别名。用于存储unicode字符集字符。<br>在类型推导时，推导的字符型为rune。byte需要在定义变量时强制声明。<br>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&apos;c&apos;</span><br><span class="line">&apos;康&apos;</span><br></pre></td></tr></table></figure></p>
+<h2><span id="4-复数complex32complex64">4 复数，complex32,complex64</span></h2><p>原生支持复数。<br>支持32bit+32bit复数complex64，和64bit+64bit的复数complex128。</p>
+<h2><span id="5-字符byterune">5 字符，byte，rune</span></h2><p>使用单引号定义字符型数据，字符指的是单个字符。有两种byte和rune：<br>byte：单字节字符，是uint8的别名。用于存储ASCII字符集字符<br>rune：多字节字符，是int32的别名。用于存储unicode字符集字符。<br>在类型推导时，推导的字符型为rune。byte需要在定义变量时强制声明。<br>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&apos;c&apos;</span><br><span class="line">&apos;康&apos;</span><br></pre></td></tr></table></figure></p>
 <p>字符的默认值是0。字符的本质就是整数型，根据字符集得到对应的字符。</p>
-<h2><span id="6-字符串">6 字符串</span></h2><p>原生支持字符串。使用双引号(“”)或反引号(``)定义，内部是unicode编码。<br>双引号：””, 用于单行字符串。<br>反引号：``，用于定义多行字符串，内部会原样解析。<br>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 单行</span><br><span class="line">&quot;心有猛虎，细嗅蔷薇&quot;</span><br><span class="line">// 多行</span><br><span class="line">`</span><br><span class="line">大风歌</span><br><span class="line">大风起兮云飞扬。</span><br><span class="line">威加海内兮归故乡。</span><br><span class="line">安得猛士兮守四方！</span><br><span class="line">`</span><br></pre></td></tr></table></figure></p>
+<h2><span id="6-字符串string">6 字符串，string</span></h2><p>原生支持字符串。使用双引号(“”)或反引号(``)定义，内部是unicode编码。<br>双引号：””, 用于单行字符串。<br>反引号：``，用于定义多行字符串，内部会原样解析。<br>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 单行</span><br><span class="line">&quot;心有猛虎，细嗅蔷薇&quot;</span><br><span class="line">// 多行</span><br><span class="line">`</span><br><span class="line">大风歌</span><br><span class="line">大风起兮云飞扬。</span><br><span class="line">威加海内兮归故乡。</span><br><span class="line">安得猛士兮守四方！</span><br><span class="line">`</span><br></pre></td></tr></table></figure></p>
 <p>字符串支持转义字符，列表如下：<br>转移符 含  义</p>
 <ul>
 <li>\r  回车符（返回行首）</li>
@@ -150,8 +154,8 @@
 <li>\  反斜杠</li>
 <li>\uXXXX  Unicode字符码值转义</li>
 </ul>
-<h2><span id="7-布尔型">7 布尔型</span></h2><p>布尔型的值只可以是常量 true 或者 false。<br>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var (</span><br><span class="line">  isFinished = false</span><br><span class="line">  )</span><br></pre></td></tr></table></figure></p>
-<h2><span id="8-指针">8 指针</span></h2><p>指针类型用于存储变量地址。使用运算符&amp;,<em>完成操作。<br>使用运算符p:=&amp;v可以获取v变量的地址。p中的数据格式类似<code>0xc0000b9528</code>，是一个内存地址的16进制表示。<br>使用运算符</em>p可以获取指针p指向变量v的值。<br>如图所示：</p>
+<h2><span id="7-布尔型bool">7 布尔型，bool</span></h2><p>布尔型的值只可以是常量 true 或者 false。<br>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var (</span><br><span class="line">  isFinished = false</span><br><span class="line">  )</span><br></pre></td></tr></table></figure></p>
+<h2><span id="8-指针pointer">8 指针，pointer</span></h2><p>指针类型用于存储变量地址。使用运算符&amp;,<em>完成操作。<br>使用运算符p:=&amp;v可以获取v变量的地址。p中的数据格式类似<code>0xc0000b9528</code>，是一个内存地址的16进制表示。<br>使用运算符</em>p可以获取指针p指向变量v的值。<br>如图所示：</p>
 <p><img src="http://www.hellokang.net/images/posts/go-pointer.png" alt="指针"></p>
 <p>在Go语言中，指针主要用于：</p>
 <ul>
@@ -159,7 +163,7 @@
 <li>切片，由指向起始元素的原始指针、元素数量和容量组成。<br>示例：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">p := 42</span><br><span class="line">pv := &amp;p</span><br><span class="line">*pv ++</span><br><span class="line">// p == 43</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h2><span id="9-数组">9 数组</span></h2><p>数组是一段固定长度的连续内存区域。是具有相同类型数据元素序列。元素类型支持任意内置类型。<br>数组从声明时就确定长度，可以修改数组元素，但是数组不可修改长度。<br>使用 <code>[长度]类型</code> 进行数组的声明。<br>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 默认值初始化</span><br><span class="line">var nums [4]int // [0 0 0 0]</span><br><span class="line">// 指定初始值</span><br><span class="line">var position = [4]string&#123;&quot;east&quot;, &quot;south&quot;, &quot;west&quot;, &quot;north&quot;&#125;</span><br><span class="line">// 自动确定长度</span><br><span class="line">var position = [...]string&#123;&quot;east&quot;, &quot;south&quot;, &quot;west&quot;, &quot;north&quot;&#125;</span><br></pre></td></tr></table></figure></p>
+<h2><span id="9-数组array">9 数组，array</span></h2><p>数组是一段固定长度的连续内存区域。是具有相同类型数据元素序列。元素类型支持任意内置类型。<br>数组从声明时就确定长度，可以修改数组元素，但是数组不可修改长度。<br>使用 <code>[长度]类型</code> 进行数组的声明。<br>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 默认值初始化</span><br><span class="line">var nums [4]int // [0 0 0 0]</span><br><span class="line">// 指定初始值</span><br><span class="line">var position = [4]string&#123;&quot;east&quot;, &quot;south&quot;, &quot;west&quot;, &quot;north&quot;&#125;</span><br><span class="line">// 自动确定长度</span><br><span class="line">var position = [...]string&#123;&quot;east&quot;, &quot;south&quot;, &quot;west&quot;, &quot;north&quot;&#125;</span><br></pre></td></tr></table></figure></p>
 <p>会使用类型默认值初始化元素。<br>数组不是引用类型，变量间为值传递。</p>
 <p>可以使用range配合循环结构完成遍历，示例如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">for k, v := range position &#123;</span><br><span class="line">    fmt.Println(k, v)</span><br><span class="line">&#125;</span><br><span class="line">// 结果</span><br><span class="line">0 east</span><br><span class="line">1 south</span><br><span class="line">2 west</span><br><span class="line">3 north</span><br></pre></td></tr></table></figure></p>
 <h2><span id="10-nil">10 nil</span></h2><p>nil，可以理解为未初始化引用。是以下类型的默认初始值：</p>
@@ -171,7 +175,7 @@
 <li>functions -&gt; nil</li>
 <li>interfaces -&gt; nil</li>
 </ul>
-<h2><span id="11-切片">11 切片</span></h2><p>切片是一个拥有相同类型元素的可变长度的序列。与数组的固定长度不同，切片也被称之为动态数组。<br>Go提供了4中方案定义切片：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">make ( []Type ,length, capacity )</span><br><span class="line">make ( []Type, length)</span><br><span class="line">[]Type&#123;&#125;</span><br><span class="line">[]Type&#123;value1 , value2 , ... , valueN &#125;</span><br></pre></td></tr></table></figure></p>
+<h2><span id="11-切片slice">11 切片，slice</span></h2><p>切片是一个拥有相同类型元素的可变长度的序列。与数组的固定长度不同，切片也被称之为动态数组。<br>Go提供了4中方案定义切片：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">make ( []Type ,length, capacity )</span><br><span class="line">make ( []Type, length)</span><br><span class="line">[]Type&#123;&#125;</span><br><span class="line">[]Type&#123;value1 , value2 , ... , valueN &#125;</span><br></pre></td></tr></table></figure></p>
 <p>或者从数组或切片生成新切片：<br>slice [开始索引:结束索引]</p>
 <ul>
 <li>slice 表示目标切片对象。</li>
@@ -192,12 +196,21 @@
 <li>容量cap，当前切片最大容量，也就是底层数组的容量。可以动态分配。</li>
 </ul>
 <p>切片为引用类型。<br>切片的默认初始值为nil。<br>切片支持: len()尺寸, cap()容量, append()追加元素等操作。详见切片的使用。</p>
+<h2><span id="12-映射map">12 映射，map</span></h2><p>Go语言中的键值对(key-&gt;value)集合，称之为映射map。<br>创建语法：<br>var m = map[key_type]value_type{key1: value1, key2: value2}<br>var m = make(map[key_type]value_type)<br>示例,字符串型下标，字符串型值：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var m = make(map[string]string) //make()会分配内存空间，初始化。</span><br><span class="line">m[&quot;east&quot;] = &quot;东&quot;</span><br><span class="line">m[&quot;west&quot;] = &quot;西&quot;</span><br><span class="line">fmt.Println(m[&quot;east&quot;]) // 东</span><br><span class="line">fmt.Println(m[&quot;west&quot;]) // 西</span><br><span class="line"></span><br><span class="line">// map演示</span><br><span class="line">var m = map[string]string&#123;&quot;east&quot;: &quot;东&quot;, &quot;west&quot;: &quot;西&quot;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>支持遍历操作，使用range：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for k, v := range mapVar &#123;</span><br><span class="line">    fmt.Println(k, v)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>映射是引用类型。<br>详见切片操作。</p>
+<h2><span id="13-结构体struct">13 结构体，struct</span></h2><p>Go语言使用结构体来描述现实业务逻辑中实体。是自定义类型。结构体是由一系列数据构成的数据集合，一系列数据类型可以不同。<br>定义结构体，使用<code>struct</code>关键字：<br>type 结构体名 struct {<br>    成员1 类型<br>    成员2 类型<br>    …<br>}<br>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">// 定义Product结构</span><br><span class="line">type Product struct &#123;</span><br><span class="line">  // 两个成员</span><br><span class="line">  name  string</span><br><span class="line">  price float64</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 构造函数</span><br><span class="line">func newProduct(name string, price float64) *Product &#123;</span><br><span class="line">  return &amp;Product&#123;name, price&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 成员方法，接收器方式</span><br><span class="line">func (p *Product) getName() string &#123;</span><br><span class="line">  return &quot;《&quot; + p.name + &quot;》&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 方法2</span><br><span class="line">func (p *Product) setPrice(price float64) *Product &#123;</span><br><span class="line">  p.price = price</span><br><span class="line">  return p</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">  // 构造Product型数据p1</span><br><span class="line">  var p1 = newProduct(&quot;BlockChain&quot;, 42.5)</span><br><span class="line">  // 访问成员</span><br><span class="line">  fmt.Println(p1.name)</span><br><span class="line">  // 通过接收器访问方法</span><br><span class="line">  fmt.Println(p1.getName())</span><br><span class="line">  var p2 = newProduct(&quot;GoLang&quot;, 30.5)</span><br><span class="line">  p2.setPrice(44.5)</span><br><span class="line">  fmt.Println(p2.price)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>详见结构体操作。</p>
+<h2><span id="14-接口interface">14 接口，interface</span></h2><p>接口是一种协议，用来规范方法的调用和定义的协议，目的是保证设计的一致性，便于模块化开发以及通讯。Go语言中，也视为一种类型。<br>定义语法：<br>type 接口名 interface {<br>    方法1( 参数列表 ) 返回值类型列表<br>    方法2( 参数列表 ) 返回值类型列表<br>    …<br>}<br>可以理解成没有方法体的方法。<br>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">// 定义Product结构</span><br><span class="line">type Product struct &#123;</span><br><span class="line">  // 两个成员</span><br><span class="line">  name  string</span><br><span class="line">  price float64</span><br><span class="line">  // say   func()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 构造函数</span><br><span class="line">func newProduct(name string, price float64) *Product &#123;</span><br><span class="line">  return &amp;Product&#123;name, price&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 成员方法，接收器方式</span><br><span class="line">func (p *Product) getName() string &#123;</span><br><span class="line">  return &quot;《&quot; + p.name + &quot;》&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 方法2</span><br><span class="line">func (p *Product) setPrice(price float64) *Product &#123;</span><br><span class="line">  p.price = price</span><br><span class="line">  return p</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 定义接口</span><br><span class="line">type ProductInterface interface &#123;</span><br><span class="line">  getName() string</span><br><span class="line">  setPrice(price float64) *Product</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">  // 构造Product型数据p1</span><br><span class="line">  var p1 = newProduct(&quot;BlockChain&quot;, 42.5)</span><br><span class="line">  // pi为接口，为其赋值p1，就意味着使用接口规范p1，若p1不满足接口定义则出错</span><br><span class="line">  var pi ProductInterface = p1</span><br><span class="line">  // 利用接口调用方法</span><br><span class="line">  fmt.Println(pi.getName())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>详见接口操作</p>
+<h2><span id="15-函数func">15 函数，func()</span></h2><p>Go语言中，函数可以作为数据存储变量中，此时变量为函数类型func()。可以通过该变量访问到这个函数。可以用在结构体成员定义上。<br>语法示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">func sayHello(name string) &#123;</span><br><span class="line">  fmt.Println(&quot;Hello, &quot;, name)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">  // 函数本身就是函数类型</span><br><span class="line">  fmt.Printf(&quot;%T(%v)\n&quot;, sayHello, sayHello) // func(string)(0x48fe20)</span><br><span class="line">  // 赋值给变量</span><br><span class="line">  var f = sayHello</span><br><span class="line">  fmt.Printf(&quot;%T(%v)\n&quot;, f, f) // func(string)(0x48fe20)</span><br><span class="line">  // 匿名函数也是函数类型</span><br><span class="line">  var af = func() &#123;</span><br><span class="line">  &#125;</span><br><span class="line">  fmt.Printf(&quot;%T(%v)\n&quot;, af, af) // func()(0x490080)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>参见函数使用</p>
 
       
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjng7ij16000y5wuo188ozovf" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjnhnjbqw0015d0uodg76e5j4" class="article-share-link">分享到</a> -->
       
 
       
@@ -286,7 +299,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-variable/" data-id="cjng7ij1a00135wuo93ybsu6w" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-variable/" data-id="cjnhnjbqt0010d0uo0fvjxe98" class="article-share-link">分享到</a> -->
       
 
       
@@ -370,7 +383,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-constant/" data-id="cjng7ij0400015wuox7fbr5ss" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-constant/" data-id="cjnhnjbq30007d0uodsiv2rnc" class="article-share-link">分享到</a> -->
       
 
       
@@ -412,7 +425,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/uncategorized/go-editor-sublime/" data-id="cjng7ij0p000g5wuooz1alqsp" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/uncategorized/go-editor-sublime/" data-id="cjnhnjbq6000ad0uorbv1gmcw" class="article-share-link">分享到</a> -->
       
 
       
@@ -485,7 +498,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/git/git-merge-rebase/" data-id="cjng7iizx00005wuozuexfgu4" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/git/git-merge-rebase/" data-id="cjnhnjbpt0001d0uomqya8shy" class="article-share-link">分享到</a> -->
       
 
       
@@ -587,7 +600,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/hexo/hexo-github/" data-id="cjng7ij1800105wuo07ifdmvw" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/hexo/hexo-github/" data-id="cjnhnjbqs000xd0uoznbwislo" class="article-share-link">分享到</a> -->
       
 
       
@@ -633,7 +646,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-command/" data-id="cjng7ij0d00065wuotg7n8ev2" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-command/" data-id="cjnhnjbq00005d0uoa2ydbsnu" class="article-share-link">分享到</a> -->
       
 
       
@@ -677,7 +690,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-stuct/" data-id="cjng7ij14000v5wuory3xt86v" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-stuct/" data-id="cjnhnjbqp000ud0uoqc15k1u7" class="article-share-link">分享到</a> -->
       
 
       
@@ -721,7 +734,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-function/" data-id="cjng7ij0j000b5wuox7l9lrxq" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-function/" data-id="cjnhnjbqb000fd0uopfonar6q" class="article-share-link">分享到</a> -->
       
 
       
@@ -765,7 +778,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-point/" data-id="cjng7ij0v000m5wuo22aai7qm" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-point/" data-id="cjnhnjbql000qd0uoc93rwxae" class="article-share-link">分享到</a> -->
       
 
       
