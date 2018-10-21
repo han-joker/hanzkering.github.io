@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.hellokang.net/"/>
-  <updated>2018-10-20T16:14:47.203Z</updated>
+  <updated>2018-10-21T12:55:33.441Z</updated>
   <id>http://blog.hellokang.net/</id>
   
   <author>
@@ -17,11 +17,79 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Go语言中的运算符</title>
+    <link href="http://blog.hellokang.net/go/go-operator/"/>
+    <id>http://blog.hellokang.net/go/go-operator/</id>
+    <published>2018-10-21T12:05:46.000Z</published>
+    <updated>2018-10-21T12:55:33.441Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;!-- toc --&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#1-概述&quot;&gt;1 概述&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#2-算术运算&quot;&gt;2 算术运算&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#3-字符串连接运算&quot;&gt;3 字符串连接运算
+        
+      
+    
+    </summary>
+    
+      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
+    
+    
+      <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
+    
+      <category term="go-guide" scheme="http://blog.hellokang.net/tags/go-guide/"/>
+    
+      <category term="运算符" scheme="http://blog.hellokang.net/tags/%E8%BF%90%E7%AE%97%E7%AC%A6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Go语言中的流程控制</title>
+    <link href="http://blog.hellokang.net/go/go-flow-control/"/>
+    <id>http://blog.hellokang.net/go/go-flow-control/</id>
+    <published>2018-10-21T12:05:24.000Z</published>
+    <updated>2018-10-21T12:55:21.366Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
+    
+    
+      <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
+    
+      <category term="go-guide" scheme="http://blog.hellokang.net/tags/go-guide/"/>
+    
+      <category term="流程控制" scheme="http://blog.hellokang.net/tags/%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6/"/>
+    
+      <category term="if" scheme="http://blog.hellokang.net/tags/if/"/>
+    
+      <category term="for" scheme="http://blog.hellokang.net/tags/for/"/>
+    
+      <category term="switch" scheme="http://blog.hellokang.net/tags/switch/"/>
+    
+      <category term="goto" scheme="http://blog.hellokang.net/tags/goto/"/>
+    
+      <category term="break" scheme="http://blog.hellokang.net/tags/break/"/>
+    
+      <category term="continue" scheme="http://blog.hellokang.net/tags/continue/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Go语言的数据类型</title>
     <link href="http://blog.hellokang.net/go/go-type/"/>
     <id>http://blog.hellokang.net/go/go-type/</id>
     <published>2018-10-19T09:59:26.000Z</published>
-    <updated>2018-10-20T16:14:47.203Z</updated>
+    <updated>2018-10-21T12:07:00.627Z</updated>
     
     <summary type="html">
     
@@ -46,6 +114,8 @@
     
       <category term="go-guide" scheme="http://blog.hellokang.net/tags/go-guide/"/>
     
+      <category term="数据类型" scheme="http://blog.hellokang.net/tags/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/"/>
+    
   </entry>
   
   <entry>
@@ -53,7 +123,7 @@
     <link href="http://blog.hellokang.net/go/go-variable/"/>
     <id>http://blog.hellokang.net/go/go-variable/</id>
     <published>2018-10-18T10:51:32.000Z</published>
-    <updated>2018-10-18T12:17:42.997Z</updated>
+    <updated>2018-10-21T12:06:38.282Z</updated>
     
     <summary type="html">
     
@@ -78,7 +148,9 @@
     
       <category term="go-guide" scheme="http://blog.hellokang.net/tags/go-guide/"/>
     
-      <category term="iota" scheme="http://blog.hellokang.net/tags/iota/"/>
+      <category term="变量" scheme="http://blog.hellokang.net/tags/%E5%8F%98%E9%87%8F/"/>
+    
+      <category term="var" scheme="http://blog.hellokang.net/tags/var/"/>
     
   </entry>
   
@@ -87,7 +159,7 @@
     <link href="http://blog.hellokang.net/go/go-constant/"/>
     <id>http://blog.hellokang.net/go/go-constant/</id>
     <published>2018-10-17T14:50:38.000Z</published>
-    <updated>2018-10-18T12:49:41.743Z</updated>
+    <updated>2018-10-21T12:07:21.637Z</updated>
     
     <summary type="html">
     
@@ -112,6 +184,8 @@
       <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
     
       <category term="go-guide" scheme="http://blog.hellokang.net/tags/go-guide/"/>
+    
+      <category term="常量" scheme="http://blog.hellokang.net/tags/%E5%B8%B8%E9%87%8F/"/>
     
       <category term="iota" scheme="http://blog.hellokang.net/tags/iota/"/>
     
