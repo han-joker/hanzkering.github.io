@@ -72,6 +72,57 @@
     <div class="outer">
       <section id="main">
   
+    <article id="post-go-error" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/go/go-error/" class="article-date">
+  <time datetime="2018-10-22T13:54:59.000Z" itemprop="datePublished">2018-10-22</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/go/">go</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/go/go-error/">go-错误处理</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2><span id="宕机panic">宕机panic</span></h2><p>Go语言可以在程序中强行宕机。宕机时会将堆栈信息和goroutine信息输出到控制台，便于处理错误。<br>示例语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">panic(&quot;宕机信息&quot;)</span><br></pre></td></tr></table></figure></p>
+<p>运行后，得到：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">panic: 宕机信息</span><br><span class="line"></span><br><span class="line">goroutine 1 [running]:</span><br><span class="line">main.main()</span><br><span class="line">        D:/projects/practice/go/syntax.go:45 +0x40</span><br><span class="line">exit status 2</span><br></pre></td></tr></table></figure></p>
+<p>宕机后，后续代码不再执行。但已经 defer 入栈的语句会在宕机前完成执行。</p>
+<h2><span id="宕机恢复-recover">宕机恢复 recover</span></h2><p>当发生宕机时，会被 recover 捕获。执行完对应的 defer 后，从宕机点退出当前函数后继续执行，因此程序不会崩溃。配合使用 defer 和 recover，可以从宕机中恢复并捕获错误。达到宕机后继续运行的目的。无论是由 Runtime 层抛出的 panic 崩溃，还是主动触发的 panic 崩溃。<br>可以理解成：panic 触发宕机类似于抛出异常 thrown，recover 宕机恢复机制就对应 try/catch。<br>原理：<br>语法上，利用 defer 的语句会在宕机前执行的机制，在代码执行前，先定义错误处理恢复方案，加入到defer栈中。再执行需要的代码。如果代码中出现宕机，会执行已经defer的代码，就是我们的宕机恢复处理代码。<br>演示如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line"></span><br><span class="line">  func() &#123;</span><br><span class="line">    // 先定义错误处理恢复方案，加入到defer栈中</span><br><span class="line">    defer func() &#123;</span><br><span class="line">      // 发生宕机时，获取 panic 传递的上下文</span><br><span class="line">      err := recover()</span><br><span class="line">      switch err.(type) &#123;</span><br><span class="line">      case runtime.Error:</span><br><span class="line">        // 运行时错误</span><br><span class="line">        fmt.Println(&quot;Runtime error:&quot;, err)</span><br><span class="line">      default:</span><br><span class="line">        // 非运行时错误</span><br><span class="line">        fmt.Println(&quot;User error:&quot;, err)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;()</span><br><span class="line">    panic(&quot;强行宕机&quot;)</span><br><span class="line">    // 或者</span><br><span class="line">    var pv *int</span><br><span class="line">    *pv = 42</span><br><span class="line">  &#125;()</span><br><span class="line"></span><br><span class="line">  fmt.Println(&quot;after panic&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>以上代码，无论执行了 <code>panic(&quot;强行宕机&quot;)</code> 还是 <code>*pv = 42</code> 都不会导致系统崩溃，而是会去执行defer的函数，输出错误信息后，继续执行。就是after panic会永远执行。<br>因为 recover 会恢复，结束 recover 所在函数后，代码继续！<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt; go run .\syntax.go</span><br><span class="line">User error: 强行宕机</span><br><span class="line">after panic</span><br><span class="line">或者</span><br><span class="line">&gt; go run .\syntax.go</span><br><span class="line">Runtime error: runtime error: invalid memory address or nil pointer dereference</span><br><span class="line">after panic</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <!-- <a data-url="http://blog.hellokang.net/go/go-error/" data-id="cjnkdgtkv000s00uo6gorsbmw" class="article-share-link">分享到</a> -->
+      
+
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/defer/">defer</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/error/">error</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go-guide/">go-guide</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/panic/">panic</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/recover/">recover</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+ 
+  
     <article id="post-go-operator" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/go/go-operator/" class="article-date">
@@ -120,7 +171,7 @@
 <li>/ 相除</li>
 <li>% 求余</li>
 <li>++ 自增</li>
-<li>– 自减</li>
+<li>-- 自减</li>
 </ul>
 <p>几个细节，需要留意一下。</p>
 <ul>
@@ -195,7 +246,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-operator/" data-id="cjnivv4o0000nucuojxidtjjp" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-operator/" data-id="cjnkdgtkt000p00uol80bkhz2" class="article-share-link">分享到</a> -->
       
 
       
@@ -236,12 +287,58 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <!-- toc -->
+<ul>
+<li><a href="#1-概述">1 概述</a></li>
+<li><a href="#2-条件分支-if">2 条件分支 if</a></li>
+<li><a href="#3-状态分支-switch">3 状态分支 switch</a><ul>
+<li><a href="#31-基础">3.1 基础</a></li>
+<li><a href="#32-fallthrough向下穿越">3.2 fallthrough，向下穿越</a></li>
+<li><a href="#33-条件型-switch">3.3 条件型 switch</a></li>
+</ul>
+</li>
+<li><a href="#4-循环for">4 循环for</a><ul>
+<li><a href="#41-基本">4.1 基本</a></li>
+<li><a href="#42-省略语句">4.2 省略语句</a></li>
+<li><a href="#43-break">4.3 break</a></li>
+<li><a href="#44-continue">4.4 continue</a></li>
+<li><a href="#45-嵌套循环">4.5 嵌套循环</a></li>
+<li><a href="#5-goto">5 goto</a></li>
+</ul>
+</li>
+<li><a href="#6-延迟执行defer">6 延迟执行defer</a></li>
+</ul>
+<!-- tocstop -->
+<h2><span id="1-概述">1 概述</span></h2><p>Go语言提供了条件分支 if，状态分支 switch，循环 for，跳转 goto，延迟执行 defer，这些流程控制语句。分别作说明如下：</p>
+<h2><span id="2-条件分支-if">2 条件分支 if</span></h2><p>依据条件是否满足确定执行哪个分支。<br>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">if 条件 1 &#123;</span><br><span class="line">  分支 1</span><br><span class="line">&#125; else if 条件 2 &#123;</span><br><span class="line">  分支 2</span><br><span class="line">&#125; else if 条件 ... &#123;</span><br><span class="line">  分支 ...</span><br><span class="line">&#125; else &#123;</span><br><span class="line">  分支 else</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>流程图：<br><img src="http://www.hellokang.net/images/posts/go/go-if.png" alt="if"></p>
+<p>Go是强类型，要求条件表达式严格返回布尔型数据！</p>
+<h2><span id="3-状态分支-switch">3 状态分支 switch</span></h2><h3><span id="31-基础">3.1 基础</span></h3><p>状态分支，依据特定的状态值进行分支判断。<br>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">switch 分支测试表达式 &#123;</span><br><span class="line">case 状态1:</span><br><span class="line">    分支1</span><br><span class="line">case 状态2:</span><br><span class="line">    分支2</span><br><span class="line">case 状态...:</span><br><span class="line">    分支...</span><br><span class="line">default:</span><br><span class="line">  分支 default</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>流程如下：<br><img src="http://www.hellokang.net/images/posts/go/go-switch.png" alt="for"></p>
+<h3><span id="32-fallthrough向下穿越">3.2 fallthrough，向下穿越</span></h3><p>在其他语法（非Go，C，PHP）中，switch 有一个特定的现象，就是向下穿越，指的是一旦一个分支 case 满足，则后续分支代码都会被执行。而Go语言中，默认分支执行完毕，switch 执行完毕。使用 fallthrough 语法，可以达到穿越下一个 case 分支的目的。<br>fallthrough 需要出现在分支语句块的最后一句！<br>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">switch 分支测试表达式 &#123;</span><br><span class="line">case 状态1:</span><br><span class="line">    分支1</span><br><span class="line">    fallthrough</span><br><span class="line">case 状态2:</span><br><span class="line">    分支2</span><br><span class="line">    fallthrough</span><br><span class="line">default:</span><br><span class="line">  分支 default</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>流程如下：<br><img src="http://www.hellokang.net/images/posts/go/go-switch-fallthrough.png" alt="switch-fallthrough"></p>
+<h3><span id="33-条件型-switch">3.3 条件型 switch</span></h3><p>示例代码，逻辑与 if-else-if 一致：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">score := 89</span><br><span class="line">switch &#123;</span><br><span class="line">case score &gt;= 90:</span><br><span class="line">  fmt.Println(&quot;优秀，不错&quot;)</span><br><span class="line">case score &gt;= 80:</span><br><span class="line">  fmt.Println(&quot;还行吧&quot;)</span><br><span class="line">default:</span><br><span class="line">  fmt.Println(&quot;呵呵&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>个人感觉失去了 switch 分支的意义哈！</p>
+<h2><span id="4-循环for">4 循环for</span></h2><h3><span id="41-基本">4.1 基本</span></h3><p>语法格式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">for 初始化语句; 条件语句; 条件变化语句 &#123;</span><br><span class="line">  循环体</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 输出1-10</span><br><span class="line">for i := 1; i &lt;= 10; i++ &#123;</span><br><span class="line"> fmt.Println(i)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>流程如下：<br><img src="http://www.hellokang.net/images/posts/go/go-for.png" alt="for"></p>
+<h3><span id="42-省略语句">4.2 省略语句</span></h3><p>Go中允许省略三个语句中的任意，就是可以形成如下的语法：<br>仅存在条件语句，类似其他语言的 while 结构！<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for 条件语句 &#123;</span><br><span class="line">  循环体</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>无限循环结构，死循环<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for &#123;</span><br><span class="line">  循环体</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>其他结构，三个语句可以任意省略，不再列举：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">for ; 条件语句; 条件变化语句 &#123;</span><br><span class="line">  循环体</span><br><span class="line">&#125;</span><br><span class="line">for 初始化语句; 条件语句; &#123;</span><br><span class="line">  循环体</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3><span id="43-break">4.3 break</span></h3><p>终止整个循环执行。<br>流程图如下：<br><img src="http://www.hellokang.net/images/posts/go/go-for-break.png" alt="for-break"></p>
+<h3><span id="44-continue">4.4 continue</span></h3><p>终止本次循环体的继续执行，进行循环条件变化。<br>流程如下：<br><img src="http://www.hellokang.net/images/posts/go/go-for-continue.png" alt="for-continue"></p>
+<h3><span id="45-嵌套循环">4.5 嵌套循环</span></h3><p>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for &#123;</span><br><span class="line">  for &#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在使用 break，continue 时，若需要终止外层循环 for，需要配合语句标签使用，演示如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">userLabel:</span><br><span class="line">for &#123;</span><br><span class="line">  for &#123;</span><br><span class="line">    break userLabel</span><br><span class="line">    或者</span><br><span class="line">    continue userLabel</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>额外注意，switch 在语言中，被视为执行一次的循环结构，因此 switch 中若要终止外层循环，需要使用标签语法，不能直接 break、continue，演示如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">userLabel:</span><br><span class="line">for &#123;</span><br><span class="line">  swtich variable &#123;</span><br><span class="line">    case &quot;exit&quot;</span><br><span class="line">      break userLabel</span><br><span class="line">      或者</span><br><span class="line">      continue userLabel</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3><span id="5-goto">5 goto</span></h3><p>配合标签完成无条件跳转。演示如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">if error &#123;</span><br><span class="line">  goto doError</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 其他业务逻辑代码略</span><br><span class="line"></span><br><span class="line">doError:</span><br><span class="line">fmt.Println(errorInfo)</span><br></pre></td></tr></table></figure></p>
+<h2><span id="6-延迟执行defer">6 延迟执行defer</span></h2><p>defer 语句会将其后语句进行延迟处理。在 defer 所属函数即将返回时，将延迟处理的语句按 defer 的逆序进行执行，也就是说，先被 defer 的语句最后被执行，最后被 defer 的语句，最先被执行。演示如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"> func main() &#123;</span><br><span class="line">    fmt.Println(&quot;before defer&quot;)</span><br><span class="line">    defer fmt.Println(&quot;defer A&quot;)</span><br><span class="line">    defer fmt.Println(&quot;defer B&quot;)</span><br><span class="line">    defer fmt.Println(&quot;defer C&quot;)</span><br><span class="line">    fmt.Println(&quot;after defer&quot;)</span><br><span class="line">&#125;</span><br><span class="line">以上代码的执行结果：</span><br><span class="line">before defer</span><br><span class="line">after defer</span><br><span class="line">defer C</span><br><span class="line">defer B</span><br><span class="line">defer A</span><br></pre></td></tr></table></figure></p>
+<p>defer 执行是放在一个临时的调用栈中，因此是先入栈后出栈的。<br>实操时，处理互斥所时，很常用！</p>
+<p>以上就是Go语言提供的流程控制相关内容<br>完！</p>
+
       
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-flow-control/" data-id="cjnivv4nu000gucuounqlmsd4" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-flow-control/" data-id="cjnkdgtkp000k00uohdffq6g7" class="article-share-link">分享到</a> -->
       
 
       
@@ -339,8 +436,8 @@
 <li>\uXXXX  Unicode字符码值转义</li>
 </ul>
 <h2><span id="7-布尔型bool">7 布尔型，bool</span></h2><p>布尔型的值只可以是常量 true 或者 false。<br>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var (</span><br><span class="line">  isFinished = false</span><br><span class="line">  )</span><br></pre></td></tr></table></figure></p>
-<h2><span id="8-指针pointer">8 指针，pointer</span></h2><p>指针类型用于存储变量地址。使用运算符&amp;,<em>完成操作。<br>使用运算符p:=&amp;v可以获取v变量的地址。p中的数据格式类似<code>0xc0000b9528</code>，是一个内存地址的16进制表示。<br>使用运算符</em>p可以获取指针p指向变量v的值。<br>如图所示：</p>
-<p><img src="http://www.hellokang.net/images/posts/go-pointer.png" alt="指针"></p>
+<h2><span id="8-指针pointer">8 指针，pointer</span></h2><p>指针类型用于存储变量地址。使用运算符 <code>&amp;</code> , <code>*</code>完成操作。<br>使用运算符 <code>p:=&amp;v</code> 可以获取v变量的地址。p中的数据格式类似<code>0xc0000b9528</code>，是一个内存地址的16进制表示。<br>使用运算符 <code>*p</code> 可以获取指针p指向变量v的值。<br>如图所示：</p>
+<p><img src="http://www.hellokang.net/images/posts/go/go-pointer.png" alt="指针"></p>
 <p>在Go语言中，指针主要用于：</p>
 <ul>
 <li>类型指针，对指针指向的数据进行修改。函数调用时传递参数使用指针，避免值传递拷贝额外数据。注意类型指针不能进行偏移和运算。</li>
@@ -372,7 +469,7 @@
 </li>
 </ul>
 <p>以从数组创建切片为例，理解切片，定义语法如上所示，下图为slice:</p>
-<p><img src="http://www.hellokang.net/images/posts/go-slice.png" alt="slice示意"></p>
+<p><img src="http://www.hellokang.net/images/posts/go/go-slice.png" alt="slice示意"></p>
 <p>切片的实现是由一个底层数组以及其上面的动态位置，尺寸来实现。由内部由指向起始元素的指针、元素数量length和容量capacity组成。其中：</p>
 <ul>
 <li>指针ptr，用于指向切片在底层数组的起始位置。</li>
@@ -394,7 +491,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjnivv4o90010ucuovqvv0o2y" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjnkdgtla001200uozpsq064m" class="article-share-link">分享到</a> -->
       
 
       
@@ -450,7 +547,7 @@
 </ul>
 <!-- tocstop -->
 <h2><span id="1-概述">1 概述</span></h2><p>变量（Variable）是程序运行过程中，内容可以变化（修改）的量，变量的功能是存储用户的数据，是计算机语言中能储存计算结果或能表示值抽象概念。<br>变量，是通过变量的标识符定位值的过程。变量的内存模拟演示：</p>
-<p><img src="http://www.hellokang.net/images/posts/go-variable.png" alt="变量的内存模拟演示"></p>
+<p><img src="http://www.hellokang.net/images/posts/go/go-variable.png" alt="变量的内存模拟演示"></p>
 <h2><span id="2-定义声明和初始化">2 定义：声明和初始化</span></h2><p>定义变使用var关键字，需要指定其类型，可以同时初始化，如果没有指定初始化值，则使用类型的默认值，语法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 声明变量，未初始化（默认值初始化）</span><br><span class="line">var name string</span><br><span class="line">// 声明变量，特定值初始化</span><br><span class="line">var user string = &quot;Hank&quot;</span><br></pre></td></tr></table></figure></p>
 <p>Go语言中的变量必须声明后才可以使用，不能直接使用未定义的变量。</p>
 <h2><span id="3-类型默认值零值">3 类型默认值（零值）</span></h2><p>Go语言的类型默认值如下所示：</p>
@@ -483,7 +580,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-variable/" data-id="cjnivv4oc0012ucuou9dltj4r" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-variable/" data-id="cjnkdgtlc001500uojauydznd" class="article-share-link">分享到</a> -->
       
 
       
@@ -567,7 +664,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-constant/" data-id="cjnivv4ns000eucuow6e26g8v" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-constant/" data-id="cjnkdgtkd000a00uot3xs2mjl" class="article-share-link">分享到</a> -->
       
 
       
@@ -609,7 +706,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/uncategorized/go-editor-sublime/" data-id="cjnivv4nl0006ucuo6dlyoxbj" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/uncategorized/go-editor-sublime/" data-id="cjnkdgtk7000500uohl198z7t" class="article-share-link">分享到</a> -->
       
 
       
@@ -657,14 +754,14 @@
 <p>git-merge - Join two or more development histories together<br>译：将两个或多个开发历史合并一起</p>
 </blockquote>
 <p>merge，合并模式。指的是合并两个分支，最终的合并代码形成一个新的版本，两个分支的版本日志按照时间顺序合并到一起即可。 演示如下，<code>git merge dev</code>：</p>
-<p><img src="http://www.hellokang.net/images/posts/git-merge.png" alt="git-merge"></p>
+<p><img src="http://www.hellokang.net/images/posts/git/git-merge.png" alt="git-merge"></p>
 <p>合并过程是，git会自动根据两个分支的共同祖先即v2，与两个分支的最新提交即master的v6和dev的v5进行一个三方合并，然后将合并中更新的内容生成一个新的版本即v6，内容合并完成后，会成立版本日志并记录。</p>
 <p>merge的好处是版本不会出现错乱的情况（一会可以对比rebase，你会发现有错乱的情况），但多了一个额外的版本。（其实无所谓啦）<br>再看rebase模式。</p>
 <h2><span id="4-git-rebase变基">4 git rebase变基</span></h2><blockquote>
 <p>git-pull - Reapply commits on top of another base tip<br>译：在另一个的基本上重新应用提交</p>
 </blockquote>
 <p>rebase，重设基础。指的是整合时，以另一个为基础（dev），将当前的（master）应用上去。演示如下，<code>git rebase dev</code>：</p>
-<p><img src="http://www.hellokang.net/images/posts/git-rebase.png" alt="git-rebaes"></p>
+<p><img src="http://www.hellokang.net/images/posts/git/git-rebase.png" alt="git-rebaes"></p>
 <p>合并过程为，git会从两个分支的共同祖先即v2开始提取当前分支即master上的提交版本即v4和v5，将提取的修改v4和v6依次应用到目标分支dev的最新提交的后面。将master指向最新的合并版本。</p>
 <p>从合并结果上看，rebase导致版本变为了：<em>v1-&gt;v2-&gt;v3-&gt;v5-&gt;v4-&gt;v6</em>，与真实的版本提交时间不一致了，就是发生了错乱。但rebase不会生成新的版本。</p>
 <h2><span id="5-merge-vs-rebase">5 merge VS rebase</span></h2><p>该如何选择他们？</p>
@@ -682,7 +779,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/git/git-merge-rebase/" data-id="cjnivv4nh0003ucuoft9jdtcb" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/git/git-merge-rebase/" data-id="cjnkdgtjs000000uo5pkjsf6l" class="article-share-link">分享到</a> -->
       
 
       
@@ -743,14 +840,14 @@
 <p>此时一个基本的博客已经建立完毕了。</p>
 <h3><span id="26-运行hexo博客">2.6 运行Hexo博客</span></h3><p>进入博客目录，执行 <code>hexo server</code> 即可运行hexo服务器。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">D:\projects\practice\blog&gt; hexo server</span><br><span class="line">INFO  Start processing</span><br><span class="line">INFO  Hexo is running at http://localhost:4000 . Press Ctrl+C to stop.</span><br></pre></td></tr></table></figure></p>
 <p>此时，浏览器访问<code>http://localhost:4000</code>，即可看到你的博客。效果如下：</p>
-<p><img src="http://www.hellokang.net/images/posts/hexo-init.png" alt="hexo默认博客首页" title="&#39;hexo默认博客首页&#39;"></p>
+<p><img src="http://www.hellokang.net/images/posts/git/hexo-init.png" alt="hexo默认博客首页" title="&#39;hexo默认博客首页&#39;"></p>
 <p>至此，hexo搭建的博客已经完成。该博客使用方法，如何发文章，分类，标签等操作请参考<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">Hexo文档</a>，本文不再赘述。</p>
 <h2><span id="3发布到github">3.发布到GitHub</span></h2><p>GitHub上允许我们搭建自己的静态站点，在不购买自己的服务器情况下，可以有自己的博客。<br>需要用到Hexo提供的发布相关功能，同时需要在github上做一定的配置。</p>
 <h3><span id="31-注册github">3.1 注册GitHub</span></h3><blockquote>
 <p>已有账号的跳过此步骤</p>
 </blockquote>
 <p>注册操作，跟着GitHub引导完成即可，<a href="https://github.com/join?source=header-home" target="_blank" rel="noopener">GitHub注册</a></p>
-<h3><span id="32-创建版本库">3.2 创建版本库</span></h3><p>登录后，<a href="https://github.com/new" target="_blank" rel="noopener">创建新版本库https://github.com/new</a><br><img src="http://www.hellokang.net/images/posts/github-new-repository.png" alt="新建版本库"></p>
+<h3><span id="32-创建版本库">3.2 创建版本库</span></h3><p>登录后，<a href="https://github.com/new" target="_blank" rel="noopener">创建新版本库https://github.com/new</a><br><img src="http://www.hellokang.net/images/posts/git/github-new-repository.png" alt="新建版本库"></p>
 <p><em>注意：版本库名字强烈建议是 <code>&lt;你的用户&gt;.github.io</code> 这种格式</em><br>创建完毕后，就可以使用 <code>&lt;你的用户&gt;.github.io</code> 这种方式访问你的github博客地址，但现在访问应该不会成功，因为是一个新创建的版本库，是空的，一无所有….。接下来就把我们本地的博客内容部署到这个github版本库上。</p>
 <h3><span id="33-github的ssh-keys设置">3.3 GitHub的SSH keys设置</span></h3><p>在部署之前，需要保证GitHub可以验证我们的机器，需要将本地的RAS-publicKey告知给GitHub，步骤如下：</p>
 <h4><span id="331-本地ras密钥对生成">3.3.1 本地RAS密钥对生成</span></h4><p>进入到 用户目录/.ssh目录下，查看是否已经存在了， 私钥<code>id_rsa</code> 公钥<code>id_rsa.pub</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Kang&gt; cd .ssh</span><br><span class="line">C:\Users\Kang\.ssh&gt; dir</span><br><span class="line">-a----       2018/10/10     19:46           1679 id_rsa</span><br><span class="line">-a----       2018/10/10     19:46            403 id_rsa.pub</span><br></pre></td></tr></table></figure></p>
@@ -759,7 +856,7 @@
 <p>-t rsa 表示使用的加密类型。生成过程可以输入一些信息，简单起见，全部回车即可。</p>
 </blockquote>
 <p>生成完毕后，目录中应该存在相应文件了。</p>
-<h4><span id="332-告知github公钥">3.3.2 告知GitHub公钥</span></h4><p>在GitHub的用户设置中，找到ssh key的设置：<a href="https://github.com/settings/keys" target="_blank" rel="noopener">SSH Keys</a><br>点击 New SSH Key 新建<br><img src="http://www.hellokang.net/images/posts/github-sshkey-new.png" alt=""><br>将生成的公钥id_rsa.pub内容拷贝到输入框中，起名标志即可。<br><img src="http://www.hellokang.net/images/posts/github-sshkey-set.png" alt=""><br>保存即可。此时GitHub已经和我们本地电脑建立的信任关系。我们就可以将内容发布到GitHub上了。</p>
+<h4><span id="332-告知github公钥">3.3.2 告知GitHub公钥</span></h4><p>在GitHub的用户设置中，找到ssh key的设置：<a href="https://github.com/settings/keys" target="_blank" rel="noopener">SSH Keys</a><br>点击 New SSH Key 新建<br><img src="http://www.hellokang.net/images/posts/git/github-sshkey-new.png" alt=""><br>将生成的公钥id_rsa.pub内容拷贝到输入框中，起名标志即可。<br><img src="http://www.hellokang.net/images/posts/git/github-sshkey-set.png" alt=""><br>保存即可。此时GitHub已经和我们本地电脑建立的信任关系。我们就可以将内容发布到GitHub上了。</p>
 <h3><span id="34-部署到github">3.4 部署到GitHub</span></h3><p>回到我们本地的博客项目中，hexo对于基于git的部署提供了一个工具<a href="https://github.com/hexojs/hexo-deployer-git" target="_blank" rel="noopener">hexo-deployer-git</a>，我们直接安装使即可。</p>
 <p>安装 hexo-deployer-git<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure></p>
 <h3><span id="35-修改博客的部署配置">3.5 修改博客的部署配置</span></h3><p>需要指定部署类型，版本库地址，分支，消息等信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/_config.yml</span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: https://github.com/yourusername/yourusername.github.io</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure></p>
@@ -784,7 +881,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/hexo/hexo-github/" data-id="cjnivv4od0015ucuosj9ha6oj" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/hexo/hexo-github/" data-id="cjnkdgtlh001c00uoxtictsu4" class="article-share-link">分享到</a> -->
       
 
       
@@ -830,51 +927,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-command/" data-id="cjnivv4nn0008ucuo8ukdnv2t" class="article-share-link">分享到</a> -->
-      
-
-      
-
-      
-    </footer>
-  </div>
-  
-</article>
-
- 
-  
-    <article id="post-go-stuct" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/go/go-stuct/" class="article-date">
-  <time datetime="2018-10-06T04:03:54.000Z" itemprop="datePublished">2018-10-06</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/go/">go</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/go/go-stuct/">Go语言使用strut处理面向对象</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-        <!-- <a data-url="http://blog.hellokang.net/go/go-stuct/" data-id="cjnivv4o5000sucuoy3kequ6i" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-command/" data-id="cjnkdgtk4000400uokdn86lya" class="article-share-link">分享到</a> -->
       
 
       
@@ -926,7 +979,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">16</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -935,7 +988,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/">blog</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/break/">break</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/continue/">continue</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/for/">for</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-guide/">go-guide</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goto/">goto</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/if/">if</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iota/">iota</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/">ssh</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/switch/">switch</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/var/">var</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/变量/">变量</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/常量/">常量</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据类型/">数据类型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/流程控制/">流程控制</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/运算符/">运算符</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/">blog</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/break/">break</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/continue/">continue</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/defer/">defer</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/for/">for</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-guide/">go-guide</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goto/">goto</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/if/">if</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iota/">iota</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/panic/">panic</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/recover/">recover</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/">ssh</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/switch/">switch</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/var/">var</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/变量/">变量</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/常量/">常量</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据类型/">数据类型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/流程控制/">流程控制</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/运算符/">运算符</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -944,7 +997,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/break/" style="font-size: 10px;">break</a> <a href="/tags/continue/" style="font-size: 10px;">continue</a> <a href="/tags/for/" style="font-size: 10px;">for</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/go/" style="font-size: 20px;">go</a> <a href="/tags/go-guide/" style="font-size: 20px;">go-guide</a> <a href="/tags/goto/" style="font-size: 10px;">goto</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/if/" style="font-size: 10px;">if</a> <a href="/tags/iota/" style="font-size: 10px;">iota</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/switch/" style="font-size: 10px;">switch</a> <a href="/tags/var/" style="font-size: 10px;">var</a> <a href="/tags/变量/" style="font-size: 10px;">变量</a> <a href="/tags/常量/" style="font-size: 10px;">常量</a> <a href="/tags/数据类型/" style="font-size: 10px;">数据类型</a> <a href="/tags/流程控制/" style="font-size: 10px;">流程控制</a> <a href="/tags/运算符/" style="font-size: 10px;">运算符</a>
+      <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/break/" style="font-size: 10px;">break</a> <a href="/tags/continue/" style="font-size: 10px;">continue</a> <a href="/tags/defer/" style="font-size: 10px;">defer</a> <a href="/tags/error/" style="font-size: 10px;">error</a> <a href="/tags/for/" style="font-size: 10px;">for</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/go/" style="font-size: 20px;">go</a> <a href="/tags/go-guide/" style="font-size: 20px;">go-guide</a> <a href="/tags/goto/" style="font-size: 10px;">goto</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/if/" style="font-size: 10px;">if</a> <a href="/tags/iota/" style="font-size: 10px;">iota</a> <a href="/tags/panic/" style="font-size: 10px;">panic</a> <a href="/tags/recover/" style="font-size: 10px;">recover</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/switch/" style="font-size: 10px;">switch</a> <a href="/tags/var/" style="font-size: 10px;">var</a> <a href="/tags/变量/" style="font-size: 10px;">变量</a> <a href="/tags/常量/" style="font-size: 10px;">常量</a> <a href="/tags/数据类型/" style="font-size: 10px;">数据类型</a> <a href="/tags/流程控制/" style="font-size: 10px;">流程控制</a> <a href="/tags/运算符/" style="font-size: 10px;">运算符</a>
     </div>
   </div>
 
@@ -953,7 +1006,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -963,6 +1016,10 @@
     <h3 class="widget-title">近期文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/go/go-error/">go-错误处理</a>
+          </li>
         
           <li>
             <a href="/go/go-operator/">Go语言中的运算符</a>
@@ -978,10 +1035,6 @@
         
           <li>
             <a href="/go/go-variable/">Go语言中的变量</a>
-          </li>
-        
-          <li>
-            <a href="/go/go-constant/">Go语言中的常量</a>
           </li>
         
       </ul>

@@ -1,0 +1,300 @@
+
+<!DOCTYPE html>
+<html  xmlns:wb="http://open.weibo.com/wb">
+<head>
+  <meta charset="utf-8">
+  
+  <title>go-错误处理 | 小韩说课</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="宕机panicGo语言可以在程序中强行宕机。宕机时会将堆栈信息和goroutine信息输出到控制台，便于处理错误。示例语法：1panic(&amp;quot;宕机信息&amp;quot;) 运行后，得到：123456panic: 宕机信息goroutine 1 [running]:main.main()        D:/projects/practice/go/syntax.go:45 +0x40exit s">
+<meta name="keywords" content="go,go-guide,error,panic,recover,defer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="go-错误处理">
+<meta property="og:url" content="http://blog.hellokang.net/go/go-error/index.html">
+<meta property="og:site_name" content="小韩说课">
+<meta property="og:description" content="宕机panicGo语言可以在程序中强行宕机。宕机时会将堆栈信息和goroutine信息输出到控制台，便于处理错误。示例语法：1panic(&amp;quot;宕机信息&amp;quot;) 运行后，得到：123456panic: 宕机信息goroutine 1 [running]:main.main()        D:/projects/practice/go/syntax.go:45 +0x40exit s">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-22T13:56:45.559Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="go-错误处理">
+<meta name="twitter:description" content="宕机panicGo语言可以在程序中强行宕机。宕机时会将堆栈信息和goroutine信息输出到控制台，便于处理错误。示例语法：1panic(&amp;quot;宕机信息&amp;quot;) 运行后，得到：123456panic: 宕机信息goroutine 1 [running]:main.main()        D:/projects/practice/go/syntax.go:45 +0x40exit s">
+  
+    <link rel="alternative" href="/atom.xml" title="小韩说课" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+  <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<div id="container">
+  <div id="wrap">
+    <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">小韩说课</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">认真做课，提供PHP, Python, JavaScript, Go, MySQL, linux相关内容</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <!-- <a id="nav-search-btn" class="nav-icon" title="Search"></a> -->
+      </nav>
+<!--       <div id="search-form-wrap">
+        <form action="#" method="get" accept-charset="utf-8" class="search-form" id="local-search-form">
+          <input type="text" id="local-search-input" class="search-form-input" placeholder="Search" /> 
+          <input type="submit" class="search-form-submit">
+          <div id="local-search-result"></div>
+        </form>
+      </div> -->
+    </div>
+  </div>
+</header>
+    <div class="outer">
+      <section id="main"><article id="post-go-error" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/go/go-error/" class="article-date">
+  <time datetime="2018-10-22T13:54:59.000Z" itemprop="datePublished">2018-10-22</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/go/">go</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      go-错误处理
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2><span id="宕机panic">宕机panic</span></h2><p>Go语言可以在程序中强行宕机。宕机时会将堆栈信息和goroutine信息输出到控制台，便于处理错误。<br>示例语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">panic(&quot;宕机信息&quot;)</span><br></pre></td></tr></table></figure></p>
+<p>运行后，得到：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">panic: 宕机信息</span><br><span class="line"></span><br><span class="line">goroutine 1 [running]:</span><br><span class="line">main.main()</span><br><span class="line">        D:/projects/practice/go/syntax.go:45 +0x40</span><br><span class="line">exit status 2</span><br></pre></td></tr></table></figure></p>
+<p>宕机后，后续代码不再执行。但已经 defer 入栈的语句会在宕机前完成执行。</p>
+<h2><span id="宕机恢复-recover">宕机恢复 recover</span></h2><p>当发生宕机时，会被 recover 捕获。执行完对应的 defer 后，从宕机点退出当前函数后继续执行，因此程序不会崩溃。配合使用 defer 和 recover，可以从宕机中恢复并捕获错误。达到宕机后继续运行的目的。无论是由 Runtime 层抛出的 panic 崩溃，还是主动触发的 panic 崩溃。<br>可以理解成：panic 触发宕机类似于抛出异常 thrown，recover 宕机恢复机制就对应 try/catch。<br>原理：<br>语法上，利用 defer 的语句会在宕机前执行的机制，在代码执行前，先定义错误处理恢复方案，加入到defer栈中。再执行需要的代码。如果代码中出现宕机，会执行已经defer的代码，就是我们的宕机恢复处理代码。<br>演示如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line"></span><br><span class="line">  func() &#123;</span><br><span class="line">    // 先定义错误处理恢复方案，加入到defer栈中</span><br><span class="line">    defer func() &#123;</span><br><span class="line">      // 发生宕机时，获取 panic 传递的上下文</span><br><span class="line">      err := recover()</span><br><span class="line">      switch err.(type) &#123;</span><br><span class="line">      case runtime.Error:</span><br><span class="line">        // 运行时错误</span><br><span class="line">        fmt.Println(&quot;Runtime error:&quot;, err)</span><br><span class="line">      default:</span><br><span class="line">        // 非运行时错误</span><br><span class="line">        fmt.Println(&quot;User error:&quot;, err)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;()</span><br><span class="line">    panic(&quot;强行宕机&quot;)</span><br><span class="line">    // 或者</span><br><span class="line">    var pv *int</span><br><span class="line">    *pv = 42</span><br><span class="line">  &#125;()</span><br><span class="line"></span><br><span class="line">  fmt.Println(&quot;after panic&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>以上代码，无论执行了 <code>panic(&quot;强行宕机&quot;)</code> 还是 <code>*pv = 42</code> 都不会导致系统崩溃，而是会去执行defer的函数，输出错误信息后，继续执行。就是after panic会永远执行。<br>因为 recover 会恢复，结束 recover 所在函数后，代码继续！<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt; go run .\syntax.go</span><br><span class="line">User error: 强行宕机</span><br><span class="line">after panic</span><br><span class="line">或者</span><br><span class="line">&gt; go run .\syntax.go</span><br><span class="line">Runtime error: runtime error: invalid memory address or nil pointer dereference</span><br><span class="line">after panic</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <!-- <a data-url="http://blog.hellokang.net/go/go-error/" data-id="cjnkdgtkv000s00uo6gorsbmw" class="article-share-link">分享到</a> -->
+      
+
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/defer/">defer</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/error/">error</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go-guide/">go-guide</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/panic/">panic</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/recover/">recover</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/go/go-operator/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">Go语言中的运算符</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+  <section class="changyan" id="comments">
+<!--PC和WAP自适应版-->
+<div id="SOHUCS" sid="cjnkdgtkv000s00uo6gorsbmw"></div> 
+<script type="text/javascript"> 
+	(function(){ 
+		var appid = 'cyt64TYiv'; 
+		var conf = 'prod_8144667773d887f47faa11a45cb29175'; 
+		var width = window.innerWidth || document.documentElement.clientWidth; 
+		if (width < 960) { 
+			window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })(); </script>
+</section>
+ </section>
+      
+      <aside id="sidebar">
+  
+      <div class="widget-wrap author">
+    <h3 class="widget-title">&nbsp;</h3>
+    <div class="widget">
+      <div class="avatar">
+        <img src="/images/avatar.png" >
+      </div>
+      <div class="info">
+        <ul>
+          <li>
+            <h3>韩忠康</h3>
+            <wb:follow-button uid="5846559498" type="red_1" width="67" height="24" ></wb:follow-button>
+            <a href="https://github.com/hanzkering" class="fa-icon fa-github" > GitHub</a>
+          </li>
+          <li>程序员，培训讲师</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+    <div class="widget-wrap author">
+  <h3 class="widget-title">微信关注</h3>    
+  <div class="widget">
+    <img src="/images/wechat_subscription.jpg">
+  </div>
+</div>
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/">blog</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/break/">break</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/continue/">continue</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/defer/">defer</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/for/">for</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-guide/">go-guide</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goto/">goto</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/if/">if</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iota/">iota</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/panic/">panic</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/recover/">recover</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/">ssh</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/switch/">switch</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/var/">var</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/变量/">变量</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/常量/">常量</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据类型/">数据类型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/流程控制/">流程控制</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/运算符/">运算符</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/break/" style="font-size: 10px;">break</a> <a href="/tags/continue/" style="font-size: 10px;">continue</a> <a href="/tags/defer/" style="font-size: 10px;">defer</a> <a href="/tags/error/" style="font-size: 10px;">error</a> <a href="/tags/for/" style="font-size: 10px;">for</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/go/" style="font-size: 20px;">go</a> <a href="/tags/go-guide/" style="font-size: 20px;">go-guide</a> <a href="/tags/goto/" style="font-size: 10px;">goto</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/if/" style="font-size: 10px;">if</a> <a href="/tags/iota/" style="font-size: 10px;">iota</a> <a href="/tags/panic/" style="font-size: 10px;">panic</a> <a href="/tags/recover/" style="font-size: 10px;">recover</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/switch/" style="font-size: 10px;">switch</a> <a href="/tags/var/" style="font-size: 10px;">var</a> <a href="/tags/变量/" style="font-size: 10px;">变量</a> <a href="/tags/常量/" style="font-size: 10px;">常量</a> <a href="/tags/数据类型/" style="font-size: 10px;">数据类型</a> <a href="/tags/流程控制/" style="font-size: 10px;">流程控制</a> <a href="/tags/运算符/" style="font-size: 10px;">运算符</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">近期文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/go/go-error/">go-错误处理</a>
+          </li>
+        
+          <li>
+            <a href="/go/go-operator/">Go语言中的运算符</a>
+          </li>
+        
+          <li>
+            <a href="/go/go-flow-control/">Go语言中的流程控制</a>
+          </li>
+        
+          <li>
+            <a href="/go/go-type/">Go语言的数据类型</a>
+          </li>
+        
+          <li>
+            <a href="/go/go-variable/">Go语言中的变量</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">友情链接</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="https://github.com/hanzkering" target="_blank">GibHub</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 韩忠康<br>
+      Powered by <a href="//hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+  </div>
+  <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+  <!-- totop start -->
+<div id="totop">
+<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+</div>
+
+<!-- totop end -->
+
+
+<!-- 百度分享 start -->
+
+<!-- 百度分享 end -->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>

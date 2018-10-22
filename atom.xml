@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.hellokang.net/"/>
-  <updated>2018-10-21T12:55:33.441Z</updated>
+  <updated>2018-10-22T13:56:45.559Z</updated>
   <id>http://blog.hellokang.net/</id>
   
   <author>
@@ -17,11 +17,47 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>go-错误处理</title>
+    <link href="http://blog.hellokang.net/go/go-error/"/>
+    <id>http://blog.hellokang.net/go/go-error/</id>
+    <published>2018-10-22T13:54:59.000Z</published>
+    <updated>2018-10-22T13:56:45.559Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2&gt;&lt;span id=&quot;宕机panic&quot;&gt;宕机panic&lt;/span&gt;&lt;/h2&gt;&lt;p&gt;Go语言可以在程序中强行宕机。宕机时会将堆栈信息和goroutine信息输出到控制台，便于处理错误。&lt;br&gt;示例语法：&lt;br&gt;&lt;figure class=&quot;highlight
+        
+      
+    
+    </summary>
+    
+      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
+    
+    
+      <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
+    
+      <category term="go-guide" scheme="http://blog.hellokang.net/tags/go-guide/"/>
+    
+      <category term="error" scheme="http://blog.hellokang.net/tags/error/"/>
+    
+      <category term="panic" scheme="http://blog.hellokang.net/tags/panic/"/>
+    
+      <category term="recover" scheme="http://blog.hellokang.net/tags/recover/"/>
+    
+      <category term="defer" scheme="http://blog.hellokang.net/tags/defer/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Go语言中的运算符</title>
     <link href="http://blog.hellokang.net/go/go-operator/"/>
     <id>http://blog.hellokang.net/go/go-operator/</id>
     <published>2018-10-21T12:05:46.000Z</published>
-    <updated>2018-10-21T12:55:33.441Z</updated>
+    <updated>2018-10-22T10:39:12.357Z</updated>
     
     <summary type="html">
     
@@ -55,9 +91,21 @@
     <link href="http://blog.hellokang.net/go/go-flow-control/"/>
     <id>http://blog.hellokang.net/go/go-flow-control/</id>
     <published>2018-10-21T12:05:24.000Z</published>
-    <updated>2018-10-21T12:55:21.366Z</updated>
+    <updated>2018-10-22T14:02:17.907Z</updated>
     
     <summary type="html">
+    
+      
+      
+        
+        
+          &lt;!-- toc --&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#1-概述&quot;&gt;1 概述&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#2-条件分支-if&quot;&gt;2 条件分支 if&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#3-状态分支-switch&quot;&gt;3 状态分支
+        
+      
     
     </summary>
     
@@ -89,7 +137,7 @@
     <link href="http://blog.hellokang.net/go/go-type/"/>
     <id>http://blog.hellokang.net/go/go-type/</id>
     <published>2018-10-19T09:59:26.000Z</published>
-    <updated>2018-10-21T12:07:00.627Z</updated>
+    <updated>2018-10-22T14:03:06.838Z</updated>
     
     <summary type="html">
     
@@ -123,7 +171,7 @@
     <link href="http://blog.hellokang.net/go/go-variable/"/>
     <id>http://blog.hellokang.net/go/go-variable/</id>
     <published>2018-10-18T10:51:32.000Z</published>
-    <updated>2018-10-21T12:06:38.282Z</updated>
+    <updated>2018-10-22T14:03:18.035Z</updated>
     
     <summary type="html">
     
@@ -210,7 +258,7 @@
     <link href="http://blog.hellokang.net/git/git-merge-rebase/"/>
     <id>http://blog.hellokang.net/git/git-merge-rebase/</id>
     <published>2018-10-14T12:29:30.000Z</published>
-    <updated>2018-10-14T16:15:29.200Z</updated>
+    <updated>2018-10-22T14:01:53.116Z</updated>
     
     <summary type="html">
     
@@ -237,7 +285,7 @@
     <link href="http://blog.hellokang.net/hexo/hexo-github/"/>
     <id>http://blog.hellokang.net/hexo/hexo-github/</id>
     <published>2018-10-11T11:12:21.000Z</published>
-    <updated>2018-10-12T05:58:57.884Z</updated>
+    <updated>2018-10-22T14:03:55.462Z</updated>
     
     <summary type="html">
     
