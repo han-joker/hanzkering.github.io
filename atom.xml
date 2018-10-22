@@ -57,7 +57,7 @@
     <link href="http://blog.hellokang.net/go/go-flow-control/"/>
     <id>http://blog.hellokang.net/go/go-flow-control/</id>
     <published>2018-10-21T12:15:24.000Z</published>
-    <updated>2018-10-22T14:11:47.006Z</updated>
+    <updated>2018-10-22T14:27:54.628Z</updated>
     
     <summary type="html">
     
@@ -81,20 +81,6 @@
       <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
     
       <category term="go-guide" scheme="http://blog.hellokang.net/tags/go-guide/"/>
-    
-      <category term="流程控制" scheme="http://blog.hellokang.net/tags/%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6/"/>
-    
-      <category term="if" scheme="http://blog.hellokang.net/tags/if/"/>
-    
-      <category term="for" scheme="http://blog.hellokang.net/tags/for/"/>
-    
-      <category term="switch" scheme="http://blog.hellokang.net/tags/switch/"/>
-    
-      <category term="goto" scheme="http://blog.hellokang.net/tags/goto/"/>
-    
-      <category term="break" scheme="http://blog.hellokang.net/tags/break/"/>
-    
-      <category term="continue" scheme="http://blog.hellokang.net/tags/continue/"/>
     
   </entry>
   
