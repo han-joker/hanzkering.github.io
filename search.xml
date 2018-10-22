@@ -38,7 +38,6 @@
       <tags>
         <tag>go</tag>
         <tag>go-guide</tag>
-        <tag>运算符</tag>
       </tags>
   </entry>
   <entry>
@@ -51,7 +50,6 @@
       <tags>
         <tag>go</tag>
         <tag>go-guide</tag>
-        <tag>数据类型</tag>
       </tags>
   </entry>
   <entry>
@@ -64,8 +62,6 @@
       <tags>
         <tag>go</tag>
         <tag>go-guide</tag>
-        <tag>变量</tag>
-        <tag>var</tag>
       </tags>
   </entry>
   <entry>
@@ -78,8 +74,6 @@
       <tags>
         <tag>go</tag>
         <tag>go-guide</tag>
-        <tag>常量</tag>
-        <tag>iota</tag>
       </tags>
   </entry>
   <entry>
@@ -109,7 +103,6 @@
         <tag>hexo</tag>
         <tag>blog</tag>
         <tag>github</tag>
-        <tag>ssh</tag>
       </tags>
   </entry>
   <entry>
