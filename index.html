@@ -108,13 +108,105 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-error/" data-id="cjnkdlsu4000c5wuomx1wsnpr" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-error/" data-id="cjnkdqqym000b1suoiq0p5m0y" class="article-share-link">分享到</a> -->
       
 
       
 
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/defer/">defer</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/error/">error</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go-guide/">go-guide</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/panic/">panic</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/recover/">recover</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+ 
+  
+    <article id="post-go-flow-control" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/go/go-flow-control/" class="article-date">
+  <time datetime="2018-10-21T12:15:24.000Z" itemprop="datePublished">2018-10-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/go/">go</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/go/go-flow-control/">Go语言中的流程控制</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- toc -->
+<ul>
+<li><a href="#1-概述">1 概述</a></li>
+<li><a href="#2-条件分支-if">2 条件分支 if</a></li>
+<li><a href="#3-状态分支-switch">3 状态分支 switch</a><ul>
+<li><a href="#31-基础">3.1 基础</a></li>
+<li><a href="#32-fallthrough向下穿越">3.2 fallthrough，向下穿越</a></li>
+<li><a href="#33-条件型-switch">3.3 条件型 switch</a></li>
+</ul>
+</li>
+<li><a href="#4-循环for">4 循环for</a><ul>
+<li><a href="#41-基本">4.1 基本</a></li>
+<li><a href="#42-省略语句">4.2 省略语句</a></li>
+<li><a href="#43-break">4.3 break</a></li>
+<li><a href="#44-continue">4.4 continue</a></li>
+<li><a href="#45-嵌套循环">4.5 嵌套循环</a></li>
+<li><a href="#5-goto">5 goto</a></li>
+</ul>
+</li>
+<li><a href="#6-延迟执行defer">6 延迟执行defer</a></li>
+</ul>
+<!-- tocstop -->
+<h2><span id="1-概述">1 概述</span></h2><p>Go语言提供了条件分支 if，状态分支 switch，循环 for，跳转 goto，延迟执行 defer，这些流程控制语句。分别作说明如下：</p>
+<h2><span id="2-条件分支-if">2 条件分支 if</span></h2><p>依据条件是否满足确定执行哪个分支。<br>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">if 条件 1 &#123;</span><br><span class="line">  分支 1</span><br><span class="line">&#125; else if 条件 2 &#123;</span><br><span class="line">  分支 2</span><br><span class="line">&#125; else if 条件 ... &#123;</span><br><span class="line">  分支 ...</span><br><span class="line">&#125; else &#123;</span><br><span class="line">  分支 else</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>流程图：<br><img src="http://www.hellokang.net/images/posts/go/go-if.png" alt="if"></p>
+<p>Go是强类型，要求条件表达式严格返回布尔型数据！</p>
+<h2><span id="3-状态分支-switch">3 状态分支 switch</span></h2><h3><span id="31-基础">3.1 基础</span></h3><p>状态分支，依据特定的状态值进行分支判断。<br>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">switch 分支测试表达式 &#123;</span><br><span class="line">case 状态1:</span><br><span class="line">    分支1</span><br><span class="line">case 状态2:</span><br><span class="line">    分支2</span><br><span class="line">case 状态...:</span><br><span class="line">    分支...</span><br><span class="line">default:</span><br><span class="line">  分支 default</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>流程如下：<br><img src="http://www.hellokang.net/images/posts/go/go-switch.png" alt="for"></p>
+<h3><span id="32-fallthrough向下穿越">3.2 fallthrough，向下穿越</span></h3><p>在其他语法（非Go，C，PHP）中，switch 有一个特定的现象，就是向下穿越，指的是一旦一个分支 case 满足，则后续分支代码都会被执行。而Go语言中，默认分支执行完毕，switch 执行完毕。使用 fallthrough 语法，可以达到穿越下一个 case 分支的目的。<br>fallthrough 需要出现在分支语句块的最后一句！<br>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">switch 分支测试表达式 &#123;</span><br><span class="line">case 状态1:</span><br><span class="line">    分支1</span><br><span class="line">    fallthrough</span><br><span class="line">case 状态2:</span><br><span class="line">    分支2</span><br><span class="line">    fallthrough</span><br><span class="line">default:</span><br><span class="line">  分支 default</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>流程如下：<br><img src="http://www.hellokang.net/images/posts/go/go-switch-fallthrough.png" alt="switch-fallthrough"></p>
+<h3><span id="33-条件型-switch">3.3 条件型 switch</span></h3><p>示例代码，逻辑与 if-else-if 一致：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">score := 89</span><br><span class="line">switch &#123;</span><br><span class="line">case score &gt;= 90:</span><br><span class="line">  fmt.Println(&quot;优秀，不错&quot;)</span><br><span class="line">case score &gt;= 80:</span><br><span class="line">  fmt.Println(&quot;还行吧&quot;)</span><br><span class="line">default:</span><br><span class="line">  fmt.Println(&quot;呵呵&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>个人感觉失去了 switch 分支的意义哈！</p>
+<h2><span id="4-循环for">4 循环for</span></h2><h3><span id="41-基本">4.1 基本</span></h3><p>语法格式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">for 初始化语句; 条件语句; 条件变化语句 &#123;</span><br><span class="line">  循环体</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 输出1-10</span><br><span class="line">for i := 1; i &lt;= 10; i++ &#123;</span><br><span class="line"> fmt.Println(i)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>流程如下：<br><img src="http://www.hellokang.net/images/posts/go/go-for.png" alt="for"></p>
+<h3><span id="42-省略语句">4.2 省略语句</span></h3><p>Go中允许省略三个语句中的任意，就是可以形成如下的语法：<br>仅存在条件语句，类似其他语言的 while 结构！<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for 条件语句 &#123;</span><br><span class="line">  循环体</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>无限循环结构，死循环<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for &#123;</span><br><span class="line">  循环体</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>其他结构，三个语句可以任意省略，不再列举：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">for ; 条件语句; 条件变化语句 &#123;</span><br><span class="line">  循环体</span><br><span class="line">&#125;</span><br><span class="line">for 初始化语句; 条件语句; &#123;</span><br><span class="line">  循环体</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3><span id="43-break">4.3 break</span></h3><p>终止整个循环执行。<br>流程图如下：<br><img src="http://www.hellokang.net/images/posts/go/go-for-break.png" alt="for-break"></p>
+<h3><span id="44-continue">4.4 continue</span></h3><p>终止本次循环体的继续执行，进行循环条件变化。<br>流程如下：<br><img src="http://www.hellokang.net/images/posts/go/go-for-continue.png" alt="for-continue"></p>
+<h3><span id="45-嵌套循环">4.5 嵌套循环</span></h3><p>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for &#123;</span><br><span class="line">  for &#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在使用 break，continue 时，若需要终止外层循环 for，需要配合语句标签使用，演示如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">userLabel:</span><br><span class="line">for &#123;</span><br><span class="line">  for &#123;</span><br><span class="line">    break userLabel</span><br><span class="line">    或者</span><br><span class="line">    continue userLabel</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>额外注意，switch 在语言中，被视为执行一次的循环结构，因此 switch 中若要终止外层循环，需要使用标签语法，不能直接 break、continue，演示如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">userLabel:</span><br><span class="line">for &#123;</span><br><span class="line">  swtich variable &#123;</span><br><span class="line">    case &quot;exit&quot;</span><br><span class="line">      break userLabel</span><br><span class="line">      或者</span><br><span class="line">      continue userLabel</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3><span id="5-goto">5 goto</span></h3><p>配合标签完成无条件跳转。演示如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">if error &#123;</span><br><span class="line">  goto doError</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 其他业务逻辑代码略</span><br><span class="line"></span><br><span class="line">doError:</span><br><span class="line">fmt.Println(errorInfo)</span><br></pre></td></tr></table></figure></p>
+<h2><span id="6-延迟执行defer">6 延迟执行defer</span></h2><p>defer 语句会将其后语句进行延迟处理。在 defer 所属函数即将返回时，将延迟处理的语句按 defer 的逆序进行执行，也就是说，先被 defer 的语句最后被执行，最后被 defer 的语句，最先被执行。演示如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"> func main() &#123;</span><br><span class="line">    fmt.Println(&quot;before defer&quot;)</span><br><span class="line">    defer fmt.Println(&quot;defer A&quot;)</span><br><span class="line">    defer fmt.Println(&quot;defer B&quot;)</span><br><span class="line">    defer fmt.Println(&quot;defer C&quot;)</span><br><span class="line">    fmt.Println(&quot;after defer&quot;)</span><br><span class="line">&#125;</span><br><span class="line">以上代码的执行结果：</span><br><span class="line">before defer</span><br><span class="line">after defer</span><br><span class="line">defer C</span><br><span class="line">defer B</span><br><span class="line">defer A</span><br></pre></td></tr></table></figure></p>
+<p>defer 执行是放在一个临时的调用栈中，因此是先入栈后出栈的。<br>实操时，处理互斥所时，很常用！</p>
+<p>以上就是Go语言提供的流程控制相关内容<br>完！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <!-- <a data-url="http://blog.hellokang.net/go/go-flow-control/" data-id="cjnkdqqz2000o1suohc83d2ln" class="article-share-link">分享到</a> -->
+      
+
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/break/">break</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/continue/">continue</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/for/">for</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go-guide/">go-guide</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goto/">goto</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/if/">if</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/switch/">switch</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/流程控制/">流程控制</a></li></ul>
 
     </footer>
   </div>
@@ -246,105 +338,13 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-operator/" data-id="cjnkdlsul000r5wuo9w64vxxm" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-operator/" data-id="cjnkdqqz8000w1suodwcdfo24" class="article-share-link">分享到</a> -->
       
 
       
 
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go-guide/">go-guide</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/运算符/">运算符</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
- 
-  
-    <article id="post-go-flow-control" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/go/go-flow-control/" class="article-date">
-  <time datetime="2018-10-21T12:05:24.000Z" itemprop="datePublished">2018-10-21</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/go/">go</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/go/go-flow-control/">Go语言中的流程控制</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!-- toc -->
-<ul>
-<li><a href="#1-概述">1 概述</a></li>
-<li><a href="#2-条件分支-if">2 条件分支 if</a></li>
-<li><a href="#3-状态分支-switch">3 状态分支 switch</a><ul>
-<li><a href="#31-基础">3.1 基础</a></li>
-<li><a href="#32-fallthrough向下穿越">3.2 fallthrough，向下穿越</a></li>
-<li><a href="#33-条件型-switch">3.3 条件型 switch</a></li>
-</ul>
-</li>
-<li><a href="#4-循环for">4 循环for</a><ul>
-<li><a href="#41-基本">4.1 基本</a></li>
-<li><a href="#42-省略语句">4.2 省略语句</a></li>
-<li><a href="#43-break">4.3 break</a></li>
-<li><a href="#44-continue">4.4 continue</a></li>
-<li><a href="#45-嵌套循环">4.5 嵌套循环</a></li>
-<li><a href="#5-goto">5 goto</a></li>
-</ul>
-</li>
-<li><a href="#6-延迟执行defer">6 延迟执行defer</a></li>
-</ul>
-<!-- tocstop -->
-<h2><span id="1-概述">1 概述</span></h2><p>Go语言提供了条件分支 if，状态分支 switch，循环 for，跳转 goto，延迟执行 defer，这些流程控制语句。分别作说明如下：</p>
-<h2><span id="2-条件分支-if">2 条件分支 if</span></h2><p>依据条件是否满足确定执行哪个分支。<br>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">if 条件 1 &#123;</span><br><span class="line">  分支 1</span><br><span class="line">&#125; else if 条件 2 &#123;</span><br><span class="line">  分支 2</span><br><span class="line">&#125; else if 条件 ... &#123;</span><br><span class="line">  分支 ...</span><br><span class="line">&#125; else &#123;</span><br><span class="line">  分支 else</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>流程图：<br><img src="http://www.hellokang.net/images/posts/go/go-if.png" alt="if"></p>
-<p>Go是强类型，要求条件表达式严格返回布尔型数据！</p>
-<h2><span id="3-状态分支-switch">3 状态分支 switch</span></h2><h3><span id="31-基础">3.1 基础</span></h3><p>状态分支，依据特定的状态值进行分支判断。<br>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">switch 分支测试表达式 &#123;</span><br><span class="line">case 状态1:</span><br><span class="line">    分支1</span><br><span class="line">case 状态2:</span><br><span class="line">    分支2</span><br><span class="line">case 状态...:</span><br><span class="line">    分支...</span><br><span class="line">default:</span><br><span class="line">  分支 default</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>流程如下：<br><img src="http://www.hellokang.net/images/posts/go/go-switch.png" alt="for"></p>
-<h3><span id="32-fallthrough向下穿越">3.2 fallthrough，向下穿越</span></h3><p>在其他语法（非Go，C，PHP）中，switch 有一个特定的现象，就是向下穿越，指的是一旦一个分支 case 满足，则后续分支代码都会被执行。而Go语言中，默认分支执行完毕，switch 执行完毕。使用 fallthrough 语法，可以达到穿越下一个 case 分支的目的。<br>fallthrough 需要出现在分支语句块的最后一句！<br>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">switch 分支测试表达式 &#123;</span><br><span class="line">case 状态1:</span><br><span class="line">    分支1</span><br><span class="line">    fallthrough</span><br><span class="line">case 状态2:</span><br><span class="line">    分支2</span><br><span class="line">    fallthrough</span><br><span class="line">default:</span><br><span class="line">  分支 default</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>流程如下：<br><img src="http://www.hellokang.net/images/posts/go/go-switch-fallthrough.png" alt="switch-fallthrough"></p>
-<h3><span id="33-条件型-switch">3.3 条件型 switch</span></h3><p>示例代码，逻辑与 if-else-if 一致：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">score := 89</span><br><span class="line">switch &#123;</span><br><span class="line">case score &gt;= 90:</span><br><span class="line">  fmt.Println(&quot;优秀，不错&quot;)</span><br><span class="line">case score &gt;= 80:</span><br><span class="line">  fmt.Println(&quot;还行吧&quot;)</span><br><span class="line">default:</span><br><span class="line">  fmt.Println(&quot;呵呵&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>个人感觉失去了 switch 分支的意义哈！</p>
-<h2><span id="4-循环for">4 循环for</span></h2><h3><span id="41-基本">4.1 基本</span></h3><p>语法格式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">for 初始化语句; 条件语句; 条件变化语句 &#123;</span><br><span class="line">  循环体</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 输出1-10</span><br><span class="line">for i := 1; i &lt;= 10; i++ &#123;</span><br><span class="line"> fmt.Println(i)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>流程如下：<br><img src="http://www.hellokang.net/images/posts/go/go-for.png" alt="for"></p>
-<h3><span id="42-省略语句">4.2 省略语句</span></h3><p>Go中允许省略三个语句中的任意，就是可以形成如下的语法：<br>仅存在条件语句，类似其他语言的 while 结构！<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for 条件语句 &#123;</span><br><span class="line">  循环体</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>无限循环结构，死循环<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for &#123;</span><br><span class="line">  循环体</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>其他结构，三个语句可以任意省略，不再列举：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">for ; 条件语句; 条件变化语句 &#123;</span><br><span class="line">  循环体</span><br><span class="line">&#125;</span><br><span class="line">for 初始化语句; 条件语句; &#123;</span><br><span class="line">  循环体</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h3><span id="43-break">4.3 break</span></h3><p>终止整个循环执行。<br>流程图如下：<br><img src="http://www.hellokang.net/images/posts/go/go-for-break.png" alt="for-break"></p>
-<h3><span id="44-continue">4.4 continue</span></h3><p>终止本次循环体的继续执行，进行循环条件变化。<br>流程如下：<br><img src="http://www.hellokang.net/images/posts/go/go-for-continue.png" alt="for-continue"></p>
-<h3><span id="45-嵌套循环">4.5 嵌套循环</span></h3><p>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for &#123;</span><br><span class="line">  for &#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>在使用 break，continue 时，若需要终止外层循环 for，需要配合语句标签使用，演示如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">userLabel:</span><br><span class="line">for &#123;</span><br><span class="line">  for &#123;</span><br><span class="line">    break userLabel</span><br><span class="line">    或者</span><br><span class="line">    continue userLabel</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>额外注意，switch 在语言中，被视为执行一次的循环结构，因此 switch 中若要终止外层循环，需要使用标签语法，不能直接 break、continue，演示如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">userLabel:</span><br><span class="line">for &#123;</span><br><span class="line">  swtich variable &#123;</span><br><span class="line">    case &quot;exit&quot;</span><br><span class="line">      break userLabel</span><br><span class="line">      或者</span><br><span class="line">      continue userLabel</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h3><span id="5-goto">5 goto</span></h3><p>配合标签完成无条件跳转。演示如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">if error &#123;</span><br><span class="line">  goto doError</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 其他业务逻辑代码略</span><br><span class="line"></span><br><span class="line">doError:</span><br><span class="line">fmt.Println(errorInfo)</span><br></pre></td></tr></table></figure></p>
-<h2><span id="6-延迟执行defer">6 延迟执行defer</span></h2><p>defer 语句会将其后语句进行延迟处理。在 defer 所属函数即将返回时，将延迟处理的语句按 defer 的逆序进行执行，也就是说，先被 defer 的语句最后被执行，最后被 defer 的语句，最先被执行。演示如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"> func main() &#123;</span><br><span class="line">    fmt.Println(&quot;before defer&quot;)</span><br><span class="line">    defer fmt.Println(&quot;defer A&quot;)</span><br><span class="line">    defer fmt.Println(&quot;defer B&quot;)</span><br><span class="line">    defer fmt.Println(&quot;defer C&quot;)</span><br><span class="line">    fmt.Println(&quot;after defer&quot;)</span><br><span class="line">&#125;</span><br><span class="line">以上代码的执行结果：</span><br><span class="line">before defer</span><br><span class="line">after defer</span><br><span class="line">defer C</span><br><span class="line">defer B</span><br><span class="line">defer A</span><br></pre></td></tr></table></figure></p>
-<p>defer 执行是放在一个临时的调用栈中，因此是先入栈后出栈的。<br>实操时，处理互斥所时，很常用！</p>
-<p>以上就是Go语言提供的流程控制相关内容<br>完！</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-        <!-- <a data-url="http://blog.hellokang.net/go/go-flow-control/" data-id="cjnkdlsub000h5wuoygsvyzu5" class="article-share-link">分享到</a> -->
-      
-
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/break/">break</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/continue/">continue</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/for/">for</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go-guide/">go-guide</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goto/">goto</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/if/">if</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/switch/">switch</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/流程控制/">流程控制</a></li></ul>
 
     </footer>
   </div>
@@ -491,7 +491,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjnkdlsux00145wuou0di64km" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjnkdqqzh00191suo0z6idhi1" class="article-share-link">分享到</a> -->
       
 
       
@@ -580,7 +580,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-variable/" data-id="cjnkdlsvb001b5wuoee6knkr8" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-variable/" data-id="cjnkdqqzk001c1suo8j4i0ndy" class="article-share-link">分享到</a> -->
       
 
       
@@ -664,7 +664,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-constant/" data-id="cjnkdlsu100095wuohtxub2zp" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-constant/" data-id="cjnkdqqyf00051suoibolhhvi" class="article-share-link">分享到</a> -->
       
 
       
@@ -706,7 +706,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/uncategorized/go-editor-sublime/" data-id="cjnkdlstt00055wuoxk5mlkni" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/uncategorized/go-editor-sublime/" data-id="cjnkdqqyz000m1suo90l9i0k6" class="article-share-link">分享到</a> -->
       
 
       
@@ -779,7 +779,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/git/git-merge-rebase/" data-id="cjnkdlstp00045wuovljpnnn5" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/git/git-merge-rebase/" data-id="cjnkdqqy000001suobooj65oj" class="article-share-link">分享到</a> -->
       
 
       
@@ -881,7 +881,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/hexo/hexo-github/" data-id="cjnkdlsv000185wuowl8tq32b" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/hexo/hexo-github/" data-id="cjnkdqr0f002l1suocycsoi2x" class="article-share-link">分享到</a> -->
       
 
       
@@ -927,7 +927,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-command/" data-id="cjnkdlstz00085wuo1oo53akw" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-command/" data-id="cjnkdqqyg00061suotmwm7lfh" class="article-share-link">分享到</a> -->
       
 
       
@@ -1022,11 +1022,11 @@
           </li>
         
           <li>
-            <a href="/go/go-operator/">Go语言中的运算符</a>
+            <a href="/go/go-flow-control/">Go语言中的流程控制</a>
           </li>
         
           <li>
-            <a href="/go/go-flow-control/">Go语言中的流程控制</a>
+            <a href="/go/go-operator/">Go语言中的运算符</a>
           </li>
         
           <li>
