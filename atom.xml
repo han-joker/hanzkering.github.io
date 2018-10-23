@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.hellokang.net/"/>
-  <updated>2018-10-23T14:57:50.074Z</updated>
+  <updated>2018-10-23T15:03:22.117Z</updated>
   <id>http://blog.hellokang.net/</id>
   
   <author>
@@ -20,8 +20,8 @@
     <title>Go语言中的函数</title>
     <link href="http://blog.hellokang.net/go/go-function/"/>
     <id>http://blog.hellokang.net/go/go-function/</id>
-    <published>2018-10-23T04:04:53.000Z</published>
-    <updated>2018-10-23T14:57:50.074Z</updated>
+    <published>2018-10-22T04:04:53.000Z</published>
+    <updated>2018-10-23T15:03:22.117Z</updated>
     
     <summary type="html">
     
@@ -41,36 +41,6 @@
       <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
     
       <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>go-错误处理</title>
-    <link href="http://blog.hellokang.net/go/go-error/"/>
-    <id>http://blog.hellokang.net/go/go-error/</id>
-    <published>2018-10-22T13:54:59.000Z</published>
-    <updated>2018-10-23T12:15:05.995Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2&gt;&lt;span id=&quot;宕机panic&quot;&gt;宕机panic&lt;/span&gt;&lt;/h2&gt;&lt;p&gt;Go语言可以在程序中强行宕机。宕机时会将堆栈信息和goroutine信息输出到控制台，便于处理错误。&lt;br&gt;示例语法：&lt;br&gt;&lt;figure class=&quot;highlight
-        
-      
-    
-    </summary>
-    
-      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
-    
-    
-      <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
-    
-      <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
-    
-      <category term="error" scheme="http://blog.hellokang.net/tags/error/"/>
     
   </entry>
   
@@ -303,6 +273,36 @@
       <category term="blog" scheme="http://blog.hellokang.net/tags/blog/"/>
     
       <category term="github" scheme="http://blog.hellokang.net/tags/github/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>go-错误处理</title>
+    <link href="http://blog.hellokang.net/go/go-error/"/>
+    <id>http://blog.hellokang.net/go/go-error/</id>
+    <published>2018-10-10T13:54:59.000Z</published>
+    <updated>2018-10-23T15:03:36.739Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2&gt;&lt;span id=&quot;宕机panic&quot;&gt;宕机panic&lt;/span&gt;&lt;/h2&gt;&lt;p&gt;Go语言可以在程序中强行宕机。宕机时会将堆栈信息和goroutine信息输出到控制台，便于处理错误。&lt;br&gt;示例语法：&lt;br&gt;&lt;figure class=&quot;highlight
+        
+      
+    
+    </summary>
+    
+      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
+    
+    
+      <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
+    
+      <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
+    
+      <category term="error" scheme="http://blog.hellokang.net/tags/error/"/>
     
   </entry>
   

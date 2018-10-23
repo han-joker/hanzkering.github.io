@@ -15,7 +15,7 @@
 <meta property="og:description" content="1 概述函数，function，独立的，用于实现具体功能的代码块。主要目的，是代码的重用（重复使用），更好的管理代码，模块化开发。函数通常使用参数和返回值，与调用者交互数据。参数给函数传递数据，返回值，函数将处理好的数据传递给调用者。Go语言中函数被称为一等公民（first-class）。意味着支持高阶函数，支持匿名函数，支持闭包等特性，可以满足接口等高级函数特性。 2 定义语法：123456定义">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://www.hellokang.net/images/posts/go/go-func-run.png">
-<meta property="og:updated_time" content="2018-10-23T14:57:50.074Z">
+<meta property="og:updated_time" content="2018-10-23T15:03:22.117Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Go语言中的函数">
 <meta name="twitter:description" content="1 概述函数，function，独立的，用于实现具体功能的代码块。主要目的，是代码的重用（重复使用），更好的管理代码，模块化开发。函数通常使用参数和返回值，与调用者交互数据。参数给函数传递数据，返回值，函数将处理好的数据传递给调用者。Go语言中函数被称为一等公民（first-class）。意味着支持高阶函数，支持匿名函数，支持闭包等特性，可以满足接口等高级函数特性。 2 定义语法：123456定义">
@@ -76,7 +76,7 @@
       <section id="main"><article id="post-go-function" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/go/go-function/" class="article-date">
-  <time datetime="2018-10-23T04:04:53.000Z" itemprop="datePublished">2018-10-23</time>
+  <time datetime="2018-10-22T04:04:53.000Z" itemprop="datePublished">2018-10-22</time>
 </a>
     
   <div class="article-category">
@@ -114,9 +114,10 @@
 <h2><span id="5-函数变量">5 函数变量</span></h2><p>函数可以看作一种特殊的指针类型，可以和其他类型一样被保存在变量中。通过函数标识符和变量都可以访问到该函数，演示如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">func funcTest() &#123;</span><br><span class="line">  fmt.Println(&quot;func() type&quot;)</span><br><span class="line">&#125;</span><br><span class="line">func main() &#123;</span><br><span class="line">  fmt.Printf(&quot;%T, (%v)\n&quot;, funcTest, funcTest)</span><br><span class="line">  fn := funcTest</span><br><span class="line">  fmt.Printf(&quot;%T, (%v)\n&quot;, fn, fn)</span><br><span class="line">  funcTest()</span><br><span class="line">  fn()</span><br><span class="line">&#125;</span><br><span class="line">执行结果：</span><br><span class="line">func(), (0x48fe20)</span><br><span class="line">func(), (0x48fe20)</span><br><span class="line">func() type</span><br><span class="line">func() type</span><br></pre></td></tr></table></figure></p>
 <p>可见，函数标识符就是指向函数的指针。可以赋值给其他变量。</p>
 <h2><span id="6-函数参数">6 函数参数</span></h2><p>函数也可以作为其他函数的参数来使用，演示如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">func funcSuccess() &#123;</span><br><span class="line">&#125;</span><br><span class="line">func funcAsync(handle func()) &#123;</span><br><span class="line">  // 调用函数参数</span><br><span class="line">  handle()</span><br><span class="line">&#125;</span><br><span class="line">// 传递函数到其他函数</span><br><span class="line">funcAsync(success)</span><br></pre></td></tr></table></figure></p>
-<p>这种回调函数的使用语法，再处理异步逻辑时十分有用。</p>
+<p>这种回调函数的使用语法，在处理异步逻辑时十分有用。</p>
 <h2><span id="7-匿名函数">7 匿名函数</span></h2><p>可以定义匿名函数。可以将匿名函数保存到变量中，作为参数传递，或者立即调用。如果函数时临时使用函数，则匿名函数是一个好选择。示例语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">赋值给变量</span><br><span class="line">fn := func() &#123;</span><br><span class="line">&#125;</span><br><span class="line">fn()</span><br><span class="line"></span><br><span class="line">// 作为参数</span><br><span class="line">someFunc(func() &#123;</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">// 立即调用</span><br><span class="line">func() &#123;</span><br><span class="line">  &#125;()</span><br></pre></td></tr></table></figure></p>
 <h2><span id="8-闭包">8 闭包</span></h2><p>由于匿名函数可以定义在其他函数内，同时变量的作用域为层叠的，也就是匿名函数可以会访问其所在的外层函数内的局部变量。当外层函数运行结束后，匿名函数会与其使用的外部函数的局部变量形成闭包。示例代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var fn func()</span><br><span class="line">func outer() &#123;</span><br><span class="line">  v := 42</span><br><span class="line">  fn = func() &#123;</span><br><span class="line">    v ++</span><br><span class="line">    fmt.Print(v)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">outer()</span><br><span class="line">fn() // 43</span><br></pre></td></tr></table></figure></p>
+<p>此例中，fn 对应的匿名函数与 outer() 的局部变量 v，就形成了闭包。</p>
 <h2><span id="9-函数调用示意图">9 函数调用示意图</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var v = &quot;global&quot;</span><br><span class="line">func funcTest(v) &#123;</span><br><span class="line">  v = &quot;funcTest&quot;</span><br><span class="line">  fmt.Println(v)</span><br><span class="line">&#125;</span><br><span class="line">func main() &#123;</span><br><span class="line">  v := &quot;main&quot;</span><br><span class="line">  funcTest(v)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>代码编译期间，会将函数代码存放在内存代码区。<br>函数被调用时，在运行期间会在函数运行栈区开辟函数栈，内部由局部变量标识符列表（就是局部变量），上层标识符列表引用等信息。直到运行结束，此空间才会被出栈，释放。<br>函数内部调用了新函数，新函数的执行空间入栈，要等到新函数执行空间出栈，调用他的函数才会被出栈。<br>以上代码的运行逻辑图如下：<br><img src="http://www.hellokang.net/images/posts/go/go-func-run.png" alt="func-run"></p>
 <h2><span id="10-递归调用">10 递归调用</span></h2><p>函数内部调用函数本身。称之为递归调用。示例代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">func funcTest() &#123;</span><br><span class="line">  fmt.Println(&quot;run&quot;)</span><br><span class="line">  funcTest()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
@@ -128,7 +129,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-function/" data-id="cjnluucd3000ee4uoj68pyizs" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-function/" data-id="cjnlv2koz000j8cuoipgeging" class="article-share-link">分享到</a> -->
       
 
       
@@ -143,9 +144,9 @@
 <nav id="article-nav">
   
   
-    <a href="/go/go-error/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/go/go-flow-control/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">go-错误处理</div>
+      <div class="article-nav-title">Go语言中的流程控制</div>
     </a>
   
 </nav>
@@ -156,7 +157,7 @@
 
   <section class="changyan" id="comments">
 <!--PC和WAP自适应版-->
-<div id="SOHUCS" sid="cjnluucd3000ee4uoj68pyizs"></div> 
+<div id="SOHUCS" sid="cjnlv2koz000j8cuoipgeging"></div> 
 <script type="text/javascript"> 
 	(function(){ 
 		var appid = 'cyt64TYiv'; 
@@ -242,10 +243,6 @@
           </li>
         
           <li>
-            <a href="/go/go-error/">go-错误处理</a>
-          </li>
-        
-          <li>
             <a href="/go/go-flow-control/">Go语言中的流程控制</a>
           </li>
         
@@ -255,6 +252,10 @@
         
           <li>
             <a href="/go/go-type/">Go语言的数据类型</a>
+          </li>
+        
+          <li>
+            <a href="/go/go-variable/">Go语言中的变量</a>
           </li>
         
       </ul>
