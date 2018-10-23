@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.hellokang.net/"/>
-  <updated>2018-10-22T13:56:45.559Z</updated>
+  <updated>2018-10-23T14:57:50.074Z</updated>
   <id>http://blog.hellokang.net/</id>
   
   <author>
@@ -17,11 +17,39 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Go语言中的函数</title>
+    <link href="http://blog.hellokang.net/go/go-function/"/>
+    <id>http://blog.hellokang.net/go/go-function/</id>
+    <published>2018-10-23T04:04:53.000Z</published>
+    <updated>2018-10-23T14:57:50.074Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2&gt;&lt;span id=&quot;1-概述&quot;&gt;1
+        
+      
+    
+    </summary>
+    
+      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
+    
+    
+      <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
+    
+      <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
+    
+  </entry>
+  
+  <entry>
     <title>go-错误处理</title>
     <link href="http://blog.hellokang.net/go/go-error/"/>
     <id>http://blog.hellokang.net/go/go-error/</id>
     <published>2018-10-22T13:54:59.000Z</published>
-    <updated>2018-10-22T13:56:45.559Z</updated>
+    <updated>2018-10-23T12:15:05.995Z</updated>
     
     <summary type="html">
     
@@ -40,15 +68,9 @@
     
       <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
     
-      <category term="go-guide" scheme="http://blog.hellokang.net/tags/go-guide/"/>
+      <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
     
       <category term="error" scheme="http://blog.hellokang.net/tags/error/"/>
-    
-      <category term="panic" scheme="http://blog.hellokang.net/tags/panic/"/>
-    
-      <category term="recover" scheme="http://blog.hellokang.net/tags/recover/"/>
-    
-      <category term="defer" scheme="http://blog.hellokang.net/tags/defer/"/>
     
   </entry>
   
@@ -57,7 +79,7 @@
     <link href="http://blog.hellokang.net/go/go-flow-control/"/>
     <id>http://blog.hellokang.net/go/go-flow-control/</id>
     <published>2018-10-21T12:15:24.000Z</published>
-    <updated>2018-10-22T14:27:54.628Z</updated>
+    <updated>2018-10-23T12:14:58.977Z</updated>
     
     <summary type="html">
     
@@ -80,7 +102,7 @@
     
       <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
     
-      <category term="go-guide" scheme="http://blog.hellokang.net/tags/go-guide/"/>
+      <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
     
   </entry>
   
@@ -89,7 +111,7 @@
     <link href="http://blog.hellokang.net/go/go-operator/"/>
     <id>http://blog.hellokang.net/go/go-operator/</id>
     <published>2018-10-21T12:05:46.000Z</published>
-    <updated>2018-10-22T14:35:11.238Z</updated>
+    <updated>2018-10-23T12:14:42.295Z</updated>
     
     <summary type="html">
     
@@ -112,7 +134,7 @@
     
       <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
     
-      <category term="go-guide" scheme="http://blog.hellokang.net/tags/go-guide/"/>
+      <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
     
   </entry>
   
@@ -121,7 +143,7 @@
     <link href="http://blog.hellokang.net/go/go-type/"/>
     <id>http://blog.hellokang.net/go/go-type/</id>
     <published>2018-10-19T09:59:26.000Z</published>
-    <updated>2018-10-22T14:35:20.640Z</updated>
+    <updated>2018-10-23T12:14:35.166Z</updated>
     
     <summary type="html">
     
@@ -144,7 +166,7 @@
     
       <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
     
-      <category term="go-guide" scheme="http://blog.hellokang.net/tags/go-guide/"/>
+      <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
     
   </entry>
   
@@ -153,7 +175,7 @@
     <link href="http://blog.hellokang.net/go/go-variable/"/>
     <id>http://blog.hellokang.net/go/go-variable/</id>
     <published>2018-10-18T10:51:32.000Z</published>
-    <updated>2018-10-22T14:35:25.204Z</updated>
+    <updated>2018-10-23T12:14:30.945Z</updated>
     
     <summary type="html">
     
@@ -176,7 +198,7 @@
     
       <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
     
-      <category term="go-guide" scheme="http://blog.hellokang.net/tags/go-guide/"/>
+      <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
     
   </entry>
   
@@ -185,7 +207,7 @@
     <link href="http://blog.hellokang.net/go/go-constant/"/>
     <id>http://blog.hellokang.net/go/go-constant/</id>
     <published>2018-10-17T14:50:38.000Z</published>
-    <updated>2018-10-22T14:35:38.670Z</updated>
+    <updated>2018-10-23T12:15:13.350Z</updated>
     
     <summary type="html">
     
@@ -209,7 +231,7 @@
     
       <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
     
-      <category term="go-guide" scheme="http://blog.hellokang.net/tags/go-guide/"/>
+      <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
     
   </entry>
   
@@ -306,22 +328,6 @@
     <id>http://blog.hellokang.net/go/go-stuct/</id>
     <published>2018-10-06T04:03:54.000Z</published>
     <updated>2018-10-15T04:15:03.174Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
-      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Go语言中的一等公民——函数</title>
-    <link href="http://blog.hellokang.net/go/go-function/"/>
-    <id>http://blog.hellokang.net/go/go-function/</id>
-    <published>2018-10-01T04:04:53.000Z</published>
-    <updated>2018-10-15T04:14:42.152Z</updated>
     
     <summary type="html">
     
@@ -434,22 +440,6 @@
     <id>http://blog.hellokang.net/go/go-goroutine/</id>
     <published>2018-08-22T03:53:59.000Z</published>
     <updated>2018-10-15T04:14:45.242Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
-      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Go语言模块化项目管理</title>
-    <link href="http://blog.hellokang.net/go/go-module/"/>
-    <id>http://blog.hellokang.net/go/go-module/</id>
-    <published>2018-06-11T03:50:05.000Z</published>
-    <updated>2018-10-15T04:14:51.637Z</updated>
     
     <summary type="html">
     

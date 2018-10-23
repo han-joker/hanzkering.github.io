@@ -72,6 +72,76 @@
     <div class="outer">
       <section id="main">
   
+    <article id="post-go-function" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/go/go-function/" class="article-date">
+  <time datetime="2018-10-23T04:04:53.000Z" itemprop="datePublished">2018-10-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/go/">go</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/go/go-function/">Go语言中的函数</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2><span id="1-概述">1 概述</span></h2><p>函数，function，独立的，用于实现具体功能的代码块。主要目的，是代码的重用（重复使用），更好的管理代码，模块化开发。<br>函数通常使用参数和返回值，与调用者交互数据。参数给函数传递数据，返回值，函数将处理好的数据传递给调用者。<br>Go语言中函数被称为一等公民（first-class）。意味着支持高阶函数，支持匿名函数，支持闭包等特性，可以满足接口等高级函数特性。</p>
+<h2><span id="2-定义">2 定义</span></h2><p>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">定义：</span><br><span class="line">func 函数名(形参列表)(返回值类型列表) &#123;</span><br><span class="line">  函数体，通常会有return语句，返回值</span><br><span class="line">&#125;</span><br><span class="line">调用：</span><br><span class="line">函数名(实参列表)</span><br></pre></td></tr></table></figure></p>
+<p>函数名：函数的标识符，用于找到函数，内部是一个指向函数代码的地址。<br>形参列表：由变量和类型构成<br>返回值类型列表：函数返回值的类型，多个返回值需要指定多个。<br>函数体：实现函数功能的具体语句。<br>return语句：返回值语句</p>
+<p>以上定的为命名函数，不能定义在其他函数内部。</p>
+<h2><span id="3-参数">3 参数</span></h2><p>用于在调用函数时向函数传递数据。<br>实参，实际参数。调用时给的参数。指的是具有的特定实际数据的参数。<br>形参，形式参数。定义时使用的参数。指的是用来表示函数需要参数，而定义时参数是没有任实际何数据的。<br>当调用时会发生使用实参为形参变量赋值的过程，称为参数的传递。在函数的执行期间，形参是有具体数据的，形参当于函数内声明的变量。</p>
+<p>参数的传递，分为值传递，地址传递两种方式。地址传递时，需要形参定义为指针类型，调用时需要取得地址传参。示例代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">func funcTest(p1 int, p2 *int) &#123;</span><br><span class="line">  p1++</span><br><span class="line">  *p2++</span><br><span class="line">  fmt.Println(p1, *p2)</span><br><span class="line">&#125;</span><br><span class="line">func main() &#123;</span><br><span class="line">  var (</span><br><span class="line">    a1 = 42</span><br><span class="line">    a2 = 42</span><br><span class="line">  )</span><br><span class="line">  funcTest(a1, &amp;a2)</span><br><span class="line">  // 参数赋值过程</span><br><span class="line">  fmt.Println(a1, a2)</span><br><span class="line">&#125;</span><br><span class="line">以上会输出</span><br><span class="line">43 43</span><br><span class="line">42 43</span><br></pre></td></tr></table></figure></p>
+<p>值传递，函数会得到实参的一份拷贝。地址传递，函数会得到实参地址，这样函数内通过地址对变量的修改，同时影响实参。</p>
+<p>Go支持rest…不定数量参数，定义时将不定数量形参放在形参列表的最后定义，使用 …Type的方式，演示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">定义：</span><br><span class="line">func funcTest(op string, nums ...int) &#123;</span><br><span class="line">  fmt.Println(nums) // [4, 1, 55, 12], slice切片型数据</span><br><span class="line">&#125;</span><br><span class="line">调用</span><br><span class="line">funcTest(&quot;someOp&quot;, 4, 1, 55, 12)</span><br></pre></td></tr></table></figure></p>
+<p>接收到的参数为slice切片类型。</p>
+<h2><span id="4-返回值">4 返回值</span></h2><p>return语句用于生成返回值。需要在函数定义时确定返回值类型，支持多值返回。演示语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">func funcTest() (int, string) &#123;</span><br><span class="line">  return 42, &quot;Hank&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以在定义时，声明返回的变量。这个做法叫命名返回，演示为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">func funcTest() (num int, title string) &#123;</span><br><span class="line">  num = 42</span><br><span class="line">  title = &quot;Hank&quot;</span><br><span class="line">  return</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>不用return任何数据，直接return即可！</p>
+<h2><span id="5-函数变量">5 函数变量</span></h2><p>函数可以看作一种特殊的指针类型，可以和其他类型一样被保存在变量中。通过函数标识符和变量都可以访问到该函数，演示如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">func funcTest() &#123;</span><br><span class="line">  fmt.Println(&quot;func() type&quot;)</span><br><span class="line">&#125;</span><br><span class="line">func main() &#123;</span><br><span class="line">  fmt.Printf(&quot;%T, (%v)\n&quot;, funcTest, funcTest)</span><br><span class="line">  fn := funcTest</span><br><span class="line">  fmt.Printf(&quot;%T, (%v)\n&quot;, fn, fn)</span><br><span class="line">  funcTest()</span><br><span class="line">  fn()</span><br><span class="line">&#125;</span><br><span class="line">执行结果：</span><br><span class="line">func(), (0x48fe20)</span><br><span class="line">func(), (0x48fe20)</span><br><span class="line">func() type</span><br><span class="line">func() type</span><br></pre></td></tr></table></figure></p>
+<p>可见，函数标识符就是指向函数的指针。可以赋值给其他变量。</p>
+<h2><span id="6-函数参数">6 函数参数</span></h2><p>函数也可以作为其他函数的参数来使用，演示如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">func funcSuccess() &#123;</span><br><span class="line">&#125;</span><br><span class="line">func funcAsync(handle func()) &#123;</span><br><span class="line">  // 调用函数参数</span><br><span class="line">  handle()</span><br><span class="line">&#125;</span><br><span class="line">// 传递函数到其他函数</span><br><span class="line">funcAsync(success)</span><br></pre></td></tr></table></figure></p>
+<p>这种回调函数的使用语法，再处理异步逻辑时十分有用。</p>
+<h2><span id="7-匿名函数">7 匿名函数</span></h2><p>可以定义匿名函数。可以将匿名函数保存到变量中，作为参数传递，或者立即调用。如果函数时临时使用函数，则匿名函数是一个好选择。示例语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">赋值给变量</span><br><span class="line">fn := func() &#123;</span><br><span class="line">&#125;</span><br><span class="line">fn()</span><br><span class="line"></span><br><span class="line">// 作为参数</span><br><span class="line">someFunc(func() &#123;</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">// 立即调用</span><br><span class="line">func() &#123;</span><br><span class="line">  &#125;()</span><br></pre></td></tr></table></figure></p>
+<h2><span id="8-闭包">8 闭包</span></h2><p>由于匿名函数可以定义在其他函数内，同时变量的作用域为层叠的，也就是匿名函数可以会访问其所在的外层函数内的局部变量。当外层函数运行结束后，匿名函数会与其使用的外部函数的局部变量形成闭包。示例代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var fn func()</span><br><span class="line">func outer() &#123;</span><br><span class="line">  v := 42</span><br><span class="line">  fn = func() &#123;</span><br><span class="line">    v ++</span><br><span class="line">    fmt.Print(v)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">outer()</span><br><span class="line">fn() // 43</span><br></pre></td></tr></table></figure></p>
+<h2><span id="9-函数调用示意图">9 函数调用示意图</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var v = &quot;global&quot;</span><br><span class="line">func funcTest(v) &#123;</span><br><span class="line">  v = &quot;funcTest&quot;</span><br><span class="line">  fmt.Println(v)</span><br><span class="line">&#125;</span><br><span class="line">func main() &#123;</span><br><span class="line">  v := &quot;main&quot;</span><br><span class="line">  funcTest(v)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代码编译期间，会将函数代码存放在内存代码区。<br>函数被调用时，在运行期间会在函数运行栈区开辟函数栈，内部由局部变量标识符列表（就是局部变量），上层标识符列表引用等信息。直到运行结束，此空间才会被出栈，释放。<br>函数内部调用了新函数，新函数的执行空间入栈，要等到新函数执行空间出栈，调用他的函数才会被出栈。<br>以上代码的运行逻辑图如下：<br><img src="http://www.hellokang.net/images/posts/go/go-func-run.png" alt="func-run"></p>
+<h2><span id="10-递归调用">10 递归调用</span></h2><p>函数内部调用函数本身。称之为递归调用。示例代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">func funcTest() &#123;</span><br><span class="line">  fmt.Println(&quot;run&quot;)</span><br><span class="line">  funcTest()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>定义实现递归调用函数时，通常需要定义一个出口。用来确定何时不再进行递归调用了。一旦满足条件，则调用停止。例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">func funcTest(v) &#123;</span><br><span class="line">  fmt.Println(v, &quot;run&quot;)</span><br><span class="line">  v ++</span><br><span class="line">  if v &lt;= 10 &#123;</span><br><span class="line">    funcTest()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>典型的应用有，树状菜单的处理，遍历目录，快速排序等。<br>递归调用的优势是编码简单，与描述的业务逻辑保持一致。</p>
+<p>完！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <!-- <a data-url="http://blog.hellokang.net/go/go-function/" data-id="cjnluucd3000ee4uoj68pyizs" class="article-share-link">分享到</a> -->
+      
+
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+ 
+  
     <article id="post-go-error" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/go/go-error/" class="article-date">
@@ -108,13 +178,13 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-error/" data-id="cjnkemwdc0009msuoy2f20pvb" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-error/" data-id="cjnluucda000me4uoa52a7ahw" class="article-share-link">分享到</a> -->
       
 
       
 
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/defer/">defer</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/error/">error</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go-guide/">go-guide</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/panic/">panic</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/recover/">recover</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/error/">error</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
 
     </footer>
   </div>
@@ -201,13 +271,13 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-flow-control/" data-id="cjnkemwdi000dmsuox5qtllza" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-flow-control/" data-id="cjnluucd0000be4uo4ma8h7mp" class="article-share-link">分享到</a> -->
       
 
       
 
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go-guide/">go-guide</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
 
     </footer>
   </div>
@@ -339,13 +409,13 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-operator/" data-id="cjnkemwdx000rmsuoh5pe62tr" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-operator/" data-id="cjnluucdi000xe4uo42sdtan9" class="article-share-link">分享到</a> -->
       
 
       
 
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go-guide/">go-guide</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
 
     </footer>
   </div>
@@ -492,13 +562,13 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjnkemwea0017msuos2t56qhj" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjnluucdk0011e4uof73jre4u" class="article-share-link">分享到</a> -->
       
 
       
 
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go-guide/">go-guide</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
 
     </footer>
   </div>
@@ -581,13 +651,13 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-variable/" data-id="cjnkemwe80015msuo8m40etu2" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-variable/" data-id="cjnluucdm0014e4uoc6slb1ui" class="article-share-link">分享到</a> -->
       
 
       
 
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go-guide/">go-guide</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
 
     </footer>
   </div>
@@ -665,13 +735,13 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-constant/" data-id="cjnkemwde000amsuoaktu98ij" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-constant/" data-id="cjnluucct0005e4uov0tqblzi" class="article-share-link">分享到</a> -->
       
 
       
 
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go-guide/">go-guide</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
 
     </footer>
   </div>
@@ -707,7 +777,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/uncategorized/go-editor-sublime/" data-id="cjnkemwd70006msuo91b8848n" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/uncategorized/go-editor-sublime/" data-id="cjnluucd8000je4uol4iy8i8s" class="article-share-link">分享到</a> -->
       
 
       
@@ -780,7 +850,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/git/git-merge-rebase/" data-id="cjnkemwd60005msuobhhhbbfd" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/git/git-merge-rebase/" data-id="cjnluucch0000e4uoam2t41ce" class="article-share-link">分享到</a> -->
       
 
       
@@ -882,7 +952,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/hexo/hexo-github/" data-id="cjnkemwed001bmsuondo95dyr" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/hexo/hexo-github/" data-id="cjnluucds001de4uoigdzfwfe" class="article-share-link">分享到</a> -->
       
 
       
@@ -890,50 +960,6 @@
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/blog/">blog</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/github/">github</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
 
-    </footer>
-  </div>
-  
-</article>
-
- 
-  
-    <article id="post-go-command" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/go/go-command/" class="article-date">
-  <time datetime="2018-10-10T03:49:27.000Z" itemprop="datePublished">2018-10-10</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/go/">go</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/go/go-command/">Go提供的常用命令</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-        <!-- <a data-url="http://blog.hellokang.net/go/go-command/" data-id="cjnkemwd40004msuoh7e9f74g" class="article-share-link">分享到</a> -->
-      
-
-      
-
-      
     </footer>
   </div>
   
@@ -980,7 +1006,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">16</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -989,7 +1015,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/">blog</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/defer/">defer</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-guide/">go-guide</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/panic/">panic</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/recover/">recover</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/">blog</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -998,7 +1024,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/defer/" style="font-size: 10px;">defer</a> <a href="/tags/error/" style="font-size: 10px;">error</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/go/" style="font-size: 20px;">go</a> <a href="/tags/go-guide/" style="font-size: 20px;">go-guide</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/panic/" style="font-size: 10px;">panic</a> <a href="/tags/recover/" style="font-size: 10px;">recover</a>
+      <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/error/" style="font-size: 10px;">error</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/go/" style="font-size: 20px;">go</a> <a href="/tags/goGuide/" style="font-size: 20px;">goGuide</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a>
     </div>
   </div>
 
@@ -1007,7 +1033,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -1017,6 +1043,10 @@
     <h3 class="widget-title">近期文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/go/go-function/">Go语言中的函数</a>
+          </li>
         
           <li>
             <a href="/go/go-error/">go-错误处理</a>
@@ -1032,10 +1062,6 @@
         
           <li>
             <a href="/go/go-type/">Go语言的数据类型</a>
-          </li>
-        
-          <li>
-            <a href="/go/go-variable/">Go语言中的变量</a>
           </li>
         
       </ul>
