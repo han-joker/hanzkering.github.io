@@ -98,7 +98,17 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2><span id="1-概述">1 概述</span></h2><p>Go 语言的源码复用建立在包（package）基础之上。包通过 package, import, GOPATH 操作完成。</p>
+        <!-- toc -->
+<ul>
+<li><a href="#1-概述">1 概述</a></li>
+<li><a href="#2-main包">2 main包</a></li>
+<li><a href="#3-包定义package">3 包定义，package</a></li>
+<li><a href="#4-导入包import">4 导入包，import</a></li>
+<li><a href="#4-gopath环境变量">4 GOPATH环境变量</a></li>
+<li><a href="#5-init-包初始化">5 init() 包初始化</a></li>
+</ul>
+<!-- tocstop -->
+<h2><span id="1-概述">1 概述</span></h2><p>Go 语言的源码复用建立在包（package）基础之上。包通过 package, import, GOPATH 操作完成。</p>
 <h2><span id="2-main包">2 main包</span></h2><p>Go 语言的入口 main() 函数所在的包（package）叫 main，main 包想要引用别的代码，需要import导入！</p>
 <h2><span id="3-包定义package">3 包定义，package</span></h2><p>Go 语言的包与文件夹一一对应，同一个目录下的所有.go文件的第一行添加 包定义，以标记该文件归属的包，演示语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">package 包名</span><br></pre></td></tr></table></figure></p>
 <p>包需要满足：</p>
@@ -133,7 +143,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-package/" data-id="cjnndlijd000xg4uo8z79x10k" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-package/" data-id="cjnndr20m0011qkuo4hpq333j" class="article-share-link">分享到</a> -->
       
 
       
@@ -249,7 +259,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-string/" data-id="cjnndliji0014g4uo370ljexu" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-string/" data-id="cjnndr20z001aqkuojmatu6be" class="article-share-link">分享到</a> -->
       
 
       
@@ -320,7 +330,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-function/" data-id="cjnndlij6000og4uoj28w8p7f" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-function/" data-id="cjnndr20b000kqkuoxr8syx6f" class="article-share-link">分享到</a> -->
       
 
       
@@ -413,7 +423,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-flow-control/" data-id="cjnndlij0000hg4uoy60ikcpu" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-flow-control/" data-id="cjnndr20d000nqkuohdzhr576" class="article-share-link">分享到</a> -->
       
 
       
@@ -551,7 +561,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-operator/" data-id="cjnndlij3000lg4uoc0es0zls" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-operator/" data-id="cjnndr20i000uqkuo86z9kak9" class="article-share-link">分享到</a> -->
       
 
       
@@ -704,7 +714,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjnndlijv001bg4uo0krwybdm" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjnndr215001jqkuo718ntkop" class="article-share-link">分享到</a> -->
       
 
       
@@ -793,7 +803,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-variable/" data-id="cjnndlik0001ig4uo1ac1cp7f" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-variable/" data-id="cjnndr211001dqkuoh7w0bggk" class="article-share-link">分享到</a> -->
       
 
       
@@ -877,7 +887,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-constant/" data-id="cjnndliiu000cg4uo3l1ljad3" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-constant/" data-id="cjnndr1zu0004qkuooo09llxa" class="article-share-link">分享到</a> -->
       
 
       
@@ -919,7 +929,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/uncategorized/go-editor-sublime/" data-id="cjnndliiq0008g4uomie5lag3" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/uncategorized/go-editor-sublime/" data-id="cjnndr202000aqkuo84rnou1w" class="article-share-link">分享到</a> -->
       
 
       
@@ -992,7 +1002,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/git/git-merge-rebase/" data-id="cjnndliid0001g4uotw0rara5" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/git/git-merge-rebase/" data-id="cjnndr1zy0007qkuovm1fi88x" class="article-share-link">分享到</a> -->
       
 
       

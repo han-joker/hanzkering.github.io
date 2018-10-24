@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.hellokang.net/"/>
-  <updated>2018-10-24T16:30:52.521Z</updated>
+  <updated>2018-10-24T16:35:20.062Z</updated>
   <id>http://blog.hellokang.net/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://blog.hellokang.net/go/go-package/"/>
     <id>http://blog.hellokang.net/go/go-package/</id>
     <published>2018-10-24T15:51:15.000Z</published>
-    <updated>2018-10-24T16:30:52.521Z</updated>
+    <updated>2018-10-24T16:35:20.062Z</updated>
     
     <summary type="html">
     
@@ -29,8 +29,11 @@
       
         
         
-          &lt;h2&gt;&lt;span id=&quot;1-概述&quot;&gt;1 概述&lt;/span&gt;&lt;/h2&gt;&lt;p&gt;Go 语言的源码复用建立在包（package）基础之上。包通过 package, import, GOPATH 操作完成。&lt;/p&gt;
-&lt;h2&gt;&lt;span id=&quot;2-main包&quot;&gt;2
+          &lt;!-- toc --&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#1-概述&quot;&gt;1 概述&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#2-main包&quot;&gt;2 main包&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#3-包定义package&quot;&gt;3
         
       
     
