@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.hellokang.net/"/>
-  <updated>2018-10-24T16:27:37.976Z</updated>
+  <updated>2018-10-24T16:30:52.521Z</updated>
   <id>http://blog.hellokang.net/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Go语言包管理</title>
+    <title>Go语言的包管理</title>
     <link href="http://blog.hellokang.net/go/go-package/"/>
     <id>http://blog.hellokang.net/go/go-package/</id>
     <published>2018-10-24T15:51:15.000Z</published>
-    <updated>2018-10-24T16:27:37.976Z</updated>
+    <updated>2018-10-24T16:30:52.521Z</updated>
     
     <summary type="html">
     

@@ -90,7 +90,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/go/go-package/">Go语言包管理</a>
+      <a class="article-title" href="/go/go-package/">Go语言的包管理</a>
     </h1>
   
 
@@ -117,13 +117,13 @@
 <ul>
 <li>windows 通过 系统-&gt;系统信息-&gt;高级系统设置-&gt;环境变量 中完成设置。</li>
 <li><p>windows 中通过 CMD 或者 powershell 也可以完成设置。通常是临时有效的，CMD或者powershell关闭失效！</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CMD：</span><br><span class="line">set GOPATH=D:\projects\goProject</span><br><span class="line">set GOPATH 可以查看</span><br><span class="line"></span><br><span class="line">powershell：</span><br><span class="line">$env:GOPATH=&quot;D:\projects\goProject&quot;</span><br><span class="line">$env:GOPATH 可以查看</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CMD：</span><br><span class="line">set GOPATH=D:\projects\goProject</span><br><span class="line">set GOPATH 可以查看</span><br><span class="line">powershell：</span><br><span class="line">$env:GOPATH=&quot;D:\projects\goProject&quot;</span><br><span class="line">$env:GOPATH 可以查看</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>linux 通过 /etc/profile 进行设置</p>
 </li>
 </ul>
 <h2><span id="5-init-包初始化">5 init() 包初始化</span></h2><p>可以在源码中，定义 init() 函数。此函数会在包被导入时执行，例如如果是在 main 中导入包，包中存在 init()，那么 init() 中的代码会在 main() 函数执行前执行，用于初始化包所需要的特定资料。例如：<br>包源码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">src/userPackage/tool.go</span><br><span class="line"></span><br><span class="line">package userPackage</span><br><span class="line">import &quot;fmt&quot;</span><br><span class="line">func init() &#123;</span><br><span class="line">  fmt.Println(&quot;tool init&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>主函数源码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">src/main.go</span><br><span class="line">package main</span><br><span class="line">import (</span><br><span class="line">  &quot;userPackage&quot;</span><br><span class="line">  )</span><br><span class="line">func main() &#123;</span><br><span class="line">  fmt.Println(&quot;main run&quot;)</span><br><span class="line">  // 使用userPackage</span><br><span class="line">  userPackage.SomeFunc()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>主函数源码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">src/main.go</span><br><span class="line"></span><br><span class="line">package main</span><br><span class="line">import (</span><br><span class="line">  &quot;userPackage&quot;</span><br><span class="line">  )</span><br><span class="line">func main() &#123;</span><br><span class="line">  fmt.Println(&quot;main run&quot;)</span><br><span class="line">  // 使用userPackage</span><br><span class="line">  userPackage.SomeFunc()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>执行时，会先输出 “tool init”，再输出 “main run”。</p>
 <p>如果仅仅需要导入包时执行初始化操作，并不需要使用包内的其他函数，常量等资源。则可以在导入包时，匿名导入：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import (</span><br><span class="line">  _ &quot;userPackage&quot;</span><br><span class="line">  )</span><br></pre></td></tr></table></figure></p>
 <p>使用下划线作为包的别名，会仅仅执行init()</p>
@@ -133,7 +133,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-package/" data-id="cjnndi1p7000zvcuoxmqqcztl" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-package/" data-id="cjnndlijd000xg4uo8z79x10k" class="article-share-link">分享到</a> -->
       
 
       
@@ -249,7 +249,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-string/" data-id="cjnndi1pf0018vcuo3auau115" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-string/" data-id="cjnndliji0014g4uo370ljexu" class="article-share-link">分享到</a> -->
       
 
       
@@ -320,7 +320,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-function/" data-id="cjnndi1oq000jvcuoxdtdptet" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-function/" data-id="cjnndlij6000og4uoj28w8p7f" class="article-share-link">分享到</a> -->
       
 
       
@@ -413,7 +413,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-flow-control/" data-id="cjnndi1ov000mvcuom1n3z5th" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-flow-control/" data-id="cjnndlij0000hg4uoy60ikcpu" class="article-share-link">分享到</a> -->
       
 
       
@@ -551,7 +551,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-operator/" data-id="cjnndi1p5000wvcuo1b6sco5r" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-operator/" data-id="cjnndlij3000lg4uoc0es0zls" class="article-share-link">分享到</a> -->
       
 
       
@@ -704,7 +704,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjnndi1pr001bvcuosfi7jbdy" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjnndlijv001bg4uo0krwybdm" class="article-share-link">分享到</a> -->
       
 
       
@@ -793,7 +793,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-variable/" data-id="cjnndi1pt001evcuo49c8caff" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-variable/" data-id="cjnndlik0001ig4uo1ac1cp7f" class="article-share-link">分享到</a> -->
       
 
       
@@ -877,7 +877,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-constant/" data-id="cjnndi1ny0005vcuonpkjd315" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-constant/" data-id="cjnndliiu000cg4uo3l1ljad3" class="article-share-link">分享到</a> -->
       
 
       
@@ -919,7 +919,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/uncategorized/go-editor-sublime/" data-id="cjnndi1ob000bvcuofma0f6va" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/uncategorized/go-editor-sublime/" data-id="cjnndliiq0008g4uomie5lag3" class="article-share-link">分享到</a> -->
       
 
       
@@ -992,7 +992,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/git/git-merge-rebase/" data-id="cjnndi1n80000vcuogjfy49vz" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/git/git-merge-rebase/" data-id="cjnndliid0001g4uotw0rara5" class="article-share-link">分享到</a> -->
       
 
       
@@ -1085,7 +1085,7 @@
       <ul>
         
           <li>
-            <a href="/go/go-package/">Go语言包管理</a>
+            <a href="/go/go-package/">Go语言的包管理</a>
           </li>
         
           <li>
