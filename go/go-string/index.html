@@ -1,0 +1,374 @@
+
+<!DOCTYPE html>
+<html  xmlns:wb="http://open.weibo.com/wb">
+<head>
+  <meta charset="utf-8">
+  
+  <title>Go语言中的字符串处理 | 小韩说课</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1 概述 2 常规操作 len()，字符串占用的字节数 +，字符串连接 ==, &amp;gt;, &amp;lt; strings.Compare(a, b string) int strings.Contains(s, substr string) bool strings.ContainsAny(s, chars string) bool strings.ContainsRune(s string, r">
+<meta name="keywords" content="go,goGuide">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go语言中的字符串处理">
+<meta property="og:url" content="http://blog.hellokang.net/go/go-string/index.html">
+<meta property="og:site_name" content="小韩说课">
+<meta property="og:description" content="1 概述 2 常规操作 len()，字符串占用的字节数 +，字符串连接 ==, &amp;gt;, &amp;lt; strings.Compare(a, b string) int strings.Contains(s, substr string) bool strings.ContainsAny(s, chars string) bool strings.ContainsRune(s string, r">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-24T15:51:22.979Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Go语言中的字符串处理">
+<meta name="twitter:description" content="1 概述 2 常规操作 len()，字符串占用的字节数 +，字符串连接 ==, &amp;gt;, &amp;lt; strings.Compare(a, b string) int strings.Contains(s, substr string) bool strings.ContainsAny(s, chars string) bool strings.ContainsRune(s string, r">
+  
+    <link rel="alternative" href="/atom.xml" title="小韩说课" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+  <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<div id="container">
+  <div id="wrap">
+    <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">小韩说课</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">认真做课，提供PHP, Python, JavaScript, Go, MySQL, linux相关内容</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <!-- <a id="nav-search-btn" class="nav-icon" title="Search"></a> -->
+      </nav>
+<!--       <div id="search-form-wrap">
+        <form action="#" method="get" accept-charset="utf-8" class="search-form" id="local-search-form">
+          <input type="text" id="local-search-input" class="search-form-input" placeholder="Search" /> 
+          <input type="submit" class="search-form-submit">
+          <div id="local-search-result"></div>
+        </form>
+      </div> -->
+    </div>
+  </div>
+</header>
+    <div class="outer">
+      <section id="main"><article id="post-go-string" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/go/go-string/" class="article-date">
+  <time datetime="2018-10-24T03:31:03.000Z" itemprop="datePublished">2018-10-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/go/">go</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Go语言中的字符串处理
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- toc -->
+<ul>
+<li><a href="#1-概述">1 概述</a></li>
+<li><a href="#2-常规操作">2 常规操作</a><ul>
+<li><a href="#len字符串占用的字节数">len()，字符串占用的字节数</a></li>
+<li><a href="#字符串连接">+，字符串连接</a></li>
+<li><a href="#">==, &gt;, &lt;</a></li>
+<li><a href="#stringscomparea-b-string-int">strings.Compare(a, b string) int</a></li>
+<li><a href="#stringscontainss-substr-string-bool">strings.Contains(s, substr string) bool</a></li>
+<li><a href="#stringscontainsanys-chars-string-bool">strings.ContainsAny(s, chars string) bool</a></li>
+<li><a href="#stringscontainsrunes-string-r-rune-bool">strings.ContainsRune(s string, r rune) bool</a></li>
+<li><a href="#stringscounts-substr-string-int">strings.Count(s, substr string) int</a></li>
+<li><a href="#stringsequalfolds-t-string-bool">strings.EqualFold(s, t string) bool</a></li>
+<li><a href="#stringsfieldss-string-string">strings.Fields(s string) []string</a></li>
+<li><a href="#stringsfieldsfuncs-string-f-funcrune-bool-string">strings.FieldsFunc(s string, f func(rune) bool) []string</a></li>
+<li><a href="#stringshasprefixs-prefix-string-bool">strings.HasPrefix(s, prefix string) bool</a></li>
+<li><a href="#stringshassuffixs-suffix-string-bool">strings.HasSuffix(s, suffix string) bool</a></li>
+<li><a href="#stringsindexs-substr-string-int">strings.Index(s, substr string) int</a></li>
+<li><a href="#stringsindexanys-chars-string-int">strings.IndexAny(s, chars string) int</a></li>
+<li><a href="#stringsindexbytes-string-c-byte-int">strings.IndexByte(s string, c byte) int</a></li>
+<li><a href="#stringsindexfuncs-string-f-funcrune-bool-int">strings.IndexFunc(s string, f func(rune) bool) int</a></li>
+<li><a href="#stringsindexrunes-string-r-rune-int">strings.IndexRune(s string, r rune) int</a></li>
+<li><a href="#stringsjoina-string-sep-string-string">strings.Join(a []string, sep string) string</a></li>
+<li><a href="#stringslastindexs-substr-string-int">strings.LastIndex(s, substr string) int</a></li>
+<li><a href="#stringslastindexanys-chars-string-int">strings.LastIndexAny(s, chars string) int</a></li>
+<li><a href="#stringslastindexbytes-string-c-byte-int">strings.LastIndexByte(s string, c byte) int</a></li>
+<li><a href="#stringslastindexfuncs-string-f-funcrune-bool-int">strings.LastIndexFunc(s string, f func(rune) bool) int</a></li>
+<li><a href="#stringsmapmapping-funcrune-rune-s-string-string">strings.Map(mapping func(rune) rune, s string) string</a></li>
+<li><a href="#stringsrepeats-string-count-int-string">strings.Repeat(s string, count int) string</a></li>
+<li><a href="#stringsreplaces-old-new-string-n-int-string">strings.Replace(s, old, new string, n int) string</a></li>
+<li><a href="#stringssplits-sep-string-string">strings.Split(s, sep string) []string</a></li>
+<li><a href="#stringssplitafters-sep-string-string">strings.SplitAfter(s, sep string) []string</a></li>
+<li><a href="#stringssplitafterns-sep-string-n-int-string">strings.SplitAfterN(s, sep string, n int) []string</a></li>
+<li><a href="#stringssplitns-sep-string-n-int-string">strings.SplitN(s, sep string, n int) []string</a></li>
+<li><a href="#stringstitles-string-string">strings.Title(s string) string</a></li>
+<li><a href="#stringstolowers-string-string">strings.ToLower(s string) string</a></li>
+<li><a href="#stringstolowerspecialc-unicodespecialcase-s-string-string">strings.ToLowerSpecial(c unicode.SpecialCase, s string) string</a></li>
+<li><a href="#stringstotitles-string-string">strings.ToTitle(s string) string</a></li>
+<li><a href="#stringstotitlespecialc-unicodespecialcase-s-string-string">strings.ToTitleSpecial(c unicode.SpecialCase, s string) string</a></li>
+<li><a href="#stringstouppers-string-string">strings.ToUpper(s string) string</a></li>
+<li><a href="#stringstoupperspecialc-unicodespecialcase-s-string-string">strings.ToUpperSpecial(c unicode.SpecialCase, s string) string</a></li>
+<li><a href="#stringstrims-string-cutset-string-string">strings.Trim(s string, cutset string) string</a></li>
+<li><a href="#stringstrimfuncs-string-f-funcrune-bool-string">strings.TrimFunc(s string, f func(rune) bool) string</a></li>
+<li><a href="#stringstrimlefts-string-cutset-string-string">strings.TrimLeft(s string, cutset string) string</a></li>
+<li><a href="#stringstrimleftfuncs-string-f-funcrune-bool-string">strings.TrimLeftFunc(s string, f func(rune) bool) string</a></li>
+<li><a href="#stringstrimprefixs-prefix-string-string">strings.TrimPrefix(s, prefix string) string</a></li>
+<li><a href="#stringstrimrights-string-cutset-string-string">strings.TrimRight(s string, cutset string) string</a></li>
+<li><a href="#stringstrimrightfuncs-string-f-funcrune-bool-string">strings.TrimRightFunc(s string, f func(rune) bool) string</a></li>
+<li><a href="#stringstrimspaces-string-string">strings.TrimSpace(s string) string</a></li>
+<li><a href="#stringstrimsuffixs-suffix-string-string">strings.TrimSuffix(s, suffix string) string</a></li>
+</ul>
+</li>
+<li><a href="#3-操作补充">3 操作补充</a></li>
+<li><a href="#3-顶层存储结构">3 顶层存储结构</a></li>
+</ul>
+<!-- tocstop -->
+<h2><span id="1-概述">1 概述</span></h2><p>字符串，string，一串固定长度的字符连接起来的字符集合。Go语言的字符串是使用UTF-8编码的。UTF-8是Unicode的实现方式之一。</p>
+<p>Go语言原生支持字符串。使用双引号(“”)或反引号(``)定义。<br>双引号：””, 用于单行字符串。<br>反引号：``，用于定义多行字符串，内部会原样解析。<br>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 单行</span><br><span class="line">&quot;心有猛虎，细嗅蔷薇&quot;</span><br><span class="line">// 多行</span><br><span class="line">`</span><br><span class="line">大风歌</span><br><span class="line">大风起兮云飞扬。</span><br><span class="line">威加海内兮归故乡。</span><br><span class="line">安得猛士兮守四方！</span><br><span class="line">`</span><br></pre></td></tr></table></figure></p>
+<p>字符串支持转义字符，列表如下：</p>
+<ul>
+<li>\r  回车符（返回行首）</li>
+<li>\n  换行符（直接跳到下一行的同列位置）</li>
+<li>\t  制表符</li>
+<li>\’  单引号</li>
+<li>\”  双引号</li>
+<li>\\  反斜杠</li>
+<li>\uXXXX  Unicode字符码值转义，例如 <code>&quot;\u5eb7&quot;</code> 就是 “康”</li>
+</ul>
+<h2><span id="2-常规操作">2 常规操作</span></h2><h3><span id="len字符串占用的字节数">len()，字符串占用的字节数</span></h3><p><code>utf-8</code> 是变长字符集，英文标点占用1个字节，中文占用3个字节。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">len(&quot;Hank康&quot;) // 7</span><br></pre></td></tr></table></figure></p>
+<h3><span id="字符串连接">+，字符串连接</span></h3><h3><span id="gt-lt">==, &gt;, &lt;</span></h3><h3><span id="stringscomparea-b-string-int">strings.Compare(a, b string) int</span></h3><h3><span id="stringscontainss-substr-string-bool">strings.Contains(s, substr string) bool</span></h3><h3><span id="stringscontainsanys-chars-string-bool">strings.ContainsAny(s, chars string) bool</span></h3><h3><span id="stringscontainsrunes-string-r-rune-bool">strings.ContainsRune(s string, r rune) bool</span></h3><h3><span id="stringscounts-substr-string-int">strings.Count(s, substr string) int</span></h3><h3><span id="stringsequalfolds-t-string-bool">strings.EqualFold(s, t string) bool</span></h3><h3><span id="stringsfieldss-string-string">strings.Fields(s string) []string</span></h3><h3><span id="stringsfieldsfuncs-string-f-funcrune-bool-string">strings.FieldsFunc(s string, f func(rune) bool) []string</span></h3><h3><span id="stringshasprefixs-prefix-string-bool">strings.HasPrefix(s, prefix string) bool</span></h3><h3><span id="stringshassuffixs-suffix-string-bool">strings.HasSuffix(s, suffix string) bool</span></h3><h3><span id="stringsindexs-substr-string-int">strings.Index(s, substr string) int</span></h3><h3><span id="stringsindexanys-chars-string-int">strings.IndexAny(s, chars string) int</span></h3><h3><span id="stringsindexbytes-string-c-byte-int">strings.IndexByte(s string, c byte) int</span></h3><h3><span id="stringsindexfuncs-string-f-funcrune-bool-int">strings.IndexFunc(s string, f func(rune) bool) int</span></h3><h3><span id="stringsindexrunes-string-r-rune-int">strings.IndexRune(s string, r rune) int</span></h3><h3><span id="stringsjoina-string-sep-string-string">strings.Join(a []string, sep string) string</span></h3><h3><span id="stringslastindexs-substr-string-int">strings.LastIndex(s, substr string) int</span></h3><h3><span id="stringslastindexanys-chars-string-int">strings.LastIndexAny(s, chars string) int</span></h3><h3><span id="stringslastindexbytes-string-c-byte-int">strings.LastIndexByte(s string, c byte) int</span></h3><h3><span id="stringslastindexfuncs-string-f-funcrune-bool-int">strings.LastIndexFunc(s string, f func(rune) bool) int</span></h3><h3><span id="stringsmapmapping-funcrune-rune-s-string-string">strings.Map(mapping func(rune) rune, s string) string</span></h3><h3><span id="stringsrepeats-string-count-int-string">strings.Repeat(s string, count int) string</span></h3><h3><span id="stringsreplaces-old-new-string-n-int-string">strings.Replace(s, old, new string, n int) string</span></h3><h3><span id="stringssplits-sep-string-string">strings.Split(s, sep string) []string</span></h3><h3><span id="stringssplitafters-sep-string-string">strings.SplitAfter(s, sep string) []string</span></h3><h3><span id="stringssplitafterns-sep-string-n-int-string">strings.SplitAfterN(s, sep string, n int) []string</span></h3><h3><span id="stringssplitns-sep-string-n-int-string">strings.SplitN(s, sep string, n int) []string</span></h3><h3><span id="stringstitles-string-string">strings.Title(s string) string</span></h3><h3><span id="stringstolowers-string-string">strings.ToLower(s string) string</span></h3><h3><span id="stringstolowerspecialc-unicodespecialcase-s-string-string">strings.ToLowerSpecial(c unicode.SpecialCase, s string) string</span></h3><h3><span id="stringstotitles-string-string">strings.ToTitle(s string) string</span></h3><h3><span id="stringstotitlespecialc-unicodespecialcase-s-string-string">strings.ToTitleSpecial(c unicode.SpecialCase, s string) string</span></h3><h3><span id="stringstouppers-string-string">strings.ToUpper(s string) string</span></h3><h3><span id="stringstoupperspecialc-unicodespecialcase-s-string-string">strings.ToUpperSpecial(c unicode.SpecialCase, s string) string</span></h3><h3><span id="stringstrims-string-cutset-string-string">strings.Trim(s string, cutset string) string</span></h3><h3><span id="stringstrimfuncs-string-f-funcrune-bool-string">strings.TrimFunc(s string, f func(rune) bool) string</span></h3><h3><span id="stringstrimlefts-string-cutset-string-string">strings.TrimLeft(s string, cutset string) string</span></h3><h3><span id="stringstrimleftfuncs-string-f-funcrune-bool-string">strings.TrimLeftFunc(s string, f func(rune) bool) string</span></h3><h3><span id="stringstrimprefixs-prefix-string-string">strings.TrimPrefix(s, prefix string) string</span></h3><h3><span id="stringstrimrights-string-cutset-string-string">strings.TrimRight(s string, cutset string) string</span></h3><h3><span id="stringstrimrightfuncs-string-f-funcrune-bool-string">strings.TrimRightFunc(s string, f func(rune) bool) string</span></h3><h3><span id="stringstrimspaces-string-string">strings.TrimSpace(s string) string</span></h3><h3><span id="stringstrimsuffixs-suffix-string-string">strings.TrimSuffix(s, suffix string) string</span></h3><h2><span id="3-操作补充">3 操作补充</span></h2><h2><span id="3-顶层存储结构">3 顶层存储结构</span></h2><p>type Builder<br>    func (b <em>Builder) Grow(n int)<br>    func (b </em>Builder) Len() int<br>    func (b <em>Builder) Reset()<br>    func (b </em>Builder) String() string<br>    func (b <em>Builder) Write(p []byte) (int, error)<br>    func (b </em>Builder) WriteByte(c byte) error<br>    func (b <em>Builder) WriteRune(r rune) (int, error)<br>    func (b </em>Builder) WriteString(s string) (int, error)<br>type Reader<br>    func NewReader(s string) <em>Reader<br>    func (r </em>Reader) Len() int<br>    func (r <em>Reader) Read(b []byte) (n int, err error)<br>    func (r </em>Reader) ReadAt(b []byte, off int64) (n int, err error)<br>    func (r <em>Reader) ReadByte() (byte, error)<br>    func (r </em>Reader) ReadRune() (ch rune, size int, err error)<br>    func (r <em>Reader) Reset(s string)<br>    func (r </em>Reader) Seek(offset int64, whence int) (int64, error)<br>    func (r <em>Reader) Size() int64<br>    func (r </em>Reader) UnreadByte() error<br>    func (r <em>Reader) UnreadRune() error<br>    func (r </em>Reader) WriteTo(w io.Writer) (n int64, err error)<br>type Replacer<br>    func NewReplacer(oldnew …string) <em>Replacer<br>    func (r </em>Replacer) Replace(s string) string<br>    func (r *Replacer) WriteString(w io.Writer, s string) (n int, err error)<br>Bugs</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <!-- <a data-url="http://blog.hellokang.net/go/go-string/" data-id="cjnndi1pf0018vcuo3auau115" class="article-share-link">分享到</a> -->
+      
+
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/go/go-package/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">
+        
+          Go语言包管理
+        
+      </div>
+    </a>
+  
+  
+    <a href="/go/go-function/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">Go语言中的函数</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+  <section class="changyan" id="comments">
+<!--PC和WAP自适应版-->
+<div id="SOHUCS" sid="cjnndi1pf0018vcuo3auau115"></div> 
+<script type="text/javascript"> 
+	(function(){ 
+		var appid = 'cyt64TYiv'; 
+		var conf = 'prod_8144667773d887f47faa11a45cb29175'; 
+		var width = window.innerWidth || document.documentElement.clientWidth; 
+		if (width < 960) { 
+			window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })(); </script>
+</section>
+ </section>
+      
+      <aside id="sidebar">
+  
+      <div class="widget-wrap author">
+    <h3 class="widget-title">&nbsp;</h3>
+    <div class="widget">
+      <div class="avatar">
+        <img src="/images/avatar.png" >
+      </div>
+      <div class="info">
+        <ul>
+          <li>
+            <h3>韩忠康</h3>
+            <wb:follow-button uid="5846559498" type="red_1" width="67" height="24" ></wb:follow-button>
+            <a href="https://github.com/hanzkering" class="fa-icon fa-github" > GitHub</a>
+          </li>
+          <li>程序员，培训讲师</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+    <div class="widget-wrap author">
+  <h3 class="widget-title">微信关注</h3>    
+  <div class="widget">
+    <img src="/images/wechat_subscription.jpg">
+  </div>
+</div>
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/error/" style="font-size: 10px;">error</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/go/" style="font-size: 20px;">go</a> <a href="/tags/goGuide/" style="font-size: 20px;">goGuide</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">近期文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/go/go-package/">Go语言包管理</a>
+          </li>
+        
+          <li>
+            <a href="/go/go-string/">Go语言中的字符串处理</a>
+          </li>
+        
+          <li>
+            <a href="/go/go-function/">Go语言中的函数</a>
+          </li>
+        
+          <li>
+            <a href="/go/go-flow-control/">Go语言中的流程控制</a>
+          </li>
+        
+          <li>
+            <a href="/go/go-operator/">Go语言中的运算符</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">友情链接</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="https://github.com/hanzkering" target="_blank">GibHub</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 韩忠康<br>
+      Powered by <a href="//hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+  </div>
+  <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+  <!-- totop start -->
+<div id="totop">
+<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+</div>
+
+<!-- totop end -->
+
+
+<!-- 百度分享 start -->
+
+<!-- 百度分享 end -->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>

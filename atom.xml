@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.hellokang.net/"/>
-  <updated>2018-10-23T15:03:22.117Z</updated>
+  <updated>2018-10-24T16:27:37.976Z</updated>
   <id>http://blog.hellokang.net/</id>
   
   <author>
@@ -15,6 +15,67 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Go语言包管理</title>
+    <link href="http://blog.hellokang.net/go/go-package/"/>
+    <id>http://blog.hellokang.net/go/go-package/</id>
+    <published>2018-10-24T15:51:15.000Z</published>
+    <updated>2018-10-24T16:27:37.976Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2&gt;&lt;span id=&quot;1-概述&quot;&gt;1 概述&lt;/span&gt;&lt;/h2&gt;&lt;p&gt;Go 语言的源码复用建立在包（package）基础之上。包通过 package, import, GOPATH 操作完成。&lt;/p&gt;
+&lt;h2&gt;&lt;span id=&quot;2-main包&quot;&gt;2
+        
+      
+    
+    </summary>
+    
+      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
+    
+    
+      <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
+    
+      <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Go语言中的字符串处理</title>
+    <link href="http://blog.hellokang.net/go/go-string/"/>
+    <id>http://blog.hellokang.net/go/go-string/</id>
+    <published>2018-10-24T03:31:03.000Z</published>
+    <updated>2018-10-24T15:51:22.979Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;!-- toc --&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#1-概述&quot;&gt;1 概述&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#2-常规操作&quot;&gt;2 常规操作&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
+    
+    
+      <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
+    
+      <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
+    
+  </entry>
   
   <entry>
     <title>Go语言中的函数</title>
@@ -113,7 +174,7 @@
     <link href="http://blog.hellokang.net/go/go-type/"/>
     <id>http://blog.hellokang.net/go/go-type/</id>
     <published>2018-10-19T09:59:26.000Z</published>
-    <updated>2018-10-23T12:14:35.166Z</updated>
+    <updated>2018-10-24T05:27:02.441Z</updated>
     
     <summary type="html">
     
@@ -251,7 +312,7 @@
     <link href="http://blog.hellokang.net/hexo/hexo-github/"/>
     <id>http://blog.hellokang.net/hexo/hexo-github/</id>
     <published>2018-10-11T11:12:21.000Z</published>
-    <updated>2018-10-22T14:35:31.156Z</updated>
+    <updated>2018-10-23T15:13:39.753Z</updated>
     
     <summary type="html">
     
@@ -269,8 +330,6 @@
     
     
       <category term="hexo" scheme="http://blog.hellokang.net/tags/hexo/"/>
-    
-      <category term="blog" scheme="http://blog.hellokang.net/tags/blog/"/>
     
       <category term="github" scheme="http://blog.hellokang.net/tags/github/"/>
     
@@ -424,22 +483,6 @@
     <id>http://blog.hellokang.net/go/go-memory-model/</id>
     <published>2018-08-23T03:51:08.000Z</published>
     <updated>2018-10-15T04:14:48.608Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
-      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Go语言使用类型管道goroutine处理并发</title>
-    <link href="http://blog.hellokang.net/go/go-goroutine/"/>
-    <id>http://blog.hellokang.net/go/go-goroutine/</id>
-    <published>2018-08-22T03:53:59.000Z</published>
-    <updated>2018-10-15T04:14:45.242Z</updated>
     
     <summary type="html">
     

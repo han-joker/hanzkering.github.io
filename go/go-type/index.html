@@ -16,7 +16,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://www.hellokang.net/images/posts/go/go-pointer.png">
 <meta property="og:image" content="http://www.hellokang.net/images/posts/go/go-slice.png">
-<meta property="og:updated_time" content="2018-10-23T12:14:35.166Z">
+<meta property="og:updated_time" content="2018-10-24T05:27:02.441Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Go语言的数据类型">
 <meta name="twitter:description" content="1 概述 2 整数，int 3 浮点数，float 4 复数，complex32,complex64 5 字符，byte，rune 6 字符串，string 7 布尔型，bool 8 指针，pointer 9 数组，array 10 nil 11 切片，slice 12 映射，map 13 结构体，struct 14 接口，interface 15 函数，func()   1 概述Go语言作为">
@@ -145,15 +145,15 @@
 <h2><span id="4-复数complex32complex64">4 复数，complex32,complex64</span></h2><p>原生支持复数。<br>支持32bit+32bit复数complex64，和64bit+64bit的复数complex128。</p>
 <h2><span id="5-字符byterune">5 字符，byte，rune</span></h2><p>使用单引号定义字符型数据，字符指的是单个字符。有两种byte和rune：<br>byte：单字节字符，是uint8的别名。用于存储ASCII字符集字符<br>rune：多字节字符，是int32的别名。用于存储unicode字符集字符。<br>在类型推导时，推导的字符型为rune。byte需要在定义变量时强制声明。<br>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&apos;c&apos;</span><br><span class="line">&apos;康&apos;</span><br></pre></td></tr></table></figure></p>
 <p>字符的默认值是0。字符的本质就是整数型，根据字符集得到对应的字符。</p>
-<h2><span id="6-字符串string">6 字符串，string</span></h2><p>原生支持字符串。使用双引号(“”)或反引号(``)定义，内部是unicode编码。<br>双引号：””, 用于单行字符串。<br>反引号：``，用于定义多行字符串，内部会原样解析。<br>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 单行</span><br><span class="line">&quot;心有猛虎，细嗅蔷薇&quot;</span><br><span class="line">// 多行</span><br><span class="line">`</span><br><span class="line">大风歌</span><br><span class="line">大风起兮云飞扬。</span><br><span class="line">威加海内兮归故乡。</span><br><span class="line">安得猛士兮守四方！</span><br><span class="line">`</span><br></pre></td></tr></table></figure></p>
-<p>字符串支持转义字符，列表如下：<br>转移符 含  义</p>
+<h2><span id="6-字符串string">6 字符串，string</span></h2><p>原生支持字符串。使用双引号(“”)或反引号(``)定义，内部是utf-8编码。<br>双引号：””, 用于单行字符串。<br>反引号：``，用于定义多行字符串，内部会原样解析。<br>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 单行</span><br><span class="line">&quot;心有猛虎，细嗅蔷薇&quot;</span><br><span class="line">// 多行</span><br><span class="line">`</span><br><span class="line">大风歌</span><br><span class="line">大风起兮云飞扬。</span><br><span class="line">威加海内兮归故乡。</span><br><span class="line">安得猛士兮守四方！</span><br><span class="line">`</span><br></pre></td></tr></table></figure></p>
+<p>字符串支持转义字符，列表如下：</p>
 <ul>
 <li>\r  回车符（返回行首）</li>
 <li>\n  换行符（直接跳到下一行的同列位置）</li>
 <li>\t  制表符</li>
 <li>\’  单引号</li>
 <li>\”  双引号</li>
-<li>\  反斜杠</li>
+<li>\\  反斜杠</li>
 <li>\uXXXX  Unicode字符码值转义</li>
 </ul>
 <h2><span id="7-布尔型bool">7 布尔型，bool</span></h2><p>布尔型的值只可以是常量 true 或者 false。<br>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var (</span><br><span class="line">  isFinished = false</span><br><span class="line">  )</span><br></pre></td></tr></table></figure></p>
@@ -212,7 +212,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjnlv2kpc00118cuohk6iix7z" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjnndi1pr001bvcuosfi7jbdy" class="article-share-link">分享到</a> -->
       
 
       
@@ -249,7 +249,7 @@
 
   <section class="changyan" id="comments">
 <!--PC和WAP自适应版-->
-<div id="SOHUCS" sid="cjnlv2kpc00118cuohk6iix7z"></div> 
+<div id="SOHUCS" sid="cjnndi1pr001bvcuosfi7jbdy"></div> 
 <script type="text/javascript"> 
 	(function(){ 
 		var appid = 'cyt64TYiv'; 
@@ -292,7 +292,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">16</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -301,7 +301,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/">blog</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -310,7 +310,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/error/" style="font-size: 10px;">error</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/go/" style="font-size: 20px;">go</a> <a href="/tags/goGuide/" style="font-size: 20px;">goGuide</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a>
+      <a href="/tags/error/" style="font-size: 10px;">error</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/go/" style="font-size: 20px;">go</a> <a href="/tags/goGuide/" style="font-size: 20px;">goGuide</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a>
     </div>
   </div>
 
@@ -319,7 +319,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -331,6 +331,14 @@
       <ul>
         
           <li>
+            <a href="/go/go-package/">Go语言包管理</a>
+          </li>
+        
+          <li>
+            <a href="/go/go-string/">Go语言中的字符串处理</a>
+          </li>
+        
+          <li>
             <a href="/go/go-function/">Go语言中的函数</a>
           </li>
         
@@ -340,14 +348,6 @@
         
           <li>
             <a href="/go/go-operator/">Go语言中的运算符</a>
-          </li>
-        
-          <li>
-            <a href="/go/go-type/">Go语言的数据类型</a>
-          </li>
-        
-          <li>
-            <a href="/go/go-variable/">Go语言中的变量</a>
           </li>
         
       </ul>
