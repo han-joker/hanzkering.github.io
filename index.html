@@ -72,96 +72,10 @@
     <div class="outer">
       <section id="main">
   
-    <article id="post-go-package" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/go/go-package/" class="article-date">
-  <time datetime="2018-10-24T15:51:15.000Z" itemprop="datePublished">2018-10-24</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/go/">go</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/go/go-package/">Go语言的包管理</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!-- toc -->
-<ul>
-<li><a href="#1-概述">1 概述</a></li>
-<li><a href="#2-main包">2 main包</a></li>
-<li><a href="#3-包定义package">3 包定义，package</a></li>
-<li><a href="#4-导入包import">4 导入包，import</a></li>
-<li><a href="#4-gopath环境变量">4 GOPATH环境变量</a></li>
-<li><a href="#5-init-包初始化">5 init() 包初始化</a></li>
-</ul>
-<!-- tocstop -->
-<h2><span id="1-概述">1 概述</span></h2><p>Go 语言的源码复用建立在包（package）基础之上。包通过 package, import, GOPATH 操作完成。</p>
-<h2><span id="2-main包">2 main包</span></h2><p>Go 语言的入口 main() 函数所在的包（package）叫 main，main 包想要引用别的代码，需要import导入！</p>
-<h2><span id="3-包定义package">3 包定义，package</span></h2><p>Go 语言的包与文件夹一一对应，同一个目录下的所有.go文件的第一行添加 包定义，以标记该文件归属的包，演示语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">package 包名</span><br></pre></td></tr></table></figure></p>
-<p>包需要满足：</p>
-<ul>
-<li>一个目录下的同级文件归属一个包。</li>
-<li>包名可以与其目录不同名。</li>
-<li>包名为 main 的包为应用程序的入口包，其他包不能使用。</li>
-</ul>
-<p>包可以嵌套定义，对应的就是嵌套目录，但包名应该与所在的目录一致，例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 文件：foo/bar/tool.go中</span><br><span class="line">package bar</span><br><span class="line">// 可以被导出的函数</span><br><span class="line">func FuncPublic() &#123;</span><br><span class="line">&#125;</span><br><span class="line">// 不可以被导出的函数</span><br><span class="line">func funcPrivate() &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>包中，通过标识符首字母是否大写，来确定是否可以被导出。首字母大写才可以被导出，视为 public 公共的资源。</p>
-<h2><span id="4-导入包import">4 导入包，import</span></h2><p>要引用其他包，可以使用 import 关键字，可以单个导入或者批量导入，语法演示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 单个导入</span><br><span class="line">import &quot;package&quot;</span><br><span class="line">// 批量导入</span><br><span class="line">import (</span><br><span class="line">  &quot;package1&quot;</span><br><span class="line">  &quot;package2&quot;</span><br><span class="line">  )</span><br></pre></td></tr></table></figure></p>
-<p>导入时，可以为包定义别名，语法演示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import (</span><br><span class="line">  p1 &quot;package1&quot;</span><br><span class="line">  p2 &quot;package2&quot;</span><br><span class="line">  )</span><br><span class="line">// 使用时</span><br><span class="line">p1.Method()</span><br></pre></td></tr></table></figure></p>
-<p>以上测试请使用系统包测试。若需要导入自定义包，需要设置GOPATH环境变量。</p>
-<h2><span id="4-gopath环境变量">4 GOPATH环境变量</span></h2><p>import导入时，会从GO的安装目录（也就是GOROOT环境变量设置的目录）和GOPATH环境变量设置的目录中，检索 src/package 来导入包。如果不存在，则导入失败。<br>GOROOT，就是GO内置的包所在的位置。<br>GOPATH，就是我们自己定义的包的位置。</p>
-<p>通常我们在开发Go项目时，调试或者编译构建时，需要设置GOPATH指向我们的项目目录，目录中的src目录中的包就可以被导入了：<br>例如，我么的项目目录为： D:\projects\goProject，那么我么就需要将我们的源代码放在 D:\projects\goProject\src 下，同时设置GOPATH为 D:\projects\goProject。设置GOPATH的方案有：</p>
-<ul>
-<li>windows 通过 系统-&gt;系统信息-&gt;高级系统设置-&gt;环境变量 中完成设置。</li>
-<li><p>windows 中通过 CMD 或者 powershell 也可以完成设置。通常是临时有效的，CMD或者powershell关闭失效！</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CMD：</span><br><span class="line">set GOPATH=D:\projects\goProject</span><br><span class="line">set GOPATH 可以查看</span><br><span class="line">powershell：</span><br><span class="line">$env:GOPATH=&quot;D:\projects\goProject&quot;</span><br><span class="line">$env:GOPATH 可以查看</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>linux 通过 /etc/profile 进行设置</p>
-</li>
-</ul>
-<h2><span id="5-init-包初始化">5 init() 包初始化</span></h2><p>可以在源码中，定义 init() 函数。此函数会在包被导入时执行，例如如果是在 main 中导入包，包中存在 init()，那么 init() 中的代码会在 main() 函数执行前执行，用于初始化包所需要的特定资料。例如：<br>包源码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">src/userPackage/tool.go</span><br><span class="line"></span><br><span class="line">package userPackage</span><br><span class="line">import &quot;fmt&quot;</span><br><span class="line">func init() &#123;</span><br><span class="line">  fmt.Println(&quot;tool init&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>主函数源码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">src/main.go</span><br><span class="line"></span><br><span class="line">package main</span><br><span class="line">import (</span><br><span class="line">  &quot;userPackage&quot;</span><br><span class="line">  )</span><br><span class="line">func main() &#123;</span><br><span class="line">  fmt.Println(&quot;main run&quot;)</span><br><span class="line">  // 使用userPackage</span><br><span class="line">  userPackage.SomeFunc()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>执行时，会先输出 “tool init”，再输出 “main run”。</p>
-<p>如果仅仅需要导入包时执行初始化操作，并不需要使用包内的其他函数，常量等资源。则可以在导入包时，匿名导入：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import (</span><br><span class="line">  _ &quot;userPackage&quot;</span><br><span class="line">  )</span><br></pre></td></tr></table></figure></p>
-<p>使用下划线作为包的别名，会仅仅执行init()</p>
-<p>完！</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-        <!-- <a data-url="http://blog.hellokang.net/go/go-package/" data-id="cjnomk4cc000yosuocnah4x1y" class="article-share-link">分享到</a> -->
-      
-
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
- 
-  
     <article id="post-go-string" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/go/go-string/" class="article-date">
-  <time datetime="2018-10-24T03:31:03.000Z" itemprop="datePublished">2018-10-24</time>
+  <time datetime="2018-10-25T03:31:03.000Z" itemprop="datePublished">2018-10-25</time>
 </a>
     
   <div class="article-category">
@@ -310,7 +224,93 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-string/" data-id="cjnomk4ck0018osuomjgg1rnr" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-string/" data-id="cjnomm3ve001cesuofrrgh06r" class="article-share-link">分享到</a> -->
+      
+
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+ 
+  
+    <article id="post-go-package" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/go/go-package/" class="article-date">
+  <time datetime="2018-10-24T15:51:15.000Z" itemprop="datePublished">2018-10-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/go/">go</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/go/go-package/">Go语言的包管理</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- toc -->
+<ul>
+<li><a href="#1-概述">1 概述</a></li>
+<li><a href="#2-main包">2 main包</a></li>
+<li><a href="#3-包定义package">3 包定义，package</a></li>
+<li><a href="#4-导入包import">4 导入包，import</a></li>
+<li><a href="#4-gopath环境变量">4 GOPATH环境变量</a></li>
+<li><a href="#5-init-包初始化">5 init() 包初始化</a></li>
+</ul>
+<!-- tocstop -->
+<h2><span id="1-概述">1 概述</span></h2><p>Go 语言的源码复用建立在包（package）基础之上。包通过 package, import, GOPATH 操作完成。</p>
+<h2><span id="2-main包">2 main包</span></h2><p>Go 语言的入口 main() 函数所在的包（package）叫 main，main 包想要引用别的代码，需要import导入！</p>
+<h2><span id="3-包定义package">3 包定义，package</span></h2><p>Go 语言的包与文件夹一一对应，同一个目录下的所有.go文件的第一行添加 包定义，以标记该文件归属的包，演示语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">package 包名</span><br></pre></td></tr></table></figure></p>
+<p>包需要满足：</p>
+<ul>
+<li>一个目录下的同级文件归属一个包。</li>
+<li>包名可以与其目录不同名。</li>
+<li>包名为 main 的包为应用程序的入口包，其他包不能使用。</li>
+</ul>
+<p>包可以嵌套定义，对应的就是嵌套目录，但包名应该与所在的目录一致，例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 文件：foo/bar/tool.go中</span><br><span class="line">package bar</span><br><span class="line">// 可以被导出的函数</span><br><span class="line">func FuncPublic() &#123;</span><br><span class="line">&#125;</span><br><span class="line">// 不可以被导出的函数</span><br><span class="line">func funcPrivate() &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>包中，通过标识符首字母是否大写，来确定是否可以被导出。首字母大写才可以被导出，视为 public 公共的资源。</p>
+<h2><span id="4-导入包import">4 导入包，import</span></h2><p>要引用其他包，可以使用 import 关键字，可以单个导入或者批量导入，语法演示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 单个导入</span><br><span class="line">import &quot;package&quot;</span><br><span class="line">// 批量导入</span><br><span class="line">import (</span><br><span class="line">  &quot;package1&quot;</span><br><span class="line">  &quot;package2&quot;</span><br><span class="line">  )</span><br></pre></td></tr></table></figure></p>
+<p>导入时，可以为包定义别名，语法演示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import (</span><br><span class="line">  p1 &quot;package1&quot;</span><br><span class="line">  p2 &quot;package2&quot;</span><br><span class="line">  )</span><br><span class="line">// 使用时</span><br><span class="line">p1.Method()</span><br></pre></td></tr></table></figure></p>
+<p>以上测试请使用系统包测试。若需要导入自定义包，需要设置GOPATH环境变量。</p>
+<h2><span id="4-gopath环境变量">4 GOPATH环境变量</span></h2><p>import导入时，会从GO的安装目录（也就是GOROOT环境变量设置的目录）和GOPATH环境变量设置的目录中，检索 src/package 来导入包。如果不存在，则导入失败。<br>GOROOT，就是GO内置的包所在的位置。<br>GOPATH，就是我们自己定义的包的位置。</p>
+<p>通常我们在开发Go项目时，调试或者编译构建时，需要设置GOPATH指向我们的项目目录，目录中的src目录中的包就可以被导入了：<br>例如，我么的项目目录为： D:\projects\goProject，那么我么就需要将我们的源代码放在 D:\projects\goProject\src 下，同时设置GOPATH为 D:\projects\goProject。设置GOPATH的方案有：</p>
+<ul>
+<li>windows 通过 系统-&gt;系统信息-&gt;高级系统设置-&gt;环境变量 中完成设置。</li>
+<li><p>windows 中通过 CMD 或者 powershell 也可以完成设置。通常是临时有效的，CMD或者powershell关闭失效！</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CMD：</span><br><span class="line">set GOPATH=D:\projects\goProject</span><br><span class="line">set GOPATH 可以查看</span><br><span class="line">powershell：</span><br><span class="line">$env:GOPATH=&quot;D:\projects\goProject&quot;</span><br><span class="line">$env:GOPATH 可以查看</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>linux 通过 /etc/profile 进行设置</p>
+</li>
+</ul>
+<h2><span id="5-init-包初始化">5 init() 包初始化</span></h2><p>可以在源码中，定义 init() 函数。此函数会在包被导入时执行，例如如果是在 main 中导入包，包中存在 init()，那么 init() 中的代码会在 main() 函数执行前执行，用于初始化包所需要的特定资料。例如：<br>包源码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">src/userPackage/tool.go</span><br><span class="line"></span><br><span class="line">package userPackage</span><br><span class="line">import &quot;fmt&quot;</span><br><span class="line">func init() &#123;</span><br><span class="line">  fmt.Println(&quot;tool init&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>主函数源码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">src/main.go</span><br><span class="line"></span><br><span class="line">package main</span><br><span class="line">import (</span><br><span class="line">  &quot;userPackage&quot;</span><br><span class="line">  )</span><br><span class="line">func main() &#123;</span><br><span class="line">  fmt.Println(&quot;main run&quot;)</span><br><span class="line">  // 使用userPackage</span><br><span class="line">  userPackage.SomeFunc()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>执行时，会先输出 “tool init”，再输出 “main run”。</p>
+<p>如果仅仅需要导入包时执行初始化操作，并不需要使用包内的其他函数，常量等资源。则可以在导入包时，匿名导入：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import (</span><br><span class="line">  _ &quot;userPackage&quot;</span><br><span class="line">  )</span><br></pre></td></tr></table></figure></p>
+<p>使用下划线作为包的别名，会仅仅执行init()</p>
+<p>完！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <!-- <a data-url="http://blog.hellokang.net/go/go-package/" data-id="cjnomm3v1000zesuonsxuufkl" class="article-share-link">分享到</a> -->
       
 
       
@@ -381,7 +381,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-function/" data-id="cjnomk4c2000losuoenzl13zy" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-function/" data-id="cjnomm3u8000hesuocc1ig3k3" class="article-share-link">分享到</a> -->
       
 
       
@@ -474,7 +474,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-flow-control/" data-id="cjnomk4bs000eosuommxvdg72" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-flow-control/" data-id="cjnomm3ue000kesuo48custgb" class="article-share-link">分享到</a> -->
       
 
       
@@ -612,7 +612,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-operator/" data-id="cjnomk4ca000uosuo0y2r3je5" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-operator/" data-id="cjnomm3ux000wesuo29yguhdy" class="article-share-link">分享到</a> -->
       
 
       
@@ -765,7 +765,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjnomk4cu001iosuolm4vdp3u" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjnomm3vb0019esuoprp0wu8w" class="article-share-link">分享到</a> -->
       
 
       
@@ -854,7 +854,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-variable/" data-id="cjnomk4cs001fosuobe41xdvm" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-variable/" data-id="cjnomm3vj001iesuoshfs69ql" class="article-share-link">分享到</a> -->
       
 
       
@@ -938,7 +938,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-constant/" data-id="cjnomk4bm0009osuohmoq3lr6" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-constant/" data-id="cjnomm3ts0006esuokf0dj14i" class="article-share-link">分享到</a> -->
       
 
       
@@ -980,7 +980,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/uncategorized/go-editor-sublime/" data-id="cjnomk4c5000nosuod9b8tote" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/uncategorized/go-editor-sublime/" data-id="cjnomm3u1000cesuoy2ceil8k" class="article-share-link">分享到</a> -->
       
 
       
@@ -1053,7 +1053,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/git/git-merge-rebase/" data-id="cjnomk4b40000osuoq4ss344h" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/git/git-merge-rebase/" data-id="cjnomm3th0001esuo9dgpt0na" class="article-share-link">分享到</a> -->
       
 
       
@@ -1146,11 +1146,11 @@
       <ul>
         
           <li>
-            <a href="/go/go-package/">Go语言的包管理</a>
+            <a href="/go/go-string/">Go语言中的字符串处理</a>
           </li>
         
           <li>
-            <a href="/go/go-string/">Go语言中的字符串处理</a>
+            <a href="/go/go-package/">Go语言的包管理</a>
           </li>
         
           <li>

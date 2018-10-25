@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.hellokang.net/"/>
-  <updated>2018-10-24T16:35:20.062Z</updated>
+  <updated>2018-10-25T13:31:10.130Z</updated>
   <id>http://blog.hellokang.net/</id>
   
   <author>
@@ -15,6 +15,38 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Go语言中的字符串处理</title>
+    <link href="http://blog.hellokang.net/go/go-string/"/>
+    <id>http://blog.hellokang.net/go/go-string/</id>
+    <published>2018-10-25T03:31:03.000Z</published>
+    <updated>2018-10-25T13:31:10.130Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;!-- toc --&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#1-概述&quot;&gt;1 概述&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#2-常规操作&quot;&gt;2 常规操作&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
+    
+    
+      <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
+    
+      <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
+    
+  </entry>
   
   <entry>
     <title>Go语言的包管理</title>
@@ -34,38 +66,6 @@
 &lt;li&gt;&lt;a href=&quot;#1-概述&quot;&gt;1 概述&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#2-main包&quot;&gt;2 main包&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#3-包定义package&quot;&gt;3
-        
-      
-    
-    </summary>
-    
-      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
-    
-    
-      <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
-    
-      <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Go语言中的字符串处理</title>
-    <link href="http://blog.hellokang.net/go/go-string/"/>
-    <id>http://blog.hellokang.net/go/go-string/</id>
-    <published>2018-10-24T03:31:03.000Z</published>
-    <updated>2018-10-25T13:29:03.623Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;!-- toc --&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#1-概述&quot;&gt;1 概述&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#2-常规操作&quot;&gt;2 常规操作&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a
         
       
     
