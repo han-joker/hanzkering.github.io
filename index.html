@@ -72,6 +72,102 @@
     <div class="outer">
       <section id="main">
   
+    <article id="post-go-utf8" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/go/go-utf8/" class="article-date">
+  <time datetime="2018-10-26T11:15:53.000Z" itemprop="datePublished">2018-10-26</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/go/">go</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/go/go-utf8/">Go语言中多字节字符的处理</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2><span id="1-概述">1 概述</span></h2><p>Go语言的字符串是使用 <code>UTF-8</code> 编码的。<code>UTF-8</code> 是 <code>Unicode</code> 的实现方式之一。本文内容包括：<code>UTF-8</code> 和 <code>Unicode</code> 的关系，Go语言提供的 <code>unicode</code> 包和 <code>unicode/utf8</code> 包的使用。</p>
+<h2><span id="2-utf-8-和-unicode-的关系">2 <code>UTF-8</code> 和 <code>Unicode</code> 的关系</span></h2><p><code>Unicode</code>一种字符集，是国际标谁化组织（ISO）设计的一个包括了地球上所有文化、所有字母和符号 的编码。他们叫它 <code>Universal Multiple-Octet Coded Character Set</code>，简称 UCS，也就是 <code>Unicode</code>。<code>Unicode</code> 为每一个 字符 分配一个唯一的 码点（Code Point），就是一个唯一的值。例如 康 的码点就是 24247，十六进制为 <code>5eb7</code>。<br><code>Unicode</code> 字符集仅仅定义了字符与码点的对应关系，但是并没有定义该如何编码（存储）这个码值，这就导致了很多问题。例如由于字符的码值不同，导致所需要的存储空间是不一致的，计算机不能确定接下来的字符是占用几个字节。还有就是如果采用固定的长度假设都是4个字节来存储码点值，那么会导致空间的额外浪费，因为 <code>ascii</code> 码字符其实仅仅需要一个字节的空间。</p>
+<p><code>UTF-8</code> 就是解决如何为 <code>Unicode</code> 编码而设计的一种编码规则。可以说 <code>UTF-8</code> 是 <code>Unicode</code> 的实现方式之一。其特点是一种变长编码，使用1到4个字节表示一个字符，根据不同的符号而变化长度。<code>UTF-8</code> 的编码规则有二：</p>
+<ul>
+<li>对于单字节的符号，字节的第一位设为0，后面7位为这个符号的 <code>Unicode</code> 码。因此对于ASCII码字符，<code>UTF-8</code> 编码和 <code>ASCII</code> 码是相同的。</li>
+<li>对于 n 字节的符号（n &gt; 1，2到4），第一个字节的前n位都设为1，第n + 1 位设为 0，后面字节的前两位一律设为10。剩下的没有提及的二进制位，全部为这个符号的 <code>Unicode</code> 码。</li>
+</ul>
+<p>以下是编码规则：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Unicode             | UTF-8</span><br><span class="line">--------------------------------------------------------- </span><br><span class="line">0000 0000-0000 007F | 0xxxxxxx</span><br><span class="line">0000 0080-0000 07FF | 110xxxxx 10xxxxxx</span><br><span class="line">0000 0800-0000 FFFF | 1110xxxx 10xxxxxx 10xxxxxx</span><br><span class="line">0001 0000-0010 FFFF | 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx</span><br><span class="line">---------------------------------------------------------</span><br></pre></td></tr></table></figure></p>
+<p>Go语言中，对于 Unicode 和 UTF-8 使用了 <code>unicode</code> 和 <code>unicode/utf8</code> 包来实现，下面是阅读 API 的总结和说明。</p>
+<h2><span id="3-unicode-包">3 <code>Unicode</code> 包</span></h2><p>Go语言中，提供了 <code>Unicode</code> 包，处理与 <code>Unicode</code> 相关的操作，整理如下：</p>
+<h3><span id="israngetab-rangetable-r-rune-bool">Is(rangeTab *RangeTable, r rune) bool</span></h3><p>检测 rune r 是否在 <code>rangeTable</code> 指定的字符范围内。<br><code>rangeTable</code> 一个 <code>Unicode</code> 码值集合，通常使用 <code>unicode</code> 包中定义的集合。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">判断字符是否出现在汉字集合中：</span><br><span class="line">unicode.Is(unicode.Scripts[&quot;Han&quot;], &apos;k&apos;)</span><br><span class="line">// 返回 false</span><br><span class="line">unicode.Is(unicode.Scripts[&quot;Han&quot;], &apos;康&apos;)</span><br><span class="line">// 返回 true</span><br></pre></td></tr></table></figure></p>
+<h3><span id="inr-rune-ranges-rangetable-bool">In(r rune, ranges …*RangeTable) bool</span></h3><p>检测 rune r 是否在多个 <code>rangeTable</code> 指定的字符范围内。<br><code>rangeTable</code> 一个 <code>Unicode</code> 码值集合，通常使用 <code>unicode</code> 包中定义的集合。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">unicode.In(&apos;康&apos;, unicode.Scripts[&quot;Han&quot;], unicode.Scripts[&quot;Latin&quot;])</span><br><span class="line">// 返回 true</span><br><span class="line">unicode.In(&apos;k&apos;, unicode.Scripts[&quot;Han&quot;], unicode.Scripts[&quot;Latin&quot;])</span><br><span class="line">// 返回 true</span><br></pre></td></tr></table></figure></p>
+<h3><span id="isoneofranges-rangetable-r-rune-bool">IsOneOf(ranges []*RangeTable, r rune) bool</span></h3><p>检测 rune r 是否在 <code>rangeTable</code> ranges 指定的字符范围内。与 <code>In</code> 功能类似，推荐使用 <code>In</code>。</p>
+<h3><span id="isspacer-rune-bool">IsSpace(r rune) bool</span></h3><p>检测字符 rune r 是否是空白字符。在Latin-1字符空间中，空白字符为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&apos;\t&apos;, &apos;\n&apos;, &apos;\v&apos;, &apos;\f&apos;, &apos;\r&apos;, &apos; &apos;, U+0085 (NEL), U+00A0 (NBSP)</span><br></pre></td></tr></table></figure></p>
+<p>其它的空白字符请参见策略Z和属性Pattern_White_Space。</p>
+<h3><span id="isdigitr-rune-bool">IsDigit(r rune) bool</span></h3><p>检测字符 rune r 是否是十进制数字字符。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">unicode.IsDigit(&apos;9&apos;)</span><br><span class="line">// 返回 true</span><br><span class="line">unicode.IsDigit(&apos;k&apos;)</span><br><span class="line">// 返回 false</span><br></pre></td></tr></table></figure></p>
+<h3><span id="isnumberr-rune-bool">IsNumber(r rune) bool</span></h3><p>检测字符 rune r 是否是 <code>Unicode</code> 数字字符。</p>
+<h3><span id="isletterr-rune-bool">IsLetter(r rune) bool</span></h3><p>检测一个字符 rune r 是否是字母<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">unicode.IsLetter(&apos;9&apos;)</span><br><span class="line">// 返回 false</span><br><span class="line">unicode.IsLetter(&apos;k&apos;)</span><br><span class="line">// 返回 true</span><br></pre></td></tr></table></figure></p>
+<h3><span id="isgraphicr-rune-bool">IsGraphic(r rune) bool</span></h3><p>一个字符 rune r 是否是 unicode 图形字符。图形字符包括字母、标记、数字、符号、标点、空白。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">unicode.IsGraphic(&apos;9&apos;)</span><br><span class="line">// 返回 true</span><br><span class="line">unicode.IsGraphic(&apos;,&apos;)</span><br><span class="line">// 返回 true</span><br></pre></td></tr></table></figure></p>
+<h3><span id="iscontrolr-rune-bool">IsControl(r rune) bool</span></h3><p>检测一个字符 rune r 是否是 unicode 控制字符。</p>
+<h3><span id="ismarkr-rune-bool">IsMark(r rune) bool</span></h3><p>检测一个字符 rune r 是否是标记字符。</p>
+<h3><span id="isprintr-rune-bool">IsPrint(r rune) bool</span></h3><p>检测一个字符 rune r 是否是的可打印字符，基本与图形字符一致，除ASCII空白字符U+0020。</p>
+<h3><span id="ispunctr-rune-bool">IsPunct(r rune) bool</span></h3><p>检测一个字符 rune r 是否是 unicode标点字符。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">unicode.IsPunct(&apos;9&apos;)</span><br><span class="line">// 返回 false</span><br><span class="line">unicode.IsPunct(&apos;,&apos;)</span><br><span class="line">// 返回 true</span><br></pre></td></tr></table></figure></p>
+<h3><span id="issymbolr-rune-bool">IsSymbol(r rune) bool</span></h3><p>检测一个字符 rune r 是否是 unicode 符号字符。</p>
+<h3><span id="islowerr-rune-bool">IsLower(r rune) bool</span></h3><p>检测一个字符 rune r 是否是小写字母。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">unicode.IsLower(&apos;h&apos;)</span><br><span class="line">// 返回 true</span><br><span class="line">unicode.IsLower(&apos;H&apos;)</span><br><span class="line">// 返回 false</span><br></pre></td></tr></table></figure></p>
+<h3><span id="isupperr-rune-bool">IsUpper(r rune) bool</span></h3><p>检测一个字符 rune r 是否是大写字母。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">unicode.IsUpper(&apos;h&apos;)</span><br><span class="line">// 返回 false</span><br><span class="line">unicode.IsUpper(&apos;H&apos;)</span><br><span class="line">// 返回 true</span><br></pre></td></tr></table></figure></p>
+<h3><span id="istitler-rune-bool">IsTitle(r rune) bool</span></h3><p>检测一个字符 rune r 是否是Title字符。大部分字符的 Title 格式就是其大写格式，少数字符的 Title 格式是特殊字符，例如 <code>ᾏᾟᾯ</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">unicode.IsTitle(&apos;ᾯ&apos;)</span><br><span class="line">// 返回 true</span><br><span class="line">unicode.IsTitle(&apos;h&apos;)</span><br><span class="line">// 返回 false</span><br><span class="line">unicode.IsTitle(&apos;H&apos;)</span><br><span class="line">// 返回 true</span><br></pre></td></tr></table></figure></p>
+<h3><span id="to_case-int-r-rune-rune">To(_case int, r rune) rune</span></h3><p>将字符 rune r 转换为指定的格式，格式_case支持：unicode.UpperCase、unicode.LowerCase、unicode.TitleCase<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">unicode.To(unicode.UpperCase, &apos;h&apos;)</span><br><span class="line">// 返回 H</span><br></pre></td></tr></table></figure></p>
+<h3><span id="tolowerr-rune-rune">ToLower(r rune) rune</span></h3><p>将字符 rune r 转换为小写。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">unicode.ToLower(&apos;H&apos;)</span><br><span class="line">// 返回 h</span><br></pre></td></tr></table></figure></p>
+<h3><span id="func-specialcase-tolower">func (SpecialCase) ToLower</span></h3><p>将字符 rune r 转换为小写。优先使用映射表 SpecialCase。<br>映射表 SpecialCase 是特定语言环境下大小写的映射表。主要应用于一些欧洲字符，例如土耳其 TurkishCase。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">unicode.TurkishCase.ToLower(&apos;İ&apos;)</span><br><span class="line">// 返回 i</span><br></pre></td></tr></table></figure></p>
+<h3><span id="toupperr-rune-rune">ToUpper(r rune) rune</span></h3><p>将字符 rune r 转换为大写。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">unicode.ToUpper(&apos;h&apos;)</span><br><span class="line">// 返回 H</span><br></pre></td></tr></table></figure></p>
+<h3><span id="func-specialcase-toupper">func (SpecialCase) ToUpper</span></h3><p>将字符 rune r 转换为大写。优先使用映射表 SpecialCase。<br>映射表 SpecialCase 是特定语言环境下大小写的映射表。主要应用于一些欧洲字符，例如土耳其 TurkishCase。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">unicode.TurkishCase.ToUpper(&apos;i&apos;)</span><br><span class="line">// 返回 İ</span><br></pre></td></tr></table></figure></p>
+<h3><span id="totitler-rune-rune">ToTitle(r rune) rune</span></h3><p>将字符 rune r 转换为 Title 字符。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">unicode.ToTitle(&apos;h&apos;)</span><br><span class="line">// 返回 H</span><br></pre></td></tr></table></figure></p>
+<h3><span id="func-specialcase-totitle">func (SpecialCase) ToTitle</span></h3><p>将字符 rune r 转换为 Title 字符。优先使用映射表 SpecialCase。<br>映射表 SpecialCase 是特定语言环境下大小写的映射表。主要应用于一些欧洲字符，例如土耳其 TurkishCase。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">unicode.TurkishCase.ToTitle(&apos;i&apos;)</span><br><span class="line">// 返回 İ</span><br></pre></td></tr></table></figure></p>
+<h3><span id="simplefoldr-rune-rune">SimpleFold(r rune) rune</span></h3><p>在 unicode 标准字符映射中查找与 rune r 互相对应的 unicode 码值。向码值大的方向循环查找。互相对应指的是同一个字符可能出现的多种写法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">unicode.SimpleFold(&apos;H&apos;)</span><br><span class="line">// 返回 h</span><br><span class="line">unicode.SimpleFold(&apos;Φ&apos;)) </span><br><span class="line">// 返回 φ</span><br></pre></td></tr></table></figure></p>
+<h2><span id="4-unicodeutf8-包">4 <code>unicode/utf8</code> 包</span></h2><h3><span id="decodelastrunep-byte-r-rune-size-int">DecodeLastRune(p []byte) (r rune, size int)</span></h3><p>解码 []byte p 中最后一个 UTF-8 编码序列，返回该码值和长度。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">utf8.DecodeLastRune([]byte(&quot;小韩说课&quot;))</span><br><span class="line">// 返回 35838 3</span><br><span class="line">// 35838 就是课的 unicode 码值</span><br></pre></td></tr></table></figure></p>
+<h3><span id="decodelastruneinstrings-string-r-rune-size-int">DecodeLastRuneInString(s string) (r rune, size int)</span></h3><p>解码 string s 中最后一个 UTF-8 编码序列，返回该码值和长度。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">utf8.DecodeLastRuneInString(&quot;小韩说课&quot;)</span><br><span class="line">// 返回 35838 3</span><br><span class="line">// 35838 就是课的 unicode 码值</span><br></pre></td></tr></table></figure></p>
+<h3><span id="decoderunep-byte-r-rune-size-int">DecodeRune(p []byte) (r rune, size int)</span></h3><p>解码 []byte p 中第一个 UTF-8 编码序列，返回该码值和长度。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">utf8.DecodeRune([]byte(&quot;小韩说课&quot;))</span><br><span class="line">// 返回 23567 3</span><br><span class="line">// 23567 就是 小 的 unicode 码值</span><br></pre></td></tr></table></figure></p>
+<h3><span id="decoderuneinstrings-string-r-rune-size-int">DecodeRuneInString(s string) (r rune, size int)</span></h3><p>解码 string s 中第一个 UTF-8 编码序列，返回该码值和长度。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">utf8.DecodeRuneInString(&quot;小韩说课&quot;)</span><br><span class="line">// 返回 23567 3</span><br><span class="line">// 23567 就是 小 的 unicode 码值</span><br></pre></td></tr></table></figure></p>
+<h3><span id="encoderunep-byte-r-rune-int">EncodeRune(p []byte, r rune) int</span></h3><p>将 rune r 的 UTF-8 编码序列写入 []byte p，并返回写入的字节数。p 满足足够的长度。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">buf := make([]byte, 3)</span><br><span class="line">n := utf8.EncodeRune(buf, &apos;康&apos;)</span><br><span class="line">fmt.Println(buf, n)</span><br><span class="line">// 输出 [229 186 183] 3</span><br></pre></td></tr></table></figure></p>
+<h3><span id="fullrunep-byte-bool">FullRune(p []byte) bool</span></h3><p>检测 []byte p 是否包含一个完整 UTF-8 编码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">buf := []byte&#123;229, 186, 183&#125; // 康</span><br><span class="line">utf8.FullRune(buf)</span><br><span class="line">// 返回 true</span><br><span class="line">utf8.FullRune(buf[:2])</span><br><span class="line">// 返回 false</span><br></pre></td></tr></table></figure></p>
+<h3><span id="fullruneinstrings-string-bool">FullRuneInString(s string) bool</span></h3><p>检测 string s 是否包含一个完整 UTF-8 编码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">buf := &quot;康&quot; // 康</span><br><span class="line">utf8.FullRuneInString(buf)</span><br><span class="line">// 返回 true</span><br><span class="line">utf8.FullRuneInString(buf[:2])</span><br><span class="line">// 返回 false</span><br></pre></td></tr></table></figure></p>
+<h3><span id="runecountp-byte-int">RuneCount(p []byte) int</span></h3><p>返回 []byte p 中的 UTF-8 编码的码值的个数。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">buf := []byte(&quot;小韩说课&quot;)</span><br><span class="line">len(buf)</span><br><span class="line">// 返回 12</span><br><span class="line">utf8.RuneCount(buf)</span><br><span class="line">// 返回 4</span><br></pre></td></tr></table></figure></p>
+<h3><span id="runecountinstrings-string-n-int">RuneCountInString(s string) (n int)</span></h3><p>返回 string s 中的 UTF-8 编码的码值的个数。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">buf := &quot;小韩说课&quot;</span><br><span class="line">len(buf)</span><br><span class="line">// 返回 12</span><br><span class="line">utf8.RuneCountInString(buf)</span><br><span class="line">// 返回 4</span><br></pre></td></tr></table></figure></p>
+<h3><span id="runelenr-rune-int">RuneLen(r rune) int</span></h3><p>返回 rune r 编码后的字节数。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">utf8.RuneLen(&apos;康&apos;)</span><br><span class="line">// 返回 3</span><br><span class="line">utf8.RuneLen(&apos;H&apos;)</span><br><span class="line">// 返回 1</span><br></pre></td></tr></table></figure></p>
+<h3><span id="runestartb-byte-bool">RuneStart(b byte) bool</span></h3><p>检测字节 byte b 是否可以作为某个 rune 编码的第一个字节。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">buf := &quot;小韩说课&quot;</span><br><span class="line">utf8.RuneStart(buf[0])</span><br><span class="line">// 返回 true</span><br><span class="line">utf8.RuneStart(buf[1])</span><br><span class="line">// 返回 false</span><br><span class="line">utf8.RuneStart(buf[3])</span><br><span class="line">// 返回 true</span><br></pre></td></tr></table></figure></p>
+<h3><span id="validp-byte-bool">Valid(p []byte) bool</span></h3><p>检测切片 []byte p 是否包含完整且合法的 UTF-8 编码序列。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">valid := []byte(&quot;小韩说课&quot;)</span><br><span class="line">invalid := []byte&#123;0xff, 0xfe, 0xfd&#125;</span><br><span class="line">utf8.Valid(valid)</span><br><span class="line">// 返回 true</span><br><span class="line">utf8.Valid(invalid)</span><br><span class="line">// 返回 false</span><br></pre></td></tr></table></figure></p>
+<h3><span id="validruner-rune-bool">ValidRune(r rune) bool</span></h3><p>检测字符 rune r 是否包含完整且合法的 UTF-8 编码序列。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">valid := &apos;a&apos;</span><br><span class="line">invalid := rune(0xfffffff)</span><br><span class="line">fmt.Println(utf8.ValidRune(valid))</span><br><span class="line">// 返回 true</span><br><span class="line">fmt.Println(utf8.ValidRune(invalid))</span><br><span class="line">// 返回 false</span><br></pre></td></tr></table></figure></p>
+<h3><span id="validstrings-string-bool">ValidString(s string) bool</span></h3><p>检测字符串 string s 是否包含完整且合法的 UTF-8 编码序列。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">valid := &quot;小韩说课&quot;</span><br><span class="line">invalid := string([]byte&#123;0xff, 0xfe, 0xfd&#125;)</span><br><span class="line">fmt.Println(utf8.ValidString(valid))</span><br><span class="line">// 返回 true</span><br><span class="line">fmt.Println(utf8.ValidString(invalid))</span><br><span class="line">// 返回 false</span><br></pre></td></tr></table></figure></p>
+<p>完！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <!-- <a data-url="http://blog.hellokang.net/go/go-utf8/" data-id="cjnpxa5gr000xd4uotmpr8bww" class="article-share-link">分享到</a> -->
+      
+
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+ 
+  
     <article id="post-go-string" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/go/go-string/" class="article-date">
@@ -228,7 +324,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-string/" data-id="cjnon83zn0019dcuolghbi6sn" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-string/" data-id="cjnpxa5gy0018d4uoceayt6f7" class="article-share-link">分享到</a> -->
       
 
       
@@ -314,7 +410,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-package/" data-id="cjnon83zj0013dcuopr007nt0" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-package/" data-id="cjnpxa5gu0011d4uo6nhmvjob" class="article-share-link">分享到</a> -->
       
 
       
@@ -385,7 +481,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-function/" data-id="cjnon83yx000gdcuorbjkb7m5" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-function/" data-id="cjnpxa5gi000kd4uoih96weiy" class="article-share-link">分享到</a> -->
       
 
       
@@ -478,7 +574,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-flow-control/" data-id="cjnon83zc000udcuocaktgwt8" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-flow-control/" data-id="cjnpxa5gf000id4uolkux3ycm" class="article-share-link">分享到</a> -->
       
 
       
@@ -616,7 +712,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-operator/" data-id="cjnon83ze000xdcuo79az20lb" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-operator/" data-id="cjnpxa5gn000rd4uobr8ebuq2" class="article-share-link">分享到</a> -->
       
 
       
@@ -769,7 +865,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjnon83zr001fdcuoa1sa8id1" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjnpxa5h3001fd4uou4voohpm" class="article-share-link">分享到</a> -->
       
 
       
@@ -858,7 +954,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-variable/" data-id="cjnon83zt001idcuolq65lxrd" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-variable/" data-id="cjnpxa5h7001jd4uoedi05rdi" class="article-share-link">分享到</a> -->
       
 
       
@@ -942,7 +1038,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-constant/" data-id="cjnon83ye0005dcuos1w5snmz" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-constant/" data-id="cjnpxa5g9000dd4uobfdjiln7" class="article-share-link">分享到</a> -->
       
 
       
@@ -984,87 +1080,12 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/uncategorized/go-editor-sublime/" data-id="cjnon83z6000mdcuo3ggzzwvm" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/uncategorized/go-editor-sublime/" data-id="cjnpxa5g30008d4uozrx1ewd0" class="article-share-link">分享到</a> -->
       
 
       
 
       
-    </footer>
-  </div>
-  
-</article>
-
- 
-  
-    <article id="post-git-merge-rebase" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/git/git-merge-rebase/" class="article-date">
-  <time datetime="2018-10-14T12:29:30.000Z" itemprop="datePublished">2018-10-14</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/git/">git</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/git/git-merge-rebase/">git中使用merge和rebase的区别</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2><span id="1-需求">1 需求</span></h2><p>今天和朋友讨论了一下 分支间的整合方案，merge和rebase。以及pull操作模式。<br>下面整理如下：</p>
-<h2><span id="2-git-pull做了什么">2 git pull做了什么</span></h2><blockquote>
-<p>git-pull - Fetch from and integrate with another repository or a local branch<br>译：从另一个版本库或本地分支拉取并与其整合</p>
-</blockquote>
-<p>文档如上说，可见<code>pull</code>（拉取）执行了两个操作，他们是<code>fetch</code>（获取）和<code>integrate</code>（整合）。<br>拉取就是将版本从远程拉取到本地，可以理解成下载。而整合指的是将拉取的版本与本地版本合并到一起。<br>这个合并的操作，通常会有两种模式来实现，就是<code>merge</code>和<code>rebase</code>。</p>
-<h2><span id="3-git-merge合并">3 git merge合并</span></h2><blockquote>
-<p>git-merge - Join two or more development histories together<br>译：将两个或多个开发历史合并一起</p>
-</blockquote>
-<p>merge，合并模式。指的是合并两个分支，最终的合并代码形成一个新的版本，两个分支的版本日志按照时间顺序合并到一起即可。 演示如下，<code>git merge dev</code>：</p>
-<p><img src="http://www.hellokang.net/images/posts/git/git-merge.png" alt="git-merge"></p>
-<p>合并过程是，git会自动根据两个分支的共同祖先即v2，与两个分支的最新提交即master的v6和dev的v5进行一个三方合并，然后将合并中更新的内容生成一个新的版本即v6，内容合并完成后，会成立版本日志并记录。</p>
-<p>merge的好处是版本不会出现错乱的情况（一会可以对比rebase，你会发现有错乱的情况），但多了一个额外的版本。（其实无所谓啦）<br>再看rebase模式。</p>
-<h2><span id="4-git-rebase变基">4 git rebase变基</span></h2><blockquote>
-<p>git-pull - Reapply commits on top of another base tip<br>译：在另一个的基本上重新应用提交</p>
-</blockquote>
-<p>rebase，重设基础。指的是整合时，以另一个为基础（dev），将当前的（master）应用上去。演示如下，<code>git rebase dev</code>：</p>
-<p><img src="http://www.hellokang.net/images/posts/git/git-rebase.png" alt="git-rebaes"></p>
-<p>合并过程为，git会从两个分支的共同祖先即v2开始提取当前分支即master上的提交版本即v4和v5，将提取的修改v4和v6依次应用到目标分支dev的最新提交的后面。将master指向最新的合并版本。</p>
-<p>从合并结果上看，rebase导致版本变为了：<em>v1-&gt;v2-&gt;v3-&gt;v5-&gt;v4-&gt;v6</em>，与真实的版本提交时间不一致了，就是发生了错乱。但rebase不会生成新的版本。</p>
-<h2><span id="5-merge-vs-rebase">5 merge VS rebase</span></h2><p>该如何选择他们？</p>
-<ul>
-<li>当某个分支不再需要了（例如一个本地的bug分支，修复完毕就不在需要了），那么我们选择merge是合理的。</li>
-<li>当我们的项目重启了，代码依赖的基础发生升级了，那么我们就可以rebase到这个升级之后的基础上继续开发。</li>
-<li>rebase -i，一个交互式的rebase，可以用来编辑版本信息，可以获得更加整洁的版本日志。</li>
-<li>千万不要在主体分支上使用rebase，否则会导致历史胡乱的。</li>
-</ul>
-<p>如果<code>git pull</code>的时候，出现 <code>error: failed to push some refs to &#39;版本库&#39;</code>， 可以<code>git pull --rebase</code>来解决下，后面说明原因。</p>
-<p>这个还需要再总结一下。</p>
-<h2><span id="6-结束">6 结束</span></h2><p>有问题，欢迎留言讨论！</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-        <!-- <a data-url="http://blog.hellokang.net/git/git-merge-rebase/" data-id="cjnon83y70001dcuo6il6dr05" class="article-share-link">分享到</a> -->
-      
-
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
-
     </footer>
   </div>
   
@@ -1111,7 +1132,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -1120,7 +1141,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -1138,7 +1159,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -1148,6 +1169,10 @@
     <h3 class="widget-title">近期文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/go/go-utf8/">Go语言中多字节字符的处理</a>
+          </li>
         
           <li>
             <a href="/go/go-string/">Go语言中的字符串处理</a>
@@ -1163,10 +1188,6 @@
         
           <li>
             <a href="/go/go-flow-control/">Go语言中的流程控制</a>
-          </li>
-        
-          <li>
-            <a href="/go/go-operator/">Go语言中的运算符</a>
           </li>
         
       </ul>

@@ -72,6 +72,81 @@
     <div class="outer">
       <section id="main">
   
+    <article id="post-git-merge-rebase" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/git/git-merge-rebase/" class="article-date">
+  <time datetime="2018-10-14T12:29:30.000Z" itemprop="datePublished">2018-10-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/git/">git</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/git/git-merge-rebase/">git中使用merge和rebase的区别</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2><span id="1-需求">1 需求</span></h2><p>今天和朋友讨论了一下 分支间的整合方案，merge和rebase。以及pull操作模式。<br>下面整理如下：</p>
+<h2><span id="2-git-pull做了什么">2 git pull做了什么</span></h2><blockquote>
+<p>git-pull - Fetch from and integrate with another repository or a local branch<br>译：从另一个版本库或本地分支拉取并与其整合</p>
+</blockquote>
+<p>文档如上说，可见<code>pull</code>（拉取）执行了两个操作，他们是<code>fetch</code>（获取）和<code>integrate</code>（整合）。<br>拉取就是将版本从远程拉取到本地，可以理解成下载。而整合指的是将拉取的版本与本地版本合并到一起。<br>这个合并的操作，通常会有两种模式来实现，就是<code>merge</code>和<code>rebase</code>。</p>
+<h2><span id="3-git-merge合并">3 git merge合并</span></h2><blockquote>
+<p>git-merge - Join two or more development histories together<br>译：将两个或多个开发历史合并一起</p>
+</blockquote>
+<p>merge，合并模式。指的是合并两个分支，最终的合并代码形成一个新的版本，两个分支的版本日志按照时间顺序合并到一起即可。 演示如下，<code>git merge dev</code>：</p>
+<p><img src="http://www.hellokang.net/images/posts/git/git-merge.png" alt="git-merge"></p>
+<p>合并过程是，git会自动根据两个分支的共同祖先即v2，与两个分支的最新提交即master的v6和dev的v5进行一个三方合并，然后将合并中更新的内容生成一个新的版本即v6，内容合并完成后，会成立版本日志并记录。</p>
+<p>merge的好处是版本不会出现错乱的情况（一会可以对比rebase，你会发现有错乱的情况），但多了一个额外的版本。（其实无所谓啦）<br>再看rebase模式。</p>
+<h2><span id="4-git-rebase变基">4 git rebase变基</span></h2><blockquote>
+<p>git-pull - Reapply commits on top of another base tip<br>译：在另一个的基本上重新应用提交</p>
+</blockquote>
+<p>rebase，重设基础。指的是整合时，以另一个为基础（dev），将当前的（master）应用上去。演示如下，<code>git rebase dev</code>：</p>
+<p><img src="http://www.hellokang.net/images/posts/git/git-rebase.png" alt="git-rebaes"></p>
+<p>合并过程为，git会从两个分支的共同祖先即v2开始提取当前分支即master上的提交版本即v4和v5，将提取的修改v4和v6依次应用到目标分支dev的最新提交的后面。将master指向最新的合并版本。</p>
+<p>从合并结果上看，rebase导致版本变为了：<em>v1-&gt;v2-&gt;v3-&gt;v5-&gt;v4-&gt;v6</em>，与真实的版本提交时间不一致了，就是发生了错乱。但rebase不会生成新的版本。</p>
+<h2><span id="5-merge-vs-rebase">5 merge VS rebase</span></h2><p>该如何选择他们？</p>
+<ul>
+<li>当某个分支不再需要了（例如一个本地的bug分支，修复完毕就不在需要了），那么我们选择merge是合理的。</li>
+<li>当我们的项目重启了，代码依赖的基础发生升级了，那么我们就可以rebase到这个升级之后的基础上继续开发。</li>
+<li>rebase -i，一个交互式的rebase，可以用来编辑版本信息，可以获得更加整洁的版本日志。</li>
+<li>千万不要在主体分支上使用rebase，否则会导致历史胡乱的。</li>
+</ul>
+<p>如果<code>git pull</code>的时候，出现 <code>error: failed to push some refs to &#39;版本库&#39;</code>， 可以<code>git pull --rebase</code>来解决下，后面说明原因。</p>
+<p>这个还需要再总结一下。</p>
+<h2><span id="6-结束">6 结束</span></h2><p>有问题，欢迎留言讨论！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <!-- <a data-url="http://blog.hellokang.net/git/git-merge-rebase/" data-id="cjnpxa5fq0001d4uo2wamfvti" class="article-share-link">分享到</a> -->
+      
+
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+ 
+  
     <article id="post-hexo-github" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/hexo/hexo-github/" class="article-date">
@@ -159,7 +234,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/hexo/hexo-github/" data-id="cjnon83zw001ldcuoncbj7iv8" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/hexo/hexo-github/" data-id="cjnpxa5h0001bd4uo40h6bdxs" class="article-share-link">分享到</a> -->
       
 
       
@@ -210,7 +285,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-error/" data-id="cjnon83yu000cdcuo8s5orkeu" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-error/" data-id="cjnpxa5gb000fd4uo07ugbtuo" class="article-share-link">分享到</a> -->
       
 
       
@@ -256,7 +331,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-command/" data-id="cjnon83yn0006dcuoowfwg0sp" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-command/" data-id="cjnpxa5hb001nd4uoq991imrz" class="article-share-link">分享到</a> -->
       
 
       
@@ -300,7 +375,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-stuct/" data-id="cjnon83zp001cdcuollt09nqd" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-stuct/" data-id="cjnpxa5gw0014d4uo05fudgqf" class="article-share-link">分享到</a> -->
       
 
       
@@ -344,7 +419,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-point/" data-id="cjnon83zh0010dcuoakc0so9w" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-point/" data-id="cjnpxa5gl000pd4uozcm6zg4v" class="article-share-link">分享到</a> -->
       
 
       
@@ -388,7 +463,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-editor-vim/" data-id="cjnon83yp0007dcuoh4jd8udq" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-editor-vim/" data-id="cjnpxa5g00005d4uobyg6jocy" class="article-share-link">分享到</a> -->
       
 
       
@@ -432,7 +507,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-reflect/" data-id="cjnon83zl0016dcuovgobpmd8" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-reflect/" data-id="cjnpxa5gp000ud4uols4w5zev" class="article-share-link">分享到</a> -->
       
 
       
@@ -476,7 +551,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-editor-goland/" data-id="cjnon83ys000bdcuolu9xnj1y" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-editor-goland/" data-id="cjnpxa5fw0003d4uo7s2rryxs" class="article-share-link">分享到</a> -->
       
 
       
@@ -520,51 +595,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-channel/" data-id="cjnon83ya0002dcuolt6ecg61" class="article-share-link">分享到</a> -->
-      
-
-      
-
-      
-    </footer>
-  </div>
-  
-</article>
-
- 
-  
-    <article id="post-go-memory-model" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/go/go-memory-model/" class="article-date">
-  <time datetime="2018-08-23T03:51:08.000Z" itemprop="datePublished">2018-08-23</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/go/">go</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/go/go-memory-model/">Go语言的内存模型</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-        <!-- <a data-url="http://blog.hellokang.net/go/go-memory-model/" data-id="cjnon83z9000pdcuo9x4e65nq" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-channel/" data-id="cjnpxa5fm0000d4uop86cqghh" class="article-share-link">分享到</a> -->
       
 
       
@@ -616,7 +647,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -625,7 +656,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -643,7 +674,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -653,6 +684,10 @@
     <h3 class="widget-title">近期文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/go/go-utf8/">Go语言中多字节字符的处理</a>
+          </li>
         
           <li>
             <a href="/go/go-string/">Go语言中的字符串处理</a>
@@ -668,10 +703,6 @@
         
           <li>
             <a href="/go/go-flow-control/">Go语言中的流程控制</a>
-          </li>
-        
-          <li>
-            <a href="/go/go-operator/">Go语言中的运算符</a>
           </li>
         
       </ul>
