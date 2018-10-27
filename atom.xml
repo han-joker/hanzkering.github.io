@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.hellokang.net/"/>
-  <updated>2018-10-27T11:35:43.604Z</updated>
+  <updated>2018-10-27T11:38:56.375Z</updated>
   <id>http://blog.hellokang.net/</id>
   
   <author>
@@ -18,10 +18,10 @@
   
   <entry>
     <title>Go语言中其他数据与字符串类型的转换</title>
-    <link href="http://blog.hellokang.net/uncategorized/go-strconv/"/>
-    <id>http://blog.hellokang.net/uncategorized/go-strconv/</id>
+    <link href="http://blog.hellokang.net/go/go-strconv/"/>
+    <id>http://blog.hellokang.net/go/go-strconv/</id>
     <published>2018-10-27T09:15:56.000Z</published>
-    <updated>2018-10-27T11:35:43.604Z</updated>
+    <updated>2018-10-27T11:38:56.375Z</updated>
     
     <summary type="html">
     
@@ -35,6 +35,12 @@
     
     </summary>
     
+      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
+    
+    
+      <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
+    
+      <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
     
   </entry>
   
