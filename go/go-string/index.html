@@ -14,10 +14,12 @@
 <meta property="og:site_name" content="小韩说课">
 <meta property="og:description" content="1 概述 2 常规操作 []索引访问 unicode/utf8 包 len()，字符串占用的字节数 +，字符串连接” ==, &amp;gt;, &amp;lt; strings.Compare(a, b string) int strings.Contains(s, substr string) bool strings.ContainsAny(s, chars string) bool strings.C">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-25T13:47:59.350Z">
+<meta property="og:image" content="http://www.hellokang.net/images/wechat_subscription.jpg">
+<meta property="og:updated_time" content="2018-10-27T14:21:47.929Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Go语言中的字符串处理">
 <meta name="twitter:description" content="1 概述 2 常规操作 []索引访问 unicode/utf8 包 len()，字符串占用的字节数 +，字符串连接” ==, &amp;gt;, &amp;lt; strings.Compare(a, b string) int strings.Contains(s, substr string) bool strings.ContainsAny(s, chars string) bool strings.C">
+<meta name="twitter:image" content="http://www.hellokang.net/images/wechat_subscription.jpg">
   
     <link rel="alternative" href="/atom.xml" title="小韩说课" type="application/atom+xml">
   
@@ -200,7 +202,7 @@
 <h3><span id="stringslastindexfuncs-string-f-funcrune-bool-int">strings.LastIndexFunc(s string, f func(rune) bool) int</span></h3><p>返回字符串 s 中字后一次满足函数 f 的rune字符的索引位置，若没有出现，返回-1。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fn := func(c rune) bool &#123;</span><br><span class="line">    return strings.ContainsRune(&quot;,|/&quot;, c)</span><br><span class="line">&#125;</span><br><span class="line">strings.LastIndexFunc(&quot;go,Js|JavaScript&quot;, fn)</span><br><span class="line">// 返回 5</span><br></pre></td></tr></table></figure></p>
 <h3><span id="stringsmapmapping-funcrune-rune-s-string-string">strings.Map(mapping func(rune) rune, s string) string</span></h3><p>返回字符串 s 中的每个字符经过映射函数 mapping 处理之后的字符串。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">fn := func(c rune) rune &#123;</span><br><span class="line">    if strings.ContainsRune(&quot;,|/&quot;, c) &#123;</span><br><span class="line">        return &apos;-&apos;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        return c</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">strings.Map(fn, &quot;go,Js|JavaScript&quot;)</span><br><span class="line">// 返回 &quot;go-Js-JavaScript&quot;</span><br></pre></td></tr></table></figure></p>
 <h3><span id="stringsrepeats-string-count-int-string">strings.Repeat(s string, count int) string</span></h3><p>返回将字符串 s 重复 count 的字符串。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">strings.Repeat(&quot;la~&quot;, 3)</span><br><span class="line">// 返回值 &quot;la~la~la~&quot;</span><br></pre></td></tr></table></figure></p>
-<h3><span id="stringsreplaces-old-new-string-n-int-string">strings.Replace(s, old, new string, n int) string</span></h3><p>在字符串 s 中使用字符串 new 替换字符串 old，使用 n 限定替换次数，n设置为负数表示没有限制。返回替换结果。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">strings.Replace(&quot;han zhong kang&quot;, &quot;n&quot;, &quot;N&quot;, 2)</span><br><span class="line">// 返回 &quot;haN zhoNg kang&quot;</span><br></pre></td></tr></table></figure></p>
+<h3><span id="stringsreplaces-old-new-string-n-int-string">strings.Replace(s, old, new string, n int) string</span></h3><p>在字符串 s 中使用字符串 new 替换字符串 old，使用 n 限定替换次数，n设置为负数表示没有限制。返回替换结果。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">strings.Replace(&quot;han zhong kang&quot;, &quot;n&quot;, &quot;N&quot;, 2)</span><br><span class="line">// 返回 &quot;haN zhoNg kang&quot;</span><br></pre></td></tr></table></figure></p>
 <h3><span id="stringssplits-sep-string-string">strings.Split(s, sep string) []string</span></h3><p>使用分隔符 sep 分割字符串 s，返回字符串切片<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">strings.Split(&quot;go-Js-JavaScript&quot;, &quot;-&quot;)</span><br><span class="line">// 返回 [&quot;go&quot;, &quot;Js&quot;, &quot;JavaScript&quot;]</span><br></pre></td></tr></table></figure></p>
 <h3><span id="stringssplitafters-sep-string-string">strings.SplitAfter(s, sep string) []string</span></h3><p>在分隔符 sep 后分割字符串 s，返回字符串切片<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">strings.SplitAfter(&quot;go-Js-JavaScript&quot;, &quot;-&quot;)</span><br><span class="line">// 返回 [&quot;go-&quot;, &quot;Js-&quot;, &quot;JavaScript&quot;]</span><br></pre></td></tr></table></figure></p>
 <h3><span id="stringssplitafterns-sep-string-n-int-string">strings.SplitAfterN(s, sep string, n int) []string</span></h3><p>在分隔符 sep 后分割字符串 s，使用 n 限定分割的元素数量，n&lt;0全部子字符串，n&gt;0最后一个子字符串包含余下内容，n==0返回nil。返回子字符串切片。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">strings.SplitAfterN(&quot;go-Js-JavaScript&quot;, &quot;-&quot;, 2)</span><br><span class="line">// 返回 [&quot;go-&quot;, &quot;Js-JavaScript&quot;]</span><br></pre></td></tr></table></figure></p>
@@ -221,13 +223,13 @@
 <h3><span id="stringstrimrightfuncs-string-f-funcrune-bool-string">strings.TrimRightFunc(s string, f func(rune) bool) string</span></h3><p>截取字符串 s 右边满足函数 f 的字符。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fn := func(c rune) bool &#123;</span><br><span class="line">    return strings.ContainsRune(&quot;,|/&quot;, c)</span><br><span class="line">&#125;</span><br><span class="line">strings.TrimRightFunc(&quot;|/user name,/&quot;, fn)</span><br><span class="line">// 返回 &quot;|/user name&quot;</span><br></pre></td></tr></table></figure></p>
 <h3><span id="stringstrimspaces-string-string">strings.TrimSpace(s string) string</span></h3><p>截取字符串 s 两端的空白字符。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">strings.TrimSpace(&quot; \t\n Hello, Gophers \n\t\r\n&quot;)</span><br><span class="line">// 返回 &quot;Hello, Gophers&quot;</span><br></pre></td></tr></table></figure></p>
 <h3><span id="stringstrimsuffixs-suffix-string-string">strings.TrimSuffix(s, suffix string) string</span></h3><p>截取字符串 s 的后缀 suffix。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">strings.TrimSuffix(&quot;goGuide_beta&quot;, &quot;_beta&quot;)</span><br><span class="line">// 返回 &quot;goGuide&quot;</span><br></pre></td></tr></table></figure></p>
-<p>完！</p>
+<p>完！<br>原文出自：<a href="http://www.hellokang.net/go/go-string/" target="_blank" rel="noopener">小韩说课</a><br>微信关注：小韩说课<br><img src="http://www.hellokang.net/images/wechat_subscription.jpg" alt="小韩说课"></p>
 
       
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-string/" data-id="cjnrdqu8i0017jouo5euo66m7" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-string/" data-id="cjnrkrcpu001d4wuoimlrkf3h" class="article-share-link">分享到</a> -->
       
 
       
@@ -264,7 +266,7 @@
 
   <section class="changyan" id="comments">
 <!--PC和WAP自适应版-->
-<div id="SOHUCS" sid="cjnrdqu8i0017jouo5euo66m7"></div> 
+<div id="SOHUCS" sid="cjnrkrcpu001d4wuoimlrkf3h"></div> 
 <script type="text/javascript"> 
 	(function(){ 
 		var appid = 'cyt64TYiv'; 

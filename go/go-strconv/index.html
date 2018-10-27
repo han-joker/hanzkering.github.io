@@ -14,10 +14,12 @@
 <meta property="og:site_name" content="小韩说课">
 <meta property="og:description" content="1 概述 2 与切片的转换 3 strconv 包 strconv.Atoi(s string) (int, error) strconv.Itoa(i int) string strconv.ParseFloat(s string, bitSize int) (float64, error) strconv.ParseInt(s string, base int, bitSize int)">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-27T11:46:06.483Z">
+<meta property="og:image" content="http://www.hellokang.net/images/wechat_subscription.jpg">
+<meta property="og:updated_time" content="2018-10-27T14:46:49.716Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Go语言中其他数据与字符串类型的转换">
 <meta name="twitter:description" content="1 概述 2 与切片的转换 3 strconv 包 strconv.Atoi(s string) (int, error) strconv.Itoa(i int) string strconv.ParseFloat(s string, bitSize int) (float64, error) strconv.ParseInt(s string, base int, bitSize int)">
+<meta name="twitter:image" content="http://www.hellokang.net/images/wechat_subscription.jpg">
   
     <link rel="alternative" href="/atom.xml" title="小韩说课" type="application/atom+xml">
   
@@ -161,13 +163,13 @@
 <h3><span id="strconvquotetoasciis-string-string">strconv.QuoteToASCII(s string) string</span></h3><p>返回字符串 s string 双引号字面值表示，控制字符和不可打印字符、非ASCII字符会进行转义。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">s := strconv.QuoteToASCII(`&quot;Fran &amp; Freddie&apos;s Diner  ☺&quot;`)</span><br><span class="line">fmt.Println(s)</span><br><span class="line">// &quot;\&quot;Fran &amp; Freddie&apos;s Diner\t\u263a\&quot;&quot;</span><br></pre></td></tr></table></figure></p>
 <h3><span id="strconvunquotes-string-string-error">strconv.Unquote(s string) (string, error)</span></h3><p>返回一个单引号、双引号、反引号包围的语法字符串 s string，解析它并返回它表示的值。若为反引号括起来的，函数会认为s是go字符字面值，返回一个单字符的字符串。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">s, err := strconv.Unquote(&quot;You can&apos;t unquote a string without quotes&quot;)</span><br><span class="line">fmt.Printf(&quot;%q, %v\n&quot;, s, err)</span><br><span class="line">// &quot;&quot;, invalid syntax</span><br><span class="line">s, err = strconv.Unquote(&quot;\&quot;The string must be either double-quoted\&quot;&quot;)</span><br><span class="line">fmt.Printf(&quot;%q, %v\n&quot;, s, err)</span><br><span class="line">// &quot;The string must be either double-quoted&quot;, &lt;nil&gt;</span><br><span class="line">s, err = strconv.Unquote(&quot;`or backquoted.`&quot;)</span><br><span class="line">fmt.Printf(&quot;%q, %v\n&quot;, s, err)</span><br><span class="line">// &quot;or backquoted.&quot;, &lt;nil&gt;</span><br><span class="line">s, err = strconv.Unquote(&quot;&apos;\u263a&apos;&quot;) // single character only allowed in single quotes</span><br><span class="line">fmt.Printf(&quot;%q, %v\n&quot;, s, err)</span><br><span class="line">// &quot;☺&quot;, &lt;nil&gt;</span><br><span class="line">s, err = strconv.Unquote(&quot;&apos;\u2639\u2639&apos;&quot;)</span><br><span class="line">fmt.Printf(&quot;%q, %v\n&quot;, s, err)</span><br><span class="line">// &quot;&quot;, invalid syntax</span><br></pre></td></tr></table></figure></p>
 <h3><span id="strconvunquotechars-string-quote-byte-value-rune-multibyte-bool-tail-string-err-error">strconv.UnquoteChar(s string, quote byte) (value rune, multibyte bool, tail string, err error)</span></h3><p>返回一个表示字符的语法字符串 s string，可以设置字符串定义语法 quote byte 双引号或者反引号。解析它并返回四个值：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">v, mb, t, err := strconv.UnquoteChar(`\&quot;Fran &amp; Freddie&apos;s Diner\&quot;`, &apos;&quot;&apos;)</span><br><span class="line">if err != nil &#123;</span><br><span class="line">    log.Fatal(err)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fmt.Println(&quot;value:&quot;, string(v))</span><br><span class="line">// value: &quot;</span><br><span class="line">fmt.Println(&quot;multibyte:&quot;, mb)</span><br><span class="line">// multibyte: false</span><br><span class="line">fmt.Println(&quot;tail:&quot;, t)</span><br><span class="line">// tail: Fran &amp; Freddie&apos;s Diner\&quot;</span><br></pre></td></tr></table></figure></p>
-<p>完！</p>
+<p>完！<br>原文出自：<a href="http://www.hellokang.net/go/go-strconv/" target="_blank" rel="noopener">小韩说课</a><br>微信关注：小韩说课<br><img src="http://www.hellokang.net/images/wechat_subscription.jpg" alt="小韩说课"></p>
 
       
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-strconv/" data-id="cjnrdqu8n001djouok3kqzi1z" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-strconv/" data-id="cjnrkrcps001a4wuotv55csi6" class="article-share-link">分享到</a> -->
       
 
       
@@ -195,7 +197,7 @@
 
   <section class="changyan" id="comments">
 <!--PC和WAP自适应版-->
-<div id="SOHUCS" sid="cjnrdqu8n001djouok3kqzi1z"></div> 
+<div id="SOHUCS" sid="cjnrkrcps001a4wuotv55csi6"></div> 
 <script type="text/javascript"> 
 	(function(){ 
 		var appid = 'cyt64TYiv'; 

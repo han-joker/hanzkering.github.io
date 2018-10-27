@@ -16,7 +16,8 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://www.hellokang.net/images/posts/go/go-pointer.png">
 <meta property="og:image" content="http://www.hellokang.net/images/posts/go/go-slice.png">
-<meta property="og:updated_time" content="2018-10-24T05:27:02.441Z">
+<meta property="og:image" content="http://www.hellokang.net/images/wechat_subscription.jpg">
+<meta property="og:updated_time" content="2018-10-27T14:11:37.258Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Go语言的数据类型">
 <meta name="twitter:description" content="1 概述 2 整数，int 3 浮点数，float 4 复数，complex32,complex64 5 字符，byte，rune 6 字符串，string 7 布尔型，bool 8 指针，pointer 9 数组，array 10 nil 11 切片，slice 12 映射，map 13 结构体，struct 14 接口，interface 15 函数，func()   1 概述Go语言作为">
@@ -206,13 +207,14 @@
 <h2><span id="14-接口interface">14 接口，interface</span></h2><p>接口是一种协议，用来规范方法的调用和定义的协议，目的是保证设计的一致性，便于模块化开发以及通讯。Go语言中，也视为一种类型。<br>定义语法：<br>type 接口名 interface {<br>    方法1( 参数列表 ) 返回值类型列表<br>    方法2( 参数列表 ) 返回值类型列表<br>    …<br>}<br>可以理解成没有方法体的方法。<br>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">// 定义Product结构</span><br><span class="line">type Product struct &#123;</span><br><span class="line">  // 两个成员</span><br><span class="line">  name  string</span><br><span class="line">  price float64</span><br><span class="line">  // say   func()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 构造函数</span><br><span class="line">func newProduct(name string, price float64) *Product &#123;</span><br><span class="line">  return &amp;Product&#123;name, price&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 成员方法，接收器方式</span><br><span class="line">func (p *Product) getName() string &#123;</span><br><span class="line">  return &quot;《&quot; + p.name + &quot;》&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 方法2</span><br><span class="line">func (p *Product) setPrice(price float64) *Product &#123;</span><br><span class="line">  p.price = price</span><br><span class="line">  return p</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 定义接口</span><br><span class="line">type ProductInterface interface &#123;</span><br><span class="line">  getName() string</span><br><span class="line">  setPrice(price float64) *Product</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">  // 构造Product型数据p1</span><br><span class="line">  var p1 = newProduct(&quot;BlockChain&quot;, 42.5)</span><br><span class="line">  // pi为接口，为其赋值p1，就意味着使用接口规范p1，若p1不满足接口定义则出错</span><br><span class="line">  var pi ProductInterface = p1</span><br><span class="line">  // 利用接口调用方法</span><br><span class="line">  fmt.Println(pi.getName())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>详见接口操作</p>
 <h2><span id="15-函数func">15 函数，func()</span></h2><p>Go语言中，函数可以作为数据存储变量中，此时变量为函数类型func()。可以通过该变量访问到这个函数。可以用在结构体成员定义上。<br>语法示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">func sayHello(name string) &#123;</span><br><span class="line">  fmt.Println(&quot;Hello, &quot;, name)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">  // 函数本身就是函数类型</span><br><span class="line">  fmt.Printf(&quot;%T(%v)\n&quot;, sayHello, sayHello) // func(string)(0x48fe20)</span><br><span class="line">  // 赋值给变量</span><br><span class="line">  var f = sayHello</span><br><span class="line">  fmt.Printf(&quot;%T(%v)\n&quot;, f, f) // func(string)(0x48fe20)</span><br><span class="line">  // 匿名函数也是函数类型</span><br><span class="line">  var af = func() &#123;</span><br><span class="line">  &#125;</span><br><span class="line">  fmt.Printf(&quot;%T(%v)\n&quot;, af, af) // func()(0x490080)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>参见函数使用</p>
+<p>参见函数使用。</p>
+<p>完！<br>原文出自：<a href="http://www.hellokang.net/go/go-type/" target="_blank" rel="noopener">小韩说课</a><br>微信关注：小韩说课<br><img src="http://www.hellokang.net/images/wechat_subscription.jpg" alt="小韩说课"></p>
 
       
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjnrdqu8p001gjouo6ydya45i" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjnrkrcpw001g4wuo68bsqhj0" class="article-share-link">分享到</a> -->
       
 
       
@@ -249,7 +251,7 @@
 
   <section class="changyan" id="comments">
 <!--PC和WAP自适应版-->
-<div id="SOHUCS" sid="cjnrdqu8p001gjouo6ydya45i"></div> 
+<div id="SOHUCS" sid="cjnrkrcpw001g4wuo68bsqhj0"></div> 
 <script type="text/javascript"> 
 	(function(){ 
 		var appid = 'cyt64TYiv'; 

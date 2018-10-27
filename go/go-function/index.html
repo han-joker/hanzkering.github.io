@@ -6,19 +6,20 @@
   
   <title>Go语言中的函数 | 小韩说课</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1 概述函数，function，独立的，用于实现具体功能的代码块。主要目的，是代码的重用（重复使用），更好的管理代码，模块化开发。函数通常使用参数和返回值，与调用者交互数据。参数给函数传递数据，返回值，函数将处理好的数据传递给调用者。Go语言中函数被称为一等公民（first-class）。意味着支持高阶函数，支持匿名函数，支持闭包等特性，可以满足接口等高级函数特性。 2 定义语法：123456定义">
+  <meta name="description" content="1 概述函数，function，独立的，用于实现具体功能的代码块。主要目的，是代码的重用（重复使用），更好的管理代码，模块化开发。函数通常使用参数和返回值，与调用者交互数据。参数给函数传递数据，返回值，函数将处理好的数据传递给调用者。Go语言中函数被称为一等公民（first-class）。意味着支持高阶函数，支持匿名函数，支持闭包等特性，可以满足接口等高级函数特性。 2 定义语法：123456定">
 <meta name="keywords" content="go,goGuide">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go语言中的函数">
 <meta property="og:url" content="http://blog.hellokang.net/go/go-function/index.html">
 <meta property="og:site_name" content="小韩说课">
-<meta property="og:description" content="1 概述函数，function，独立的，用于实现具体功能的代码块。主要目的，是代码的重用（重复使用），更好的管理代码，模块化开发。函数通常使用参数和返回值，与调用者交互数据。参数给函数传递数据，返回值，函数将处理好的数据传递给调用者。Go语言中函数被称为一等公民（first-class）。意味着支持高阶函数，支持匿名函数，支持闭包等特性，可以满足接口等高级函数特性。 2 定义语法：123456定义">
+<meta property="og:description" content="1 概述函数，function，独立的，用于实现具体功能的代码块。主要目的，是代码的重用（重复使用），更好的管理代码，模块化开发。函数通常使用参数和返回值，与调用者交互数据。参数给函数传递数据，返回值，函数将处理好的数据传递给调用者。Go语言中函数被称为一等公民（first-class）。意味着支持高阶函数，支持匿名函数，支持闭包等特性，可以满足接口等高级函数特性。 2 定义语法：123456定">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://www.hellokang.net/images/posts/go/go-func-run.png">
-<meta property="og:updated_time" content="2018-10-23T15:03:22.117Z">
+<meta property="og:image" content="http://www.hellokang.net/images/wechat_subscription.jpg">
+<meta property="og:updated_time" content="2018-10-27T14:40:59.902Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Go语言中的函数">
-<meta name="twitter:description" content="1 概述函数，function，独立的，用于实现具体功能的代码块。主要目的，是代码的重用（重复使用），更好的管理代码，模块化开发。函数通常使用参数和返回值，与调用者交互数据。参数给函数传递数据，返回值，函数将处理好的数据传递给调用者。Go语言中函数被称为一等公民（first-class）。意味着支持高阶函数，支持匿名函数，支持闭包等特性，可以满足接口等高级函数特性。 2 定义语法：123456定义">
+<meta name="twitter:description" content="1 概述函数，function，独立的，用于实现具体功能的代码块。主要目的，是代码的重用（重复使用），更好的管理代码，模块化开发。函数通常使用参数和返回值，与调用者交互数据。参数给函数传递数据，返回值，函数将处理好的数据传递给调用者。Go语言中函数被称为一等公民（first-class）。意味着支持高阶函数，支持匿名函数，支持闭包等特性，可以满足接口等高级函数特性。 2 定义语法：123456定">
 <meta name="twitter:image" content="http://www.hellokang.net/images/posts/go/go-func-run.png">
   
     <link rel="alternative" href="/atom.xml" title="小韩说课" type="application/atom+xml">
@@ -99,7 +100,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2><span id="1-概述">1 概述</span></h2><p>函数，function，独立的，用于实现具体功能的代码块。主要目的，是代码的重用（重复使用），更好的管理代码，模块化开发。<br>函数通常使用参数和返回值，与调用者交互数据。参数给函数传递数据，返回值，函数将处理好的数据传递给调用者。<br>Go语言中函数被称为一等公民（first-class）。意味着支持高阶函数，支持匿名函数，支持闭包等特性，可以满足接口等高级函数特性。</p>
+        <!-- TOC -->
+<h2><span id="1-概述">1 概述</span></h2><p>函数，function，独立的，用于实现具体功能的代码块。主要目的，是代码的重用（重复使用），更好的管理代码，模块化开发。<br>函数通常使用参数和返回值，与调用者交互数据。参数给函数传递数据，返回值，函数将处理好的数据传递给调用者。<br>Go语言中函数被称为一等公民（first-class）。意味着支持高阶函数，支持匿名函数，支持闭包等特性，可以满足接口等高级函数特性。</p>
 <h2><span id="2-定义">2 定义</span></h2><p>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">定义：</span><br><span class="line">func 函数名(形参列表)(返回值类型列表) &#123;</span><br><span class="line">  函数体，通常会有return语句，返回值</span><br><span class="line">&#125;</span><br><span class="line">调用：</span><br><span class="line">函数名(实参列表)</span><br></pre></td></tr></table></figure></p>
 <p>函数名：函数的标识符，用于找到函数，内部是一个指向函数代码的地址。<br>形参列表：由变量和类型构成<br>返回值类型列表：函数返回值的类型，多个返回值需要指定多个。<br>函数体：实现函数功能的具体语句。<br>return语句：返回值语句</p>
 <p>以上定的为命名函数，不能定义在其他函数内部。</p>
@@ -123,13 +125,13 @@
 <h2><span id="10-递归调用">10 递归调用</span></h2><p>函数内部调用函数本身。称之为递归调用。示例代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">func funcTest() &#123;</span><br><span class="line">  fmt.Println(&quot;run&quot;)</span><br><span class="line">  funcTest()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>定义实现递归调用函数时，通常需要定义一个出口。用来确定何时不再进行递归调用了。一旦满足条件，则调用停止。例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">func funcTest(v) &#123;</span><br><span class="line">  fmt.Println(v, &quot;run&quot;)</span><br><span class="line">  v ++</span><br><span class="line">  if v &lt;= 10 &#123;</span><br><span class="line">    funcTest()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>典型的应用有，树状菜单的处理，遍历目录，快速排序等。<br>递归调用的优势是编码简单，与描述的业务逻辑保持一致。</p>
-<p>完！</p>
+<p>完！<br>原文出自：<a href="http://www.hellokang.net/go/go-function/" target="_blank" rel="noopener">小韩说课</a><br>微信关注：小韩说课<br><img src="http://www.hellokang.net/images/wechat_subscription.jpg" alt="小韩说课"></p>
 
       
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-function/" data-id="cjnrdqu7o000hjouo0lrvkdu6" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-function/" data-id="cjnrkrcou000f4wuouaofnug4" class="article-share-link">分享到</a> -->
       
 
       
@@ -166,7 +168,7 @@
 
   <section class="changyan" id="comments">
 <!--PC和WAP自适应版-->
-<div id="SOHUCS" sid="cjnrdqu7o000hjouo0lrvkdu6"></div> 
+<div id="SOHUCS" sid="cjnrkrcou000f4wuouaofnug4"></div> 
 <script type="text/javascript"> 
 	(function(){ 
 		var appid = 'cyt64TYiv'; 

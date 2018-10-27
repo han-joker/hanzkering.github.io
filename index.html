@@ -162,13 +162,13 @@
 <h3><span id="strconvquotetoasciis-string-string">strconv.QuoteToASCII(s string) string</span></h3><p>返回字符串 s string 双引号字面值表示，控制字符和不可打印字符、非ASCII字符会进行转义。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">s := strconv.QuoteToASCII(`&quot;Fran &amp; Freddie&apos;s Diner  ☺&quot;`)</span><br><span class="line">fmt.Println(s)</span><br><span class="line">// &quot;\&quot;Fran &amp; Freddie&apos;s Diner\t\u263a\&quot;&quot;</span><br></pre></td></tr></table></figure></p>
 <h3><span id="strconvunquotes-string-string-error">strconv.Unquote(s string) (string, error)</span></h3><p>返回一个单引号、双引号、反引号包围的语法字符串 s string，解析它并返回它表示的值。若为反引号括起来的，函数会认为s是go字符字面值，返回一个单字符的字符串。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">s, err := strconv.Unquote(&quot;You can&apos;t unquote a string without quotes&quot;)</span><br><span class="line">fmt.Printf(&quot;%q, %v\n&quot;, s, err)</span><br><span class="line">// &quot;&quot;, invalid syntax</span><br><span class="line">s, err = strconv.Unquote(&quot;\&quot;The string must be either double-quoted\&quot;&quot;)</span><br><span class="line">fmt.Printf(&quot;%q, %v\n&quot;, s, err)</span><br><span class="line">// &quot;The string must be either double-quoted&quot;, &lt;nil&gt;</span><br><span class="line">s, err = strconv.Unquote(&quot;`or backquoted.`&quot;)</span><br><span class="line">fmt.Printf(&quot;%q, %v\n&quot;, s, err)</span><br><span class="line">// &quot;or backquoted.&quot;, &lt;nil&gt;</span><br><span class="line">s, err = strconv.Unquote(&quot;&apos;\u263a&apos;&quot;) // single character only allowed in single quotes</span><br><span class="line">fmt.Printf(&quot;%q, %v\n&quot;, s, err)</span><br><span class="line">// &quot;☺&quot;, &lt;nil&gt;</span><br><span class="line">s, err = strconv.Unquote(&quot;&apos;\u2639\u2639&apos;&quot;)</span><br><span class="line">fmt.Printf(&quot;%q, %v\n&quot;, s, err)</span><br><span class="line">// &quot;&quot;, invalid syntax</span><br></pre></td></tr></table></figure></p>
 <h3><span id="strconvunquotechars-string-quote-byte-value-rune-multibyte-bool-tail-string-err-error">strconv.UnquoteChar(s string, quote byte) (value rune, multibyte bool, tail string, err error)</span></h3><p>返回一个表示字符的语法字符串 s string，可以设置字符串定义语法 quote byte 双引号或者反引号。解析它并返回四个值：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">v, mb, t, err := strconv.UnquoteChar(`\&quot;Fran &amp; Freddie&apos;s Diner\&quot;`, &apos;&quot;&apos;)</span><br><span class="line">if err != nil &#123;</span><br><span class="line">    log.Fatal(err)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fmt.Println(&quot;value:&quot;, string(v))</span><br><span class="line">// value: &quot;</span><br><span class="line">fmt.Println(&quot;multibyte:&quot;, mb)</span><br><span class="line">// multibyte: false</span><br><span class="line">fmt.Println(&quot;tail:&quot;, t)</span><br><span class="line">// tail: Fran &amp; Freddie&apos;s Diner\&quot;</span><br></pre></td></tr></table></figure></p>
-<p>完！</p>
+<p>完！<br>原文出自：<a href="http://www.hellokang.net/go/go-strconv/" target="_blank" rel="noopener">小韩说课</a><br>微信关注：小韩说课<br><img src="http://www.hellokang.net/images/wechat_subscription.jpg" alt="小韩说课"></p>
 
       
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-strconv/" data-id="cjnrdqu8n001djouok3kqzi1z" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-strconv/" data-id="cjnrkrcps001a4wuotv55csi6" class="article-share-link">分享到</a> -->
       
 
       
@@ -258,13 +258,13 @@
 <h3><span id="validp-byte-bool">Valid(p []byte) bool</span></h3><p>检测切片 []byte p 是否包含完整且合法的 UTF-8 编码序列。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">valid := []byte(&quot;小韩说课&quot;)</span><br><span class="line">invalid := []byte&#123;0xff, 0xfe, 0xfd&#125;</span><br><span class="line">utf8.Valid(valid)</span><br><span class="line">// 返回 true</span><br><span class="line">utf8.Valid(invalid)</span><br><span class="line">// 返回 false</span><br></pre></td></tr></table></figure></p>
 <h3><span id="validruner-rune-bool">ValidRune(r rune) bool</span></h3><p>检测字符 rune r 是否包含完整且合法的 UTF-8 编码序列。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">valid := &apos;a&apos;</span><br><span class="line">invalid := rune(0xfffffff)</span><br><span class="line">fmt.Println(utf8.ValidRune(valid))</span><br><span class="line">// 返回 true</span><br><span class="line">fmt.Println(utf8.ValidRune(invalid))</span><br><span class="line">// 返回 false</span><br></pre></td></tr></table></figure></p>
 <h3><span id="validstrings-string-bool">ValidString(s string) bool</span></h3><p>检测字符串 string s 是否包含完整且合法的 UTF-8 编码序列。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">valid := &quot;小韩说课&quot;</span><br><span class="line">invalid := string([]byte&#123;0xff, 0xfe, 0xfd&#125;)</span><br><span class="line">fmt.Println(utf8.ValidString(valid))</span><br><span class="line">// 返回 true</span><br><span class="line">fmt.Println(utf8.ValidString(invalid))</span><br><span class="line">// 返回 false</span><br></pre></td></tr></table></figure></p>
-<p>完！</p>
+<p>完！<br>原文出自：<a href="http://www.hellokang.net/go/go-utf8/" target="_blank" rel="noopener">小韩说课</a><br>微信关注：小韩说课<br><img src="http://www.hellokang.net/images/wechat_subscription.jpg" alt="小韩说课"></p>
 
       
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-utf8/" data-id="cjnrdqu8r001jjouoscptynxt" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-utf8/" data-id="cjnrkrcpx001j4wuonmwxhe99" class="article-share-link">分享到</a> -->
       
 
       
@@ -408,7 +408,7 @@
 <h3><span id="stringslastindexfuncs-string-f-funcrune-bool-int">strings.LastIndexFunc(s string, f func(rune) bool) int</span></h3><p>返回字符串 s 中字后一次满足函数 f 的rune字符的索引位置，若没有出现，返回-1。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fn := func(c rune) bool &#123;</span><br><span class="line">    return strings.ContainsRune(&quot;,|/&quot;, c)</span><br><span class="line">&#125;</span><br><span class="line">strings.LastIndexFunc(&quot;go,Js|JavaScript&quot;, fn)</span><br><span class="line">// 返回 5</span><br></pre></td></tr></table></figure></p>
 <h3><span id="stringsmapmapping-funcrune-rune-s-string-string">strings.Map(mapping func(rune) rune, s string) string</span></h3><p>返回字符串 s 中的每个字符经过映射函数 mapping 处理之后的字符串。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">fn := func(c rune) rune &#123;</span><br><span class="line">    if strings.ContainsRune(&quot;,|/&quot;, c) &#123;</span><br><span class="line">        return &apos;-&apos;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        return c</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">strings.Map(fn, &quot;go,Js|JavaScript&quot;)</span><br><span class="line">// 返回 &quot;go-Js-JavaScript&quot;</span><br></pre></td></tr></table></figure></p>
 <h3><span id="stringsrepeats-string-count-int-string">strings.Repeat(s string, count int) string</span></h3><p>返回将字符串 s 重复 count 的字符串。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">strings.Repeat(&quot;la~&quot;, 3)</span><br><span class="line">// 返回值 &quot;la~la~la~&quot;</span><br></pre></td></tr></table></figure></p>
-<h3><span id="stringsreplaces-old-new-string-n-int-string">strings.Replace(s, old, new string, n int) string</span></h3><p>在字符串 s 中使用字符串 new 替换字符串 old，使用 n 限定替换次数，n设置为负数表示没有限制。返回替换结果。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">strings.Replace(&quot;han zhong kang&quot;, &quot;n&quot;, &quot;N&quot;, 2)</span><br><span class="line">// 返回 &quot;haN zhoNg kang&quot;</span><br></pre></td></tr></table></figure></p>
+<h3><span id="stringsreplaces-old-new-string-n-int-string">strings.Replace(s, old, new string, n int) string</span></h3><p>在字符串 s 中使用字符串 new 替换字符串 old，使用 n 限定替换次数，n设置为负数表示没有限制。返回替换结果。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">strings.Replace(&quot;han zhong kang&quot;, &quot;n&quot;, &quot;N&quot;, 2)</span><br><span class="line">// 返回 &quot;haN zhoNg kang&quot;</span><br></pre></td></tr></table></figure></p>
 <h3><span id="stringssplits-sep-string-string">strings.Split(s, sep string) []string</span></h3><p>使用分隔符 sep 分割字符串 s，返回字符串切片<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">strings.Split(&quot;go-Js-JavaScript&quot;, &quot;-&quot;)</span><br><span class="line">// 返回 [&quot;go&quot;, &quot;Js&quot;, &quot;JavaScript&quot;]</span><br></pre></td></tr></table></figure></p>
 <h3><span id="stringssplitafters-sep-string-string">strings.SplitAfter(s, sep string) []string</span></h3><p>在分隔符 sep 后分割字符串 s，返回字符串切片<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">strings.SplitAfter(&quot;go-Js-JavaScript&quot;, &quot;-&quot;)</span><br><span class="line">// 返回 [&quot;go-&quot;, &quot;Js-&quot;, &quot;JavaScript&quot;]</span><br></pre></td></tr></table></figure></p>
 <h3><span id="stringssplitafterns-sep-string-n-int-string">strings.SplitAfterN(s, sep string, n int) []string</span></h3><p>在分隔符 sep 后分割字符串 s，使用 n 限定分割的元素数量，n&lt;0全部子字符串，n&gt;0最后一个子字符串包含余下内容，n==0返回nil。返回子字符串切片。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">strings.SplitAfterN(&quot;go-Js-JavaScript&quot;, &quot;-&quot;, 2)</span><br><span class="line">// 返回 [&quot;go-&quot;, &quot;Js-JavaScript&quot;]</span><br></pre></td></tr></table></figure></p>
@@ -429,13 +429,13 @@
 <h3><span id="stringstrimrightfuncs-string-f-funcrune-bool-string">strings.TrimRightFunc(s string, f func(rune) bool) string</span></h3><p>截取字符串 s 右边满足函数 f 的字符。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fn := func(c rune) bool &#123;</span><br><span class="line">    return strings.ContainsRune(&quot;,|/&quot;, c)</span><br><span class="line">&#125;</span><br><span class="line">strings.TrimRightFunc(&quot;|/user name,/&quot;, fn)</span><br><span class="line">// 返回 &quot;|/user name&quot;</span><br></pre></td></tr></table></figure></p>
 <h3><span id="stringstrimspaces-string-string">strings.TrimSpace(s string) string</span></h3><p>截取字符串 s 两端的空白字符。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">strings.TrimSpace(&quot; \t\n Hello, Gophers \n\t\r\n&quot;)</span><br><span class="line">// 返回 &quot;Hello, Gophers&quot;</span><br></pre></td></tr></table></figure></p>
 <h3><span id="stringstrimsuffixs-suffix-string-string">strings.TrimSuffix(s, suffix string) string</span></h3><p>截取字符串 s 的后缀 suffix。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">strings.TrimSuffix(&quot;goGuide_beta&quot;, &quot;_beta&quot;)</span><br><span class="line">// 返回 &quot;goGuide&quot;</span><br></pre></td></tr></table></figure></p>
-<p>完！</p>
+<p>完！<br>原文出自：<a href="http://www.hellokang.net/go/go-string/" target="_blank" rel="noopener">小韩说课</a><br>微信关注：小韩说课<br><img src="http://www.hellokang.net/images/wechat_subscription.jpg" alt="小韩说课"></p>
 
       
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-string/" data-id="cjnrdqu8i0017jouo5euo66m7" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-string/" data-id="cjnrkrcpu001d4wuoimlrkf3h" class="article-share-link">分享到</a> -->
       
 
       
@@ -515,13 +515,13 @@
 <p>执行时，会先输出 “tool init”，再输出 “main run”。</p>
 <p>如果仅仅需要导入包时执行初始化操作，并不需要使用包内的其他函数，常量等资源。则可以在导入包时，匿名导入：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import (</span><br><span class="line">  _ &quot;userPackage&quot;</span><br><span class="line">  )</span><br></pre></td></tr></table></figure></p>
 <p>使用下划线作为包的别名，会仅仅执行init()</p>
-<p>完！</p>
+<p>完！<br>原文出自：<a href="http://www.hellokang.net/go/go-package/" target="_blank" rel="noopener">小韩说课</a><br>微信关注：小韩说课<br><img src="http://www.hellokang.net/images/wechat_subscription.jpg" alt="小韩说课"></p>
 
       
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-package/" data-id="cjnrdqu870014jouofulj4l4u" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-package/" data-id="cjnrkrcpk000y4wuo975admy5" class="article-share-link">分享到</a> -->
       
 
       
@@ -562,7 +562,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2><span id="1-概述">1 概述</span></h2><p>函数，function，独立的，用于实现具体功能的代码块。主要目的，是代码的重用（重复使用），更好的管理代码，模块化开发。<br>函数通常使用参数和返回值，与调用者交互数据。参数给函数传递数据，返回值，函数将处理好的数据传递给调用者。<br>Go语言中函数被称为一等公民（first-class）。意味着支持高阶函数，支持匿名函数，支持闭包等特性，可以满足接口等高级函数特性。</p>
+        <!-- TOC -->
+<h2><span id="1-概述">1 概述</span></h2><p>函数，function，独立的，用于实现具体功能的代码块。主要目的，是代码的重用（重复使用），更好的管理代码，模块化开发。<br>函数通常使用参数和返回值，与调用者交互数据。参数给函数传递数据，返回值，函数将处理好的数据传递给调用者。<br>Go语言中函数被称为一等公民（first-class）。意味着支持高阶函数，支持匿名函数，支持闭包等特性，可以满足接口等高级函数特性。</p>
 <h2><span id="2-定义">2 定义</span></h2><p>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">定义：</span><br><span class="line">func 函数名(形参列表)(返回值类型列表) &#123;</span><br><span class="line">  函数体，通常会有return语句，返回值</span><br><span class="line">&#125;</span><br><span class="line">调用：</span><br><span class="line">函数名(实参列表)</span><br></pre></td></tr></table></figure></p>
 <p>函数名：函数的标识符，用于找到函数，内部是一个指向函数代码的地址。<br>形参列表：由变量和类型构成<br>返回值类型列表：函数返回值的类型，多个返回值需要指定多个。<br>函数体：实现函数功能的具体语句。<br>return语句：返回值语句</p>
 <p>以上定的为命名函数，不能定义在其他函数内部。</p>
@@ -586,13 +587,13 @@
 <h2><span id="10-递归调用">10 递归调用</span></h2><p>函数内部调用函数本身。称之为递归调用。示例代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">func funcTest() &#123;</span><br><span class="line">  fmt.Println(&quot;run&quot;)</span><br><span class="line">  funcTest()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>定义实现递归调用函数时，通常需要定义一个出口。用来确定何时不再进行递归调用了。一旦满足条件，则调用停止。例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">func funcTest(v) &#123;</span><br><span class="line">  fmt.Println(v, &quot;run&quot;)</span><br><span class="line">  v ++</span><br><span class="line">  if v &lt;= 10 &#123;</span><br><span class="line">    funcTest()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>典型的应用有，树状菜单的处理，遍历目录，快速排序等。<br>递归调用的优势是编码简单，与描述的业务逻辑保持一致。</p>
-<p>完！</p>
+<p>完！<br>原文出自：<a href="http://www.hellokang.net/go/go-function/" target="_blank" rel="noopener">小韩说课</a><br>微信关注：小韩说课<br><img src="http://www.hellokang.net/images/wechat_subscription.jpg" alt="小韩说课"></p>
 
       
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-function/" data-id="cjnrdqu7o000hjouo0lrvkdu6" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-function/" data-id="cjnrkrcou000f4wuouaofnug4" class="article-share-link">分享到</a> -->
       
 
       
@@ -685,7 +686,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-flow-control/" data-id="cjnrdqu7r000ljouojhbo3atm" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-flow-control/" data-id="cjnrkrcoy000i4wuohovt2b2l" class="article-share-link">分享到</a> -->
       
 
       
@@ -817,13 +818,13 @@
 <p>建议使用()小括号，明确调整优先级。</p>
 <h2><span id="10-类型转换">10 类型转换</span></h2><p>类型不同的数据不能完成运算。如果需要，则要将类型转换为一致的类型。<br>自动转换，有些转换Go语言自动完成，例如 <code>5/4.0</code> 5整型会被自动转换为浮点数。<br>强制转换，使用语法 <code>type(数据)</code> 的形式转换，例如：<code>float64(5)</code>。</p>
 <p>Go语言对类型要求比较严格，类型可以相互转换的场景不多，主要集中在数值上。就是要类型兼容，才可以转换。</p>
-<p>完！</p>
+<p>完！<br>原文出自：<a href="http://www.hellokang.net/go/go-operator/" target="_blank" rel="noopener">小韩说课</a><br>微信关注：小韩说课<br><img src="http://www.hellokang.net/images/wechat_subscription.jpg" alt="小韩说课"></p>
 
       
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-operator/" data-id="cjnrdqu7x000sjouo33uehxps" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-operator/" data-id="cjnrkrcp9000v4wuo0x8nq7ej" class="article-share-link">分享到</a> -->
       
 
       
@@ -970,13 +971,14 @@
 <h2><span id="14-接口interface">14 接口，interface</span></h2><p>接口是一种协议，用来规范方法的调用和定义的协议，目的是保证设计的一致性，便于模块化开发以及通讯。Go语言中，也视为一种类型。<br>定义语法：<br>type 接口名 interface {<br>    方法1( 参数列表 ) 返回值类型列表<br>    方法2( 参数列表 ) 返回值类型列表<br>    …<br>}<br>可以理解成没有方法体的方法。<br>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">// 定义Product结构</span><br><span class="line">type Product struct &#123;</span><br><span class="line">  // 两个成员</span><br><span class="line">  name  string</span><br><span class="line">  price float64</span><br><span class="line">  // say   func()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 构造函数</span><br><span class="line">func newProduct(name string, price float64) *Product &#123;</span><br><span class="line">  return &amp;Product&#123;name, price&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 成员方法，接收器方式</span><br><span class="line">func (p *Product) getName() string &#123;</span><br><span class="line">  return &quot;《&quot; + p.name + &quot;》&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 方法2</span><br><span class="line">func (p *Product) setPrice(price float64) *Product &#123;</span><br><span class="line">  p.price = price</span><br><span class="line">  return p</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 定义接口</span><br><span class="line">type ProductInterface interface &#123;</span><br><span class="line">  getName() string</span><br><span class="line">  setPrice(price float64) *Product</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">  // 构造Product型数据p1</span><br><span class="line">  var p1 = newProduct(&quot;BlockChain&quot;, 42.5)</span><br><span class="line">  // pi为接口，为其赋值p1，就意味着使用接口规范p1，若p1不满足接口定义则出错</span><br><span class="line">  var pi ProductInterface = p1</span><br><span class="line">  // 利用接口调用方法</span><br><span class="line">  fmt.Println(pi.getName())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>详见接口操作</p>
 <h2><span id="15-函数func">15 函数，func()</span></h2><p>Go语言中，函数可以作为数据存储变量中，此时变量为函数类型func()。可以通过该变量访问到这个函数。可以用在结构体成员定义上。<br>语法示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">func sayHello(name string) &#123;</span><br><span class="line">  fmt.Println(&quot;Hello, &quot;, name)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">  // 函数本身就是函数类型</span><br><span class="line">  fmt.Printf(&quot;%T(%v)\n&quot;, sayHello, sayHello) // func(string)(0x48fe20)</span><br><span class="line">  // 赋值给变量</span><br><span class="line">  var f = sayHello</span><br><span class="line">  fmt.Printf(&quot;%T(%v)\n&quot;, f, f) // func(string)(0x48fe20)</span><br><span class="line">  // 匿名函数也是函数类型</span><br><span class="line">  var af = func() &#123;</span><br><span class="line">  &#125;</span><br><span class="line">  fmt.Printf(&quot;%T(%v)\n&quot;, af, af) // func()(0x490080)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>参见函数使用</p>
+<p>参见函数使用。</p>
+<p>完！<br>原文出自：<a href="http://www.hellokang.net/go/go-type/" target="_blank" rel="noopener">小韩说课</a><br>微信关注：小韩说课<br><img src="http://www.hellokang.net/images/wechat_subscription.jpg" alt="小韩说课"></p>
 
       
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjnrdqu8p001gjouo6ydya45i" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjnrkrcpw001g4wuo68bsqhj0" class="article-share-link">分享到</a> -->
       
 
       
@@ -1059,13 +1061,13 @@
 <p>带有{}的语句，其中的变量也仅仅在内部有效，例如for，if，switch等，演示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for i := 0; i &lt; 10; i++ &#123;</span><br><span class="line">  fmt.Println(i)</span><br><span class="line">&#125;</span><br><span class="line">fmt.Println(i)</span><br><span class="line">// 会提示变量i未定义, undefined: i</span><br></pre></td></tr></table></figure></p>
 <p>注意i，是通过短声明在for内部定义的变量，仅仅在for内部有意义。</p>
 <p>互不嵌套的{}见作用域不可见，不可互相访问。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">  &#123;</span><br><span class="line">    v := 42</span><br><span class="line">  &#125;</span><br><span class="line">  &#123;</span><br><span class="line">    fmt.Println(v)</span><br><span class="line">    // 会提示变量v未定义, undefined: v</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>一家之言，欢迎讨论！</p>
+<p>完！<br>原文出自：<a href="http://www.hellokang.net/go/go-variable/" target="_blank" rel="noopener">小韩说课</a><br>微信关注：小韩说课<br><img src="http://www.hellokang.net/images/wechat_subscription.jpg" alt="小韩说课"></p>
 
       
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-variable/" data-id="cjnrdqu8t001mjouolyuhd0nb" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-variable/" data-id="cjnrkrcq0001m4wuo469g9lgs" class="article-share-link">分享到</a> -->
       
 
       
@@ -1144,13 +1146,14 @@
 <li>数据的集中管理，更改常量定义，即可完成全部的修改。</li>
 <li>保证不被程序的其他代码所更改。</li>
 </ul>
-<p>一家之言，欢迎讨论！</p>
+<p>完！</p>
+<p>原文出自：<a href="http://www.hellokang.net/go/go-constant/" target="_blank" rel="noopener">小韩说课</a><br>微信关注：小韩说课<br><img src="http://www.hellokang.net/images/wechat_subscription.jpg" alt="小韩说课"></p>
 
       
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-constant/" data-id="cjnrdqu770005jouowzb8vq9s" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-constant/" data-id="cjnrkrcoc00014wuoi7qi7f82" class="article-share-link">分享到</a> -->
       
 
       

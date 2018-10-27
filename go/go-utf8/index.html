@@ -14,10 +14,12 @@
 <meta property="og:site_name" content="小韩说课">
 <meta property="og:description" content="1 概述Go语言的字符串是使用 UTF-8 编码的。UTF-8 是 Unicode 的实现方式之一。本文内容包括：UTF-8 和 Unicode 的关系，Go语言提供的 unicode 包和 unicode/utf8 包的使用。 2 UTF-8 和 Unicode 的关系Unicode一种字符集，是国际标谁化组织（ISO）设计的一个包括了地球上所有文化、所有字母和符号 的编码。他们叫它 Unive">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-26T15:20:12.975Z">
+<meta property="og:image" content="http://www.hellokang.net/images/wechat_subscription.jpg">
+<meta property="og:updated_time" content="2018-10-27T14:22:51.149Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Go语言中多字节字符的处理">
 <meta name="twitter:description" content="1 概述Go语言的字符串是使用 UTF-8 编码的。UTF-8 是 Unicode 的实现方式之一。本文内容包括：UTF-8 和 Unicode 的关系，Go语言提供的 unicode 包和 unicode/utf8 包的使用。 2 UTF-8 和 Unicode 的关系Unicode一种字符集，是国际标谁化组织（ISO）设计的一个包括了地球上所有文化、所有字母和符号 的编码。他们叫它 Unive">
+<meta name="twitter:image" content="http://www.hellokang.net/images/wechat_subscription.jpg">
   
     <link rel="alternative" href="/atom.xml" title="小韩说课" type="application/atom+xml">
   
@@ -146,13 +148,13 @@
 <h3><span id="validp-byte-bool">Valid(p []byte) bool</span></h3><p>检测切片 []byte p 是否包含完整且合法的 UTF-8 编码序列。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">valid := []byte(&quot;小韩说课&quot;)</span><br><span class="line">invalid := []byte&#123;0xff, 0xfe, 0xfd&#125;</span><br><span class="line">utf8.Valid(valid)</span><br><span class="line">// 返回 true</span><br><span class="line">utf8.Valid(invalid)</span><br><span class="line">// 返回 false</span><br></pre></td></tr></table></figure></p>
 <h3><span id="validruner-rune-bool">ValidRune(r rune) bool</span></h3><p>检测字符 rune r 是否包含完整且合法的 UTF-8 编码序列。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">valid := &apos;a&apos;</span><br><span class="line">invalid := rune(0xfffffff)</span><br><span class="line">fmt.Println(utf8.ValidRune(valid))</span><br><span class="line">// 返回 true</span><br><span class="line">fmt.Println(utf8.ValidRune(invalid))</span><br><span class="line">// 返回 false</span><br></pre></td></tr></table></figure></p>
 <h3><span id="validstrings-string-bool">ValidString(s string) bool</span></h3><p>检测字符串 string s 是否包含完整且合法的 UTF-8 编码序列。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">valid := &quot;小韩说课&quot;</span><br><span class="line">invalid := string([]byte&#123;0xff, 0xfe, 0xfd&#125;)</span><br><span class="line">fmt.Println(utf8.ValidString(valid))</span><br><span class="line">// 返回 true</span><br><span class="line">fmt.Println(utf8.ValidString(invalid))</span><br><span class="line">// 返回 false</span><br></pre></td></tr></table></figure></p>
-<p>完！</p>
+<p>完！<br>原文出自：<a href="http://www.hellokang.net/go/go-utf8/" target="_blank" rel="noopener">小韩说课</a><br>微信关注：小韩说课<br><img src="http://www.hellokang.net/images/wechat_subscription.jpg" alt="小韩说课"></p>
 
       
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-utf8/" data-id="cjnrdqu8r001jjouoscptynxt" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-utf8/" data-id="cjnrkrcpx001j4wuonmwxhe99" class="article-share-link">分享到</a> -->
       
 
       
@@ -189,7 +191,7 @@
 
   <section class="changyan" id="comments">
 <!--PC和WAP自适应版-->
-<div id="SOHUCS" sid="cjnrdqu8r001jjouoscptynxt"></div> 
+<div id="SOHUCS" sid="cjnrkrcpx001j4wuonmwxhe99"></div> 
 <script type="text/javascript"> 
 	(function(){ 
 		var appid = 'cyt64TYiv'; 
