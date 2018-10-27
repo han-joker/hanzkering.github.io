@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.hellokang.net/"/>
-  <updated>2018-10-27T11:38:56.375Z</updated>
+  <updated>2018-10-27T11:46:06.483Z</updated>
   <id>http://blog.hellokang.net/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://blog.hellokang.net/go/go-strconv/"/>
     <id>http://blog.hellokang.net/go/go-strconv/</id>
     <published>2018-10-27T09:15:56.000Z</published>
-    <updated>2018-10-27T11:38:56.375Z</updated>
+    <updated>2018-10-27T11:46:06.483Z</updated>
     
     <summary type="html">
     
@@ -29,7 +29,11 @@
       
         
         
-          &lt;h2&gt;&lt;span id=&quot;1-概述&quot;&gt;1 概述&lt;/span&gt;&lt;/h2&gt;&lt;p&gt;Go语言是强类型语言，因此总会需要将字符串转成需要的类型。比如整型和字符串转换，字符串和布尔型的转换等。本文就介绍如何完成这些转换，以下是Go语言关于字符串转换的整理说明，主要是与切片类型的转换，和
+          &lt;!-- toc --&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#1-概述&quot;&gt;1 概述&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#2-与切片的转换&quot;&gt;2 与切片的转换&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#3-strconv-包&quot;&gt;3 strconv
         
       
     

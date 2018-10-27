@@ -6,18 +6,18 @@
   
   <title>Go语言中其他数据与字符串类型的转换 | 小韩说课</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1 概述Go语言是强类型语言，因此总会需要将字符串转成需要的类型。比如整型和字符串转换，字符串和布尔型的转换等。本文就介绍如何完成这些转换，以下是Go语言关于字符串转换的整理说明，主要是与切片类型的转换，和 strconv 包的使用。 2 与切片的转换切片类型可以和字符串类型相互转换。123456789fmt.Println([]rune(&amp;quot;Hello小韩说课&amp;quot;))// [72">
+  <meta name="description" content="1 概述 2 与切片的转换 3 strconv 包 strconv.Atoi(s string) (int, error) strconv.Itoa(i int) string strconv.ParseFloat(s string, bitSize int) (float64, error) strconv.ParseInt(s string, base int, bitSize int)">
 <meta name="keywords" content="go,goGuide">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go语言中其他数据与字符串类型的转换">
 <meta property="og:url" content="http://blog.hellokang.net/go/go-strconv/index.html">
 <meta property="og:site_name" content="小韩说课">
-<meta property="og:description" content="1 概述Go语言是强类型语言，因此总会需要将字符串转成需要的类型。比如整型和字符串转换，字符串和布尔型的转换等。本文就介绍如何完成这些转换，以下是Go语言关于字符串转换的整理说明，主要是与切片类型的转换，和 strconv 包的使用。 2 与切片的转换切片类型可以和字符串类型相互转换。123456789fmt.Println([]rune(&amp;quot;Hello小韩说课&amp;quot;))// [72">
+<meta property="og:description" content="1 概述 2 与切片的转换 3 strconv 包 strconv.Atoi(s string) (int, error) strconv.Itoa(i int) string strconv.ParseFloat(s string, bitSize int) (float64, error) strconv.ParseInt(s string, base int, bitSize int)">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-27T11:38:56.375Z">
+<meta property="og:updated_time" content="2018-10-27T11:46:06.483Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Go语言中其他数据与字符串类型的转换">
-<meta name="twitter:description" content="1 概述Go语言是强类型语言，因此总会需要将字符串转成需要的类型。比如整型和字符串转换，字符串和布尔型的转换等。本文就介绍如何完成这些转换，以下是Go语言关于字符串转换的整理说明，主要是与切片类型的转换，和 strconv 包的使用。 2 与切片的转换切片类型可以和字符串类型相互转换。123456789fmt.Println([]rune(&amp;quot;Hello小韩说课&amp;quot;))// [72">
+<meta name="twitter:description" content="1 概述 2 与切片的转换 3 strconv 包 strconv.Atoi(s string) (int, error) strconv.Itoa(i int) string strconv.ParseFloat(s string, bitSize int) (float64, error) strconv.ParseInt(s string, base int, bitSize int)">
   
     <link rel="alternative" href="/atom.xml" title="小韩说课" type="application/atom+xml">
   
@@ -97,7 +97,42 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2><span id="1-概述">1 概述</span></h2><p>Go语言是强类型语言，因此总会需要将字符串转成需要的类型。比如整型和字符串转换，字符串和布尔型的转换等。本文就介绍如何完成这些转换，以下是Go语言关于字符串转换的整理说明，主要是与切片类型的转换，和 strconv 包的使用。</p>
+        <!-- toc -->
+<ul>
+<li><a href="#1-概述">1 概述</a></li>
+<li><a href="#2-与切片的转换">2 与切片的转换</a></li>
+<li><a href="#3-strconv-包">3 strconv 包</a><ul>
+<li><a href="#strconvatois-string-int-error">strconv.Atoi(s string) (int, error)</a></li>
+<li><a href="#strconvitoai-int-string">strconv.Itoa(i int) string</a></li>
+<li><a href="#strconvparsefloats-string-bitsize-int-float64-error">strconv.ParseFloat(s string, bitSize int) (float64, error)</a></li>
+<li><a href="#strconvparseints-string-base-int-bitsize-int-i-int64-err-error">strconv.ParseInt(s string, base int, bitSize int) (i int64, err error)</a></li>
+<li><a href="#strconvformatfloatf-float64-fmt-byte-prec-bitsize-int-string">strconv.FormatFloat(f float64, fmt byte, prec, bitSize int) string</a></li>
+<li><a href="#strconvformatinti-int64-base-int-string">strconv.FormatInt(i int64, base int) string</a></li>
+<li><a href="#strconvappendbooldst-byte-b-bool-byte">strconv.AppendBool(dst []byte, b bool) []byte</a></li>
+<li><a href="#strconvappendfloatdst-byte-f-float64-fmt-byte-prec-bitsize-int-byte">strconv.AppendFloat(dst []byte, f float64, fmt byte, prec, bitSize int) []byte</a></li>
+<li><a href="#strconvappendintdst-byte-i-int64-base-int-byte">strconv.AppendInt(dst []byte, i int64, base int) []byte</a></li>
+<li><a href="#strconvappendquotedst-byte-s-string-byte">strconv.AppendQuote(dst []byte, s string) []byte</a></li>
+<li><a href="#strconvappendquoterunedst-byte-r-rune-byte">strconv.AppendQuoteRune(dst []byte, r rune) []byte</a></li>
+<li><a href="#strconvappendquoterunetoasciidst-byte-r-rune-byte">strconv.AppendQuoteRuneToASCII(dst []byte, r rune) []byte</a></li>
+<li><a href="#strconvappendquotetoasciidst-byte-s-string-byte">strconv.AppendQuoteToASCII(dst []byte, s string) []byte</a></li>
+<li><a href="#strconvappenduintdst-byte-i-uint64-base-int-byte">strconv.AppendUint(dst []byte, i uint64, base int) []byte</a></li>
+<li><a href="#strconvcanbackquotes-string-bool">strconv.CanBackquote(s string) bool</a></li>
+<li><a href="#strconvformatboolb-bool-string">strconv.FormatBool(b bool) string</a></li>
+<li><a href="#strconvformatuinti-uint64-base-int-string">strconv.FormatUint(i uint64, base int) string</a></li>
+<li><a href="#strconvisprintr-rune-bool">strconv.IsPrint(r rune) bool</a></li>
+<li><a href="#strconvparseboolstr-string-bool-error">strconv.ParseBool(str string) (bool, error)</a></li>
+<li><a href="#strconvparseuints-string-base-int-bitsize-int-uint64-error">strconv.ParseUint(s string, base int, bitSize int) (uint64, error)</a></li>
+<li><a href="#strconvquotes-string-string">strconv.Quote(s string) string</a></li>
+<li><a href="#strconvquoteruner-rune-string">strconv.QuoteRune(r rune) string</a></li>
+<li><a href="#strconvquoterunetoasciir-rune-string">strconv.QuoteRuneToASCII(r rune) string</a></li>
+<li><a href="#strconvquotetoasciis-string-string">strconv.QuoteToASCII(s string) string</a></li>
+<li><a href="#strconvunquotes-string-string-error">strconv.Unquote(s string) (string, error)</a></li>
+<li><a href="#strconvunquotechars-string-quote-byte-value-rune-multibyte-bool-tail-string-err-error">strconv.UnquoteChar(s string, quote byte) (value rune, multibyte bool, tail string, err error)</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+<h2><span id="1-概述">1 概述</span></h2><p>Go语言是强类型语言，因此总会需要将字符串转成需要的类型。比如整型和字符串转换，字符串和布尔型的转换等。本文就介绍如何完成这些转换，以下是Go语言关于字符串转换的整理说明，主要是与切片类型的转换，和 strconv 包的使用。</p>
 <h2><span id="2-与切片的转换">2 与切片的转换</span></h2><p>切片类型可以和字符串类型相互转换。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">fmt.Println([]rune(&quot;Hello小韩说课&quot;))</span><br><span class="line">// [72 101 108 108 111 23567 38889 35828 35838]</span><br><span class="line">fmt.Println(string([]rune&#123;72, 101, 108, 108, 111, 23567, 38889, 35828, 35838&#125;))</span><br><span class="line">// Hello小韩说课</span><br><span class="line"></span><br><span class="line">fmt.Println([]byte(&quot;Hello&quot;))</span><br><span class="line">// [72 101 108 108 111]</span><br><span class="line">fmt.Println(string([]byte&#123;72, 101, 108, 108, 111&#125;))</span><br><span class="line">// Hello</span><br></pre></td></tr></table></figure></p>
 <h2><span id="3-strconv-包">3 strconv 包</span></h2><p>会将常用的放在前面：</p>
 <h3><span id="strconvatois-string-int-error">strconv.Atoi(s string) (int, error)</span></h3><p>转换字符串 s string 到整型。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">v := &quot;10&quot;</span><br><span class="line">if s, err := strconv.Atoi(v); err == nil &#123;</span><br><span class="line">    fmt.Printf(&quot;%T, %v&quot;, s, s)</span><br><span class="line">&#125;</span><br><span class="line">// int, 10</span><br><span class="line"></span><br><span class="line">// 相当于</span><br><span class="line">strconv.ParseInt(s, 10, 0)</span><br></pre></td></tr></table></figure></p>
@@ -132,7 +167,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-strconv/" data-id="cjnrdhxrs001778uod3x6gnka" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-strconv/" data-id="cjnrdqu8n001djouok3kqzi1z" class="article-share-link">分享到</a> -->
       
 
       
@@ -160,7 +195,7 @@
 
   <section class="changyan" id="comments">
 <!--PC和WAP自适应版-->
-<div id="SOHUCS" sid="cjnrdhxrs001778uod3x6gnka"></div> 
+<div id="SOHUCS" sid="cjnrdqu8n001djouok3kqzi1z"></div> 
 <script type="text/javascript"> 
 	(function(){ 
 		var appid = 'cyt64TYiv'; 
