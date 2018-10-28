@@ -100,7 +100,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/uncategorized/go-slice/" data-id="cjnsx4gbz001gl4uoj8olihtn" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/uncategorized/go-slice/" data-id="cjnsx604m001bg0uoktddqnbo" class="article-share-link">分享到</a> -->
       
 
       
@@ -148,7 +148,7 @@
 <h2><span id="6-数组遍历">6 数组遍历</span></h2><p>使用 循环索引 或者 for range 的语法完成遍历。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 循环索引</span><br><span class="line">var arr = [...]string&#123;&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;, &quot;f&quot;&#125;</span><br><span class="line">for i, l := 0, len(arr); i &lt; l; i++ &#123;</span><br><span class="line">  fmt.Println(arr[i])</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// for range</span><br><span class="line">var arr = [...]string&#123;&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;, &quot;f&quot;, &quot;g&quot;, &quot;h&quot;&#125;</span><br><span class="line">for i, v := range arr &#123;</span><br><span class="line">  fmt.Println(i, v)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h2><span id="7-多维数组">7 多维数组</span></h2><p>数组元素的值可以是数组类型，称之为多维数组，要求内部数组的长度相同。以二维数组为例，使用[][]来定义，可以将二维数组想象成一个行列表格。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var a1 [3][5]int</span><br><span class="line">var a2 = [3][5]string&#123;&#123;&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;&#125;, &#123;&quot;f&quot;, &quot;g&quot;, &quot;h&quot;, &quot;i&quot;, &quot;j&quot;&#125;, &#123;&quot;k&quot;, &quot;l&quot;, &quot;m&quot;, &quot;n&quot;, &quot;o&quot;&#125;&#125;</span><br></pre></td></tr></table></figure></p>
 <p>以上代码就定了二维数组，第一个使用默认值初始，第二个手动填充。</p>
-<p>演示如下<br><img src="http://www.hellokang.net/images/posts/go/go-array.png" alt="数组"></p>
+<p>演示如下<br><img src="http://www.hellokang.net/images/posts/go/go-array-2.png" alt="二维数组"></p>
 <p>使用双层循环可以遍历二维数组：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">// 循环索引</span><br><span class="line">// 行坐标索引</span><br><span class="line">for i := 0; i &lt; 3; i++ &#123;</span><br><span class="line">  // 列坐标索引</span><br><span class="line">  for j := 0; j &lt; 5; j++ &#123;</span><br><span class="line">    fmt.Print(a2[i][j], &quot; &quot;)</span><br><span class="line">  &#125;</span><br><span class="line">  fmt.Println()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// for range</span><br><span class="line">for _, row := range a2 &#123;</span><br><span class="line">  // fmt.Println(i, row)</span><br><span class="line">  for _, value := range row &#123;</span><br><span class="line">    fmt.Print(value, &quot; &quot;)</span><br><span class="line">  &#125;</span><br><span class="line">  fmt.Println()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h2><span id="8-数组传参">8 数组传参</span></h2><p>数组是值类型，传参时会发生值拷贝，当使用大数组时，内存的消耗需要考虑。可以考虑使用数组指针或者切片类型。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">func FuncName(p *[9999]float64) &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h2><span id="9-数组间的比较">9 ==，!= 数组间的比较</span></h2><p>两个数组的类型，长度，元素值，顺序都相同，认为两个数组相等。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[3]&#123;1, 2, 3&#125; == [4]&#123;1, 2, 3, 4&#125;</span><br><span class="line">// false</span><br><span class="line"></span><br><span class="line">[3]&#123;1, 2, 3&#125; == [3]&#123;3, 2, 1&#125;</span><br><span class="line">// false</span><br><span class="line"></span><br><span class="line">[3]&#123;1, 2, 3&#125; == [3]&#123;1, 2, 3&#125;</span><br><span class="line">// true</span><br></pre></td></tr></table></figure></p>
@@ -158,7 +158,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-array/" data-id="cjnsx4gac0002l4uouifp8loy" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-array/" data-id="cjnsx603d0006g0uoxmk9ul7k" class="article-share-link">分享到</a> -->
       
 
       
@@ -269,7 +269,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-strconv/" data-id="cjnsx4gbw001dl4uoq9wi37zq" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-strconv/" data-id="cjnsx604o001eg0uok1usfbup" class="article-share-link">分享到</a> -->
       
 
       
@@ -365,7 +365,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-utf8/" data-id="cjnsx4gc5001pl4uolwt5j3uq" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-utf8/" data-id="cjnsx604y001qg0uo29x9dxno" class="article-share-link">分享到</a> -->
       
 
       
@@ -536,7 +536,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-string/" data-id="cjnsx4gc1001jl4uo0qe0oqux" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-string/" data-id="cjnsx604r001hg0uolwczrkp5" class="article-share-link">分享到</a> -->
       
 
       
@@ -622,7 +622,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-package/" data-id="cjnsx4gbo0013l4uofi4aw0f3" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-package/" data-id="cjnsx6044000yg0uo6tkhsrgl" class="article-share-link">分享到</a> -->
       
 
       
@@ -694,7 +694,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-function/" data-id="cjnsx4gba000ll4uo1ujclhw7" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-function/" data-id="cjnsx603t000kg0uo8w8kymqb" class="article-share-link">分享到</a> -->
       
 
       
@@ -787,7 +787,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-flow-control/" data-id="cjnsx4gbl0010l4uolyamvn0f" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-flow-control/" data-id="cjnsx6040000rg0uo5egzb0eq" class="article-share-link">分享到</a> -->
       
 
       
@@ -925,7 +925,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-operator/" data-id="cjnsx4gbj000wl4uoavv7tb4a" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-operator/" data-id="cjnsx604g0012g0uofd81y56v" class="article-share-link">分享到</a> -->
       
 
       
@@ -1079,7 +1079,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjnsx4gc3001ml4uojkbdht8y" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjnsx604u001kg0uo15wr609m" class="article-share-link">分享到</a> -->
       
 
       
