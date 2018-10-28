@@ -72,6 +72,106 @@
     <div class="outer">
       <section id="main">
   
+    <article id="post-go-slice" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/uncategorized/go-slice/" class="article-date">
+  <time datetime="2018-10-28T13:03:49.000Z" itemprop="datePublished">2018-10-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/uncategorized/go-slice/">go-slice</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2><span id="1-概述">1 概述</span></h2><p>其中切片是基于数据中连续片段的引用，是一个引用类型。与数组不同的是，切片的长度可以在运行时修改。使用上可以将切片看作是长度可变的数组。即使超过了底层数组的最大长度，也可以继续扩容。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <!-- <a data-url="http://blog.hellokang.net/uncategorized/go-slice/" data-id="cjnsx0eab000xwkuocl6zscl6" class="article-share-link">分享到</a> -->
+      
+
+      
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+ 
+  
+    <article id="post-go-array" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/go/go-array/" class="article-date">
+  <time datetime="2018-10-28T12:41:02.000Z" itemprop="datePublished">2018-10-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/go/">go</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/go/go-array/">Go语言中数组的使用</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2><span id="1-概述">1 概述</span></h2><p>数组，切片，map是容器数据类型。都是可以存储多个值的符合类型。<br>其中数组是相同类型的一组已编号且长度固定的数据项序列，不用类型和长度是不同的数据类型，例如[5]int, [3]int, [5]byte是不同的类型。</p>
+<p><img src="http://www.hellokang.net/images/posts/go/go-array.png" alt="数组"></p>
+<h2><span id="定义语法">定义语法</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// 定义长度和类型，默认使用类型零值进行初始化</span><br><span class="line">var a1 [10]int</span><br><span class="line"></span><br><span class="line">// 定义长度和类型，同时初始化部分（全部）元素</span><br><span class="line">// 元素不够从前到后进行初始化</span><br><span class="line">var a2 = [10]int&#123;1, 2, 3, 4, 5&#125;</span><br><span class="line"></span><br><span class="line">// 不指定长度，指定类型。使用初始值确定长度</span><br><span class="line">// 有几个初始值，长度就是几</span><br><span class="line">var a3 = [...]int&#123;1, 2, 3, 4, 5, 6&#125;</span><br><span class="line"></span><br><span class="line">// 通过索引确定元素值</span><br><span class="line">var a4 = [10]int&#123;0: 1, 3: 2, 5: 3, 4, 5&#125;</span><br></pre></td></tr></table></figure>
+<h2><span id="索引访问">[]索引访问</span></h2><p>索引（index），是从 0 开始，加 1 递增的。使用 [] 访问。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">arr[0] // 数组的第一个元素</span><br><span class="line">arr[len(arr)-1] // 数组的最后一个元素</span><br></pre></td></tr></table></figure></p>
+<h2><span id="数组是值类型">数组是值类型</span></h2><p>数组为值类型，赋值时会生成新拷贝。这个可能和你熟悉的语言不同，稍稍留意。</p>
+<h2><span id="len-长度">len() 长度</span></h2><p>统计元素个数，一维的统计。如果是多维，仅统计一维元素数量。</p>
+<h2><span id="数组遍历">数组遍历</span></h2><p>使用 循环索引 或者 for range 的语法完成遍历。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 循环索引</span><br><span class="line">var arr = [...]string&#123;&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;, &quot;f&quot;&#125;</span><br><span class="line">for i, l := 0, len(arr); i &lt; l; i++ &#123;</span><br><span class="line">  fmt.Println(arr[i])</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// for range</span><br><span class="line">var arr = [...]string&#123;&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;, &quot;f&quot;, &quot;g&quot;, &quot;h&quot;&#125;</span><br><span class="line">for i, v := range arr &#123;</span><br><span class="line">  fmt.Println(i, v)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2><span id="多维数组">多维数组</span></h2><p>数组元素的值可以是数组类型，称之为多维数组，要求内部数组的长度相同。以二维数组为例，使用[][]来定义，可以将二维数组想象成一个行列表格。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var a1 [3][5]int</span><br><span class="line">var a2 = [3][5]string&#123;&#123;&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;&#125;, &#123;&quot;f&quot;, &quot;g&quot;, &quot;h&quot;, &quot;i&quot;, &quot;j&quot;&#125;, &#123;&quot;k&quot;, &quot;l&quot;, &quot;m&quot;, &quot;n&quot;, &quot;o&quot;&#125;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>以上代码就定了二维数组，第一个使用默认值初始，第二个手动填充。</p>
+<p>演示如下<br><img src="http://www.hellokang.net/images/posts/go/go-array.png" alt="数组"></p>
+<p>使用双层循环可以遍历二维数组：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">// 循环索引</span><br><span class="line">// 行坐标索引</span><br><span class="line">for i := 0; i &lt; 3; i++ &#123;</span><br><span class="line">  // 列坐标索引</span><br><span class="line">  for j := 0; j &lt; 5; j++ &#123;</span><br><span class="line">    fmt.Print(a2[i][j], &quot; &quot;)</span><br><span class="line">  &#125;</span><br><span class="line">  fmt.Println()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// for range</span><br><span class="line">for _, row := range a2 &#123;</span><br><span class="line">  // fmt.Println(i, row)</span><br><span class="line">  for _, value := range row &#123;</span><br><span class="line">    fmt.Print(value, &quot; &quot;)</span><br><span class="line">  &#125;</span><br><span class="line">  fmt.Println()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2><span id="数组传参">数组传参</span></h2><p>数组是值类型，传参时会发生值拷贝，当使用大数组时，内存的消耗需要考虑。可以考虑使用数组指针或者切片类型。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">func FuncName(p *[9999]float64) &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2><span id="数组间的比较">==，!= 数组间的比较</span></h2><p>两个数组的类型，长度，元素值，顺序都相同，认为两个数组相等。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[3]&#123;1, 2, 3&#125; == [4]&#123;1, 2, 3, 4&#125;</span><br><span class="line">// false</span><br><span class="line"></span><br><span class="line">[3]&#123;1, 2, 3&#125; == [3]&#123;3, 2, 1&#125;</span><br><span class="line">// false</span><br><span class="line"></span><br><span class="line">[3]&#123;1, 2, 3&#125; == [3]&#123;1, 2, 3&#125;</span><br><span class="line">// true</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <!-- <a data-url="http://blog.hellokang.net/go/go-array/" data-id="cjnsx0e7v0000wkuo06p86mnj" class="article-share-link">分享到</a> -->
+      
+
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+ 
+  
     <article id="post-go-strconv" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/go/go-strconv/" class="article-date">
@@ -168,7 +268,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-strconv/" data-id="cjnrkrcps001a4wuotv55csi6" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-strconv/" data-id="cjnsx0eaw001jwkuo16iv24uq" class="article-share-link">分享到</a> -->
       
 
       
@@ -264,7 +364,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-utf8/" data-id="cjnrkrcpx001j4wuonmwxhe99" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-utf8/" data-id="cjnsx0eay001mwkuohtosb664" class="article-share-link">分享到</a> -->
       
 
       
@@ -435,7 +535,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-string/" data-id="cjnrkrcpu001d4wuoimlrkf3h" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-string/" data-id="cjnsx0eau001gwkuojq6opf6w" class="article-share-link">分享到</a> -->
       
 
       
@@ -521,7 +621,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-package/" data-id="cjnrkrcpk000y4wuo975admy5" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-package/" data-id="cjnsx0eap001awkuoajgtah8g" class="article-share-link">分享到</a> -->
       
 
       
@@ -593,7 +693,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-function/" data-id="cjnrkrcou000f4wuouaofnug4" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-function/" data-id="cjnsx0ea0000mwkuo3cxfth97" class="article-share-link">分享到</a> -->
       
 
       
@@ -680,13 +780,13 @@
 <h2><span id="6-延迟执行defer">6 延迟执行defer</span></h2><p>defer 语句会将其后语句进行延迟处理。在 defer 所属函数即将返回时，将延迟处理的语句按 defer 的逆序进行执行，也就是说，先被 defer 的语句最后被执行，最后被 defer 的语句，最先被执行。演示如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"> func main() &#123;</span><br><span class="line">    fmt.Println(&quot;before defer&quot;)</span><br><span class="line">    defer fmt.Println(&quot;defer A&quot;)</span><br><span class="line">    defer fmt.Println(&quot;defer B&quot;)</span><br><span class="line">    defer fmt.Println(&quot;defer C&quot;)</span><br><span class="line">    fmt.Println(&quot;after defer&quot;)</span><br><span class="line">&#125;</span><br><span class="line">以上代码的执行结果：</span><br><span class="line">before defer</span><br><span class="line">after defer</span><br><span class="line">defer C</span><br><span class="line">defer B</span><br><span class="line">defer A</span><br></pre></td></tr></table></figure></p>
 <p>defer 执行是放在一个临时的调用栈中，因此是先入栈后出栈的。<br>流程图如下：<br><img src="http://www.hellokang.net/images/posts/go/go-defer.png" alt="defer"></p>
 <p>实操时，处理互斥所时，很常用！</p>
-<p>以上就是Go语言提供的流程控制相关内容<br>完！</p>
+<p>完！<br>原文出自：<a href="http://www.hellokang.net/go/go-flow-control/" target="_blank" rel="noopener">小韩说课</a><br>微信关注：小韩说课<br><img src="http://www.hellokang.net/images/wechat_subscription.jpg" alt="小韩说课"></p>
 
       
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-flow-control/" data-id="cjnrkrcoy000i4wuohovt2b2l" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-flow-control/" data-id="cjnsx0ea5000rwkuoz1ow4m40" class="article-share-link">分享到</a> -->
       
 
       
@@ -824,7 +924,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-operator/" data-id="cjnrkrcp9000v4wuo0x8nq7ej" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-operator/" data-id="cjnsx0eal0017wkuoh6fr11kp" class="article-share-link">分享到</a> -->
       
 
       
@@ -978,182 +1078,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjnrkrcpw001g4wuo68bsqhj0" class="article-share-link">分享到</a> -->
-      
-
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
- 
-  
-    <article id="post-go-variable" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/go/go-variable/" class="article-date">
-  <time datetime="2018-10-18T10:51:32.000Z" itemprop="datePublished">2018-10-18</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/go/">go</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/go/go-variable/">Go语言中的变量</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!-- toc -->
-<ul>
-<li><a href="#1-概述">1 概述</a></li>
-<li><a href="#2-定义声明和初始化">2 定义：声明和初始化</a></li>
-<li><a href="#3-类型默认值零值">3 类型默认值（零值）</a></li>
-<li><a href="#4-强类型">4 强类型</a></li>
-<li><a href="#5-类型推导">5 类型推导</a></li>
-<li><a href="#6-短声明定义">6 短声明（定义）</a></li>
-<li><a href="#7-批量定义">7 批量定义</a></li>
-<li><a href="#8-批量赋值">8 批量赋值</a></li>
-<li><a href="#9-匿名变量">9 匿名变量</a></li>
-<li><a href="#10-变量作用域">10 变量作用域</a></li>
-</ul>
-<!-- tocstop -->
-<h2><span id="1-概述">1 概述</span></h2><p>变量（Variable）是程序运行过程中，内容可以变化（修改）的量，变量的功能是存储用户的数据，是计算机语言中能储存计算结果或能表示值抽象概念。<br>变量，是通过变量的标识符定位值的过程。变量的内存模拟演示：</p>
-<p><img src="http://www.hellokang.net/images/posts/go/go-variable.png" alt="变量的内存模拟演示"></p>
-<h2><span id="2-定义声明和初始化">2 定义：声明和初始化</span></h2><p>定义变使用var关键字，需要指定其类型，可以同时初始化，如果没有指定初始化值，则使用类型的默认值，语法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 声明变量，未初始化（默认值初始化）</span><br><span class="line">var name string</span><br><span class="line">// 声明变量，特定值初始化</span><br><span class="line">var user string = &quot;Hank&quot;</span><br></pre></td></tr></table></figure></p>
-<p>Go语言中的变量必须声明后才可以使用，不能直接使用未定义的变量。</p>
-<h2><span id="3-类型默认值零值">3 类型默认值（零值）</span></h2><p>Go语言的类型默认值如下所示：</p>
-<ul>
-<li>整型和浮点型变量的默认值为 0。</li>
-<li>字符串变量的默认值为空字符串。</li>
-<li>布尔型变量默认为 bool。</li>
-<li>切片、函数、指针变量的默认为 nil。</li>
-</ul>
-<h2><span id="4-强类型">4 强类型</span></h2><p>Go语言是强类型语言，变量必须有类型，同时变量仅仅可以存储特定类型的数据。</p>
-<h2><span id="5-类型推导">5 类型推导</span></h2><p>定义变量时，如果指定了初始值，则可以省略类型的定义，Go语言可以自己由数据推导出类型。<br>语法为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 声明变量，特定值初始化，类型推导出user为字符串string型</span><br><span class="line">var user = &quot;Hank&quot;</span><br></pre></td></tr></table></figure></p>
-<h2><span id="6-短声明定义">6 短声明（定义）</span></h2><p>为了简化定义变量，使用运算符 := 配合类型推导，可以快速完成变量的定义，语法为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">user := &quot;hank&quot;</span><br></pre></td></tr></table></figure></p>
-<h2><span id="7-批量定义">7 批量定义</span></h2><p>使用var或:=都可以一次性定义多个变量，语法为：<br>var<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var (</span><br><span class="line">  v1 = 42</span><br><span class="line">  v2 = &quot;hank&quot;</span><br><span class="line">  )</span><br><span class="line">也可以</span><br><span class="line">var v1, v2 = 42, &quot;hank&quot;</span><br></pre></td></tr></table></figure></p>
-<p>:=<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">v1, v2 := 42, &quot;hank&quot;</span><br></pre></td></tr></table></figure></p>
-<p>推荐使用 var() 声明块语法，因为代码维护容易。</p>
-<h2><span id="8-批量赋值">8 批量赋值</span></h2><p>一次性为多个变量进行赋值。（类似短定义。v1, v2, v3 := 42, “hank”, false）<br>当变量定义完毕后，再批量对其赋值，没有定义功能！<br>语法为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var (</span><br><span class="line">  v1 int</span><br><span class="line">  v2 int</span><br><span class="line">)</span><br><span class="line">// 批量赋值</span><br><span class="line">v1, v2 = 42, 1024</span><br></pre></td></tr></table></figure></p>
-<p>该语法，通常配合函数的批量返回来使用，一次性接收多个返回值，语法为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">  var (</span><br><span class="line">    v1 int</span><br><span class="line">    v2 int</span><br><span class="line">  )</span><br><span class="line">  // 调用函数，接收其返回值</span><br><span class="line">  v1, v2 = getData()</span><br><span class="line">&#125;</span><br><span class="line">// 返回两个值的函数</span><br><span class="line">func getData() (int, int) &#123;</span><br><span class="line">  // 返回了两个值（假设42为最小值，1024为最大值）</span><br><span class="line">  return 42, 1024</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>非常方便的可以交换两个变量的值：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var (</span><br><span class="line">  v1 = 42</span><br><span class="line">  v2 = 1024</span><br><span class="line">)</span><br><span class="line">// 交换</span><br><span class="line">v1, v2 = v2, v1</span><br></pre></td></tr></table></figure></p>
-<p>执行后，v1==1024, v2==42</p>
-<h2><span id="9-匿名变量">9 匿名变量</span></h2><p>标识符为<em>（下划线）的变量，是系统保留的匿名变量，在赋值后，会被立即释放，称之为匿名变量。其作用是变量占位符，对其变量赋值结构。通常会在批量赋值时使用。<br>例如，函数返回多个值，我们仅仅需要其中部分，则不需要的使用</em>来占位，演示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">  var (</span><br><span class="line">    v int</span><br><span class="line">  )</span><br><span class="line">  // 调用函数，仅仅需要第二个返回值，第一，三使用匿名变量占位</span><br><span class="line">  _, v, _ = getData()</span><br><span class="line">&#125;</span><br><span class="line">// 返回两个值的函数</span><br><span class="line">func getData() (int, int, int) &#123;</span><br><span class="line">  // 返回3个值</span><br><span class="line">  return 42, 1024, 2012</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2><span id="10-变量作用域">10 变量作用域</span></h2><p>Go语言中的变量是块作用域。<br>块，指的是使用{}定义的代码段，包括函数，if/switch/for语句，或独立的{}都是块。在块内定义的变量仅仅在本块内可用。<br>定义，指的是 var 或者 := 定义的变量。<br>Go语言的作用域是层叠的，就是说内层块可以直接访问到外层块的变量，前提是内层块没有定义同名的外层变量。<br>演示如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">// 全局（函数外）定义3个变量</span><br><span class="line">var (</span><br><span class="line">  v1 = 1</span><br><span class="line">  v2 = 2</span><br><span class="line">  v3 = 3</span><br><span class="line">)</span><br><span class="line">func main() &#123;</span><br><span class="line"></span><br><span class="line">  // main&#123;&#125;函数块，定义2个变量</span><br><span class="line">  var (</span><br><span class="line">    v2 = 22</span><br><span class="line">    v3 = 33</span><br><span class="line">  )</span><br><span class="line">  fmt.Println(v1, v2, v3)</span><br><span class="line">  // 结果 1 22 33</span><br><span class="line"></span><br><span class="line">  &#123;</span><br><span class="line">    // main()函数内部&#123;&#125;块，定义1个变量</span><br><span class="line">    var (</span><br><span class="line">      v3 = 333</span><br><span class="line">    )</span><br><span class="line">    fmt.Println(v1, v2, v3)</span><br><span class="line">    // 结果 1 22 333</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>上面代码中：<br>在main()中，v2，v3被重新定义，则在main()中，v1是外部，而v2, v3是main函数局部的。<br>在main()内部的{}中，v3被重新定义，则在main()内部的{}中，v1是外部，而v2是main()定义的, v3是main()内部{}定义的的。</p>
-<p>变量可以沿内部作用域向外部作用域查找变量的过程。</p>
-<p>带有{}的语句，其中的变量也仅仅在内部有效，例如for，if，switch等，演示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for i := 0; i &lt; 10; i++ &#123;</span><br><span class="line">  fmt.Println(i)</span><br><span class="line">&#125;</span><br><span class="line">fmt.Println(i)</span><br><span class="line">// 会提示变量i未定义, undefined: i</span><br></pre></td></tr></table></figure></p>
-<p>注意i，是通过短声明在for内部定义的变量，仅仅在for内部有意义。</p>
-<p>互不嵌套的{}见作用域不可见，不可互相访问。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">  &#123;</span><br><span class="line">    v := 42</span><br><span class="line">  &#125;</span><br><span class="line">  &#123;</span><br><span class="line">    fmt.Println(v)</span><br><span class="line">    // 会提示变量v未定义, undefined: v</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>完！<br>原文出自：<a href="http://www.hellokang.net/go/go-variable/" target="_blank" rel="noopener">小韩说课</a><br>微信关注：小韩说课<br><img src="http://www.hellokang.net/images/wechat_subscription.jpg" alt="小韩说课"></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-        <!-- <a data-url="http://blog.hellokang.net/go/go-variable/" data-id="cjnrkrcq0001m4wuo469g9lgs" class="article-share-link">分享到</a> -->
-      
-
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
- 
-  
-    <article id="post-go-constant" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/go/go-constant/" class="article-date">
-  <time datetime="2018-10-17T14:50:38.000Z" itemprop="datePublished">2018-10-17</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/go/">go</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/go/go-constant/">Go语言中的常量</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!-- toc -->
-<ul>
-<li><a href="#1-概述">1 概述</a></li>
-<li><a href="#2-定义单个常量">2 定义单个常量</a></li>
-<li><a href="#3-类型推导">3 类型推导</a></li>
-<li><a href="#4-定义多个常量">4 定义多个常量</a></li>
-<li><a href="#5-iota迭代定义常量">5 iota迭代定义常量</a></li>
-<li><a href="#6-常量在编译时确定">6 常量在编译时确定</a></li>
-<li><a href="#7-常量的作用">7 常量的作用</a></li>
-</ul>
-<!-- tocstop -->
-<p>[TOC]</p>
-<h2><span id="1-概述">1 概述</span></h2><p>常量，一经定义不可更改的量。功能角度看，当出现不需要被更改的数据时，应该使用常量进行存储，例如圆周率。从语法的角度看，使用常量可以保证数据，在整个运行期间内，不会被更改。例如当前处理器的架构类型，可以保证不被更改。</p>
-<p>语法如下</p>
-<h2><span id="2-定义单个常量">2 定义单个常量</span></h2><p>const 常量名 &lt;可选的类型&gt; = 常量值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const c1 int = 1000</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>Go语言中，标识符（常量名）是否大小写，取决于是否需要在导出时被识别。</p>
-</blockquote>
-<p>常量的值仅仅支持，基础类型，字符串，字符，整型，浮点，布尔。</p>
-<h2><span id="3-类型推导">3 类型推导</span></h2><p>类型可以通过值推导出来，大多数情况可以省略类型，例如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const c2 = 1000</span><br></pre></td></tr></table></figure></p>
-<p>除非你想使用例如，int8, byte，float32这些非默认类型时，需要指定类型，例如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const c3 int16 = 1000</span><br></pre></td></tr></table></figure></p>
-<h2><span id="4-定义多个常量">4 定义多个常量</span></h2><p>可以一行定义多个常量，例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const c4, c5 = 42, 1000</span><br></pre></td></tr></table></figure></p>
-<p>也可以使用 const()定义块，定义多个，每个常量单独一行，例如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const (</span><br><span class="line">  c6 = 42</span><br><span class="line">  c7 = 1000</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>推荐使用const()块语法，一次性定义多个。</p>
-</blockquote>
-<p>const()块定义时，如果常量未给出定义，则延续上面的定义规则，例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const (</span><br><span class="line">  c7 = 42</span><br><span class="line">  c8 // c8 = 42</span><br><span class="line">  c9 // c9 = 42</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
-<p>此时，c8, c9, 值都是42。</p>
-<h2><span id="5-iota迭代定义常量">5 iota迭代定义常量</span></h2><p>const配合iota关键字使用，可以定义一组由0开始+1迭代的常量<br>演示语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const (</span><br><span class="line">  gender_secret = iota</span><br><span class="line">  gender_male // = iota</span><br><span class="line">  gender_female // = iota</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
-<p>此时，三个常量值，分别是,0, 1, 2<br>iota的规则是：若iota出现在const()中，那么const()定义的第一行的iota就是0，第二行就是0+1=1，不论iota是否被常量使用。演示如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">const (</span><br><span class="line">  c1 = 42 // iota = 0，虽然未使用iota，但后边（const()中）有使用，此时iota被初始化为0，下面每行累加1</span><br><span class="line">  c2 = iota      // iota = 1，iota继续累加，使用了iota</span><br><span class="line">  c3 = 1024      // iota = 2，同样未使用，但iota的值继续累加。c3 被定义为1024</span><br><span class="line">  c4             // iota = 3，c4延续上面的定义c4=1024，iota继续累加</span><br><span class="line">  c5 = iota      // iota = 4，iota继续累加，使用了iota</span><br><span class="line">  c6 = iota      // iota = 5，iota继续累加，使用了iota</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
-<p>此时结果为：42, 1, 1024, 1024, 4, 5</p>
-<h2><span id="6-常量在编译时确定">6 常量在编译时确定</span></h2><p>编译时确定，因此不能使用变量为其赋值。可以使用，确定的字面量，字面量运算，内置函数运算，其他定义常量，这些在编译时可以确定的内容为常量赋值，演示为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">const c1 = &quot;hank&quot;</span><br><span class="line">const (</span><br><span class="line">  c2 = c1</span><br><span class="line">  c3 = 42 + 1024</span><br><span class="line">  c4 = len(&quot;hank&quot;)</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
-<p>以上语法都可以！</p>
-<h2><span id="7-常量的作用">7 常量的作用</span></h2><ul>
-<li>将特殊的值，语义化。使用时，可以知道其具体含义。</li>
-<li>数据的集中管理，更改常量定义，即可完成全部的修改。</li>
-<li>保证不被程序的其他代码所更改。</li>
-</ul>
-<p>完！</p>
-<p>原文出自：<a href="http://www.hellokang.net/go/go-constant/" target="_blank" rel="noopener">小韩说课</a><br>微信关注：小韩说课<br><img src="http://www.hellokang.net/images/wechat_subscription.jpg" alt="小韩说课"></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-        <!-- <a data-url="http://blog.hellokang.net/go/go-constant/" data-id="cjnrkrcoc00014wuoi7qi7f82" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjnsx0eb0001pwkuolhj8k9t5" class="article-share-link">分享到</a> -->
       
 
       
@@ -1207,7 +1132,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">20</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">21</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -1216,7 +1141,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -1234,7 +1159,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -1246,6 +1171,14 @@
       <ul>
         
           <li>
+            <a href="/uncategorized/go-slice/">go-slice</a>
+          </li>
+        
+          <li>
+            <a href="/go/go-array/">Go语言中数组的使用</a>
+          </li>
+        
+          <li>
             <a href="/go/go-strconv/">Go语言中其他数据与字符串类型的转换</a>
           </li>
         
@@ -1255,14 +1188,6 @@
         
           <li>
             <a href="/go/go-string/">Go语言中的字符串处理</a>
-          </li>
-        
-          <li>
-            <a href="/go/go-package/">Go语言的包管理</a>
-          </li>
-        
-          <li>
-            <a href="/go/go-function/">Go语言中的函数</a>
           </li>
         
       </ul>

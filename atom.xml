@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.hellokang.net/"/>
-  <updated>2018-10-27T14:46:49.716Z</updated>
+  <updated>2018-10-28T13:04:06.166Z</updated>
   <id>http://blog.hellokang.net/</id>
   
   <author>
@@ -15,6 +15,56 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>go-slice</title>
+    <link href="http://blog.hellokang.net/uncategorized/go-slice/"/>
+    <id>http://blog.hellokang.net/uncategorized/go-slice/</id>
+    <published>2018-10-28T13:03:49.000Z</published>
+    <updated>2018-10-28T13:04:06.166Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2&gt;&lt;span id=&quot;1-概述&quot;&gt;1
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Go语言中数组的使用</title>
+    <link href="http://blog.hellokang.net/go/go-array/"/>
+    <id>http://blog.hellokang.net/go/go-array/</id>
+    <published>2018-10-28T12:41:02.000Z</published>
+    <updated>2018-10-28T13:32:38.716Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2&gt;&lt;span id=&quot;1-概述&quot;&gt;1 概述&lt;/span&gt;&lt;/h2&gt;&lt;p&gt;数组，切片，map是容器数据类型。都是可以存储多个值的符合类型。&lt;br&gt;其中数组是相同类型的一组已编号且长度固定的数据项序列，不用类型和长度是不同的数据类型，例如[5]int, [3]int,
+        
+      
+    
+    </summary>
+    
+      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
+    
+    
+      <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
+    
+      <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
+    
+  </entry>
   
   <entry>
     <title>Go语言中其他数据与字符串类型的转换</title>
@@ -175,7 +225,7 @@
     <link href="http://blog.hellokang.net/go/go-flow-control/"/>
     <id>http://blog.hellokang.net/go/go-flow-control/</id>
     <published>2018-10-21T12:15:24.000Z</published>
-    <updated>2018-10-23T12:14:58.977Z</updated>
+    <updated>2018-10-28T05:34:37.420Z</updated>
     
     <summary type="html">
     
@@ -484,38 +534,6 @@
     <id>http://blog.hellokang.net/go/go-editor-vim/</id>
     <published>2018-09-18T03:54:36.000Z</published>
     <updated>2018-10-15T04:14:36.973Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
-      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Go语言的反射机制</title>
-    <link href="http://blog.hellokang.net/go/go-reflect/"/>
-    <id>http://blog.hellokang.net/go/go-reflect/</id>
-    <published>2018-09-17T04:05:48.000Z</published>
-    <updated>2018-10-15T04:14:59.468Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
-      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>使用goland编写Go语言</title>
-    <link href="http://blog.hellokang.net/go/go-editor-goland/"/>
-    <id>http://blog.hellokang.net/go/go-editor-goland/</id>
-    <published>2018-09-17T03:54:42.000Z</published>
-    <updated>2018-10-15T04:14:32.949Z</updated>
     
     <summary type="html">
     
