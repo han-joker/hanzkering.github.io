@@ -6,18 +6,21 @@
   
   <title>go-slice | 小韩说课</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1 概述其中切片是基于数据中连续片段的引用，是一个引用类型。与数组不同的是，切片的长度可以在运行时修改。使用上可以将切片看作是长度可变的数组。即使超过了底层数组的最大长度，也可以继续扩容。">
+  <meta name="description" content="1 概述其中切片是基于数据中连续片段的引用，是一个引用类型。与数组不同的是，切片的长度可以在运行时修改。使用上可以将切片看作是长度可变的数组。即使超过了底层数组的最大长度，也可以继续扩容。 图例为： 切片的实现是由一个底层数组以及其上面的动态位置，尺寸来实现。由内部由指向起始元素的指针、元素数量length和容量capacity组成。其中：  指针ptr，用于指向切片在底层数组的起始位置。 尺寸l">
 <meta name="keywords" content="PHP, Python, JavaScript, Go, MySQL, linux, docker, 区块链, 韩忠康, 小韩说课">
 <meta property="og:type" content="article">
 <meta property="og:title" content="go-slice">
 <meta property="og:url" content="http://blog.hellokang.net/uncategorized/go-slice/index.html">
 <meta property="og:site_name" content="小韩说课">
-<meta property="og:description" content="1 概述其中切片是基于数据中连续片段的引用，是一个引用类型。与数组不同的是，切片的长度可以在运行时修改。使用上可以将切片看作是长度可变的数组。即使超过了底层数组的最大长度，也可以继续扩容。">
+<meta property="og:description" content="1 概述其中切片是基于数据中连续片段的引用，是一个引用类型。与数组不同的是，切片的长度可以在运行时修改。使用上可以将切片看作是长度可变的数组。即使超过了底层数组的最大长度，也可以继续扩容。 图例为： 切片的实现是由一个底层数组以及其上面的动态位置，尺寸来实现。由内部由指向起始元素的指针、元素数量length和容量capacity组成。其中：  指针ptr，用于指向切片在底层数组的起始位置。 尺寸l">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-28T13:04:06.166Z">
+<meta property="og:image" content="http://www.hellokang.net/images/posts/go/go-slice.png">
+<meta property="og:image" content="http://www.hellokang.net/images/wechat_subscription.jpg">
+<meta property="og:updated_time" content="2018-10-29T13:26:22.793Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="go-slice">
-<meta name="twitter:description" content="1 概述其中切片是基于数据中连续片段的引用，是一个引用类型。与数组不同的是，切片的长度可以在运行时修改。使用上可以将切片看作是长度可变的数组。即使超过了底层数组的最大长度，也可以继续扩容。">
+<meta name="twitter:description" content="1 概述其中切片是基于数据中连续片段的引用，是一个引用类型。与数组不同的是，切片的长度可以在运行时修改。使用上可以将切片看作是长度可变的数组。即使超过了底层数组的最大长度，也可以继续扩容。 图例为： 切片的实现是由一个底层数组以及其上面的动态位置，尺寸来实现。由内部由指向起始元素的指针、元素数量length和容量capacity组成。其中：  指针ptr，用于指向切片在底层数组的起始位置。 尺寸l">
+<meta name="twitter:image" content="http://www.hellokang.net/images/posts/go/go-slice.png">
   
     <link rel="alternative" href="/atom.xml" title="小韩说课" type="application/atom+xml">
   
@@ -94,6 +97,41 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2><span id="1-概述">1 概述</span></h2><p>其中切片是基于数据中连续片段的引用，是一个引用类型。与数组不同的是，切片的长度可以在运行时修改。使用上可以将切片看作是长度可变的数组。即使超过了底层数组的最大长度，也可以继续扩容。</p>
+<p>图例为：<br><img src="http://www.hellokang.net/images/posts/go/go-slice.png" alt="slice示意"></p>
+<p>切片的实现是由一个底层数组以及其上面的动态位置，尺寸来实现。由内部由指向起始元素的指针、元素数量length和容量capacity组成。其中：</p>
+<ul>
+<li>指针ptr，用于指向切片在底层数组的起始位置。</li>
+<li>尺寸len，用于记录切片内元素数量。</li>
+<li>容量cap，当前切片最大容量，也就是底层数组的容量。可以动态分配。</li>
+</ul>
+<p>当使用不定数量参数时，函数得到的参数也是切片类型。</p>
+<p>切片为引用类型，因此切片的默认初始值为nil。</p>
+<h2><span id="2-创建切片">2 创建切片</span></h2><p>语法整理如下：</p>
+<ul>
+<li>[]type，切片类型</li>
+<li>[]type{v1, v2, v3}，定义时指定初始值</li>
+<li>make([]type, len)，make开辟内存空间，指定类型和长度</li>
+<li>make([]type, len, cap)，make开辟切片内存空间，指定类型，长度和容量</li>
+<li>arr[start:end:max]，由数组或切片创建<br>其中：<br>开始索引start，表示从哪个元素开始。<br>结束索引end，表示到哪个索引终止，不包括该索引元素。<br>最大索引max，用来确定容量，容量=最大索引-开始索引。默认情况下，最大索引的值为len()。</li>
+</ul>
+<h2><span id="3-for-range-遍历">3 for-range 遍历</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for i, v := range sli &#123;</span><br><span class="line">  fmt.Println(i, v)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2><span id="4-append-扩容">4 append() 扩容</span></h2><p>func append(s []T, x …T) []T<br>使用 buildin 函数 append() 可以向切片中添加新元素。添加时存在两种情况：</p>
+<ul>
+<li>切片容量充足，在原切片基础上追加。</li>
+<li>切片容量不足，会分配新的切片空间来保证已有切片元素和新增元素的存储。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">s1 := make([]int, 3, 5)</span><br><span class="line">s2 := append(s1, 1, 2)</span><br><span class="line">s2[1] = 42</span><br><span class="line">fmt.Println(s1)</span><br><span class="line">fmt.Println(s2)</span><br><span class="line">// [0 42 0] 修改s2，s1也会更改</span><br><span class="line">// [0 42 0 1 2]</span><br><span class="line"></span><br><span class="line">s3 := make([]int, 3, 5)</span><br><span class="line">s4 := append(s1, 1, 2, 3, 4, 5)</span><br><span class="line">s4[1] = 42</span><br><span class="line">fmt.Println(s3)</span><br><span class="line">fmt.Println(s4)</span><br><span class="line">// [0 0 0] 修改s4，s3不会更改，因为容量不足，开辟了新空间</span><br><span class="line">// [0 42 0 1 2 3 4 5]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>可以将一个切片到另一个切片后，需要使用 切片… 来实现：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">append(slice1, slice2…)</span><br></pre></td></tr></table></figure></p>
+<h2><span id="5-copy-拷贝切片">5 copy() 拷贝切片</span></h2><p>由于默认是地址传递赋值方式，当需要得到一个新的拷贝时，需要使用函数copy()来实现。<br>copy(新切片，旧切片)，利用旧切片复制一份新切片。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">s3 := []int&#123;10, 20, 30&#125;</span><br><span class="line">var s4 = make([]int, 3)</span><br><span class="line">copy(s4, s3)</span><br></pre></td></tr></table></figure>
+<h2><span id="6-常用操作">6 常用操作</span></h2><p>配合 make，append，copy 可以完成切片的常用操作。</p>
+<h3><span id="通过索引-i-删除切片中某个元素">通过索引 i 删除切片中某个元素</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s2 := append(s1[:i], s1[i+1:]...)</span><br></pre></td></tr></table></figure>
+<h3><span id="删除索引-i-j-的元素">删除索引 i-j 的元素</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s2 := append(append([]int&#123;&#125;, s1[:i]...), s1[j:]...)</span><br></pre></td></tr></table></figure>
+<h3><span id="在索引-i-的位置插入元素">在索引 i 的位置插入元素</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s2 := append(s1[:i], append([]int&#123;v&#125;, s1[i:]...)...)</span><br></pre></td></tr></table></figure>
+<h3><span id="在-s1-索引-i-的位置插入切片-s2-的所有元素">在 s1 索引 i 的位置插入切片 s2 的所有元素</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s1 = append(s1[:i], append(s2, s1[i:]...)...)</span><br></pre></td></tr></table></figure>
+<h3><span id="栈操作模拟">栈操作模拟</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">// 栈模拟（只在一端的头，添加或者删除元素）</span><br><span class="line">var s1 = []int&#123;6, 7, 8, 9, 10, 11&#125;</span><br><span class="line">// 操作末尾</span><br><span class="line">// 入栈</span><br><span class="line">s1 = append(s1, 12)</span><br><span class="line">fmt.Println(s1)</span><br><span class="line">// 出栈</span><br><span class="line">v := s1[len(s1)-1]</span><br><span class="line">s1 = s1[:len(s1)-1]</span><br><span class="line">fmt.Println(v, s1)</span><br><span class="line"></span><br><span class="line">// 操作头部</span><br><span class="line">// 入栈</span><br><span class="line">s1 = append([]int&#123;5&#125;, s1...)</span><br><span class="line">fmt.Println(s1)</span><br><span class="line">// 出栈</span><br><span class="line">v := s1[0]</span><br><span class="line">s1 = s1[1:]</span><br><span class="line">fmt.Println(v, s1)</span><br></pre></td></tr></table></figure>
+<h3><span id="队列操作模拟">队列操作模拟</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// 模拟队列</span><br><span class="line">// 头进尾出</span><br><span class="line">var s1 = []int&#123;6, 7, 8, 9, 10, 11&#125;</span><br><span class="line">s1 = append([]int&#123;5&#125;, s1...)</span><br><span class="line">v := s1[len(s1)-1]</span><br><span class="line">s1 = s1[:len(s1)-1]</span><br><span class="line"></span><br><span class="line">// 尾进头出</span><br><span class="line">var s1 = []int&#123;6, 7, 8, 9, 10, 11&#125;</span><br><span class="line">s1 = append(s1, 12)</span><br><span class="line">v := s1[0]</span><br><span class="line">s1 = s1[1:]</span><br></pre></td></tr></table></figure>
+<p>完！<br>原文出自：<a href="http://www.hellokang.net/go/go-slice/" target="_blank" rel="noopener">小韩说课</a><br>微信关注：小韩说课<br><img src="http://www.hellokang.net/images/wechat_subscription.jpg" alt="小韩说课"></p>
 
       
     </div>
