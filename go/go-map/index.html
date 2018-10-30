@@ -4,20 +4,23 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Go语言的内存模型 | 小韩说课</title>
+  <title>Go语言中映射表map的使用 | 小韩说课</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="PHP, Python, JavaScript, Go, MySQL, linux, docker, 区块链, 韩忠康, 小韩说课">
-<meta name="keywords" content="PHP, Python, JavaScript, Go, MySQL, linux, docker, 区块链, 韩忠康, 小韩说课">
+  <meta name="description" content="概述Go语言中的键值对(key-&amp;gt;value)集合，称之为映射map。映射map是变长类型，定义时不需要指定长度。映射map是无序的，遍历是的顺序不可期，原因是底层由hash表实现。逻辑结构表示为： 2 创建语法12345678910var m = map[key_type]value_type&amp;#123;key1: value1, key2: value2&amp;#125;var m = mak">
+<meta name="keywords" content="go,goGuide">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Go语言的内存模型">
-<meta property="og:url" content="http://blog.hellokang.net/go/go-memory-model/index.html">
+<meta property="og:title" content="Go语言中映射表map的使用">
+<meta property="og:url" content="http://blog.hellokang.net/go/go-map/index.html">
 <meta property="og:site_name" content="小韩说课">
-<meta property="og:description" content="PHP, Python, JavaScript, Go, MySQL, linux, docker, 区块链, 韩忠康, 小韩说课">
+<meta property="og:description" content="概述Go语言中的键值对(key-&amp;gt;value)集合，称之为映射map。映射map是变长类型，定义时不需要指定长度。映射map是无序的，遍历是的顺序不可期，原因是底层由hash表实现。逻辑结构表示为： 2 创建语法12345678910var m = map[key_type]value_type&amp;#123;key1: value1, key2: value2&amp;#125;var m = mak">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-15T04:14:48.608Z">
+<meta property="og:image" content="http://www.hellokang.net/images/posts/go/go-map.png">
+<meta property="og:image" content="http://www.hellokang.net/images/wechat_subscription.jpg">
+<meta property="og:updated_time" content="2018-10-30T11:34:18.188Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Go语言的内存模型">
-<meta name="twitter:description" content="PHP, Python, JavaScript, Go, MySQL, linux, docker, 区块链, 韩忠康, 小韩说课">
+<meta name="twitter:title" content="Go语言中映射表map的使用">
+<meta name="twitter:description" content="概述Go语言中的键值对(key-&amp;gt;value)集合，称之为映射map。映射map是变长类型，定义时不需要指定长度。映射map是无序的，遍历是的顺序不可期，原因是底层由hash表实现。逻辑结构表示为： 2 创建语法12345678910var m = map[key_type]value_type&amp;#123;key1: value1, key2: value2&amp;#125;var m = mak">
+<meta name="twitter:image" content="http://www.hellokang.net/images/posts/go/go-map.png">
   
     <link rel="alternative" href="/atom.xml" title="小韩说课" type="application/atom+xml">
   
@@ -71,10 +74,10 @@
   </div>
 </header>
     <div class="outer">
-      <section id="main"><article id="post-go-memory-model" class="article article-type-post" itemscope itemprop="blogPost">
+      <section id="main"><article id="post-go-map" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/go/go-memory-model/" class="article-date">
-  <time datetime="2018-08-23T03:51:08.000Z" itemprop="datePublished">2018-08-23</time>
+    <a href="/go/go-map/" class="article-date">
+  <time datetime="2018-10-30T10:29:57.000Z" itemprop="datePublished">2018-10-30</time>
 </a>
     
   <div class="article-category">
@@ -89,7 +92,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Go语言的内存模型
+      Go语言中映射表map的使用
     </h1>
   
 
@@ -97,36 +100,39 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h2><span id="概述">概述</span></h2><p>Go语言中的键值对(key-&gt;value)集合，称之为映射map。映射map是变长类型，定义时不需要指定长度。映射map是无序的，遍历是的顺序不可期，原因是底层由hash表实现。<br>逻辑结构表示为：<br><img src="http://www.hellokang.net/images/posts/go/go-map.png" alt="map示意"></p>
+<h2><span id="2-创建语法">2 创建语法</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var m = map[key_type]value_type&#123;key1: value1, key2: value2&#125;</span><br><span class="line">var m = make(map[key_type]value_type)</span><br><span class="line"></span><br><span class="line">// 示例,字符串型下标，字符串型值：</span><br><span class="line">var m = make(map[string]string) //make()会分配内存空间，初始化。</span><br><span class="line">m[&quot;east&quot;] = &quot;东&quot;</span><br><span class="line">m[&quot;west&quot;] = &quot;西&quot;</span><br><span class="line"></span><br><span class="line">// 直接初始化</span><br><span class="line">var m = map[string]string&#123;&quot;east&quot;: &quot;东&quot;, &quot;west&quot;: &quot;西&quot;&#125;</span><br></pre></td></tr></table></figure>
+<h2><span id="下标操作">[]下标操作</span></h2><p>与数组类型，使用下标完成映射元素的访问。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var m = map[string]string&#123;&quot;east&quot;: &quot;东&quot;, &quot;west&quot;: &quot;西&quot;&#125;</span><br><span class="line">fmt.Println(m[&quot;east&quot;]) </span><br><span class="line">// 东</span><br><span class="line">fmt.Println(m[&quot;west&quot;]) </span><br><span class="line">// 西</span><br></pre></td></tr></table></figure></p>
+<h2><span id="for-range">for-range</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for k, v := range mapVar &#123;</span><br><span class="line">    fmt.Println(k, v)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>遍历的顺序不可期。</p>
+<h2><span id="映射是引用类型">映射是引用类型</span></h2><p>切片为引用类型，因此切片的默认初始值为nil。<br>同时复制时为引用传递，修改会相互影响。</p>
+<h2><span id="检测元素是否存在">检测元素是否存在</span></h2><p>通过key获取元素时，使用第二个变量，可以接收到当前key是否存在的布尔值。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var m = map[string]string&#123;&quot;east&quot;: &quot;东&quot;, &quot;west&quot;: &quot;西&quot;&#125;</span><br><span class="line">value, exists := m[&quot;south&quot;]</span><br><span class="line">// value: 东， exists: true</span><br><span class="line"></span><br><span class="line">value, exists := m[&quot;south&quot;]</span><br><span class="line">// value: ， exists: false</span><br></pre></td></tr></table></figure></p>
+<h2><span id="delete-删除元素">delete 删除元素</span></h2><p>delete(map, key)，删除 map 中，指定的 key。如果 key 不存在，该操作不会产生错误。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var m = map[string]string&#123;&quot;east&quot;: &quot;东&quot;, &quot;west&quot;: &quot;西&quot;&#125;</span><br><span class="line">delete(m, &quot;west&quot;)</span><br><span class="line">fmt.Println(m)</span><br><span class="line">// map[east:东]</span><br></pre></td></tr></table></figure></p>
+<h2><span id="键值对调">键值对调</span></h2><p>如果 map 的值类型可以作为 key 且所有的 value 是唯一的，那么通过下面的方法可以做到键值对调：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var m = map[string]string&#123;&quot;east&quot;: &quot;东&quot;, &quot;west&quot;: &quot;西&quot;&#125;</span><br><span class="line">for k, v := range m &#123;</span><br><span class="line">  m[v] = k</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>完！<br>原文出自：<a href="http://www.hellokang.net/go/go-map/" target="_blank" rel="noopener">小韩说课</a><br>微信关注：小韩说课<br><img src="http://www.hellokang.net/images/wechat_subscription.jpg" alt="小韩说课"></p>
+
       
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-memory-model/" data-id="cjnvnn0oz000vg4uodkgnh4wa" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-map/" data-id="cjnvnn0p1000yg4uo274r2vwd" class="article-share-link">分享到</a> -->
       
 
       
 
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
+
     </footer>
   </div>
   
     
 <nav id="article-nav">
   
-    <a href="/go/go-channel/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">
-        
-          Go语言使用类型管道channel处理并发
-        
-      </div>
-    </a>
   
-  
-    <a href="/go/go-goroutine/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/go/go-slice/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">Go语言中管道goroutine处理并发</div>
+      <div class="article-nav-title">Go语言中切片的使用</div>
     </a>
   
 </nav>
@@ -137,7 +143,7 @@
 
   <section class="changyan" id="comments">
 <!--PC和WAP自适应版-->
-<div id="SOHUCS" sid="cjnvnn0oz000vg4uodkgnh4wa"></div> 
+<div id="SOHUCS" sid="cjnvnn0p1000yg4uo274r2vwd"></div> 
 <script type="text/javascript"> 
 	(function(){ 
 		var appid = 'cyt64TYiv'; 
