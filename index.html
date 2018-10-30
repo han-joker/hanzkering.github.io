@@ -74,10 +74,14 @@
   
     <article id="post-go-slice" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/uncategorized/go-slice/" class="article-date">
+    <a href="/go/go-slice/" class="article-date">
   <time datetime="2018-10-28T13:03:49.000Z" itemprop="datePublished">2018-10-28</time>
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/go/">go</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -86,7 +90,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/uncategorized/go-slice/">Go语言中切片的使用</a>
+      <a class="article-title" href="/go/go-slice/">Go语言中切片的使用</a>
     </h1>
   
 
@@ -116,9 +120,9 @@
 <h2><span id="4-append-扩容">4 append() 扩容</span></h2><p>func append(s []T, x …T) []T<br>使用 buildin 函数 append() 可以向切片中添加新元素。添加时存在两种情况：</p>
 <ul>
 <li>切片容量充足，在原切片基础上追加。</li>
-<li>切片容量不足，会分配新的切片空间来保证已有切片元素和新增元素的存储。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">s1 := make([]int, 3, 5)</span><br><span class="line">s2 := append(s1, 1, 2)</span><br><span class="line">s2[1] = 42</span><br><span class="line">fmt.Println(s1)</span><br><span class="line">fmt.Println(s2)</span><br><span class="line">// [0 42 0] 修改s2，s1也会更改</span><br><span class="line">// [0 42 0 1 2]</span><br><span class="line"></span><br><span class="line">s3 := make([]int, 3, 5)</span><br><span class="line">s4 := append(s1, 1, 2, 3, 4, 5)</span><br><span class="line">s4[1] = 42</span><br><span class="line">fmt.Println(s3)</span><br><span class="line">fmt.Println(s4)</span><br><span class="line">// [0 0 0] 修改s4，s3不会更改，因为容量不足，开辟了新空间</span><br><span class="line">// [0 42 0 1 2 3 4 5]</span><br></pre></td></tr></table></figure>
-</li>
+<li>切片容量不足，会分配新的切片空间来保证已有切片元素和新增元素的存储。</li>
 </ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">s1 := make([]int, 3, 5)</span><br><span class="line">s2 := append(s1, 1, 2)</span><br><span class="line">s2[1] = 42</span><br><span class="line">fmt.Println(s1)</span><br><span class="line">fmt.Println(s2)</span><br><span class="line">// [0 42 0] 修改s2，s1也会更改</span><br><span class="line">// [0 42 0 1 2]</span><br><span class="line"></span><br><span class="line">s3 := make([]int, 3, 5)</span><br><span class="line">s4 := append(s1, 1, 2, 3, 4, 5)</span><br><span class="line">s4[1] = 42</span><br><span class="line">fmt.Println(s3)</span><br><span class="line">fmt.Println(s4)</span><br><span class="line">// [0 0 0] 修改s4，s3不会更改，因为容量不足，开辟了新空间</span><br><span class="line">// [0 42 0 1 2 3 4 5]</span><br></pre></td></tr></table></figure>
 <p>可以将一个切片到另一个切片后，需要使用 切片… 来实现：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">append(slice1, slice2…)</span><br></pre></td></tr></table></figure></p>
 <h2><span id="5-copy-拷贝切片">5 copy() 拷贝切片</span></h2><p>由于默认是地址传递赋值方式，当需要得到一个新的拷贝时，需要使用函数copy()来实现。<br>copy(新切片，旧切片)，利用旧切片复制一份新切片。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">s3 := []int&#123;10, 20, 30&#125;</span><br><span class="line">var s4 = make([]int, 3)</span><br><span class="line">copy(s4, s3)</span><br></pre></td></tr></table></figure>
@@ -135,12 +139,14 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/uncategorized/go-slice/" data-id="cjnucc2ss001cxwuoxcutoob5" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-slice/" data-id="cjnucc2ss001cxwuoxcutoob5" class="article-share-link">分享到</a> -->
       
 
       
 
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
+
     </footer>
   </div>
   
@@ -1168,7 +1174,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">21</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">22</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -1177,7 +1183,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -1207,7 +1213,7 @@
       <ul>
         
           <li>
-            <a href="/uncategorized/go-slice/">Go语言中切片的使用</a>
+            <a href="/go/go-slice/">Go语言中切片的使用</a>
           </li>
         
           <li>
