@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.hellokang.net/"/>
-  <updated>2018-10-31T10:48:31.819Z</updated>
+  <updated>2018-10-31T10:55:03.100Z</updated>
   <id>http://blog.hellokang.net/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://blog.hellokang.net/go/go-struct-ii/"/>
     <id>http://blog.hellokang.net/go/go-struct-ii/</id>
     <published>2018-10-31T08:39:28.000Z</published>
-    <updated>2018-10-31T10:48:31.819Z</updated>
+    <updated>2018-10-31T10:55:03.100Z</updated>
     
     <summary type="html">
     
@@ -29,8 +29,11 @@
       
         
         
-          &lt;!-- TOC --&gt;
-&lt;h2&gt;&lt;span id=&quot;1-概述&quot;&gt;1 概述&lt;/span&gt;&lt;/h2&gt;&lt;p&gt;结构体的基本语法请参见：&lt;a href=&quot;http://www.hellokang.net/go/go-struct-i/&quot; target=&quot;_blank&quot;
+          &lt;!-- toc --&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#1-概述&quot;&gt;1 概述&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#2-构造工厂函数&quot;&gt;2 构造工厂函数&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#3-成员方法接收器&quot;&gt;3
         
       
     

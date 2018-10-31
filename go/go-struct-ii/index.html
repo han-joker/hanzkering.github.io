@@ -6,20 +6,20 @@
   
   <title>Go语言中结构体的使用-第2部分OOP | 小韩说课</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1 概述结构体的基本语法请参见：Go语言中结构体的使用-第1部分结构体。结构体除了是一个复合数据之外，还用来做面向对象编程。Go 语言使用结构体和结构体成员来描述真实世界的实体和实体对应的各种属性。也就意味着结构体类型可以类比为其他语言中的“类class”, 而结构体数据可以类比为其他语言中的 “对象”。本文就说说结构体中，面向对象的部分。 2 构造工厂函数在面向对象编程中，实例化对象时往往需要">
+  <meta name="description" content="1 概述 2 构造工厂函数 3 成员方法（接收器） 4 继承，内嵌结构体 5 重写，override   1 概述结构体的基本语法请参见：Go语言中结构体的使用-第1部分结构体。结构体除了是一个复合数据之外，还用来做面向对象编程。Go 语言使用结构体和结构体成员来描述真实世界的实体和实体对应的各种属性。也就意味着结构体类型可以类比为其他语言中的“类class”, 而结构体数据可以类比为其他语言">
 <meta name="keywords" content="go,goGuide">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go语言中结构体的使用-第2部分OOP">
 <meta property="og:url" content="http://blog.hellokang.net/go/go-struct-ii/index.html">
 <meta property="og:site_name" content="小韩说课">
-<meta property="og:description" content="1 概述结构体的基本语法请参见：Go语言中结构体的使用-第1部分结构体。结构体除了是一个复合数据之外，还用来做面向对象编程。Go 语言使用结构体和结构体成员来描述真实世界的实体和实体对应的各种属性。也就意味着结构体类型可以类比为其他语言中的“类class”, 而结构体数据可以类比为其他语言中的 “对象”。本文就说说结构体中，面向对象的部分。 2 构造工厂函数在面向对象编程中，实例化对象时往往需要">
+<meta property="og:description" content="1 概述 2 构造工厂函数 3 成员方法（接收器） 4 继承，内嵌结构体 5 重写，override   1 概述结构体的基本语法请参见：Go语言中结构体的使用-第1部分结构体。结构体除了是一个复合数据之外，还用来做面向对象编程。Go 语言使用结构体和结构体成员来描述真实世界的实体和实体对应的各种属性。也就意味着结构体类型可以类比为其他语言中的“类class”, 而结构体数据可以类比为其他语言">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://www.hellokang.net/images/posts/go/go-object.png">
 <meta property="og:image" content="http://www.hellokang.net/images/wechat_subscription.jpg">
-<meta property="og:updated_time" content="2018-10-31T10:48:31.819Z">
+<meta property="og:updated_time" content="2018-10-31T10:55:03.100Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Go语言中结构体的使用-第2部分OOP">
-<meta name="twitter:description" content="1 概述结构体的基本语法请参见：Go语言中结构体的使用-第1部分结构体。结构体除了是一个复合数据之外，还用来做面向对象编程。Go 语言使用结构体和结构体成员来描述真实世界的实体和实体对应的各种属性。也就意味着结构体类型可以类比为其他语言中的“类class”, 而结构体数据可以类比为其他语言中的 “对象”。本文就说说结构体中，面向对象的部分。 2 构造工厂函数在面向对象编程中，实例化对象时往往需要">
+<meta name="twitter:description" content="1 概述 2 构造工厂函数 3 成员方法（接收器） 4 继承，内嵌结构体 5 重写，override   1 概述结构体的基本语法请参见：Go语言中结构体的使用-第1部分结构体。结构体除了是一个复合数据之外，还用来做面向对象编程。Go 语言使用结构体和结构体成员来描述真实世界的实体和实体对应的各种属性。也就意味着结构体类型可以类比为其他语言中的“类class”, 而结构体数据可以类比为其他语言">
 <meta name="twitter:image" content="http://www.hellokang.net/images/posts/go/go-object.png">
   
     <link rel="alternative" href="/atom.xml" title="小韩说课" type="application/atom+xml">
@@ -100,7 +100,15 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <!-- TOC -->
+        <!-- toc -->
+<ul>
+<li><a href="#1-概述">1 概述</a></li>
+<li><a href="#2-构造工厂函数">2 构造工厂函数</a></li>
+<li><a href="#3-成员方法接收器">3 成员方法（接收器）</a></li>
+<li><a href="#4-继承内嵌结构体">4 继承，内嵌结构体</a></li>
+<li><a href="#5-重写override">5 重写，override</a></li>
+</ul>
+<!-- tocstop -->
 <h2><span id="1-概述">1 概述</span></h2><p>结构体的基本语法请参见：<a href="http://www.hellokang.net/go/go-struct-i/" target="_blank" rel="noopener">Go语言中结构体的使用-第1部分结构体</a>。<br>结构体除了是一个复合数据之外，还用来做面向对象编程。Go 语言使用结构体和结构体成员来描述真实世界的实体和实体对应的各种属性。也就意味着结构体类型可以类比为其他语言中的“类class”, 而结构体数据可以类比为其他语言中的 “对象”。<br>本文就说说结构体中，面向对象的部分。</p>
 <h2><span id="2-构造工厂函数">2 构造工厂函数</span></h2><p>在面向对象编程中，实例化对象时往往需要完成很多业务逻辑，例如初始数据合理性，获取需要的资源等。在经典的OOP程序中，都会提供构造方法，用于在实例化对象时完成特定功能。<br>Go语言中，没有class，因此没有典型意义的构造方法。但我们可以定义一个函数，用来实例化结构体对象，在函数内完成特定功能，实现构造函数的功能，这就是构造工厂函数。演示如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">type Product struct &#123;</span><br><span class="line">    Name  string</span><br><span class="line">    Price float64</span><br><span class="line">&#125;</span><br><span class="line">func NewProduct(name string, price float64) *Product &#123;</span><br><span class="line">    // 此处完成初始化业务逻辑</span><br><span class="line"></span><br><span class="line">    // 得到Product对象</span><br><span class="line">    return &amp;Product&#123;</span><br><span class="line">        Name: name,</span><br><span class="line">        Price: price,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 需要 Product 对象时：</span><br><span class="line">p := NewProduct(&quot;ThinkPad T480&quot;, 8008)</span><br></pre></td></tr></table></figure></p>
 <p>注意，在OOP编程中，通常认为对象是引用用传递，因此我们的构造函数返回的是 <code>*Product</code> 同时函数内使用 <code>&amp;Product</code> ，这样得到的对象为引用传递（Go语言对结构体类型自动解析引用）。 </p>
