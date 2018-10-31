@@ -2,8 +2,15 @@
 <search>
   <entry>
     <title><![CDATA[Go语言中结构体的使用-第1部分]]></title>
-    <url>%2Funcategorized%2Fgo-struct-i%2F</url>
+    <url>%2Fgo%2Fgo-struct-i%2F</url>
     <content type="text"><![CDATA[1 概述结构体是由成员构成的复合类型。Go 语言使用结构体和结构体成员来描述真实世界的实体和实体对应的各种属性。结构体成员，也可称之为成员变量，字段，属性。属性要满足唯一性。结构体的概念在软件工程上旧的术语叫 ADT（抽象数据类型：Abstract Data Type）数据层面，结构体是自定义数据类型，可以理解成是由一系列具有相同或不同类型的数据构成的数据集合。因此结构体也被称之为抽象数据类型（ADT，Abstract Data Type）。在Go语言中，结构体承担着面向对象语言中类的作用。 Go语言中，结构体本身仅用来定义属性。还可以通过接收器函数来定义方法，使用内嵌结构体来定义继承。这样使用结构体相关操作Go语言就可以实现OOP面向对象编程了。 我们先看结构体相关语法，再看OOP相关的。 2 定义语法12345678910type identifier struct &#123; field1 type1 field2 type2 ...&#125;// 或者 同一类型的字段，可以定义在一行type identifier struct &#123; field1, field2 int&#125; 3 实例化Go语言提供了以下几种方法实例化：12345// T表示结构体标识符，v结构体变量var v T v := T&#123;&#125; // var v = T&#123;&#125;v := new(T)v := &amp;T&#123;&#125; // var v = &amp;T&#123;&#125; 以上方法中，var v T 和 v := T{} // var v = T{} 会返回结构体变量，而 v := new(T) 和 v := &amp;T{} // var v = &amp;T{} 会返回结构体指针。 4 值类型注意，结构体是值类型，不是引用类型。因此使用不同方式实例化的，在赋值时效果时不一样的，需要注意。 var v T 和 v := T{} // var v = T{} 值传递。v := new(T) 和 v := &amp;T{} // var v = &amp;T{} 引用地址传递。 Go语言会对结构体类型指针做自解析。也就是说，即使获得的是结构体指针，也不需要使用 *v 的语法。12345v := &amp;T&#123;&#125;// 直接使用v.语法即可。自动解析了 *vv.field// 相当于，也可以这么用(*v).field 5 初始化属性使用类似于键值对的语法初始化结构体属性，但此处的键指的是结构体内字段：12345v := T&#123; field1: value1, field2: value2, …&#125; 如果我们初始化全部的结构体字段，可以按照定义顺序仅仅使用数据部分即可完成初始化：123456// 要满足全部字段，按照定义顺序v := T&#123; value1, value2, value3,&#125; 6 . 成员访问运算符点号要访问结构体成员，需要使用点号 . 操作符，格式为：12345v.field// 获取fmt.Println(v.field)// 设置v.field = new-value 7 匿名结构体匿名结构体没有类型名称，只有字段和类型定义，无须通过type关键字定义就可以直接使用。匿名结构体的初始化写法由结构体定义和键值对初始化两部分组成。如下所示：1234567v := struct &#123; field1 type1 field2 type2&#125;&#123; field1: value1, field2: value2,&#125; 注意，匿名结构体，必须要同时初始化，不能仅仅定义匿名结构体。当需要使用一个临时结构体类型时，可以使用匿名结构体。 第一部分完！后续部分为 构造函数，方法，继承 与OOP相关的内容。原文出自：小韩说课微信关注：小韩说课]]></content>
+      <categories>
+        <category>go</category>
+      </categories>
+      <tags>
+        <tag>go</tag>
+        <tag>goGuide</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[Go语言中映射表map的使用]]></title>
