@@ -6,20 +6,20 @@
   
   <title>Go语言中的变量 | 小韩说课</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1 概述 2 定义：声明和初始化 3 类型默认值（零值） 4 强类型 5 类型推导 6 短声明（定义） 7 批量定义 8 批量赋值 9 匿名变量 10 变量作用域   1 概述变量（Variable）是程序运行过程中，内容可以变化（修改）的量，变量的功能是存储用户的数据，是计算机语言中能储存计算结果或能表示值抽象概念。变量，是通过变量的标识符定位值的过程。变量的内存模拟演示：  2 定义：声明">
+  <meta name="description" content="1 概述 2 定义：声明和初始化 3 类型默认值（零值） 4 强类型 5 类型推导 6 短声明（定义） 7 批量定义 8 批量赋值 9 匿名变量 10 变量作用域   [TOC] 1 概述变量（Variable）是程序运行过程中，内容可以变化（修改）的量，变量的功能是存储用户的数据，是计算机语言中能储存计算结果或能表示值抽象概念。变量，是通过变量的标识符定位值的过程。变量的内存模拟演示：  2">
 <meta name="keywords" content="go,goGuide">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go语言中的变量">
 <meta property="og:url" content="http://blog.hellokang.net/go/go-variable/index.html">
 <meta property="og:site_name" content="小韩说课">
-<meta property="og:description" content="1 概述 2 定义：声明和初始化 3 类型默认值（零值） 4 强类型 5 类型推导 6 短声明（定义） 7 批量定义 8 批量赋值 9 匿名变量 10 变量作用域   1 概述变量（Variable）是程序运行过程中，内容可以变化（修改）的量，变量的功能是存储用户的数据，是计算机语言中能储存计算结果或能表示值抽象概念。变量，是通过变量的标识符定位值的过程。变量的内存模拟演示：  2 定义：声明">
+<meta property="og:description" content="1 概述 2 定义：声明和初始化 3 类型默认值（零值） 4 强类型 5 类型推导 6 短声明（定义） 7 批量定义 8 批量赋值 9 匿名变量 10 变量作用域   [TOC] 1 概述变量（Variable）是程序运行过程中，内容可以变化（修改）的量，变量的功能是存储用户的数据，是计算机语言中能储存计算结果或能表示值抽象概念。变量，是通过变量的标识符定位值的过程。变量的内存模拟演示：  2">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://www.hellokang.net/images/posts/go/go-variable.png">
 <meta property="og:image" content="http://www.hellokang.net/images/wechat_subscription.jpg">
-<meta property="og:updated_time" content="2018-10-27T14:08:36.886Z">
+<meta property="og:updated_time" content="2018-10-30T14:43:33.944Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Go语言中的变量">
-<meta name="twitter:description" content="1 概述 2 定义：声明和初始化 3 类型默认值（零值） 4 强类型 5 类型推导 6 短声明（定义） 7 批量定义 8 批量赋值 9 匿名变量 10 变量作用域   1 概述变量（Variable）是程序运行过程中，内容可以变化（修改）的量，变量的功能是存储用户的数据，是计算机语言中能储存计算结果或能表示值抽象概念。变量，是通过变量的标识符定位值的过程。变量的内存模拟演示：  2 定义：声明">
+<meta name="twitter:description" content="1 概述 2 定义：声明和初始化 3 类型默认值（零值） 4 强类型 5 类型推导 6 短声明（定义） 7 批量定义 8 批量赋值 9 匿名变量 10 变量作用域   [TOC] 1 概述变量（Variable）是程序运行过程中，内容可以变化（修改）的量，变量的功能是存储用户的数据，是计算机语言中能储存计算结果或能表示值抽象概念。变量，是通过变量的标识符定位值的过程。变量的内存模拟演示：  2">
 <meta name="twitter:image" content="http://www.hellokang.net/images/posts/go/go-variable.png">
   
     <link rel="alternative" href="/atom.xml" title="小韩说课" type="application/atom+xml">
@@ -114,6 +114,7 @@
 <li><a href="#10-变量作用域">10 变量作用域</a></li>
 </ul>
 <!-- tocstop -->
+<p>[TOC]</p>
 <h2><span id="1-概述">1 概述</span></h2><p>变量（Variable）是程序运行过程中，内容可以变化（修改）的量，变量的功能是存储用户的数据，是计算机语言中能储存计算结果或能表示值抽象概念。<br>变量，是通过变量的标识符定位值的过程。变量的内存模拟演示：</p>
 <p><img src="http://www.hellokang.net/images/posts/go/go-variable.png" alt="变量的内存模拟演示"></p>
 <h2><span id="2-定义声明和初始化">2 定义：声明和初始化</span></h2><p>定义变使用var关键字，需要指定其类型，可以同时初始化，如果没有指定初始化值，则使用类型的默认值，语法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 声明变量，未初始化（默认值初始化）</span><br><span class="line">var name string</span><br><span class="line">// 声明变量，特定值初始化</span><br><span class="line">var user string = &quot;Hank&quot;</span><br></pre></td></tr></table></figure></p>
@@ -148,7 +149,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-variable/" data-id="cjnvnn0pv001vg4uo0pnhcesg" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-variable/" data-id="cjnwvhs66001ud8uouwbmq67x" class="article-share-link">分享到</a> -->
       
 
       
@@ -185,7 +186,7 @@
 
   <section class="changyan" id="comments">
 <!--PC和WAP自适应版-->
-<div id="SOHUCS" sid="cjnvnn0pv001vg4uo0pnhcesg"></div> 
+<div id="SOHUCS" sid="cjnwvhs66001ud8uouwbmq67x"></div> 
 <script type="text/javascript"> 
 	(function(){ 
 		var appid = 'cyt64TYiv'; 
@@ -255,7 +256,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -265,6 +266,10 @@
     <h3 class="widget-title">近期文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/uncategorized/go-struct-i/">Go语言中结构体的使用-第1部分</a>
+          </li>
         
           <li>
             <a href="/go/go-map/">Go语言中映射表map的使用</a>
@@ -280,10 +285,6 @@
         
           <li>
             <a href="/go/go-strconv/">Go语言中其他数据与字符串类型的转换</a>
-          </li>
-        
-          <li>
-            <a href="/go/go-utf8/">Go语言中多字节字符的处理</a>
           </li>
         
       </ul>
