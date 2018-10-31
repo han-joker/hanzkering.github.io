@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.hellokang.net/"/>
-  <updated>2018-10-31T10:12:58.495Z</updated>
+  <updated>2018-10-31T10:15:57.021Z</updated>
   <id>http://blog.hellokang.net/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Go语言中结构体的使用-第2部分OOP</title>
+    <link href="http://blog.hellokang.net/go/go-struct-ii/"/>
+    <id>http://blog.hellokang.net/go/go-struct-ii/</id>
+    <published>2018-10-31T08:39:28.000Z</published>
+    <updated>2018-10-31T10:15:57.021Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;!-- TOC --&gt;
+&lt;h2&gt;&lt;span id=&quot;1-概述&quot;&gt;1 概述&lt;/span&gt;&lt;/h2&gt;&lt;p&gt;结构体的基本语法请参见：&lt;a href=&quot;http://www.hellokang.net/go/go-struct-i/&quot; target=&quot;_blank&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
+    
+    
+      <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
+    
+      <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
+    
+  </entry>
   
   <entry>
     <title>Go语言中结构体的使用-第1部分结构体</title>
@@ -553,22 +582,6 @@
     <id>http://blog.hellokang.net/go/go-command/</id>
     <published>2018-10-10T03:49:27.000Z</published>
     <updated>2018-10-15T04:14:29.642Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
-      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Go语言使用strut处理面向对象</title>
-    <link href="http://blog.hellokang.net/go/go-stuct/"/>
-    <id>http://blog.hellokang.net/go/go-stuct/</id>
-    <published>2018-10-06T04:03:54.000Z</published>
-    <updated>2018-10-15T04:15:03.174Z</updated>
     
     <summary type="html">
     
