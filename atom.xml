@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.hellokang.net/"/>
-  <updated>2018-10-31T10:03:03.584Z</updated>
+  <updated>2018-10-31T10:12:58.495Z</updated>
   <id>http://blog.hellokang.net/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Go语言中结构体的使用-第1结构体</title>
+    <title>Go语言中结构体的使用-第1部分结构体</title>
     <link href="http://blog.hellokang.net/go/go-struct-i/"/>
     <id>http://blog.hellokang.net/go/go-struct-i/</id>
     <published>2018-10-31T04:08:38.000Z</published>
-    <updated>2018-10-31T10:03:03.584Z</updated>
+    <updated>2018-10-31T10:12:58.495Z</updated>
     
     <summary type="html">
     
