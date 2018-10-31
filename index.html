@@ -90,7 +90,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/go/go-struct-i/">Go语言中结构体的使用-第1部分</a>
+      <a class="article-title" href="/go/go-struct-i/">Go语言中结构体的使用-第1结构体</a>
     </h1>
   
 
@@ -98,7 +98,18 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2><span id="1-概述">1 概述</span></h2><p>结构体是由成员构成的复合类型。Go 语言使用结构体和结构体成员来描述真实世界的实体和实体对应的各种属性。<br>结构体成员，也可称之为成员变量，字段，属性。属性要满足唯一性。<br>结构体的概念在软件工程上旧的术语叫 ADT（抽象数据类型：Abstract Data Type）<br>数据层面，结构体是自定义数据类型，可以理解成是由一系列具有相同或不同类型的数据构成的数据集合。因此结构体也被称之为抽象数据类型（ADT，Abstract Data Type）。<br>在Go语言中，结构体承担着面向对象语言中类的作用。</p>
+        <!-- toc -->
+<ul>
+<li><a href="#1-概述">1 概述</a></li>
+<li><a href="#2-定义语法">2 定义语法</a></li>
+<li><a href="#3-实例化">3 实例化</a></li>
+<li><a href="#4-值类型">4 值类型</a></li>
+<li><a href="#5-初始化属性">5 初始化属性</a></li>
+<li><a href="#6-成员访问运算符点号">6 <code>.</code> 成员访问运算符点号</a></li>
+<li><a href="#7-匿名结构体">7 匿名结构体</a></li>
+</ul>
+<!-- tocstop -->
+<h2><span id="1-概述">1 概述</span></h2><p>结构体是由成员构成的复合类型。Go 语言使用结构体和结构体成员来描述真实世界的实体和实体对应的各种属性。<br>结构体成员，也可称之为成员变量，字段，属性。属性要满足唯一性。<br>结构体的概念在软件工程上旧的术语叫 ADT（抽象数据类型：Abstract Data Type）<br>数据层面，结构体是自定义数据类型，可以理解成是由一系列具有相同或不同类型的数据构成的数据集合。因此结构体也被称之为抽象数据类型（ADT，Abstract Data Type）。<br>在Go语言中，结构体承担着面向对象语言中类的作用。</p>
 <p>Go语言中，结构体本身仅用来定义属性。还可以通过接收器函数来定义方法，使用内嵌结构体来定义继承。这样使用结构体相关操作Go语言就可以实现OOP面向对象编程了。</p>
 <p>我们先看结构体相关语法，再看OOP相关的。</p>
 <h2><span id="2-定义语法">2 定义语法</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">type identifier struct &#123;</span><br><span class="line">    field1 type1</span><br><span class="line">    field2 type2</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 或者 同一类型的字段，可以定义在一行</span><br><span class="line">type identifier struct &#123;</span><br><span class="line">  field1, field2 int</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -118,7 +129,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-struct-i/" data-id="cjnwvjy9n001n90uo18xcfmca" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-struct-i/" data-id="cjnwztqx1001g1kuoc55cunj7" class="article-share-link">分享到</a> -->
       
 
       
@@ -174,7 +185,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-map/" data-id="cjnwvjy94000z90uougt7akww" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-map/" data-id="cjnwztqwj000s1kuojimbzjqn" class="article-share-link">分享到</a> -->
       
 
       
@@ -256,7 +267,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-slice/" data-id="cjnwvjy9l001k90uob1usa9ia" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-slice/" data-id="cjnwztqwy001d1kuocfs48xq0" class="article-share-link">分享到</a> -->
       
 
       
@@ -316,7 +327,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-array/" data-id="cjnwvjy83000190uor5x1fp8h" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-array/" data-id="cjnwztqw1000a1kuoxb4o8o2v" class="article-share-link">分享到</a> -->
       
 
       
@@ -427,7 +438,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-strconv/" data-id="cjnwvjy9j001h90uoxsojvsav" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-strconv/" data-id="cjnwztqx4001k1kuozmmtvezt" class="article-share-link">分享到</a> -->
       
 
       
@@ -523,7 +534,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-utf8/" data-id="cjnwvjy9s001t90uoot5cs8sx" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-utf8/" data-id="cjnwztqx7001q1kuor0yl8xtt" class="article-share-link">分享到</a> -->
       
 
       
@@ -694,7 +705,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-string/" data-id="cjnwvjy9g001e90uogo5rdvli" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-string/" data-id="cjnwztqx6001n1kuo30aoz8q7" class="article-share-link">分享到</a> -->
       
 
       
@@ -780,7 +791,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-package/" data-id="cjnwvjy96001290uoynjzms4o" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-package/" data-id="cjnwztqwq00121kuojb2df0sc" class="article-share-link">分享到</a> -->
       
 
       
@@ -852,7 +863,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-function/" data-id="cjnwvjy8v000m90uo6f3ahs67" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-function/" data-id="cjnwztqwe000m1kuoxa28xyrn" class="article-share-link">分享到</a> -->
       
 
       
@@ -945,7 +956,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-flow-control/" data-id="cjnwvjy8x000p90uo964rhpv9" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-flow-control/" data-id="cjnwztqwc000j1kuo944woo3k" class="article-share-link">分享到</a> -->
       
 
       
@@ -1083,7 +1094,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-operator/" data-id="cjnwvjy99001590uojdunzto9" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-operator/" data-id="cjnwztqwm000v1kuoviqehlig" class="article-share-link">分享到</a> -->
       
 
       
@@ -1237,7 +1248,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjnwvjy9u001w90uonyxfllmv" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjnwztqxb001t1kuoqlyh5umu" class="article-share-link">分享到</a> -->
       
 
       
@@ -1330,7 +1341,7 @@
       <ul>
         
           <li>
-            <a href="/go/go-struct-i/">Go语言中结构体的使用-第1部分</a>
+            <a href="/go/go-struct-i/">Go语言中结构体的使用-第1结构体</a>
           </li>
         
           <li>
