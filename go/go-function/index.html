@@ -6,20 +6,20 @@
   
   <title>Go语言中的函数 | 小韩说课</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1 概述函数，function，独立的，用于实现具体功能的代码块。主要目的，是代码的重用（重复使用），更好的管理代码，模块化开发。函数通常使用参数和返回值，与调用者交互数据。参数给函数传递数据，返回值，函数将处理好的数据传递给调用者。Go语言中函数被称为一等公民（first-class）。意味着支持高阶函数，支持匿名函数，支持闭包等特性，可以满足接口等高级函数特性。 2 定义语法：123456定">
+  <meta name="description" content="1 概述函数，function，独立的，用于实现具体功能的代码块。主要目的，是代码的重用（重复使用），更好的管理代码，模块化开发。函数通常使用参数和返回值，与调用者交互数据。参数给函数传递数据，返回值，函数将处理好的数据传递给调用者。Go语言中函数被称为一等公民（first-class）。意味着支持高阶函数，支持匿名函数，支持闭包等特性，可以满足接口等高级函数特性。">
 <meta name="keywords" content="go,goGuide">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go语言中的函数">
 <meta property="og:url" content="http://blog.hellokang.net/go/go-function/index.html">
 <meta property="og:site_name" content="小韩说课">
-<meta property="og:description" content="1 概述函数，function，独立的，用于实现具体功能的代码块。主要目的，是代码的重用（重复使用），更好的管理代码，模块化开发。函数通常使用参数和返回值，与调用者交互数据。参数给函数传递数据，返回值，函数将处理好的数据传递给调用者。Go语言中函数被称为一等公民（first-class）。意味着支持高阶函数，支持匿名函数，支持闭包等特性，可以满足接口等高级函数特性。 2 定义语法：123456定">
+<meta property="og:description" content="1 概述函数，function，独立的，用于实现具体功能的代码块。主要目的，是代码的重用（重复使用），更好的管理代码，模块化开发。函数通常使用参数和返回值，与调用者交互数据。参数给函数传递数据，返回值，函数将处理好的数据传递给调用者。Go语言中函数被称为一等公民（first-class）。意味着支持高阶函数，支持匿名函数，支持闭包等特性，可以满足接口等高级函数特性。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://www.hellokang.net/images/posts/go/go-func-run.png">
 <meta property="og:image" content="http://www.hellokang.net/images/wechat_subscription.jpg">
-<meta property="og:updated_time" content="2018-10-30T14:31:05.587Z">
+<meta property="og:updated_time" content="2018-11-01T14:28:16.578Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Go语言中的函数">
-<meta name="twitter:description" content="1 概述函数，function，独立的，用于实现具体功能的代码块。主要目的，是代码的重用（重复使用），更好的管理代码，模块化开发。函数通常使用参数和返回值，与调用者交互数据。参数给函数传递数据，返回值，函数将处理好的数据传递给调用者。Go语言中函数被称为一等公民（first-class）。意味着支持高阶函数，支持匿名函数，支持闭包等特性，可以满足接口等高级函数特性。 2 定义语法：123456定">
+<meta name="twitter:description" content="1 概述函数，function，独立的，用于实现具体功能的代码块。主要目的，是代码的重用（重复使用），更好的管理代码，模块化开发。函数通常使用参数和返回值，与调用者交互数据。参数给函数传递数据，返回值，函数将处理好的数据传递给调用者。Go语言中函数被称为一等公民（first-class）。意味着支持高阶函数，支持匿名函数，支持闭包等特性，可以满足接口等高级函数特性。">
 <meta name="twitter:image" content="http://www.hellokang.net/images/posts/go/go-func-run.png">
   
     <link rel="alternative" href="/atom.xml" title="小韩说课" type="application/atom+xml">
@@ -104,6 +104,7 @@
       
         <!-- TOC -->
 <h2><span id="1-概述">1 概述</span></h2><p>函数，function，独立的，用于实现具体功能的代码块。主要目的，是代码的重用（重复使用），更好的管理代码，模块化开发。<br>函数通常使用参数和返回值，与调用者交互数据。参数给函数传递数据，返回值，函数将处理好的数据传递给调用者。<br>Go语言中函数被称为一等公民（first-class）。意味着支持高阶函数，支持匿名函数，支持闭包等特性，可以满足接口等高级函数特性。</p>
+<a id="more"></a>
 <h2><span id="2-定义">2 定义</span></h2><p>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">定义：</span><br><span class="line">func 函数名(形参列表)(返回值类型列表) &#123;</span><br><span class="line">  函数体，通常会有return语句，返回值</span><br><span class="line">&#125;</span><br><span class="line">调用：</span><br><span class="line">函数名(实参列表)</span><br></pre></td></tr></table></figure></p>
 <p>函数名：函数的标识符，用于找到函数，内部是一个指向函数代码的地址。<br>形参列表：由变量和类型构成<br>返回值类型列表：函数返回值的类型，多个返回值需要指定多个。<br>函数体：实现函数功能的具体语句。<br>return语句：返回值语句</p>
 <p>以上定的为命名函数，不能定义在其他函数内部。</p>
@@ -133,7 +134,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-function/" data-id="cjnyojf5c000p98uozgza1c3p" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-function/" data-id="cjnypc1uh000mb8uonao0bh9z" class="article-share-link">分享到</a> -->
       
 
       
@@ -170,7 +171,7 @@
 
   <section class="changyan" id="comments">
 <!--PC和WAP自适应版-->
-<div id="SOHUCS" sid="cjnyojf5c000p98uozgza1c3p"></div> 
+<div id="SOHUCS" sid="cjnypc1uh000mb8uonao0bh9z"></div> 
 <script type="text/javascript"> 
 	(function(){ 
 		var appid = 'cyt64TYiv'; 
@@ -213,7 +214,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">25</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">24</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -240,7 +241,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 

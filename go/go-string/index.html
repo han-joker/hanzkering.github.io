@@ -15,7 +15,7 @@
 <meta property="og:description" content="1 概述 2 常规操作 []索引访问 unicode/utf8 包 len()，字符串占用的字节数 +，字符串连接” ==, &amp;gt;, &amp;lt; strings.Compare(a, b string) int strings.Contains(s, substr string) bool strings.ContainsAny(s, chars string) bool strings.C">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://www.hellokang.net/images/wechat_subscription.jpg">
-<meta property="og:updated_time" content="2018-10-30T14:31:10.643Z">
+<meta property="og:updated_time" content="2018-11-01T14:29:06.946Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Go语言中的字符串处理">
 <meta name="twitter:description" content="1 概述 2 常规操作 []索引访问 unicode/utf8 包 len()，字符串占用的字节数 +，字符串连接” ==, &amp;gt;, &amp;lt; strings.Compare(a, b string) int strings.Contains(s, substr string) bool strings.ContainsAny(s, chars string) bool strings.C">
@@ -170,6 +170,7 @@
 <li>\uXXXX  Unicode字符码值转义，例如 <code>&quot;\u5eb7&quot;</code> 就是 “康”</li>
 </ul>
 <p>Go语言中字符串的顶层结构是由一个指针和长度构成的。使用 unsafe.Sizeof(“”) 会得到16长度，其中8个字节是指针，指向字符串的内存地址，8个是存储字符串的长度。</p>
+<a id="more"></a>
 <h2><span id="2-常规操作">2 常规操作</span></h2><p>以下是针对字符串的操作总结，主要来自于Go语言的API的说明和测试。</p>
 <h3><span id="索引访问">[]索引访问</span></h3><p>可以使用[index]方式，访问到字符串中的字符。可以访问，不可以修改。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">s := &quot;Hank&quot;</span><br><span class="line">fmt.Printf(&quot;%c&quot;, s[2])</span><br><span class="line">// 返回 n</span><br></pre></td></tr></table></figure></p>
 <h3><span id="unicodeutf8-包">unicode/utf8 包</span></h3><p>多字节字符的处理，请参考 unicode/utf8 包的相关说明。<br>例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import &quot;unicode/utf8&quot;</span><br><span class="line">utf8.RuneCountInString(&quot;小韩说课&quot;)</span><br><span class="line">// 返回 4</span><br></pre></td></tr></table></figure></p>
@@ -231,7 +232,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-string/" data-id="cjnyojf5x001j98uotjt4ii3e" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-string/" data-id="cjnypc1vb001nb8uo8wkkg0ib" class="article-share-link">分享到</a> -->
       
 
       
@@ -268,7 +269,7 @@
 
   <section class="changyan" id="comments">
 <!--PC和WAP自适应版-->
-<div id="SOHUCS" sid="cjnyojf5x001j98uotjt4ii3e"></div> 
+<div id="SOHUCS" sid="cjnypc1vb001nb8uo8wkkg0ib"></div> 
 <script type="text/javascript"> 
 	(function(){ 
 		var appid = 'cyt64TYiv'; 
@@ -311,7 +312,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">25</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">24</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -338,7 +339,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 

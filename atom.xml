@@ -52,22 +52,24 @@
     <link href="http://blog.hellokang.net/go/go-struct-i/"/>
     <id>http://blog.hellokang.net/go/go-struct-i/</id>
     <published>2018-10-31T04:08:38.000Z</published>
-    <updated>2018-10-31T10:12:58.495Z</updated>
+    <updated>2018-11-01T14:27:34.468Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;!-- toc --&gt;
+      &lt;!-- toc --&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;#1-概述&quot;&gt;1 概述&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#2-定义语法&quot;&gt;2 定义语法&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#3-实例化&quot;&gt;3 实例化&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a
-        
-      
+&lt;li&gt;&lt;a href=&quot;#4-值类型&quot;&gt;4 值类型&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#5-初始化属性&quot;&gt;5 初始化属性&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#6-成员访问运算符点号&quot;&gt;6 &lt;code&gt;.&lt;/code&gt; 成员访问运算符点号&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#7-匿名结构体&quot;&gt;7 匿名结构体&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+&lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h2&gt;&lt;p&gt;结构体是由成员构成的复合类型。Go 语言使用结构体和结构体成员来描述真实世界的实体和实体对应的各种属性。&lt;br&gt;结构体成员，也可称之为成员变量，字段，属性。属性要满足唯一性。&lt;br&gt;结构体的概念在软件工程上旧的术语叫 ADT（抽象数据类型：Abstract Data Type）&lt;br&gt;数据层面，结构体是自定义数据类型，可以理解成是由一系列具有相同或不同类型的数据构成的数据集合。因此结构体也被称之为抽象数据类型（ADT，Abstract Data Type）。&lt;br&gt;在Go语言中，结构体承担着面向对象语言中类的作用。&lt;/p&gt;
+&lt;p&gt;Go语言中，结构体本身仅用来定义属性。还可以通过接收器函数来定义方法，使用内嵌结构体来定义继承。这样使用结构体相关操作Go语言就可以实现OOP面向对象编程了。&lt;/p&gt;
+&lt;p&gt;我们先看结构体相关语法，再看OOP相关的。&lt;br&gt;
     
     </summary>
     
@@ -85,17 +87,11 @@
     <link href="http://blog.hellokang.net/go/go-map/"/>
     <id>http://blog.hellokang.net/go/go-map/</id>
     <published>2018-10-30T10:29:57.000Z</published>
-    <updated>2018-10-30T14:30:42.436Z</updated>
+    <updated>2018-11-01T14:28:24.227Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;h2&gt;&lt;span id=&quot;1-概述&quot;&gt;1
-        
-      
+      &lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h2&gt;&lt;p&gt;Go语言中的键值对(key-&amp;gt;value)集合，称之为映射map。映射map是变长类型，定义时不需要指定长度。映射map是无序的，遍历是的顺序不可期，原因是底层由hash表实现。&lt;br&gt;逻辑结构表示为：&lt;br&gt;&lt;img src=&quot;http://www.hellokang.net/images/posts/go/go-map.png&quot; alt=&quot;map示意&quot;&gt;&lt;/p&gt;
     
     </summary>
     
@@ -113,17 +109,20 @@
     <link href="http://blog.hellokang.net/go/go-slice/"/>
     <id>http://blog.hellokang.net/go/go-slice/</id>
     <published>2018-10-28T13:03:49.000Z</published>
-    <updated>2018-10-30T14:30:45.791Z</updated>
+    <updated>2018-11-01T14:28:54.952Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;h2&gt;&lt;span id=&quot;1-概述&quot;&gt;1
-        
-      
+      &lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h2&gt;&lt;p&gt;其中切片是基于数据中连续片段的引用，是一个引用类型。与数组不同的是，切片的长度可以在运行时修改。使用上可以将切片看作是长度可变的数组。即使超过了底层数组的最大长度，也可以继续扩容。&lt;/p&gt;
+&lt;p&gt;图例为：&lt;br&gt;&lt;img src=&quot;http://www.hellokang.net/images/posts/go/go-slice.png&quot; alt=&quot;slice示意&quot;&gt;&lt;/p&gt;
+&lt;p&gt;切片的实现是由一个底层数组以及其上面的动态位置，尺寸来实现。由内部由指向起始元素的指针、元素数量length和容量capacity组成。其中：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;指针ptr，用于指向切片在底层数组的起始位置。&lt;/li&gt;
+&lt;li&gt;尺寸len，用于记录切片内元素数量。&lt;/li&gt;
+&lt;li&gt;容量cap，当前切片最大容量，也就是底层数组的容量。可以动态分配。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;当使用不定数量参数时，函数得到的参数也是切片类型。&lt;/p&gt;
+&lt;p&gt;切片为引用类型，因此切片的默认初始值为nil。&lt;/p&gt;
     
     </summary>
     
@@ -141,17 +140,12 @@
     <link href="http://blog.hellokang.net/go/go-array/"/>
     <id>http://blog.hellokang.net/go/go-array/</id>
     <published>2018-10-28T12:41:02.000Z</published>
-    <updated>2018-10-30T14:30:55.201Z</updated>
+    <updated>2018-11-01T14:27:50.517Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;h2&gt;&lt;span id=&quot;1-概述&quot;&gt;1 概述&lt;/span&gt;&lt;/h2&gt;&lt;p&gt;数组，切片，map是容器数据类型。都是可以存储多个值的符合类型。&lt;br&gt;其中数组是相同类型的一组已编号且长度固定的数据项序列，不用类型和长度是不同的数据类型，例如[5]int, [3]int,
-        
-      
+      &lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h2&gt;&lt;p&gt;数组，切片，map是容器数据类型。都是可以存储多个值的符合类型。&lt;br&gt;其中数组是相同类型的一组已编号且长度固定的数据项序列，不用类型和长度是不同的数据类型，例如[5]int, [3]int, [5]byte是不同的类型。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://www.hellokang.net/images/posts/go/go-array.png&quot; alt=&quot;数组&quot;&gt;&lt;/p&gt;
     
     </summary>
     
@@ -169,21 +163,46 @@
     <link href="http://blog.hellokang.net/go/go-strconv/"/>
     <id>http://blog.hellokang.net/go/go-strconv/</id>
     <published>2018-10-27T09:15:56.000Z</published>
-    <updated>2018-10-27T14:46:49.716Z</updated>
+    <updated>2018-11-01T14:28:59.839Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;!-- toc --&gt;
+      &lt;!-- toc --&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;#1-概述&quot;&gt;1 概述&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#2-与切片的转换&quot;&gt;2 与切片的转换&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#3-strconv-包&quot;&gt;3 strconv
-        
-      
+&lt;li&gt;&lt;a href=&quot;#3-strconv-包&quot;&gt;3 strconv 包&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#strconvatois-string-int-error&quot;&gt;strconv.Atoi(s string) (int, error)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#strconvitoai-int-string&quot;&gt;strconv.Itoa(i int) string&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#strconvparsefloats-string-bitsize-int-float64-error&quot;&gt;strconv.ParseFloat(s string, bitSize int) (float64, error)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#strconvparseints-string-base-int-bitsize-int-i-int64-err-error&quot;&gt;strconv.ParseInt(s string, base int, bitSize int) (i int64, err error)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#strconvformatfloatf-float64-fmt-byte-prec-bitsize-int-string&quot;&gt;strconv.FormatFloat(f float64, fmt byte, prec, bitSize int) string&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#strconvformatinti-int64-base-int-string&quot;&gt;strconv.FormatInt(i int64, base int) string&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#strconvappendbooldst-byte-b-bool-byte&quot;&gt;strconv.AppendBool(dst []byte, b bool) []byte&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#strconvappendfloatdst-byte-f-float64-fmt-byte-prec-bitsize-int-byte&quot;&gt;strconv.AppendFloat(dst []byte, f float64, fmt byte, prec, bitSize int) []byte&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#strconvappendintdst-byte-i-int64-base-int-byte&quot;&gt;strconv.AppendInt(dst []byte, i int64, base int) []byte&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#strconvappendquotedst-byte-s-string-byte&quot;&gt;strconv.AppendQuote(dst []byte, s string) []byte&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#strconvappendquoterunedst-byte-r-rune-byte&quot;&gt;strconv.AppendQuoteRune(dst []byte, r rune) []byte&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#strconvappendquoterunetoasciidst-byte-r-rune-byte&quot;&gt;strconv.AppendQuoteRuneToASCII(dst []byte, r rune) []byte&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#strconvappendquotetoasciidst-byte-s-string-byte&quot;&gt;strconv.AppendQuoteToASCII(dst []byte, s string) []byte&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#strconvappenduintdst-byte-i-uint64-base-int-byte&quot;&gt;strconv.AppendUint(dst []byte, i uint64, base int) []byte&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#strconvcanbackquotes-string-bool&quot;&gt;strconv.CanBackquote(s string) bool&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#strconvformatboolb-bool-string&quot;&gt;strconv.FormatBool(b bool) string&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#strconvformatuinti-uint64-base-int-string&quot;&gt;strconv.FormatUint(i uint64, base int) string&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#strconvisprintr-rune-bool&quot;&gt;strconv.IsPrint(r rune) bool&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#strconvparseboolstr-string-bool-error&quot;&gt;strconv.ParseBool(str string) (bool, error)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#strconvparseuints-string-base-int-bitsize-int-uint64-error&quot;&gt;strconv.ParseUint(s string, base int, bitSize int) (uint64, error)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#strconvquotes-string-string&quot;&gt;strconv.Quote(s string) string&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#strconvquoteruner-rune-string&quot;&gt;strconv.QuoteRune(r rune) string&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#strconvquoterunetoasciir-rune-string&quot;&gt;strconv.QuoteRuneToASCII(r rune) string&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#strconvquotetoasciis-string-string&quot;&gt;strconv.QuoteToASCII(s string) string&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#strconvunquotes-string-string-error&quot;&gt;strconv.Unquote(s string) (string, error)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#strconvunquotechars-string-quote-byte-value-rune-multibyte-bool-tail-string-err-error&quot;&gt;strconv.UnquoteChar(s string, quote byte) (value rune, multibyte bool, tail string, err error)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+&lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h2&gt;&lt;p&gt;Go语言是强类型语言，因此总会需要将字符串转成需要的类型。比如整型和字符串转换，字符串和布尔型的转换等。本文就介绍如何完成这些转换，以下是Go语言关于字符串转换的整理说明，主要是与切片类型的转换，和 strconv 包的使用。&lt;/p&gt;
     
     </summary>
     
@@ -201,17 +220,11 @@
     <link href="http://blog.hellokang.net/go/go-utf8/"/>
     <id>http://blog.hellokang.net/go/go-utf8/</id>
     <published>2018-10-26T11:15:53.000Z</published>
-    <updated>2018-10-27T14:22:51.149Z</updated>
+    <updated>2018-11-01T14:29:21.874Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;h2&gt;&lt;span id=&quot;1-概述&quot;&gt;1 概述&lt;/span&gt;&lt;/h2&gt;&lt;p&gt;Go语言的字符串是使用 &lt;code&gt;UTF-8&lt;/code&gt; 编码的。&lt;code&gt;UTF-8&lt;/code&gt; 是 &lt;code&gt;Unicode&lt;/code&gt;
-        
-      
+      &lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h2&gt;&lt;p&gt;Go语言的字符串是使用 &lt;code&gt;UTF-8&lt;/code&gt; 编码的。&lt;code&gt;UTF-8&lt;/code&gt; 是 &lt;code&gt;Unicode&lt;/code&gt; 的实现方式之一。本文内容包括：&lt;code&gt;UTF-8&lt;/code&gt; 和 &lt;code&gt;Unicode&lt;/code&gt; 的关系，Go语言提供的 &lt;code&gt;unicode&lt;/code&gt; 包和 &lt;code&gt;unicode/utf8&lt;/code&gt; 包的使用。&lt;/p&gt;
     
     </summary>
     
@@ -229,22 +242,79 @@
     <link href="http://blog.hellokang.net/go/go-string/"/>
     <id>http://blog.hellokang.net/go/go-string/</id>
     <published>2018-10-25T03:31:03.000Z</published>
-    <updated>2018-10-30T14:31:10.643Z</updated>
+    <updated>2018-11-01T14:29:06.946Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;!-- toc --&gt;
+      &lt;!-- toc --&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;#1-概述&quot;&gt;1 概述&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#2-常规操作&quot;&gt;2 常规操作&lt;/a&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;#索引访问&quot;&gt;[]索引访问&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a
-        
-      
+&lt;li&gt;&lt;a href=&quot;#unicodeutf8-包&quot;&gt;unicode/utf8 包&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#len字符串占用的字节数&quot;&gt;len()，字符串占用的字节数&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#字符串连接&quot;&gt;+，字符串连接”&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#&quot;&gt;==, &amp;gt;, &amp;lt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringscomparea-b-string-int&quot;&gt;strings.Compare(a, b string) int&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringscontainss-substr-string-bool&quot;&gt;strings.Contains(s, substr string) bool&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringscontainsanys-chars-string-bool&quot;&gt;strings.ContainsAny(s, chars string) bool&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringscontainsrunes-string-r-rune-bool&quot;&gt;strings.ContainsRune(s string, r rune) bool&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringscounts-substr-string-int&quot;&gt;strings.Count(s, substr string) int&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringsequalfolds-t-string-bool&quot;&gt;strings.EqualFold(s, t string) bool&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringsfieldss-string-string&quot;&gt;strings.Fields(s string) []string&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringsfieldsfuncs-string-f-funcrune-bool-string&quot;&gt;strings.FieldsFunc(s string, f func(rune) bool) []string&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringshasprefixs-prefix-string-bool&quot;&gt;strings.HasPrefix(s, prefix string) bool&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringshassuffixs-suffix-string-bool&quot;&gt;strings.HasSuffix(s, suffix string) bool&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringsindexs-substr-string-int&quot;&gt;strings.Index(s, substr string) int&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringsindexanys-chars-string-int&quot;&gt;strings.IndexAny(s, chars string) int&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringsindexbytes-string-c-byte-int&quot;&gt;strings.IndexByte(s string, c byte) int&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringsindexfuncs-string-f-funcrune-bool-int&quot;&gt;strings.IndexFunc(s string, f func(rune) bool) int&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringsindexrunes-string-r-rune-int&quot;&gt;strings.IndexRune(s string, r rune) int&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringsjoina-string-sep-string-string&quot;&gt;strings.Join(a []string, sep string) string&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringslastindexs-substr-string-int&quot;&gt;strings.LastIndex(s, substr string) int&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringslastindexanys-chars-string-int&quot;&gt;strings.LastIndexAny(s, chars string) int&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringslastindexbytes-string-c-byte-int&quot;&gt;strings.LastIndexByte(s string, c byte) int&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringslastindexfuncs-string-f-funcrune-bool-int&quot;&gt;strings.LastIndexFunc(s string, f func(rune) bool) int&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringsmapmapping-funcrune-rune-s-string-string&quot;&gt;strings.Map(mapping func(rune) rune, s string) string&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringsrepeats-string-count-int-string&quot;&gt;strings.Repeat(s string, count int) string&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringsreplaces-old-new-string-n-int-string&quot;&gt;strings.Replace(s, old, new string, n int) string&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringssplits-sep-string-string&quot;&gt;strings.Split(s, sep string) []string&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringssplitafters-sep-string-string&quot;&gt;strings.SplitAfter(s, sep string) []string&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringssplitafterns-sep-string-n-int-string&quot;&gt;strings.SplitAfterN(s, sep string, n int) []string&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringssplitns-sep-string-n-int-string&quot;&gt;strings.SplitN(s, sep string, n int) []string&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringstitles-string-string&quot;&gt;strings.Title(s string) string&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringstolowers-string-string&quot;&gt;strings.ToLower(s string) string&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringstolowerspecialc-unicodespecialcase-s-string-string&quot;&gt;strings.ToLowerSpecial(c unicode.SpecialCase, s string) string&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringstotitles-string-string&quot;&gt;strings.ToTitle(s string) string&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringstotitlespecialc-unicodespecialcase-s-string-string&quot;&gt;strings.ToTitleSpecial(c unicode.SpecialCase, s string) string&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringstouppers-string-string&quot;&gt;strings.ToUpper(s string) string&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringstoupperspecialc-unicodespecialcase-s-string-string&quot;&gt;strings.ToUpperSpecial(c unicode.SpecialCase, s string) string&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringstrims-string-cutset-string-string&quot;&gt;strings.Trim(s string, cutset string) string&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringstrimfuncs-string-f-funcrune-bool-string&quot;&gt;strings.TrimFunc(s string, f func(rune) bool) string&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringstrimlefts-string-cutset-string-string&quot;&gt;strings.TrimLeft(s string, cutset string) string&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringstrimleftfuncs-string-f-funcrune-bool-string&quot;&gt;strings.TrimLeftFunc(s string, f func(rune) bool) string&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringstrimprefixs-prefix-string-string&quot;&gt;strings.TrimPrefix(s, prefix string) string&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringstrimrights-string-cutset-string-string&quot;&gt;strings.TrimRight(s string, cutset string) string&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringstrimrightfuncs-string-f-funcrune-bool-string&quot;&gt;strings.TrimRightFunc(s string, f func(rune) bool) string&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringstrimspaces-string-string&quot;&gt;strings.TrimSpace(s string) string&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#stringstrimsuffixs-suffix-string-string&quot;&gt;strings.TrimSuffix(s, suffix string) string&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+&lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h2&gt;&lt;p&gt;字符串，string，一串固定长度的字符连接起来的字符集合。Go语言的字符串是使用UTF-8编码的。UTF-8是Unicode的实现方式之一。&lt;/p&gt;
+&lt;p&gt;Go语言原生支持字符串。使用双引号(“”)或反引号(``)定义。&lt;br&gt;双引号：””, 用于单行字符串。&lt;br&gt;反引号：``，用于定义多行字符串，内部会原样解析。&lt;br&gt;示例：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;// 单行&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;quot;心有猛虎，细嗅蔷薇&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;// 多行&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;`&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;大风歌&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;大风起兮云飞扬。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;威加海内兮归故乡。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;安得猛士兮守四方！&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;`&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;字符串支持转义字符，列表如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;\r  回车符（返回行首）&lt;/li&gt;
+&lt;li&gt;\n  换行符（直接跳到下一行的同列位置）&lt;/li&gt;
+&lt;li&gt;\t  制表符&lt;/li&gt;
+&lt;li&gt;\’  单引号&lt;/li&gt;
+&lt;li&gt;\”  双引号&lt;/li&gt;
+&lt;li&gt;\\  反斜杠&lt;/li&gt;
+&lt;li&gt;\uXXXX  Unicode字符码值转义，例如 &lt;code&gt;&amp;quot;\u5eb7&amp;quot;&lt;/code&gt; 就是 “康”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Go语言中字符串的顶层结构是由一个指针和长度构成的。使用 unsafe.Sizeof(“”) 会得到16长度，其中8个字节是指针，指向字符串的内存地址，8个是存储字符串的长度。&lt;/p&gt;
     
     </summary>
     
@@ -262,21 +332,21 @@
     <link href="http://blog.hellokang.net/go/go-package/"/>
     <id>http://blog.hellokang.net/go/go-package/</id>
     <published>2018-10-24T15:51:15.000Z</published>
-    <updated>2018-10-30T14:31:08.161Z</updated>
+    <updated>2018-11-01T14:28:44.669Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;!-- toc --&gt;
+      &lt;!-- toc --&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;#1-概述&quot;&gt;1 概述&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#2-main包&quot;&gt;2 main包&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#3-包定义package&quot;&gt;3
-        
-      
+&lt;li&gt;&lt;a href=&quot;#3-包定义package&quot;&gt;3 包定义，package&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#4-导入包import&quot;&gt;4 导入包，import&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#4-gopath环境变量&quot;&gt;4 GOPATH环境变量&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#5-init-包初始化&quot;&gt;5 init() 包初始化&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+&lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h2&gt;&lt;p&gt;Go 语言的源码复用建立在包（package）基础之上。包通过 package, import, GOPATH 操作完成。&lt;/p&gt;
     
     </summary>
     
@@ -294,18 +364,12 @@
     <link href="http://blog.hellokang.net/go/go-function/"/>
     <id>http://blog.hellokang.net/go/go-function/</id>
     <published>2018-10-22T04:04:53.000Z</published>
-    <updated>2018-10-30T14:31:05.587Z</updated>
+    <updated>2018-11-01T14:28:16.578Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;!-- TOC --&gt;
-&lt;h2&gt;&lt;span id=&quot;1-概述&quot;&gt;1
-        
-      
+      &lt;!-- TOC --&gt;
+&lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h2&gt;&lt;p&gt;函数，function，独立的，用于实现具体功能的代码块。主要目的，是代码的重用（重复使用），更好的管理代码，模块化开发。&lt;br&gt;函数通常使用参数和返回值，与调用者交互数据。参数给函数传递数据，返回值，函数将处理好的数据传递给调用者。&lt;br&gt;Go语言中函数被称为一等公民（first-class）。意味着支持高阶函数，支持匿名函数，支持闭包等特性，可以满足接口等高级函数特性。&lt;/p&gt;
     
     </summary>
     
@@ -323,21 +387,33 @@
     <link href="http://blog.hellokang.net/go/go-flow-control/"/>
     <id>http://blog.hellokang.net/go/go-flow-control/</id>
     <published>2018-10-21T12:15:24.000Z</published>
-    <updated>2018-10-30T14:31:03.556Z</updated>
+    <updated>2018-11-01T14:28:08.570Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;!-- toc --&gt;
+      &lt;!-- toc --&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;#1-概述&quot;&gt;1 概述&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#2-条件分支-if&quot;&gt;2 条件分支 if&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#3-状态分支-switch&quot;&gt;3 状态分支
-        
-      
+&lt;li&gt;&lt;a href=&quot;#3-状态分支-switch&quot;&gt;3 状态分支 switch&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#31-基础&quot;&gt;3.1 基础&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#32-fallthrough向下穿越&quot;&gt;3.2 fallthrough，向下穿越&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#33-条件型-switch&quot;&gt;3.3 条件型 switch&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#4-循环for&quot;&gt;4 循环for&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#41-基本&quot;&gt;4.1 基本&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#42-省略语句&quot;&gt;4.2 省略语句&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#43-break&quot;&gt;4.3 break&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#44-continue&quot;&gt;4.4 continue&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#45-嵌套循环&quot;&gt;4.5 嵌套循环&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#5-goto&quot;&gt;5 goto&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#6-延迟执行defer&quot;&gt;6 延迟执行defer&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+&lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h2&gt;&lt;p&gt;Go语言提供了条件分支 if，状态分支 switch，循环 for，跳转 goto，延迟执行 defer，这些流程控制语句。分别作说明如下：&lt;/p&gt;
     
     </summary>
     
@@ -355,21 +431,25 @@
     <link href="http://blog.hellokang.net/go/go-operator/"/>
     <id>http://blog.hellokang.net/go/go-operator/</id>
     <published>2018-10-21T12:05:46.000Z</published>
-    <updated>2018-10-30T14:30:59.816Z</updated>
+    <updated>2018-11-01T14:28:35.343Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;!-- toc --&gt;
+      &lt;!-- toc --&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;#1-概述&quot;&gt;1 概述&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#2-算术运算&quot;&gt;2 算术运算&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#3-字符串连接运算&quot;&gt;3 字符串连接运算
-        
-      
+&lt;li&gt;&lt;a href=&quot;#3-字符串连接运算&quot;&gt;3 字符串连接运算 +&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#4-关系运算&quot;&gt;4 关系运算&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#5-逻辑运算&quot;&gt;5 逻辑运算&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#6-指针运算&quot;&gt;6 指针运算&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#7-位运算&quot;&gt;7 位运算&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#8-赋值运算&quot;&gt;8 赋值运算&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#9-运算符优先级&quot;&gt;9 运算符优先级&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#10-类型转换&quot;&gt;10 类型转换&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+&lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h2&gt;&lt;p&gt;Go语言提供了，算术，关系，逻辑，位，指针，赋值运算符。本篇整体说明一下。&lt;/p&gt;
     
     </summary>
     
@@ -387,7 +467,7 @@
     <link href="http://blog.hellokang.net/go/go-type/"/>
     <id>http://blog.hellokang.net/go/go-type/</id>
     <published>2018-10-19T09:59:26.000Z</published>
-    <updated>2018-11-01T07:44:11.864Z</updated>
+    <updated>2018-11-01T14:29:17.557Z</updated>
     
     <summary type="html">
     
@@ -445,21 +525,27 @@
     <link href="http://blog.hellokang.net/go/go-variable/"/>
     <id>http://blog.hellokang.net/go/go-variable/</id>
     <published>2018-10-18T10:51:32.000Z</published>
-    <updated>2018-10-30T14:43:33.944Z</updated>
+    <updated>2018-11-01T14:29:26.121Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;!-- toc --&gt;
+      &lt;!-- toc --&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;#1-概述&quot;&gt;1 概述&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#2-定义声明和初始化&quot;&gt;2 定义：声明和初始化&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#3-类型默认值零值&quot;&gt;3
-        
-      
+&lt;li&gt;&lt;a href=&quot;#3-类型默认值零值&quot;&gt;3 类型默认值（零值）&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#4-强类型&quot;&gt;4 强类型&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#5-类型推导&quot;&gt;5 类型推导&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#6-短声明定义&quot;&gt;6 短声明（定义）&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#7-批量定义&quot;&gt;7 批量定义&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#8-批量赋值&quot;&gt;8 批量赋值&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#9-匿名变量&quot;&gt;9 匿名变量&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#10-变量作用域&quot;&gt;10 变量作用域&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+&lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h2&gt;&lt;p&gt;变量（Variable）是程序运行过程中，内容可以变化（修改）的量，变量的功能是存储用户的数据，是计算机语言中能储存计算结果或能表示值抽象概念。&lt;br&gt;变量，是通过变量的标识符定位值的过程。变量的内存模拟演示：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://www.hellokang.net/images/posts/go/go-variable.png&quot; alt=&quot;变量的内存模拟演示&quot;&gt;&lt;/p&gt;
     
     </summary>
     
@@ -477,22 +563,24 @@
     <link href="http://blog.hellokang.net/go/go-constant/"/>
     <id>http://blog.hellokang.net/go/go-constant/</id>
     <published>2018-10-17T14:50:38.000Z</published>
-    <updated>2018-10-30T14:30:51.972Z</updated>
+    <updated>2018-11-01T14:28:00.379Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;!-- toc --&gt;
+      &lt;!-- toc --&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;#1-概述&quot;&gt;1 概述&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#2-定义单个常量&quot;&gt;2 定义单个常量&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#3-类型推导&quot;&gt;3 类型推导&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a
-        
-      
+&lt;li&gt;&lt;a href=&quot;#4-定义多个常量&quot;&gt;4 定义多个常量&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#5-iota迭代定义常量&quot;&gt;5 iota迭代定义常量&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#6-常量在编译时确定&quot;&gt;6 常量在编译时确定&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#7-常量的作用&quot;&gt;7 常量的作用&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+&lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h2&gt;&lt;p&gt;常量，一经定义不可更改的量。功能角度看，当出现不需要被更改的数据时，应该使用常量进行存储，例如圆周率。从语法的角度看，使用常量可以保证数据，在整个运行期间内，不会被更改。例如当前处理器的架构类型，可以保证不被更改。&lt;/p&gt;
+&lt;p&gt;语法如下：&lt;/p&gt;
     
     </summary>
     
@@ -524,18 +612,11 @@
     <link href="http://blog.hellokang.net/git/git-merge-rebase/"/>
     <id>http://blog.hellokang.net/git/git-merge-rebase/</id>
     <published>2018-10-14T12:29:30.000Z</published>
-    <updated>2018-10-22T14:35:53.296Z</updated>
+    <updated>2018-11-01T14:27:45.641Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;h2&gt;&lt;span id=&quot;1-需求&quot;&gt;1 需求&lt;/span&gt;&lt;/h2&gt;&lt;p&gt;今天和朋友讨论了一下 分支间的整合方案，merge和rebase。以及pull操作模式。&lt;br&gt;下面整理如下：&lt;/p&gt;
-&lt;h2&gt;&lt;span id=&quot;2-git-pull做了什么&quot;&gt;2 git
-        
-      
+      &lt;h2 id=&quot;1-需求&quot;&gt;&lt;a href=&quot;#1-需求&quot; class=&quot;headerlink&quot; title=&quot;1 需求&quot;&gt;&lt;/a&gt;1 需求&lt;/h2&gt;&lt;p&gt;今天和朋友讨论了一下 分支间的整合方案，merge和rebase。以及pull操作模式。&lt;br&gt;下面整理如下：&lt;/p&gt;
     
     </summary>
     
@@ -551,17 +632,14 @@
     <link href="http://blog.hellokang.net/hexo/hexo-github/"/>
     <id>http://blog.hellokang.net/hexo/hexo-github/</id>
     <published>2018-10-11T11:12:21.000Z</published>
-    <updated>2018-10-23T15:13:39.753Z</updated>
+    <updated>2018-11-01T14:44:59.355Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;h2&gt;&lt;span id=&quot;1-需求&quot;&gt;1
-        
-      
+      &lt;h2 id=&quot;1-需求&quot;&gt;&lt;a href=&quot;#1-需求&quot; class=&quot;headerlink&quot; title=&quot;1 需求&quot;&gt;&lt;/a&gt;1 需求&lt;/h2&gt;&lt;p&gt;博客之前是wordpress搭建的，也很好用。现在想使用一个基于markdown文件为中心的博客系统，就锁定了hexo这个项目。hexo是基于Node.js的，提供markdown支持，草稿，单页，分类，标签，主题，i18n，永久链接，静态生成，部署等很常用的博客系统功能。其主页地址为：&lt;a href=&quot;https://hexo.io/zh-cn/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;，大家可以获取更详细的信息。&lt;br&gt;下面就和大家说说过程，大致有博客搭建，部署到github，还有另一个git服务器（个人的服务器）上的过程。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;下面的操作的个人电脑为windows系统（win10)。&lt;/p&gt;
+&lt;/blockquote&gt;
     
     </summary>
     

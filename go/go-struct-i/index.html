@@ -15,7 +15,7 @@
 <meta property="og:description" content="1 概述 2 定义语法 3 实例化 4 值类型 5 初始化属性 6 . 成员访问运算符点号 7 匿名结构体   1 概述结构体是由成员构成的复合类型。Go 语言使用结构体和结构体成员来描述真实世界的实体和实体对应的各种属性。结构体成员，也可称之为成员变量，字段，属性。属性要满足唯一性。结构体的概念在软件工程上旧的术语叫 ADT（抽象数据类型：Abstract Data Type）数据层面，结构">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://www.hellokang.net/images/wechat_subscription.jpg">
-<meta property="og:updated_time" content="2018-10-31T10:12:58.495Z">
+<meta property="og:updated_time" content="2018-11-01T14:27:34.468Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Go语言中结构体的使用-第1部分结构体">
 <meta name="twitter:description" content="1 概述 2 定义语法 3 实例化 4 值类型 5 初始化属性 6 . 成员访问运算符点号 7 匿名结构体   1 概述结构体是由成员构成的复合类型。Go 语言使用结构体和结构体成员来描述真实世界的实体和实体对应的各种属性。结构体成员，也可称之为成员变量，字段，属性。属性要满足唯一性。结构体的概念在软件工程上旧的术语叫 ADT（抽象数据类型：Abstract Data Type）数据层面，结构">
@@ -114,7 +114,7 @@
 <!-- tocstop -->
 <h2><span id="1-概述">1 概述</span></h2><p>结构体是由成员构成的复合类型。Go 语言使用结构体和结构体成员来描述真实世界的实体和实体对应的各种属性。<br>结构体成员，也可称之为成员变量，字段，属性。属性要满足唯一性。<br>结构体的概念在软件工程上旧的术语叫 ADT（抽象数据类型：Abstract Data Type）<br>数据层面，结构体是自定义数据类型，可以理解成是由一系列具有相同或不同类型的数据构成的数据集合。因此结构体也被称之为抽象数据类型（ADT，Abstract Data Type）。<br>在Go语言中，结构体承担着面向对象语言中类的作用。</p>
 <p>Go语言中，结构体本身仅用来定义属性。还可以通过接收器函数来定义方法，使用内嵌结构体来定义继承。这样使用结构体相关操作Go语言就可以实现OOP面向对象编程了。</p>
-<p>我们先看结构体相关语法，再看OOP相关的。</p>
+<p>我们先看结构体相关语法，再看OOP相关的。<br><a id="more"></a></p>
 <h2><span id="2-定义语法">2 定义语法</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">type identifier struct &#123;</span><br><span class="line">    field1 type1</span><br><span class="line">    field2 type2</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 或者 同一类型的字段，可以定义在一行</span><br><span class="line">type identifier struct &#123;</span><br><span class="line">  field1, field2 int</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2><span id="3-实例化">3 实例化</span></h2><p>Go语言提供了以下几种方法实例化：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// T表示结构体标识符，v结构体变量</span><br><span class="line">var v T </span><br><span class="line">v := T&#123;&#125; // var v = T&#123;&#125;</span><br><span class="line">v := new(T)</span><br><span class="line">v := &amp;T&#123;&#125; // var v = &amp;T&#123;&#125;</span><br></pre></td></tr></table></figure></p>
 <p>以上方法中，<code>var v T</code> 和 <code>v := T{} // var v = T{}</code> 会返回结构体变量，而 <code>v := new(T)</code> 和 <code>v := &amp;T{} // var v = &amp;T{}</code> 会返回结构体指针。</p>
@@ -132,7 +132,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-struct-i/" data-id="cjnyojf5z001m98uo81ps4sf1" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-struct-i/" data-id="cjnypc1v8001kb8uo8hugiy60" class="article-share-link">分享到</a> -->
       
 
       
@@ -169,7 +169,7 @@
 
   <section class="changyan" id="comments">
 <!--PC和WAP自适应版-->
-<div id="SOHUCS" sid="cjnyojf5z001m98uo81ps4sf1"></div> 
+<div id="SOHUCS" sid="cjnypc1v8001kb8uo8hugiy60"></div> 
 <script type="text/javascript"> 
 	(function(){ 
 		var appid = 'cyt64TYiv'; 
@@ -212,7 +212,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">25</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">24</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -239,7 +239,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 

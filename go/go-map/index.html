@@ -6,20 +6,20 @@
   
   <title>Go语言中映射表map的使用 | 小韩说课</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1 概述Go语言中的键值对(key-&amp;gt;value)集合，称之为映射map。映射map是变长类型，定义时不需要指定长度。映射map是无序的，遍历是的顺序不可期，原因是底层由hash表实现。逻辑结构表示为： 2 创建语法12345678910var m = map[key_type]value_type&amp;#123;key1: value1, key2: value2&amp;#125;var m = m">
+  <meta name="description" content="1 概述Go语言中的键值对(key-&amp;gt;value)集合，称之为映射map。映射map是变长类型，定义时不需要指定长度。映射map是无序的，遍历是的顺序不可期，原因是底层由hash表实现。逻辑结构表示为：">
 <meta name="keywords" content="go,goGuide">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go语言中映射表map的使用">
 <meta property="og:url" content="http://blog.hellokang.net/go/go-map/index.html">
 <meta property="og:site_name" content="小韩说课">
-<meta property="og:description" content="1 概述Go语言中的键值对(key-&amp;gt;value)集合，称之为映射map。映射map是变长类型，定义时不需要指定长度。映射map是无序的，遍历是的顺序不可期，原因是底层由hash表实现。逻辑结构表示为： 2 创建语法12345678910var m = map[key_type]value_type&amp;#123;key1: value1, key2: value2&amp;#125;var m = m">
+<meta property="og:description" content="1 概述Go语言中的键值对(key-&amp;gt;value)集合，称之为映射map。映射map是变长类型，定义时不需要指定长度。映射map是无序的，遍历是的顺序不可期，原因是底层由hash表实现。逻辑结构表示为：">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://www.hellokang.net/images/posts/go/go-map.png">
 <meta property="og:image" content="http://www.hellokang.net/images/wechat_subscription.jpg">
-<meta property="og:updated_time" content="2018-10-30T14:30:42.436Z">
+<meta property="og:updated_time" content="2018-11-01T14:28:24.227Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Go语言中映射表map的使用">
-<meta name="twitter:description" content="1 概述Go语言中的键值对(key-&amp;gt;value)集合，称之为映射map。映射map是变长类型，定义时不需要指定长度。映射map是无序的，遍历是的顺序不可期，原因是底层由hash表实现。逻辑结构表示为： 2 创建语法12345678910var m = map[key_type]value_type&amp;#123;key1: value1, key2: value2&amp;#125;var m = m">
+<meta name="twitter:description" content="1 概述Go语言中的键值对(key-&amp;gt;value)集合，称之为映射map。映射map是变长类型，定义时不需要指定长度。映射map是无序的，遍历是的顺序不可期，原因是底层由hash表实现。逻辑结构表示为：">
 <meta name="twitter:image" content="http://www.hellokang.net/images/posts/go/go-map.png">
   
     <link rel="alternative" href="/atom.xml" title="小韩说课" type="application/atom+xml">
@@ -103,6 +103,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2><span id="1-概述">1 概述</span></h2><p>Go语言中的键值对(key-&gt;value)集合，称之为映射map。映射map是变长类型，定义时不需要指定长度。映射map是无序的，遍历是的顺序不可期，原因是底层由hash表实现。<br>逻辑结构表示为：<br><img src="http://www.hellokang.net/images/posts/go/go-map.png" alt="map示意"></p>
+<a id="more"></a>
 <h2><span id="2-创建语法">2 创建语法</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var m = map[key_type]value_type&#123;key1: value1, key2: value2&#125;</span><br><span class="line">var m = make(map[key_type]value_type)</span><br><span class="line"></span><br><span class="line">// 示例,字符串型下标，字符串型值：</span><br><span class="line">var m = make(map[string]string) //make()会分配内存空间，初始化。</span><br><span class="line">m[&quot;east&quot;] = &quot;东&quot;</span><br><span class="line">m[&quot;west&quot;] = &quot;西&quot;</span><br><span class="line"></span><br><span class="line">// 直接初始化</span><br><span class="line">var m = map[string]string&#123;&quot;east&quot;: &quot;东&quot;, &quot;west&quot;: &quot;西&quot;&#125;</span><br></pre></td></tr></table></figure>
 <h2><span id="3-下标操作">3 []下标操作</span></h2><p>与数组类型，使用下标完成映射元素的访问。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var m = map[string]string&#123;&quot;east&quot;: &quot;东&quot;, &quot;west&quot;: &quot;西&quot;&#125;</span><br><span class="line">fmt.Println(m[&quot;east&quot;]) </span><br><span class="line">// 东</span><br><span class="line">fmt.Println(m[&quot;west&quot;]) </span><br><span class="line">// 西</span><br></pre></td></tr></table></figure></p>
 <h2><span id="4-for-range">4 for-range</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for k, v := range mapVar &#123;</span><br><span class="line">    fmt.Println(k, v)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -117,7 +118,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-map/" data-id="cjnyojf5h000v98uopimfyj3t" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-map/" data-id="cjnypc1up000wb8uocaql3i40" class="article-share-link">分享到</a> -->
       
 
       
@@ -154,7 +155,7 @@
 
   <section class="changyan" id="comments">
 <!--PC和WAP自适应版-->
-<div id="SOHUCS" sid="cjnyojf5h000v98uopimfyj3t"></div> 
+<div id="SOHUCS" sid="cjnypc1up000wb8uocaql3i40"></div> 
 <script type="text/javascript"> 
 	(function(){ 
 		var appid = 'cyt64TYiv'; 
@@ -197,7 +198,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">25</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">24</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -224,7 +225,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 

@@ -146,7 +146,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjnyojf67001y98uohrf7zgjo" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjnypc1vh001tb8uoa1u9y7rv" class="article-share-link">分享到</a> -->
       
 
       
@@ -202,41 +202,18 @@
 </ul>
 <!-- tocstop -->
 <p>[TOC]</p>
-<h2><span id="1-概述">1 概述</span></h2><p>变量（Variable）是程序运行过程中，内容可以变化（修改）的量，变量的功能是存储用户的数据，是计算机语言中能储存计算结果或能表示值抽象概念。<br>变量，是通过变量的标识符定位值的过程。变量的内存模拟演示：</p>
+<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h2><p>变量（Variable）是程序运行过程中，内容可以变化（修改）的量，变量的功能是存储用户的数据，是计算机语言中能储存计算结果或能表示值抽象概念。<br>变量，是通过变量的标识符定位值的过程。变量的内存模拟演示：</p>
 <p><img src="http://www.hellokang.net/images/posts/go/go-variable.png" alt="变量的内存模拟演示"></p>
-<h2><span id="2-定义声明和初始化">2 定义：声明和初始化</span></h2><p>定义变使用var关键字，需要指定其类型，可以同时初始化，如果没有指定初始化值，则使用类型的默认值，语法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 声明变量，未初始化（默认值初始化）</span><br><span class="line">var name string</span><br><span class="line">// 声明变量，特定值初始化</span><br><span class="line">var user string = &quot;Hank&quot;</span><br></pre></td></tr></table></figure></p>
-<p>Go语言中的变量必须声明后才可以使用，不能直接使用未定义的变量。</p>
-<h2><span id="3-类型默认值零值">3 类型默认值（零值）</span></h2><p>Go语言的类型默认值如下所示：</p>
-<ul>
-<li>整型和浮点型变量的默认值为 0。</li>
-<li>字符串变量的默认值为空字符串。</li>
-<li>布尔型变量默认为 bool。</li>
-<li>切片、函数、指针变量的默认为 nil。</li>
-</ul>
-<h2><span id="4-强类型">4 强类型</span></h2><p>Go语言是强类型语言，变量必须有类型，同时变量仅仅可以存储特定类型的数据。</p>
-<h2><span id="5-类型推导">5 类型推导</span></h2><p>定义变量时，如果指定了初始值，则可以省略类型的定义，Go语言可以自己由数据推导出类型。<br>语法为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 声明变量，特定值初始化，类型推导出user为字符串string型</span><br><span class="line">var user = &quot;Hank&quot;</span><br></pre></td></tr></table></figure></p>
-<h2><span id="6-短声明定义">6 短声明（定义）</span></h2><p>为了简化定义变量，使用运算符 := 配合类型推导，可以快速完成变量的定义，语法为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">user := &quot;hank&quot;</span><br></pre></td></tr></table></figure></p>
-<h2><span id="7-批量定义">7 批量定义</span></h2><p>使用var或:=都可以一次性定义多个变量，语法为：<br>var<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var (</span><br><span class="line">  v1 = 42</span><br><span class="line">  v2 = &quot;hank&quot;</span><br><span class="line">  )</span><br><span class="line">也可以</span><br><span class="line">var v1, v2 = 42, &quot;hank&quot;</span><br></pre></td></tr></table></figure></p>
-<p>:=<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">v1, v2 := 42, &quot;hank&quot;</span><br></pre></td></tr></table></figure></p>
-<p>推荐使用 var() 声明块语法，因为代码维护容易。</p>
-<h2><span id="8-批量赋值">8 批量赋值</span></h2><p>一次性为多个变量进行赋值。（类似短定义。v1, v2, v3 := 42, “hank”, false）<br>当变量定义完毕后，再批量对其赋值，没有定义功能！<br>语法为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var (</span><br><span class="line">  v1 int</span><br><span class="line">  v2 int</span><br><span class="line">)</span><br><span class="line">// 批量赋值</span><br><span class="line">v1, v2 = 42, 1024</span><br></pre></td></tr></table></figure></p>
-<p>该语法，通常配合函数的批量返回来使用，一次性接收多个返回值，语法为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">  var (</span><br><span class="line">    v1 int</span><br><span class="line">    v2 int</span><br><span class="line">  )</span><br><span class="line">  // 调用函数，接收其返回值</span><br><span class="line">  v1, v2 = getData()</span><br><span class="line">&#125;</span><br><span class="line">// 返回两个值的函数</span><br><span class="line">func getData() (int, int) &#123;</span><br><span class="line">  // 返回了两个值（假设42为最小值，1024为最大值）</span><br><span class="line">  return 42, 1024</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>非常方便的可以交换两个变量的值：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var (</span><br><span class="line">  v1 = 42</span><br><span class="line">  v2 = 1024</span><br><span class="line">)</span><br><span class="line">// 交换</span><br><span class="line">v1, v2 = v2, v1</span><br></pre></td></tr></table></figure></p>
-<p>执行后，v1==1024, v2==42</p>
-<h2><span id="9-匿名变量">9 匿名变量</span></h2><p>标识符为<em>（下划线）的变量，是系统保留的匿名变量，在赋值后，会被立即释放，称之为匿名变量。其作用是变量占位符，对其变量赋值结构。通常会在批量赋值时使用。<br>例如，函数返回多个值，我们仅仅需要其中部分，则不需要的使用</em>来占位，演示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">  var (</span><br><span class="line">    v int</span><br><span class="line">  )</span><br><span class="line">  // 调用函数，仅仅需要第二个返回值，第一，三使用匿名变量占位</span><br><span class="line">  _, v, _ = getData()</span><br><span class="line">&#125;</span><br><span class="line">// 返回两个值的函数</span><br><span class="line">func getData() (int, int, int) &#123;</span><br><span class="line">  // 返回3个值</span><br><span class="line">  return 42, 1024, 2012</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2><span id="10-变量作用域">10 变量作用域</span></h2><p>Go语言中的变量是块作用域。<br>块，指的是使用{}定义的代码段，包括函数，if/switch/for语句，或独立的{}都是块。在块内定义的变量仅仅在本块内可用。<br>定义，指的是 var 或者 := 定义的变量。<br>Go语言的作用域是层叠的，就是说内层块可以直接访问到外层块的变量，前提是内层块没有定义同名的外层变量。<br>演示如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">// 全局（函数外）定义3个变量</span><br><span class="line">var (</span><br><span class="line">  v1 = 1</span><br><span class="line">  v2 = 2</span><br><span class="line">  v3 = 3</span><br><span class="line">)</span><br><span class="line">func main() &#123;</span><br><span class="line"></span><br><span class="line">  // main&#123;&#125;函数块，定义2个变量</span><br><span class="line">  var (</span><br><span class="line">    v2 = 22</span><br><span class="line">    v3 = 33</span><br><span class="line">  )</span><br><span class="line">  fmt.Println(v1, v2, v3)</span><br><span class="line">  // 结果 1 22 33</span><br><span class="line"></span><br><span class="line">  &#123;</span><br><span class="line">    // main()函数内部&#123;&#125;块，定义1个变量</span><br><span class="line">    var (</span><br><span class="line">      v3 = 333</span><br><span class="line">    )</span><br><span class="line">    fmt.Println(v1, v2, v3)</span><br><span class="line">    // 结果 1 22 333</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>上面代码中：<br>在main()中，v2，v3被重新定义，则在main()中，v1是外部，而v2, v3是main函数局部的。<br>在main()内部的{}中，v3被重新定义，则在main()内部的{}中，v1是外部，而v2是main()定义的, v3是main()内部{}定义的的。</p>
-<p>变量可以沿内部作用域向外部作用域查找变量的过程。</p>
-<p>带有{}的语句，其中的变量也仅仅在内部有效，例如for，if，switch等，演示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for i := 0; i &lt; 10; i++ &#123;</span><br><span class="line">  fmt.Println(i)</span><br><span class="line">&#125;</span><br><span class="line">fmt.Println(i)</span><br><span class="line">// 会提示变量i未定义, undefined: i</span><br></pre></td></tr></table></figure></p>
-<p>注意i，是通过短声明在for内部定义的变量，仅仅在for内部有意义。</p>
-<p>互不嵌套的{}见作用域不可见，不可互相访问。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">  &#123;</span><br><span class="line">    v := 42</span><br><span class="line">  &#125;</span><br><span class="line">  &#123;</span><br><span class="line">    fmt.Println(v)</span><br><span class="line">    // 会提示变量v未定义, undefined: v</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>完！<br>原文出自：<a href="http://www.hellokang.net/go/go-variable/" target="_blank" rel="noopener">小韩说课</a><br>微信关注：小韩说课<br><img src="http://www.hellokang.net/images/wechat_subscription.jpg" alt="小韩说课"></p>
-
+        
+          <p class="article-more-link">
+            <a href="/go/go-variable/#more">Read More</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-variable/" data-id="cjnyojf66001v98uogz4sq2ca" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-variable/" data-id="cjnypc1vk001wb8uou3xj3i27" class="article-share-link">分享到</a> -->
       
 
       
@@ -289,40 +266,18 @@
 </ul>
 <!-- tocstop -->
 <p>[TOC]</p>
-<h2><span id="1-概述">1 概述</span></h2><p>常量，一经定义不可更改的量。功能角度看，当出现不需要被更改的数据时，应该使用常量进行存储，例如圆周率。从语法的角度看，使用常量可以保证数据，在整个运行期间内，不会被更改。例如当前处理器的架构类型，可以保证不被更改。</p>
-<p>语法如下</p>
-<h2><span id="2-定义单个常量">2 定义单个常量</span></h2><p>const 常量名 &lt;可选的类型&gt; = 常量值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const c1 int = 1000</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>Go语言中，标识符（常量名）是否大小写，取决于是否需要在导出时被识别。</p>
-</blockquote>
-<p>常量的值仅仅支持，基础类型，字符串，字符，整型，浮点，布尔。</p>
-<h2><span id="3-类型推导">3 类型推导</span></h2><p>类型可以通过值推导出来，大多数情况可以省略类型，例如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const c2 = 1000</span><br></pre></td></tr></table></figure></p>
-<p>除非你想使用例如，int8, byte，float32这些非默认类型时，需要指定类型，例如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const c3 int16 = 1000</span><br></pre></td></tr></table></figure></p>
-<h2><span id="4-定义多个常量">4 定义多个常量</span></h2><p>可以一行定义多个常量，例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const c4, c5 = 42, 1000</span><br></pre></td></tr></table></figure></p>
-<p>也可以使用 const()定义块，定义多个，每个常量单独一行，例如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const (</span><br><span class="line">  c6 = 42</span><br><span class="line">  c7 = 1000</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>推荐使用const()块语法，一次性定义多个。</p>
-</blockquote>
-<p>const()块定义时，如果常量未给出定义，则延续上面的定义规则，例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const (</span><br><span class="line">  c7 = 42</span><br><span class="line">  c8 // c8 = 42</span><br><span class="line">  c9 // c9 = 42</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
-<p>此时，c8, c9, 值都是42。</p>
-<h2><span id="5-iota迭代定义常量">5 iota迭代定义常量</span></h2><p>const配合iota关键字使用，可以定义一组由0开始+1迭代的常量<br>演示语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const (</span><br><span class="line">  gender_secret = iota</span><br><span class="line">  gender_male // = iota</span><br><span class="line">  gender_female // = iota</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
-<p>此时，三个常量值，分别是,0, 1, 2<br>iota的规则是：若iota出现在const()中，那么const()定义的第一行的iota就是0，第二行就是0+1=1，不论iota是否被常量使用。演示如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">const (</span><br><span class="line">  c1 = 42 // iota = 0，虽然未使用iota，但后边（const()中）有使用，此时iota被初始化为0，下面每行累加1</span><br><span class="line">  c2 = iota      // iota = 1，iota继续累加，使用了iota</span><br><span class="line">  c3 = 1024      // iota = 2，同样未使用，但iota的值继续累加。c3 被定义为1024</span><br><span class="line">  c4             // iota = 3，c4延续上面的定义c4=1024，iota继续累加</span><br><span class="line">  c5 = iota      // iota = 4，iota继续累加，使用了iota</span><br><span class="line">  c6 = iota      // iota = 5，iota继续累加，使用了iota</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
-<p>此时结果为：42, 1, 1024, 1024, 4, 5</p>
-<h2><span id="6-常量在编译时确定">6 常量在编译时确定</span></h2><p>编译时确定，因此不能使用变量为其赋值。可以使用，确定的字面量，字面量运算，内置函数运算，其他定义常量，这些在编译时可以确定的内容为常量赋值，演示为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">const c1 = &quot;hank&quot;</span><br><span class="line">const (</span><br><span class="line">  c2 = c1</span><br><span class="line">  c3 = 42 + 1024</span><br><span class="line">  c4 = len(&quot;hank&quot;)</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
-<p>以上语法都可以！</p>
-<h2><span id="7-常量的作用">7 常量的作用</span></h2><ul>
-<li>将特殊的值，语义化。使用时，可以知道其具体含义。</li>
-<li>数据的集中管理，更改常量定义，即可完成全部的修改。</li>
-<li>保证不被程序的其他代码所更改。</li>
-</ul>
-<p>完！</p>
-<p>原文出自：<a href="http://www.hellokang.net/go/go-constant/" target="_blank" rel="noopener">小韩说课</a><br>微信关注：小韩说课<br><img src="http://www.hellokang.net/images/wechat_subscription.jpg" alt="小韩说课"></p>
-
+<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h2><p>常量，一经定义不可更改的量。功能角度看，当出现不需要被更改的数据时，应该使用常量进行存储，例如圆周率。从语法的角度看，使用常量可以保证数据，在整个运行期间内，不会被更改。例如当前处理器的架构类型，可以保证不被更改。</p>
+<p>语法如下：</p>
+        
+          <p class="article-more-link">
+            <a href="/go/go-constant/#more">Read More</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-constant/" data-id="cjnyojf53000m98uo8081o8ul" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-constant/" data-id="cjnypc1u6000ab8uonezkusxd" class="article-share-link">分享到</a> -->
       
 
       
@@ -364,7 +319,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/uncategorized/go-editor-sublime/" data-id="cjnyojf4v000f98uojum8nh2m" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/uncategorized/go-editor-sublime/" data-id="cjnypc1u9000db8uoay04ok7f" class="article-share-link">分享到</a> -->
       
 
       
@@ -403,41 +358,17 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2><span id="1-需求">1 需求</span></h2><p>今天和朋友讨论了一下 分支间的整合方案，merge和rebase。以及pull操作模式。<br>下面整理如下：</p>
-<h2><span id="2-git-pull做了什么">2 git pull做了什么</span></h2><blockquote>
-<p>git-pull - Fetch from and integrate with another repository or a local branch<br>译：从另一个版本库或本地分支拉取并与其整合</p>
-</blockquote>
-<p>文档如上说，可见<code>pull</code>（拉取）执行了两个操作，他们是<code>fetch</code>（获取）和<code>integrate</code>（整合）。<br>拉取就是将版本从远程拉取到本地，可以理解成下载。而整合指的是将拉取的版本与本地版本合并到一起。<br>这个合并的操作，通常会有两种模式来实现，就是<code>merge</code>和<code>rebase</code>。</p>
-<h2><span id="3-git-merge合并">3 git merge合并</span></h2><blockquote>
-<p>git-merge - Join two or more development histories together<br>译：将两个或多个开发历史合并一起</p>
-</blockquote>
-<p>merge，合并模式。指的是合并两个分支，最终的合并代码形成一个新的版本，两个分支的版本日志按照时间顺序合并到一起即可。 演示如下，<code>git merge dev</code>：</p>
-<p><img src="http://www.hellokang.net/images/posts/git/git-merge.png" alt="git-merge"></p>
-<p>合并过程是，git会自动根据两个分支的共同祖先即v2，与两个分支的最新提交即master的v6和dev的v5进行一个三方合并，然后将合并中更新的内容生成一个新的版本即v6，内容合并完成后，会成立版本日志并记录。</p>
-<p>merge的好处是版本不会出现错乱的情况（一会可以对比rebase，你会发现有错乱的情况），但多了一个额外的版本。（其实无所谓啦）<br>再看rebase模式。</p>
-<h2><span id="4-git-rebase变基">4 git rebase变基</span></h2><blockquote>
-<p>git-pull - Reapply commits on top of another base tip<br>译：在另一个的基本上重新应用提交</p>
-</blockquote>
-<p>rebase，重设基础。指的是整合时，以另一个为基础（dev），将当前的（master）应用上去。演示如下，<code>git rebase dev</code>：</p>
-<p><img src="http://www.hellokang.net/images/posts/git/git-rebase.png" alt="git-rebaes"></p>
-<p>合并过程为，git会从两个分支的共同祖先即v2开始提取当前分支即master上的提交版本即v4和v5，将提取的修改v4和v6依次应用到目标分支dev的最新提交的后面。将master指向最新的合并版本。</p>
-<p>从合并结果上看，rebase导致版本变为了：<em>v1-&gt;v2-&gt;v3-&gt;v5-&gt;v4-&gt;v6</em>，与真实的版本提交时间不一致了，就是发生了错乱。但rebase不会生成新的版本。</p>
-<h2><span id="5-merge-vs-rebase">5 merge VS rebase</span></h2><p>该如何选择他们？</p>
-<ul>
-<li>当某个分支不再需要了（例如一个本地的bug分支，修复完毕就不在需要了），那么我们选择merge是合理的。</li>
-<li>当我们的项目重启了，代码依赖的基础发生升级了，那么我们就可以rebase到这个升级之后的基础上继续开发。</li>
-<li>rebase -i，一个交互式的rebase，可以用来编辑版本信息，可以获得更加整洁的版本日志。</li>
-<li>千万不要在主体分支上使用rebase，否则会导致历史胡乱的。</li>
-</ul>
-<p>如果<code>git pull</code>的时候，出现 <code>error: failed to push some refs to &#39;版本库&#39;</code>， 可以<code>git pull --rebase</code>来解决下，后面说明原因。</p>
-<p>这个还需要再总结一下。</p>
-<h2><span id="6-结束">6 结束</span></h2><p>有问题，欢迎留言讨论！</p>
-
+        <h2 id="1-需求"><a href="#1-需求" class="headerlink" title="1 需求"></a>1 需求</h2><p>今天和朋友讨论了一下 分支间的整合方案，merge和rebase。以及pull操作模式。<br>下面整理如下：</p>
+        
+          <p class="article-more-link">
+            <a href="/git/git-merge-rebase/#more">Read More</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/git/git-merge-rebase/" data-id="cjnyojf4g000298uouz9ikdzc" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/git/git-merge-rebase/" data-id="cjnypc1ty0004b8uosfgrmq0m" class="article-share-link">分享到</a> -->
       
 
       
@@ -478,68 +409,20 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2><span id="1-需求">1 需求</span></h2><p>博客之前是wordpress搭建的，也很好用。现在想使用一个基于markdown文件为中心的博客系统，就锁定了hexo这个项目。hexo是基于Node.js的，提供markdown支持，草稿，单页，分类，标签，主题，i18n，永久链接，静态生成，部署等很常用的博客系统功能。其主页地址为：<a href="https://hexo.io/zh-cn/" target="_blank" rel="noopener">Hexo</a>，大家可以获取更详细的信息。<br>下面就和大家说说过程，大致有博客搭建，部署到github，还有另一个git服务器（个人的服务器）上的过程。</p>
+        <h2 id="1-需求"><a href="#1-需求" class="headerlink" title="1 需求"></a>1 需求</h2><p>博客之前是wordpress搭建的，也很好用。现在想使用一个基于markdown文件为中心的博客系统，就锁定了hexo这个项目。hexo是基于Node.js的，提供markdown支持，草稿，单页，分类，标签，主题，i18n，永久链接，静态生成，部署等很常用的博客系统功能。其主页地址为：<a href="https://hexo.io/zh-cn/" target="_blank" rel="noopener">Hexo</a>，大家可以获取更详细的信息。<br>下面就和大家说说过程，大致有博客搭建，部署到github，还有另一个git服务器（个人的服务器）上的过程。</p>
 <blockquote>
 <p>下面的操作的个人电脑为windows系统（win10)。</p>
 </blockquote>
-<h2><span id="2-hexo搭建博客">2 hexo搭建博客</span></h2><p>此步骤完成后，可以在自己本地电脑上，看到完整的博客系统了。</p>
-<h3><span id="21-快速开始">2.1 快速开始</span></h3><p>在安装好 Node.js, Git的基础上，执行下面代码即可<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> npm install -g hexo-cli</span><br><span class="line"><span class="meta">$</span> hexo init &lt;folder&gt;</span><br><span class="line"><span class="meta">$</span> cd &lt;folder&gt;</span><br><span class="line"><span class="meta">$</span> npm install</span><br><span class="line"><span class="meta">$</span> hexo server</span><br></pre></td></tr></table></figure></p>
-<p>浏览器访问<code>http://localhost:4000</code>，即可看到你的博客。</p>
-<p>如果没有Node.js或Git，请按照下面的步骤执行。</p>
-<h3><span id="22-安装nodejs">2.2 安装Node.js</span></h3><p>Node.js是基于Chrome V8 JavaScript引擎的JavaScript运行环境(runtime built)。安装方式请参考<a href="https://nodejs.org/" target="_blank" rel="noopener">Node.js官网</a> ，或者<a href="/categories/nodejs/">本站的Node.js相关内容</a>。<br>安装完毕后，应出现如下效果，表示安装成功：<br><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">C:\<span class="title">Users</span>\<span class="title">Kang</span>&gt; <span class="title">node</span> -<span class="title">v</span></span></span><br><span class="line"><span class="function"><span class="title">v8</span>.12.0</span></span><br><span class="line"><span class="function"><span class="title">PS</span> <span class="title">C</span>:\<span class="title">Users</span>\<span class="title">Kang</span>&gt; <span class="title">npm</span> -<span class="title">v</span></span></span><br><span class="line"><span class="function">6.4.1</span></span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>安装Node.js还可以使用nvm（Node Version Manager，Node.js的版本管理工具）。使用nvm可以方便的安装Node.js的各种版本，以及在版本间进行切换。安装使用方式请参考<a href="https://github.com/coreybutler/nvm-windows" target="_blank" rel="noopener">windows下的nvm</a>和<a href="https://github.com/creationix/nvm" target="_blank" rel="noopener">linux下的nvm</a>或者<a href="/categories/nodejs/">本站的Node.js相关内容</a>。</p>
-</blockquote>
-<h3><span id="23-安装git">2.3 安装Git</span></h3><p>Git是开源免费的分布式版本控制系统是用来处理代码量由小到大相关问题的。安装方式请参考<a href="https://git-scm.com/" target="_blank" rel="noopener">Git官网</a>，或者<a href="/categories/git/">本站的Git相关内容</a>。<br>安装完毕后，应出现如下效果，表示安装成功：<br><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">C:\<span class="title">Users</span>\<span class="title">Kang</span>&gt; <span class="title">git</span> <span class="title">version</span></span></span><br><span class="line"><span class="function"><span class="title">git</span> <span class="title">version</span> 2.19.1.<span class="title">windows</span>.1</span></span><br></pre></td></tr></table></figure></p>
-<h3><span id="24-安装hexo">2.4 安装Hexo</span></h3><p>使用npm按照hexo即可，运行如下代码全局按照hexo-cli这个hexo的命令行工具<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> npm install -g hexo-cli</span><br></pre></td></tr></table></figure></p>
-<p>安装完毕后，应出现如下效果，表示安装成功：<br><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">C:\<span class="title">Users</span>\<span class="title">Kang</span>&gt; <span class="title">hexo</span> -<span class="title">v</span></span></span><br><span class="line"><span class="function"><span class="title">hexo</span>-<span class="title">cli</span>: 1.1.0</span></span><br><span class="line"><span class="function"><span class="title">os</span>: <span class="title">Windows_NT</span> 10.0.17134 <span class="title">win32</span> <span class="title">x64</span></span></span><br><span class="line"><span class="function"><span class="title">http_parser</span>: 2.8.0</span></span><br><span class="line"><span class="function"><span class="title">node</span>: 8.12.0</span></span><br><span class="line"><span class="function"><span class="title">v8</span>: 6.2.414.66</span></span><br><span class="line"><span class="function"><span class="title">uv</span>: 1.19.2</span></span><br><span class="line"><span class="function"><span class="title">zlib</span>: 1.2.11</span></span><br><span class="line"><span class="function"><span class="title">ares</span>: 1.10.1-<span class="title">DEV</span></span></span><br><span class="line"><span class="function"><span class="title">modules</span>: 57</span></span><br><span class="line"><span class="function"><span class="title">nghttp2</span>: 1.32.0</span></span><br><span class="line"><span class="function"><span class="title">napi</span>: 3</span></span><br><span class="line"><span class="function"><span class="title">openssl</span>: 1.0.2<span class="title">p</span></span></span><br><span class="line"><span class="function"><span class="title">icu</span>: 60.1</span></span><br><span class="line"><span class="function"><span class="title">unicode</span>: 10.0</span></span><br><span class="line"><span class="function"><span class="title">cldr</span>: 32.0</span></span><br><span class="line"><span class="function"><span class="title">tz</span>: 2017<span class="title">c</span></span></span><br></pre></td></tr></table></figure></p>
-<h3><span id="25-hexo建站">2.5 Hexo建站</span></h3><p>安装 Hexo 完成后，请执行下列命令，Hexo 将会在指定文件夹中新建所需要的文件：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> hexo init &lt;folder&gt;</span><br><span class="line"><span class="meta">$</span> cd &lt;folder&gt;</span><br><span class="line"><span class="meta">$</span> npm install</span><br></pre></td></tr></table></figure></p>
-<p>选择好需要的站点目录（目录地址不要有中文）。例如选择 <code>D:\projects\practice\blog&gt;</code> 作为建站目录，那么执行如下操作即可：<br><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">C:\<span class="title">Users</span>\<span class="title">Kang</span>&gt; <span class="title">d</span>:</span></span><br><span class="line"><span class="function"><span class="title">D</span>:\&gt; <span class="title">cd</span> .\<span class="title">projects</span>\<span class="title">practice</span></span></span><br><span class="line"><span class="function"><span class="title">D</span>:\<span class="title">projects</span>\<span class="title">practice</span>&gt; <span class="title">hexo</span> <span class="title">init</span> <span class="title">blog</span></span></span><br><span class="line"><span class="function"><span class="title">D</span>:\<span class="title">projects</span>\<span class="title">practice</span>&gt; <span class="title">cd</span> <span class="title">blog</span></span></span><br><span class="line"><span class="function"><span class="title">D</span>:\<span class="title">projects</span>\<span class="title">practice</span>\<span class="title">blog</span>&gt; <span class="title">npm</span> <span class="title">install</span></span></span><br></pre></td></tr></table></figure></p>
-<p>此时一个基本的博客已经建立完毕了。</p>
-<h3><span id="26-运行hexo博客">2.6 运行Hexo博客</span></h3><p>进入博客目录，执行 <code>hexo server</code> 即可运行hexo服务器。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">D:\projects\practice\blog&gt; hexo server</span><br><span class="line">INFO  Start processing</span><br><span class="line">INFO  Hexo is running at http://localhost:4000 . Press Ctrl+C to stop.</span><br></pre></td></tr></table></figure></p>
-<p>此时，浏览器访问<code>http://localhost:4000</code>，即可看到你的博客。效果如下：</p>
-<p><img src="http://www.hellokang.net/images/posts/hexo/hexo-init.png" alt="hexo默认博客首页" title="&#39;hexo默认博客首页&#39;"></p>
-<p>至此，hexo搭建的博客已经完成。该博客使用方法，如何发文章，分类，标签等操作请参考<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">Hexo文档</a>，本文不再赘述。</p>
-<h2><span id="3发布到github">3.发布到GitHub</span></h2><p>GitHub上允许我们搭建自己的静态站点，在不购买自己的服务器情况下，可以有自己的博客。<br>需要用到Hexo提供的发布相关功能，同时需要在github上做一定的配置。</p>
-<h3><span id="31-注册github">3.1 注册GitHub</span></h3><blockquote>
-<p>已有账号的跳过此步骤</p>
-</blockquote>
-<p>注册操作，跟着GitHub引导完成即可，<a href="https://github.com/join?source=header-home" target="_blank" rel="noopener">GitHub注册</a></p>
-<h3><span id="32-创建版本库">3.2 创建版本库</span></h3><p>登录后，<a href="https://github.com/new" target="_blank" rel="noopener">创建新版本库https://github.com/new</a><br><img src="http://www.hellokang.net/images/posts/git/github-new-repository.png" alt="新建版本库"></p>
-<p><em>注意：版本库名字强烈建议是 <code>&lt;你的用户&gt;.github.io</code> 这种格式</em><br>创建完毕后，就可以使用 <code>&lt;你的用户&gt;.github.io</code> 这种方式访问你的github博客地址，但现在访问应该不会成功，因为是一个新创建的版本库，是空的，一无所有….。接下来就把我们本地的博客内容部署到这个github版本库上。</p>
-<h3><span id="33-github的ssh-keys设置">3.3 GitHub的SSH keys设置</span></h3><p>在部署之前，需要保证GitHub可以验证我们的机器，需要将本地的RAS-publicKey告知给GitHub，步骤如下：</p>
-<h4><span id="331-本地ras密钥对生成">3.3.1 本地RAS密钥对生成</span></h4><p>进入到 用户目录/.ssh目录下，查看是否已经存在了， 私钥<code>id_rsa</code> 公钥<code>id_rsa.pub</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Kang&gt; cd .ssh</span><br><span class="line">C:\Users\Kang\.ssh&gt; dir</span><br><span class="line">-a----       2018/10/10     19:46           1679 id_rsa</span><br><span class="line">-a----       2018/10/10     19:46            403 id_rsa.pub</span><br></pre></td></tr></table></figure></p>
-<p>上面的输出表示已经存在。若不存在，执行 <code>ssh-keygen</code> 生成即可（持续回车即可）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Kang\.ssh&gt; ssh-keygen.exe -t rsa</span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line">Enter file in which to save the key (C:\Users\Kang/.ssh/id_rsa):</span><br><span class="line">Enter passphrase (empty for no passphrase):</span><br><span class="line">Enter same passphrase again:</span><br><span class="line">Your identification has been saved in C:\Users\Kang/.ssh/id_rsa.</span><br><span class="line">Your public key has been saved in C:\Users\Kang/.ssh/id_rsa.pub.</span><br><span class="line">The key fingerprint is:</span><br><span class="line">SHA256:ymf2laAmgHVsGakavggdXrzORtVRNxkuKYq444C5Irs kang@V1N3RYQG70NI7YD</span><br><span class="line">The key&apos;s randomart image is:</span><br><span class="line">+---[RSA 2048]----+</span><br><span class="line">|      .. .. +o   |</span><br><span class="line">|     ..o.  +..   |</span><br><span class="line">|   ...=...o .    |</span><br><span class="line">|  o+++.... .     |</span><br><span class="line">| +o=oo. S .      |</span><br><span class="line">|o.=.oo . . . .   |</span><br><span class="line">|=.o=  + *   o    |</span><br><span class="line">|++..+  * . .     |</span><br><span class="line">|Eo..      .      |</span><br><span class="line">+----[SHA256]-----+</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>-t rsa 表示使用的加密类型。生成过程可以输入一些信息，简单起见，全部回车即可。</p>
-</blockquote>
-<p>生成完毕后，目录中应该存在相应文件了。</p>
-<h4><span id="332-告知github公钥">3.3.2 告知GitHub公钥</span></h4><p>在GitHub的用户设置中，找到ssh key的设置：<a href="https://github.com/settings/keys" target="_blank" rel="noopener">SSH Keys</a><br>点击 New SSH Key 新建<br><img src="http://www.hellokang.net/images/posts/git/github-sshkey-new.png" alt=""><br>将生成的公钥id_rsa.pub内容拷贝到输入框中，起名标志即可。<br><img src="http://www.hellokang.net/images/posts/git/github-sshkey-set.png" alt=""><br>保存即可。此时GitHub已经和我们本地电脑建立的信任关系。我们就可以将内容发布到GitHub上了。</p>
-<h3><span id="34-部署到github">3.4 部署到GitHub</span></h3><p>回到我们本地的博客项目中，hexo对于基于git的部署提供了一个工具<a href="https://github.com/hexojs/hexo-deployer-git" target="_blank" rel="noopener">hexo-deployer-git</a>，我们直接安装使即可。</p>
-<p>安装 hexo-deployer-git<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure></p>
-<h3><span id="35-修改博客的部署配置">3.5 修改博客的部署配置</span></h3><p>需要指定部署类型，版本库地址，分支，消息等信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/_config.yml</span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: https://github.com/yourusername/yourusername.github.io</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure></p>
-<h3><span id="36-执行部署">3.6 执行部署</span></h3><p>部署的过程，是将本地博客先生成静态文件，然后将静态文件发布到指定的版本库中。<br>因此总的过程应该是，清理之前的静态文件，生成新静态文件，发布到版本库 这个步骤，执行下面的代码即可：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hexo clean</span><br><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>部署deploy时会自动生成，因此可以省略 <code>$ hexo generate</code> 操作。</p>
-</blockquote>
-<p>第一次部署的过程中，会出现要求输入GitHub账号信息的步骤，请输入即可：<br><img src="http://www.hellokang.net/images/posts/github-signin.png" alt="GitHub登录"></p>
-<p>等等过后，如果出现 <code>Deploy done</code>，类似的信息，说明部署完成。<br><img src="http://www.hellokang.net/images/posts/github-deploy-done.png" alt="GitHub部署成功"></p>
-<p>也可以去版本库中查看是否已经存在代码了，版本库地址就是：<a href="https://github.com/yourusername/yourusername.github.io" target="_blank" rel="noopener">https://github.com/yourusername/yourusername.github.io</a><br><img src="http://www.hellokang.net/images/posts/github-deploy-done-code.png" alt="GitHub部署成功"></p>
-<p>部署完毕，就可以在 <code>yourusername.github.io</code> 看到你的博客了。<br><img src="http://www.hellokang.net/images/posts/github-blog.png" alt="GitHub博客"></p>
-<h3><span id="36-绑定域名">3.6 绑定域名</span></h3><p>过程如下：</p>
-<ul>
-<li>1 申请域名，在域名供应商申请，例如万网（阿里云）。</li>
-<li>2 添加解析到GitHub到IP，可以通过ping yourusername.github.io 获取，例如是：185.199.109.153。在域名供应商设置，例如万网（阿里云）。</li>
-<li>3 在版本库中，增加一个CNAME。进入yourusername.github.io版本库，右上角setting，找到 Custom domain，设置好自己的域名即可。<br><img src="http://www.hellokang.net/images/posts/github-custom-domain.png" alt=""></li>
-</ul>
-<h2><span id="4-总述">4 总述</span></h2><p>完成以上部署后，博客完毕。写作流程就是，本地编辑md文件，本地预览ok后，发布到github即可！<br>写作过程，请参考：<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">Hexo文档</a>。</p>
-<p>有问题，欢迎留言讨论！</p>
-
+        
+          <p class="article-more-link">
+            <a href="/hexo/hexo-github/#more">Read More</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/hexo/hexo-github/" data-id="cjnyojf6e002498uox1eb8uht" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/hexo/hexo-github/" data-id="cjnypc1vr0022b8uok7exljqo" class="article-share-link">分享到</a> -->
       
 
       
@@ -590,7 +473,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-error/" data-id="cjnyojf4s000b98uod7k5elyk" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-error/" data-id="cjnypc1ue000jb8uotolbs64u" class="article-share-link">分享到</a> -->
       
 
       
@@ -636,51 +519,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-command/" data-id="cjnyojf4k000598uo64o4gc38" class="article-share-link">分享到</a> -->
-      
-
-      
-
-      
-    </footer>
-  </div>
-  
-</article>
-
- 
-  
-    <article id="post-go-stuct" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/go/go-stuct/" class="article-date">
-  <time datetime="2018-10-06T04:03:54.000Z" itemprop="datePublished">2018-10-06</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/go/">go</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/go/go-stuct/">Go语言使用strut处理面向对象</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-        <!-- <a data-url="http://blog.hellokang.net/go/go-stuct/" data-id="cjnyojf63001s98uoqdrx24hm" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-command/" data-id="cjnypc1u00005b8uoz58rj8nn" class="article-share-link">分享到</a> -->
       
 
       
@@ -724,7 +563,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-point/" data-id="cjnyojf5m001498uobcgj2xoe" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-point/" data-id="cjnypc1uy0018b8uoctblijdk" class="article-share-link">分享到</a> -->
       
 
       
@@ -768,7 +607,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-editor-vim/" data-id="cjnyojf4q000a98uor4j5ws14" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-editor-vim/" data-id="cjnypc1uc000gb8uo2iuzm43j" class="article-share-link">分享到</a> -->
       
 
       
@@ -812,7 +651,51 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-reflect/" data-id="cjnyojf5q001a98uo2cqju89q" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-reflect/" data-id="cjnypc1v6001hb8uodusujcht" class="article-share-link">分享到</a> -->
+      
+
+      
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+ 
+  
+    <article id="post-go-editor-goland" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/go/go-editor-goland/" class="article-date">
+  <time datetime="2018-09-17T03:54:42.000Z" itemprop="datePublished">2018-09-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/go/">go</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/go/go-editor-goland/">使用goland编写Go语言</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+        <!-- <a data-url="http://blog.hellokang.net/go/go-editor-goland/" data-id="cjnypc1u20006b8uotpjwrt8s" class="article-share-link">分享到</a> -->
       
 
       
@@ -864,7 +747,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">25</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">24</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -891,7 +774,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 

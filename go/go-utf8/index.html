@@ -6,19 +6,19 @@
   
   <title>Go语言中多字节字符的处理 | 小韩说课</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1 概述Go语言的字符串是使用 UTF-8 编码的。UTF-8 是 Unicode 的实现方式之一。本文内容包括：UTF-8 和 Unicode 的关系，Go语言提供的 unicode 包和 unicode/utf8 包的使用。 2 UTF-8 和 Unicode 的关系Unicode一种字符集，是国际标谁化组织（ISO）设计的一个包括了地球上所有文化、所有字母和符号 的编码。他们叫它 Unive">
+  <meta name="description" content="1 概述Go语言的字符串是使用 UTF-8 编码的。UTF-8 是 Unicode 的实现方式之一。本文内容包括：UTF-8 和 Unicode 的关系，Go语言提供的 unicode 包和 unicode/utf8 包的使用。">
 <meta name="keywords" content="go,goGuide">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go语言中多字节字符的处理">
 <meta property="og:url" content="http://blog.hellokang.net/go/go-utf8/index.html">
 <meta property="og:site_name" content="小韩说课">
-<meta property="og:description" content="1 概述Go语言的字符串是使用 UTF-8 编码的。UTF-8 是 Unicode 的实现方式之一。本文内容包括：UTF-8 和 Unicode 的关系，Go语言提供的 unicode 包和 unicode/utf8 包的使用。 2 UTF-8 和 Unicode 的关系Unicode一种字符集，是国际标谁化组织（ISO）设计的一个包括了地球上所有文化、所有字母和符号 的编码。他们叫它 Unive">
+<meta property="og:description" content="1 概述Go语言的字符串是使用 UTF-8 编码的。UTF-8 是 Unicode 的实现方式之一。本文内容包括：UTF-8 和 Unicode 的关系，Go语言提供的 unicode 包和 unicode/utf8 包的使用。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://www.hellokang.net/images/wechat_subscription.jpg">
-<meta property="og:updated_time" content="2018-10-27T14:22:51.149Z">
+<meta property="og:updated_time" content="2018-11-01T14:29:21.874Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Go语言中多字节字符的处理">
-<meta name="twitter:description" content="1 概述Go语言的字符串是使用 UTF-8 编码的。UTF-8 是 Unicode 的实现方式之一。本文内容包括：UTF-8 和 Unicode 的关系，Go语言提供的 unicode 包和 unicode/utf8 包的使用。 2 UTF-8 和 Unicode 的关系Unicode一种字符集，是国际标谁化组织（ISO）设计的一个包括了地球上所有文化、所有字母和符号 的编码。他们叫它 Unive">
+<meta name="twitter:description" content="1 概述Go语言的字符串是使用 UTF-8 编码的。UTF-8 是 Unicode 的实现方式之一。本文内容包括：UTF-8 和 Unicode 的关系，Go语言提供的 unicode 包和 unicode/utf8 包的使用。">
 <meta name="twitter:image" content="http://www.hellokang.net/images/wechat_subscription.jpg">
   
     <link rel="alternative" href="/atom.xml" title="小韩说课" type="application/atom+xml">
@@ -102,6 +102,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2><span id="1-概述">1 概述</span></h2><p>Go语言的字符串是使用 <code>UTF-8</code> 编码的。<code>UTF-8</code> 是 <code>Unicode</code> 的实现方式之一。本文内容包括：<code>UTF-8</code> 和 <code>Unicode</code> 的关系，Go语言提供的 <code>unicode</code> 包和 <code>unicode/utf8</code> 包的使用。</p>
+<a id="more"></a>
 <h2><span id="2-utf-8-和-unicode-的关系">2 <code>UTF-8</code> 和 <code>Unicode</code> 的关系</span></h2><p><code>Unicode</code>一种字符集，是国际标谁化组织（ISO）设计的一个包括了地球上所有文化、所有字母和符号 的编码。他们叫它 <code>Universal Multiple-Octet Coded Character Set</code>，简称 UCS，也就是 <code>Unicode</code>。<code>Unicode</code> 为每一个 字符 分配一个唯一的 码点（Code Point），就是一个唯一的值。例如 康 的码点就是 24247，十六进制为 <code>5eb7</code>。<br><code>Unicode</code> 字符集仅仅定义了字符与码点的对应关系，但是并没有定义该如何编码（存储）这个码值，这就导致了很多问题。例如由于字符的码值不同，导致所需要的存储空间是不一致的，计算机不能确定接下来的字符是占用几个字节。还有就是如果采用固定的长度假设都是4个字节来存储码点值，那么会导致空间的额外浪费，因为 <code>ascii</code> 码字符其实仅仅需要一个字节的空间。</p>
 <p><code>UTF-8</code> 就是解决如何为 <code>Unicode</code> 编码而设计的一种编码规则。可以说 <code>UTF-8</code> 是 <code>Unicode</code> 的实现方式之一。其特点是一种变长编码，使用1到4个字节表示一个字符，根据不同的符号而变化长度。<code>UTF-8</code> 的编码规则有二：</p>
 <ul>
@@ -156,7 +157,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-utf8/" data-id="cjnyojf6b002198uodysimxe1" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-utf8/" data-id="cjnypc1vn001zb8uonpaq2ru0" class="article-share-link">分享到</a> -->
       
 
       
@@ -193,7 +194,7 @@
 
   <section class="changyan" id="comments">
 <!--PC和WAP自适应版-->
-<div id="SOHUCS" sid="cjnyojf6b002198uodysimxe1"></div> 
+<div id="SOHUCS" sid="cjnypc1vn001zb8uonpaq2ru0"></div> 
 <script type="text/javascript"> 
 	(function(){ 
 		var appid = 'cyt64TYiv'; 
@@ -236,7 +237,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">25</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">24</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -263,7 +264,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
