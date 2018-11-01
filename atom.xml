@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.hellokang.net/"/>
-  <updated>2018-10-31T10:55:03.100Z</updated>
+  <updated>2018-11-01T07:44:01.543Z</updated>
   <id>http://blog.hellokang.net/</id>
   
   <author>
@@ -21,21 +21,20 @@
     <link href="http://blog.hellokang.net/go/go-struct-ii/"/>
     <id>http://blog.hellokang.net/go/go-struct-ii/</id>
     <published>2018-10-31T08:39:28.000Z</published>
-    <updated>2018-10-31T10:55:03.100Z</updated>
+    <updated>2018-11-01T07:44:01.543Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;!-- toc --&gt;
+      &lt;!-- toc --&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;#1-概述&quot;&gt;1 概述&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#2-构造工厂函数&quot;&gt;2 构造工厂函数&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#3-成员方法接收器&quot;&gt;3
-        
-      
+&lt;li&gt;&lt;a href=&quot;#3-成员方法接收器&quot;&gt;3 成员方法（接收器）&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#4-继承内嵌结构体&quot;&gt;4 继承，内嵌结构体&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#5-重写override&quot;&gt;5 重写，override&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+&lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h2&gt;&lt;p&gt;结构体的基本语法请参见：&lt;a href=&quot;http://www.hellokang.net/go/go-struct-i/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Go语言中结构体的使用-第1部分结构体&lt;/a&gt;。&lt;br&gt;结构体除了是一个复合数据之外，还用来做面向对象编程。Go 语言使用结构体和结构体成员来描述真实世界的实体和实体对应的各种属性。也就意味着结构体类型可以类比为其他语言中的“类class”, 而结构体数据可以类比为其他语言中的 “对象”。&lt;br&gt;本文就说说结构体中，面向对象的部分。&lt;/p&gt;
     
     </summary>
     
@@ -388,21 +387,47 @@
     <link href="http://blog.hellokang.net/go/go-type/"/>
     <id>http://blog.hellokang.net/go/go-type/</id>
     <published>2018-10-19T09:59:26.000Z</published>
-    <updated>2018-10-30T14:30:57.635Z</updated>
+    <updated>2018-11-01T07:44:11.864Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;!-- toc --&gt;
+      &lt;!-- toc --&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;#1-概述&quot;&gt;1 概述&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#2-整数int&quot;&gt;2 整数，int&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#3-浮点数float&quot;&gt;3
-        
-      
+&lt;li&gt;&lt;a href=&quot;#3-浮点数float&quot;&gt;3 浮点数，float&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#4-复数complex32complex64&quot;&gt;4 复数，complex32,complex64&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#5-字符byterune&quot;&gt;5 字符，byte，rune&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#6-字符串string&quot;&gt;6 字符串，string&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#7-布尔型bool&quot;&gt;7 布尔型，bool&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#8-指针pointer&quot;&gt;8 指针，pointer&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#9-数组array&quot;&gt;9 数组，array&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#10-nil&quot;&gt;10 nil&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#11-切片slice&quot;&gt;11 切片，slice&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#12-映射map&quot;&gt;12 映射，map&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#13-结构体struct&quot;&gt;13 结构体，struct&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#14-接口interface&quot;&gt;14 接口，interface&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#15-函数func&quot;&gt;15 函数，func()&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+&lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h2&gt;&lt;p&gt;Go语言作为类C语言，支持常规的基础数据类型的的同时，支持常用的高级数据类型。他们是：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;整数，int，uint，int8，uint8，int16，uint16，int32，uint32，int64，uint64&lt;/li&gt;
+&lt;li&gt;浮点（小数），float32，float64&lt;/li&gt;
+&lt;li&gt;复数，complex&lt;/li&gt;
+&lt;li&gt;字符，byte，rune&lt;/li&gt;
+&lt;li&gt;字符串，string&lt;/li&gt;
+&lt;li&gt;布尔，bool&lt;/li&gt;
+&lt;li&gt;指针，pointor&lt;/li&gt;
+&lt;li&gt;数组，array&lt;/li&gt;
+&lt;li&gt;nil&lt;/li&gt;
+&lt;li&gt;切片，slice。（引用类型）&lt;/li&gt;
+&lt;li&gt;映射，map&lt;/li&gt;
+&lt;li&gt;结构体，struct&lt;/li&gt;
+&lt;li&gt;接口，interface&lt;/li&gt;
+&lt;li&gt;函数，func()&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;本篇相当于一个类型索引。包含了Go语言中的全部类型。具体每种类型的操作，请参见具体章节！&lt;/p&gt;
     
     </summary>
     

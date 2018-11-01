@@ -107,28 +107,17 @@
 <li><a href="#5-重写override">5 重写，override</a></li>
 </ul>
 <!-- tocstop -->
-<h2><span id="1-概述">1 概述</span></h2><p>结构体的基本语法请参见：<a href="http://www.hellokang.net/go/go-struct-i/" target="_blank" rel="noopener">Go语言中结构体的使用-第1部分结构体</a>。<br>结构体除了是一个复合数据之外，还用来做面向对象编程。Go 语言使用结构体和结构体成员来描述真实世界的实体和实体对应的各种属性。也就意味着结构体类型可以类比为其他语言中的“类class”, 而结构体数据可以类比为其他语言中的 “对象”。<br>本文就说说结构体中，面向对象的部分。</p>
-<h2><span id="2-构造工厂函数">2 构造工厂函数</span></h2><p>在面向对象编程中，实例化对象时往往需要完成很多业务逻辑，例如初始数据合理性，获取需要的资源等。在经典的OOP程序中，都会提供构造方法，用于在实例化对象时完成特定功能。<br>Go语言中，没有class，因此没有典型意义的构造方法。但我们可以定义一个函数，用来实例化结构体对象，在函数内完成特定功能，实现构造函数的功能，这就是构造工厂函数。演示如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">type Product struct &#123;</span><br><span class="line">    Name  string</span><br><span class="line">    Price float64</span><br><span class="line">&#125;</span><br><span class="line">func NewProduct(name string, price float64) *Product &#123;</span><br><span class="line">    // 此处完成初始化业务逻辑</span><br><span class="line"></span><br><span class="line">    // 得到Product对象</span><br><span class="line">    return &amp;Product&#123;</span><br><span class="line">        Name: name,</span><br><span class="line">        Price: price,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 需要 Product 对象时：</span><br><span class="line">p := NewProduct(&quot;ThinkPad T480&quot;, 8008)</span><br></pre></td></tr></table></figure></p>
-<p>注意，在OOP编程中，通常认为对象是引用用传递，因此我们的构造函数返回的是 <code>*Product</code> 同时函数内使用 <code>&amp;Product</code> ，这样得到的对象为引用传递（Go语言对结构体类型自动解析引用）。 </p>
-<h2><span id="3-成员方法接收器">3 成员方法（接收器）</span></h2><p>若要为成员增加方法，需要在函数上定义接收器，用来接收调用该方法的成员对象。接收器定义如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">func (p *Product) Sale() &#123;</span><br><span class="line">  fmt.Println(&quot;Product: &quot;, p.name, &quot; is on Sale&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>语法中，<code>(p *Product)</code> 就是接收器。通过定义可知，该接收器可以让函数接受一个 <code>*Product</code> 类型的参数，也就是调用该函数的对象。调用方法为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">pro := &amp;Product&#123;</span><br><span class="line">  name: &quot;ThinkPad T480&quot;</span><br><span class="line">&#125;</span><br><span class="line">// 当作成员去调用</span><br><span class="line">// 调用时，将调用函数的 pro，作为参数传递给函数 Run 的接收器 m。这样就可以访问 pro 对象了。</span><br><span class="line">pro.Sale()</span><br></pre></td></tr></table></figure></p>
-<p>同样，面向对象中对象通常为引用类型，因此接收器的定义也是 <code>*Product</code> 的引用类型。</p>
-<h2><span id="4-继承内嵌结构体">4 继承，内嵌结构体</span></h2><p>Go语言中结构体对象间的继承，通过内嵌结构体语法实现。演示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">type Product struct &#123;</span><br><span class="line">    Name  string</span><br><span class="line">    Price float64</span><br><span class="line">&#125;</span><br><span class="line">func (p *Product) Sale() &#123;</span><br><span class="line">  fmt.Println(&quot;Product: &quot;, p.name, &quot; is on Sale&quot;)</span><br><span class="line">&#125;</span><br><span class="line">type Book struct &#123;</span><br><span class="line">  // 嵌入Product结构体</span><br><span class="line">  Product</span><br><span class="line">  Author string</span><br><span class="line">  Publish string</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>定义 Book 时，内嵌了 Product 结构体。其中 Book 称为子结构体（派生，扩展），Product成为父结构体（基础）。实例化的 Book 结构体对象，可以直接访问 Product 结构体中定义的成员包括属性和方法。演示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">v := &amp;Book&#123;&#125;</span><br><span class="line">// 访问内嵌结构体属性</span><br><span class="line">v.Name = &quot;笑傲江湖&quot;</span><br><span class="line">v.Author = &quot;金庸&quot;</span><br><span class="line">// 调用内嵌结构体方法</span><br><span class="line">v.Sale()</span><br></pre></td></tr></table></figure></p>
-<p>内嵌还支持：<br><em>多继承</em>，可以同时内嵌多个结构体，称之为多继承。但要保证所继承的结构体间没有同名成员，否则出错。</p>
-<p><em>间接访问</em>，字结构体对象支持通过父结构体对象访问继承的成员，语法为 <code>v.Product.Name</code>，效果与 <code>v.Name</code> 一致。可以理解为是一种快捷语法。</p>
-<p><em>直接初始化</em>，可以直接为内嵌结构体提供初始化操作。演示为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">p := &amp;Book&#123;</span><br><span class="line">  Product: &amp;Product&#123;</span><br><span class="line">    Name: &quot;天龙八部&quot;</span><br><span class="line">    Price: 42.8</span><br><span class="line">  &#125;</span><br><span class="line">  Author: &quot;金庸&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2><span id="5-重写override">5 重写，override</span></h2><p>在内嵌继承中，若子与父结构体存在同名成员，实例化的子结构体成员，访问到的是字结构体定义的成员。这个现象称之为重写override。演示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">type Product struct &#123;</span><br><span class="line">    Name  string</span><br><span class="line">    Price float64</span><br><span class="line">&#125;</span><br><span class="line">func (p *Product) Sale() &#123;</span><br><span class="line">  fmt.Println(&quot;Product: &quot;, p.name, &quot; is on Sale&quot;)</span><br><span class="line">&#125;</span><br><span class="line">type Book struct &#123;</span><br><span class="line">  // 嵌入Product结构体</span><br><span class="line">  Product</span><br><span class="line">  Author string</span><br><span class="line">  Publish string</span><br><span class="line">  Price float64</span><br><span class="line">&#125;</span><br><span class="line">v := &amp;Book&#123;&#125;</span><br><span class="line">// 访问内嵌结构体属性</span><br><span class="line">// 以下代码访问的是 Book 中定义的 Price 属性</span><br><span class="line">v.Price = 42.8</span><br><span class="line">// 测试：</span><br><span class="line">fmt.Println(v.Product.Price) // 结果为 0</span><br></pre></td></tr></table></figure></p>
-<p>注意，继承是一个<em>查找</em> 过程。先在当前结构体对象中查找，如果没有向内嵌结构体中查找，直到最内层内嵌结构体。重写就是由于在当前结构体对象中查找到了，就不需要再去嵌入结构体对象中查找了，不是一个成员替换过程。</p>
-<p>结构体，实例化，继承，重写示意图如下：<br><img src="http://www.hellokang.net/images/posts/go/go-object.png" alt="OOP"></p>
-<p>以上就是结构体提供的关于OOP中的语法。OOP编程还会涉及到接口，反射等技术。</p>
-<p>结构体第二部分完！<br>原文出自：<a href="http://www.hellokang.net/go/go-struct-ii/" target="_blank" rel="noopener">小韩说课</a><br>微信关注：小韩说课<br><img src="http://www.hellokang.net/images/wechat_subscription.jpg" alt="小韩说课"></p>
-
+<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h2><p>结构体的基本语法请参见：<a href="http://www.hellokang.net/go/go-struct-i/" target="_blank" rel="noopener">Go语言中结构体的使用-第1部分结构体</a>。<br>结构体除了是一个复合数据之外，还用来做面向对象编程。Go 语言使用结构体和结构体成员来描述真实世界的实体和实体对应的各种属性。也就意味着结构体类型可以类比为其他语言中的“类class”, 而结构体数据可以类比为其他语言中的 “对象”。<br>本文就说说结构体中，面向对象的部分。</p>
+        
+          <p class="article-more-link">
+            <a href="/go/go-struct-ii/#more">Read More</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-struct-ii/" data-id="cjnx0ac4a00008wuo1cd98qc4" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-struct-ii/" data-id="cjnyn233u001nhsuof0rcwyk5" class="article-share-link">分享到</a> -->
       
 
       
@@ -200,7 +189,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-struct-i/" data-id="cjnx06xg1001lzwuocmukxbmn" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-struct-i/" data-id="cjnyn233w001qhsuo5ksvqk53" class="article-share-link">分享到</a> -->
       
 
       
@@ -256,7 +245,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-map/" data-id="cjnx06xfi000tzwuo4dibeu2z" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-map/" data-id="cjnyn2334000vhsuoijrlh423" class="article-share-link">分享到</a> -->
       
 
       
@@ -338,7 +327,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-slice/" data-id="cjnx06xfx001fzwuo0bqob996" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-slice/" data-id="cjnyn233q001hhsuou9qicfik" class="article-share-link">分享到</a> -->
       
 
       
@@ -398,7 +387,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-array/" data-id="cjnx06xev0005zwuoujnnkulf" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-array/" data-id="cjnyn23280001hsuo3cqjcfkt" class="article-share-link">分享到</a> -->
       
 
       
@@ -509,7 +498,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-strconv/" data-id="cjnx06xfz001izwuoftk8y10s" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-strconv/" data-id="cjnyn233o001ehsuow8ziqrpl" class="article-share-link">分享到</a> -->
       
 
       
@@ -605,7 +594,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-utf8/" data-id="cjnx06xg8001uzwuoap87sq8a" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-utf8/" data-id="cjnyn23440022hsuoa3saf3yb" class="article-share-link">分享到</a> -->
       
 
       
@@ -776,7 +765,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-string/" data-id="cjnx06xg3001ozwuo1x645qox" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-string/" data-id="cjnyn233s001khsuoeup4ba6g" class="article-share-link">分享到</a> -->
       
 
       
@@ -862,7 +851,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-package/" data-id="cjnx06xft0019zwuo4dzby09n" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-package/" data-id="cjnyn233a0015hsuo4t8b07zv" class="article-share-link">分享到</a> -->
       
 
       
@@ -934,7 +923,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-function/" data-id="cjnx06xfd000lzwuobjgwvirg" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-function/" data-id="cjnyn232u000khsuozb8z82oy" class="article-share-link">分享到</a> -->
       
 
       
@@ -1027,7 +1016,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-flow-control/" data-id="cjnx06xff000ozwuozjvt2ei6" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-flow-control/" data-id="cjnyn232y000nhsuo13ivpn3q" class="article-share-link">分享到</a> -->
       
 
       
@@ -1165,7 +1154,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-operator/" data-id="cjnx06xfp0013zwuoauv6rcca" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-operator/" data-id="cjnyn2336000zhsuozygmsgtx" class="article-share-link">分享到</a> -->
       
 
       
