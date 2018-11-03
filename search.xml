@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Go语言的反射机制]]></title>
+    <url>%2Fgo%2Fgo-reflect%2F</url>
+    <content type="text"><![CDATA[1 概述 2 获取类型 3 获取基础类型（类别） 1 概述类似于 Java，Go 语言也支持反射。支持反射的语言可以在运行时对程序进行访问和修改。反射的原理是在程序编译期将反射信息（如类型信息、结构体信息等）整合到程序中，并给提供给程序访问反射信息的操作接口，这样在程序运行期间就可以获取该反射信息，甚至支持修改操作。 Go 语言使用 reflect 包支持反射。 2 获取类型使用 reflect.TypeOf() 函数可以获得任意值的类型反射对象。演示为：123456type Stu struct &#123;&#125;var v StutypeV := reflect.TypeOf(v)fmt.Println(typeV.Name())// Stu 其中，typeV是 reflect.Type 类型的实例，通过Name()方法可以得到所反射的类型名字。 3 获取基础类型（类别）基础类型，也称之为类别。例如 type Stu struct，从类型上看是 Stu 类型，如果从基础类型（类别）的角度去看，就是 struct。当需要区分一个大类类别时，就会用到基础类型的概念。可以通过 typeV.Kind() 方法获取对应的基础类型。演示为：1234567type Stu struct &#123;&#125;var v StutypeV := reflect.TypeOf(v)// 同时输出类型名和基础类型fmt.Println(typeV.Name(), typeV.Kind())// Stu struct Go 语言的 reflect 包定义了如下的基础类型：123456789101112131415161718192021222324252627282930type Kind uintconst ( Invalid Kind = iota // 非法类型 Bool // 布尔型 Int // 有符号整型 Int8 // 有符号8位整型 Int16 // 有符号16位整型 Int32 // 有符号32位整型 Int64 // 有符号64位整型 Uint // 无符号整型 Uint8 // 无符号8位整型 Uint16 // 无符号16位整型 Uint32 // 无符号32位整型 Uint64 // 无符号64位整型 Uintptr // 指针 Float32 // 单精度浮点数 Float64 // 双精度浮点数 Complex64 // 64位复数类型 Complex128 // 128位复数类型 Array // 数组 Chan // 通道 Func // 函数 Interface // 接口 Map // 映射 Ptr // 指针 Slice // 切片 String // 字符串 Struct // 结构体 UnsafePointer // 底层指针) 可见指的是原生类型，而不是自定义类型。]]></content>
+      <categories>
+        <category>go</category>
+      </categories>
+      <tags>
+        <tag>go</tag>
+        <tag>goGuide</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Go语言中接口的使用]]></title>
     <url>%2Funcategorized%2Fgo-interface%2F</url>
     <content type="text"><![CDATA[1 概述 2 定义语法 3 对象实现接口 4 判断对象是否实现接口 5 通过接口调用对象方法 6 空接口 7 接口间的嵌套 1 概述接口，interface，是用于规范对象应该具备哪些方法的技术。OOP中与结构体配合使用，对象使用结构体规范应该具有的书写，而对外通过接口暴露方法。Go 语言的接口设计是非侵入式的，接口实现者（也就是结构体）无须指明实现哪一个接口。编译器在编译时来确定使用哪个接口。在 Go 语言中，接口是一种引用的数据类型出现的。但体现的功能是规范，而不是数据。做 OOP 开发时，通常要保证一类操作具有相同的方法调用，此时就需要使用接口实现。 2 定义语法123type 接口名 interface &#123; 接口中定义的规范方法列表&#125; 演示为：1234567// 定义接口type Logger interface &#123; // 写入一个日志事件 write(line string) int // 获取日志 fetch() string&#125; 我们定义了一个 Logger 接口。其中定义了两个函数：write, fetch。 3 对象实现接口依据接口定义，为对象定义相应方法，即为实现接口。接口设计是非侵入式的，因此不需要显式的在结构体上进行定义。12345678910111213// 文件日志操作类（结构体）type FileLogger struct &#123;&#125;// 实现 Logger接口func (fl *FileLogger) write(line string) int &#123; // 功能不表 return 0&#125;func (fl *FileLogger) fetch() string &#123; // 功能不表 return ""&#125; 对象实现接口时，有以下几个特点： 一个类型对象可以实现多个接口，只需要将全部接口中定义的方法实现即可。注意接口间相互独立的，没有关联。 一个接口可以同时被多个类型对象实现。 一个接口的方法，可以通过内嵌结构体的方式来实现，不要求由一个结构体完全实现。 4 判断对象是否实现接口我们通过将结构体对象赋值给接口对象的方式，来检测对象是否满足某个接口，演示为：123456789// 对象fl := &amp;FileLogger&#123;&#125;// 声明一个Logger类型接口var log Logger// 将需要检测的对象，赋值给接口对象// 如果可以赋值成功，说明满足接口限定，否则不满足log = fl// 用一下接口，否则会报告变量定义未使用的错误fmt.Println(log) 以上代码，若 fl 对象满足接口 log 的定义，赋值会成功。若没有满足，赋值失败，提示未实现接口的提示,提示类似于： cannot use fl (type *FileLogger) as type Logger in assignment: *fl does not implement Logger (missing wirte method) 同理，若函数的参数为接口类型，在调用函数时，传递的参数不满足接口，也会触发如上的错误：12345678910// 参数 logger 为接口 Logger类型func writeLog(logger Logger, line string) int &#123; fmt.Println("Logger Run") // 实现略 return 0&#125;// 调用函数// 对象fl := &amp;FileLogger&#123;&#125;writeLog(fl, "some log") 以上代码，若 fl 对象未满足接口 Logger 的定义，函数调用失败。提示类似的 does not implement 错误。 5 通过接口调用对象方法当将对象赋值给接口后，检测通过，赋值成功。就可以使用接口调用对象方法了，此时对象方法接收器接收的对象还是原对象。直接赋值 和 函数调用赋值 都一样。1234567891011// 对象赋值给接口log = fl// 调用对象方法log.write("log line")// 函数参数也是如此func writeLog(logger Logger, line string) int &#123; // 调用对象方法 logger.write(line) return 0&#125; 6 空接口空接口，没有定义任何成员的接口。语法演示：12type any interface &#123;&#125; 由于没有定义任何的函数，意味着全部的对象都满足该接口。这个范围要扩大到全部数据类型上。不仅仅是对象。主要作用是类型通配，通常在定义函数时，表示函数可以接收任何类型的参数，例如 fmt.Print。 定义函数接收空接口类型参数时，可以使用 switch v.(type) 接口检测类型，这个结构称之为类型分支：123456789101112func sayType(v interface&#123;&#125;) &#123; switch v.(type) &#123; case bool: fmt.Println("bool") case float64: fmt.Println("float64") case string: fmt.Println("string") default: fmt.Println("其他类型") &#125;&#125; 7 接口间的嵌套接口类似于接头体，可以嵌套，达到接口重用的目的。以系统 io 包定义的接口为例：12345678910111213type Writer interface &#123; Write(p []byte) (n int, err error)&#125;type Closer interface &#123; Close() error&#125;// WriteCloser 接口type WriteCloser interface &#123; // 内嵌了 Write，Closer 接口 Writer Closer&#125; 此时，若想实现 WriteCloser 接口，则 Writer 与 Closer 接口中定义的而方法需要全部实现。 完！全部文章整理在：Go语言指导|小韩说课原文出自：小韩说课微信关注：小韩说课]]></content>
@@ -245,14 +257,6 @@
   <entry>
     <title><![CDATA[使用vim编写Go语言]]></title>
     <url>%2Fgo%2Fgo-editor-vim%2F</url>
-    <content type="text"></content>
-      <categories>
-        <category>go</category>
-      </categories>
-  </entry>
-  <entry>
-    <title><![CDATA[Go语言的反射机制]]></title>
-    <url>%2Fgo%2Fgo-reflect%2F</url>
     <content type="text"></content>
       <categories>
         <category>go</category>

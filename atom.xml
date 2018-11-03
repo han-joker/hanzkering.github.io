@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.hellokang.net/"/>
-  <updated>2018-11-02T13:50:26.876Z</updated>
+  <updated>2018-11-03T15:17:28.092Z</updated>
   <id>http://blog.hellokang.net/</id>
   
   <author>
@@ -15,6 +15,38 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Go语言的反射机制</title>
+    <link href="http://blog.hellokang.net/go/go-reflect/"/>
+    <id>http://blog.hellokang.net/go/go-reflect/</id>
+    <published>2018-11-03T04:05:48.000Z</published>
+    <updated>2018-11-03T15:17:28.092Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;!-- toc --&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#1-概述&quot;&gt;1 概述&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#2-获取类型&quot;&gt;2 获取类型&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#3-获取基础类型类别&quot;&gt;3
+        
+      
+    
+    </summary>
+    
+      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
+    
+    
+      <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
+    
+      <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
+    
+  </entry>
   
   <entry>
     <title>Go语言中接口的使用</title>
@@ -676,36 +708,6 @@
       <category term="hexo" scheme="http://blog.hellokang.net/tags/hexo/"/>
     
       <category term="github" scheme="http://blog.hellokang.net/tags/github/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>go-错误处理</title>
-    <link href="http://blog.hellokang.net/go/go-error/"/>
-    <id>http://blog.hellokang.net/go/go-error/</id>
-    <published>2018-10-10T13:54:59.000Z</published>
-    <updated>2018-10-23T15:03:36.739Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2&gt;&lt;span id=&quot;宕机panic&quot;&gt;宕机panic&lt;/span&gt;&lt;/h2&gt;&lt;p&gt;Go语言可以在程序中强行宕机。宕机时会将堆栈信息和goroutine信息输出到控制台，便于处理错误。&lt;br&gt;示例语法：&lt;br&gt;&lt;figure class=&quot;highlight
-        
-      
-    
-    </summary>
-    
-      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
-    
-    
-      <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
-    
-      <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
-    
-      <category term="error" scheme="http://blog.hellokang.net/tags/error/"/>
     
   </entry>
   

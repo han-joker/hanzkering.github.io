@@ -74,6 +74,66 @@
     <div class="outer">
       <section id="main">
   
+    <article id="post-go-reflect" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/go/go-reflect/" class="article-date">
+  <time datetime="2018-11-03T04:05:48.000Z" itemprop="datePublished">2018-11-03</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/go/">go</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/go/go-reflect/">Go语言的反射机制</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- toc -->
+<ul>
+<li><a href="#1-概述">1 概述</a></li>
+<li><a href="#2-获取类型">2 获取类型</a></li>
+<li><a href="#3-获取基础类型类别">3 获取基础类型（类别）</a></li>
+</ul>
+<!-- tocstop -->
+<h2><span id="1-概述">1 概述</span></h2><p>类似于 Java，Go 语言也支持反射。支持反射的语言可以在运行时对程序进行访问和修改。反射的原理是在程序编译期将反射信息（如类型信息、结构体信息等）整合到程序中，并给提供给程序访问反射信息的操作接口，这样在程序运行期间就可以获取该反射信息，甚至支持修改操作。</p>
+<p>Go 语言使用 <code>reflect</code> 包支持反射。</p>
+<h2><span id="2-获取类型">2 获取类型</span></h2><p>使用 <code>reflect.TypeOf()</code> 函数可以获得任意值的类型反射对象。演示为：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Stu <span class="keyword">struct</span> &#123;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> v Stu</span><br><span class="line">typeV := reflect.TypeOf(v)</span><br><span class="line">fmt.Println(typeV.Name())</span><br><span class="line"><span class="comment">// Stu</span></span><br></pre></td></tr></table></figure></p>
+<p>其中，typeV是 <code>reflect.Type</code> 类型的实例，通过Name()方法可以得到所反射的类型名字。</p>
+<h2><span id="3-获取基础类型类别">3 获取基础类型（类别）</span></h2><p>基础类型，也称之为类别。例如 type Stu struct，从类型上看是 Stu 类型，如果从基础类型（类别）的角度去看，就是 struct。当需要区分一个大类类别时，就会用到基础类型的概念。可以通过 typeV.Kind() 方法获取对应的基础类型。演示为：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Stu <span class="keyword">struct</span> &#123;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> v Stu</span><br><span class="line">typeV := reflect.TypeOf(v)</span><br><span class="line"><span class="comment">// 同时输出类型名和基础类型</span></span><br><span class="line">fmt.Println(typeV.Name(), typeV.Kind())</span><br><span class="line"><span class="comment">// Stu struct</span></span><br></pre></td></tr></table></figure></p>
+<p>Go 语言的 <code>reflect</code> 包定义了如下的基础类型：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Kind <span class="keyword">uint</span></span><br><span class="line"><span class="keyword">const</span> (</span><br><span class="line">  Invalid Kind = <span class="literal">iota</span>  <span class="comment">// 非法类型</span></span><br><span class="line">  Bool                 <span class="comment">// 布尔型</span></span><br><span class="line">  Int                  <span class="comment">// 有符号整型</span></span><br><span class="line">  Int8                 <span class="comment">// 有符号8位整型</span></span><br><span class="line">  Int16                <span class="comment">// 有符号16位整型</span></span><br><span class="line">  Int32                <span class="comment">// 有符号32位整型</span></span><br><span class="line">  Int64                <span class="comment">// 有符号64位整型</span></span><br><span class="line">  Uint                 <span class="comment">// 无符号整型</span></span><br><span class="line">  Uint8                <span class="comment">// 无符号8位整型</span></span><br><span class="line">  Uint16               <span class="comment">// 无符号16位整型</span></span><br><span class="line">  Uint32               <span class="comment">// 无符号32位整型</span></span><br><span class="line">  Uint64               <span class="comment">// 无符号64位整型</span></span><br><span class="line">  Uintptr              <span class="comment">// 指针</span></span><br><span class="line">  Float32              <span class="comment">// 单精度浮点数</span></span><br><span class="line">  Float64              <span class="comment">// 双精度浮点数</span></span><br><span class="line">  Complex64            <span class="comment">// 64位复数类型</span></span><br><span class="line">  Complex128           <span class="comment">// 128位复数类型</span></span><br><span class="line">  Array                <span class="comment">// 数组</span></span><br><span class="line">  Chan                 <span class="comment">// 通道</span></span><br><span class="line">  Func                 <span class="comment">// 函数</span></span><br><span class="line">  Interface            <span class="comment">// 接口</span></span><br><span class="line">  Map                  <span class="comment">// 映射</span></span><br><span class="line">  Ptr                  <span class="comment">// 指针</span></span><br><span class="line">  Slice                <span class="comment">// 切片</span></span><br><span class="line">  String               <span class="comment">// 字符串</span></span><br><span class="line">  Struct               <span class="comment">// 结构体</span></span><br><span class="line">  UnsafePointer        <span class="comment">// 底层指针</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<p>可见指的是原生类型，而不是自定义类型。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <!-- <a data-url="http://blog.hellokang.net/go/go-reflect/" data-id="cjo02tpv500163suop9uixcbv" class="article-share-link">分享到</a> -->
+      
+
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+ 
+  
     <article id="post-go-interface" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/uncategorized/go-interface/" class="article-date">
@@ -786,79 +846,6 @@
 
  
   
-    <article id="post-go-flow-control" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/go/go-flow-control/" class="article-date">
-  <time datetime="2018-10-21T12:15:24.000Z" itemprop="datePublished">2018-10-21</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/go/">go</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/go/go-flow-control/">Go语言中的流程控制</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!-- toc -->
-<ul>
-<li><a href="#1-概述">1 概述</a></li>
-<li><a href="#2-条件分支-if">2 条件分支 if</a></li>
-<li><a href="#3-状态分支-switch">3 状态分支 switch</a><ul>
-<li><a href="#31-基础">3.1 基础</a></li>
-<li><a href="#32-fallthrough向下穿越">3.2 fallthrough，向下穿越</a></li>
-<li><a href="#33-条件型-switch">3.3 条件型 switch</a></li>
-</ul>
-</li>
-<li><a href="#4-循环for">4 循环for</a><ul>
-<li><a href="#41-基本">4.1 基本</a></li>
-<li><a href="#42-省略语句">4.2 省略语句</a></li>
-<li><a href="#43-break">4.3 break</a></li>
-<li><a href="#44-continue">4.4 continue</a></li>
-<li><a href="#45-嵌套循环">4.5 嵌套循环</a></li>
-<li><a href="#5-goto">5 goto</a></li>
-</ul>
-</li>
-<li><a href="#6-延迟执行defer">6 延迟执行defer</a></li>
-</ul>
-<!-- tocstop -->
-<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h2><p>Go语言提供了条件分支 if，状态分支 switch，循环 for，跳转 goto，延迟执行 defer，这些流程控制语句。分别作说明如下：</p>
-        
-          <p class="article-more-link">
-            <a href="/go/go-flow-control/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-        <!-- <a data-url="http://blog.hellokang.net/go/go-flow-control/" data-id="cjo02tpuy000v3suoynk4v6tp" class="article-share-link">分享到</a> -->
-      
-
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
- 
-  
 
 
   <nav id="page-nav">
@@ -907,7 +894,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -925,7 +912,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -935,6 +922,10 @@
     <h3 class="widget-title">近期文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/go/go-reflect/">Go语言的反射机制</a>
+          </li>
         
           <li>
             <a href="/uncategorized/go-interface/">Go语言中接口的使用</a>
@@ -950,10 +941,6 @@
         
           <li>
             <a href="/go/go-map/">Go语言中映射表map的使用</a>
-          </li>
-        
-          <li>
-            <a href="/go/go-slice/">Go语言中切片的使用</a>
           </li>
         
       </ul>
