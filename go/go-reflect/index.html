@@ -6,18 +6,18 @@
   
   <title>Go语言的反射机制 | 小韩说课</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1 概述 2 获取类型 3 获取基础类型（类别）   1 概述类似于 Java，Go 语言也支持反射。支持反射的语言可以在运行时对程序进行访问和修改。反射的原理是在程序编译期将反射信息（如类型信息、结构体信息等）整合到程序中，并给提供给程序访问反射信息的操作接口，这样在程序运行期间就可以获取该反射信息，甚至支持修改操作。 Go 语言使用 reflect 包支持反射。 2 获取类型使用 refl">
+  <meta name="description" content="1 概述 2 获取类型 3 获取基础类型（类别）   1 概述类似于 Java，Go 语言也支持反射。支持反射的语言可以在运行时对程序进行访问和修改。反射的原理是在程序编译期将反射信息（如类型信息、结构体信息等）整合到程序中，并给提供给程序访问反射信息的操作接口，这样在程序运行期间就可以获取该反射信息，甚至支持修改操作。 Go 语言使用 reflect 包支持反射。本文就阐述反射在 Go 语言">
 <meta name="keywords" content="go,goGuide">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go语言的反射机制">
 <meta property="og:url" content="http://blog.hellokang.net/go/go-reflect/index.html">
 <meta property="og:site_name" content="小韩说课">
-<meta property="og:description" content="1 概述 2 获取类型 3 获取基础类型（类别）   1 概述类似于 Java，Go 语言也支持反射。支持反射的语言可以在运行时对程序进行访问和修改。反射的原理是在程序编译期将反射信息（如类型信息、结构体信息等）整合到程序中，并给提供给程序访问反射信息的操作接口，这样在程序运行期间就可以获取该反射信息，甚至支持修改操作。 Go 语言使用 reflect 包支持反射。 2 获取类型使用 refl">
+<meta property="og:description" content="1 概述 2 获取类型 3 获取基础类型（类别）   1 概述类似于 Java，Go 语言也支持反射。支持反射的语言可以在运行时对程序进行访问和修改。反射的原理是在程序编译期将反射信息（如类型信息、结构体信息等）整合到程序中，并给提供给程序访问反射信息的操作接口，这样在程序运行期间就可以获取该反射信息，甚至支持修改操作。 Go 语言使用 reflect 包支持反射。本文就阐述反射在 Go 语言">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-11-03T15:17:28.092Z">
+<meta property="og:updated_time" content="2018-11-03T15:20:48.140Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Go语言的反射机制">
-<meta name="twitter:description" content="1 概述 2 获取类型 3 获取基础类型（类别）   1 概述类似于 Java，Go 语言也支持反射。支持反射的语言可以在运行时对程序进行访问和修改。反射的原理是在程序编译期将反射信息（如类型信息、结构体信息等）整合到程序中，并给提供给程序访问反射信息的操作接口，这样在程序运行期间就可以获取该反射信息，甚至支持修改操作。 Go 语言使用 reflect 包支持反射。 2 获取类型使用 refl">
+<meta name="twitter:description" content="1 概述 2 获取类型 3 获取基础类型（类别）   1 概述类似于 Java，Go 语言也支持反射。支持反射的语言可以在运行时对程序进行访问和修改。反射的原理是在程序编译期将反射信息（如类型信息、结构体信息等）整合到程序中，并给提供给程序访问反射信息的操作接口，这样在程序运行期间就可以获取该反射信息，甚至支持修改操作。 Go 语言使用 reflect 包支持反射。本文就阐述反射在 Go 语言">
   
     <link rel="alternative" href="/atom.xml" title="小韩说课" type="application/atom+xml">
   
@@ -107,7 +107,7 @@
 </ul>
 <!-- tocstop -->
 <h2><span id="1-概述">1 概述</span></h2><p>类似于 Java，Go 语言也支持反射。支持反射的语言可以在运行时对程序进行访问和修改。反射的原理是在程序编译期将反射信息（如类型信息、结构体信息等）整合到程序中，并给提供给程序访问反射信息的操作接口，这样在程序运行期间就可以获取该反射信息，甚至支持修改操作。</p>
-<p>Go 语言使用 <code>reflect</code> 包支持反射。</p>
+<p>Go 语言使用 <code>reflect</code> 包支持反射。本文就阐述反射在 Go 语言中的作用。包括结构获取，代理执行等。<br><a id="more"></a></p>
 <h2><span id="2-获取类型">2 获取类型</span></h2><p>使用 <code>reflect.TypeOf()</code> 函数可以获得任意值的类型反射对象。演示为：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Stu <span class="keyword">struct</span> &#123;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> v Stu</span><br><span class="line">typeV := reflect.TypeOf(v)</span><br><span class="line">fmt.Println(typeV.Name())</span><br><span class="line"><span class="comment">// Stu</span></span><br></pre></td></tr></table></figure></p>
 <p>其中，typeV是 <code>reflect.Type</code> 类型的实例，通过Name()方法可以得到所反射的类型名字。</p>
 <h2><span id="3-获取基础类型类别">3 获取基础类型（类别）</span></h2><p>基础类型，也称之为类别。例如 type Stu struct，从类型上看是 Stu 类型，如果从基础类型（类别）的角度去看，就是 struct。当需要区分一个大类类别时，就会用到基础类型的概念。可以通过 typeV.Kind() 方法获取对应的基础类型。演示为：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Stu <span class="keyword">struct</span> &#123;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> v Stu</span><br><span class="line">typeV := reflect.TypeOf(v)</span><br><span class="line"><span class="comment">// 同时输出类型名和基础类型</span></span><br><span class="line">fmt.Println(typeV.Name(), typeV.Kind())</span><br><span class="line"><span class="comment">// Stu struct</span></span><br></pre></td></tr></table></figure></p>
