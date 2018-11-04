@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.hellokang.net/"/>
-  <updated>2018-11-04T15:49:05.643Z</updated>
+  <updated>2018-11-04T17:36:12.734Z</updated>
   <id>http://blog.hellokang.net/</id>
   
   <author>
@@ -15,6 +15,66 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Go语言反射之反射调用</title>
+    <link href="http://blog.hellokang.net/go/go-reflect-invoke/"/>
+    <id>http://blog.hellokang.net/go/go-reflect-invoke/</id>
+    <published>2018-11-04T17:34:28.000Z</published>
+    <updated>2018-11-04T17:36:12.734Z</updated>
+    
+    <summary type="html">
+    
+      &lt;!-- toc --&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#1-概述&quot;&gt;1 概述&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#2-创建实例&quot;&gt;2 创建实例&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#3-调用函数&quot;&gt;3 调用函数&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#4-调用方法&quot;&gt;4 调用方法&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+&lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h2&gt;&lt;p&gt;利用反射，不仅可以获取信息，还可以创建实例，执行函数和方法。就是反射代理执行。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
+    
+    
+      <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
+    
+      <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Go语言反射之值反射</title>
+    <link href="http://blog.hellokang.net/go/go-reflect-value/"/>
+    <id>http://blog.hellokang.net/go/go-reflect-value/</id>
+    <published>2018-11-04T16:51:45.000Z</published>
+    <updated>2018-11-04T16:56:39.069Z</updated>
+    
+    <summary type="html">
+    
+      &lt;!-- toc --&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#1-概述&quot;&gt;1 概述&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#2-值反射对象&quot;&gt;2 值反射对象&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#3-修改值&quot;&gt;3 修改值&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#4-修改结构体字段值&quot;&gt;4 修改结构体字段值&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+&lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h2&gt;&lt;p&gt;反射不仅可以获取值的类型信息，还可操作变量的值。使用 &lt;code&gt;reflect.Value&lt;/code&gt; 类型操作变量的值。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
+    
+    
+      <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
+    
+      <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
+    
+  </entry>
   
   <entry>
     <title>Go语言反射之类型反射</title>
@@ -665,51 +725,6 @@
     
     </summary>
     
-    
-  </entry>
-  
-  <entry>
-    <title>git中使用merge和rebase的区别</title>
-    <link href="http://blog.hellokang.net/git/git-merge-rebase/"/>
-    <id>http://blog.hellokang.net/git/git-merge-rebase/</id>
-    <published>2018-10-14T12:29:30.000Z</published>
-    <updated>2018-11-01T14:27:45.641Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;1-需求&quot;&gt;&lt;a href=&quot;#1-需求&quot; class=&quot;headerlink&quot; title=&quot;1 需求&quot;&gt;&lt;/a&gt;1 需求&lt;/h2&gt;&lt;p&gt;今天和朋友讨论了一下 分支间的整合方案，merge和rebase。以及pull操作模式。&lt;br&gt;下面整理如下：&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="git" scheme="http://blog.hellokang.net/categories/git/"/>
-    
-    
-      <category term="git" scheme="http://blog.hellokang.net/tags/git/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hexo搭建博客，发布到GitHub</title>
-    <link href="http://blog.hellokang.net/hexo/hexo-github/"/>
-    <id>http://blog.hellokang.net/hexo/hexo-github/</id>
-    <published>2018-10-11T11:12:21.000Z</published>
-    <updated>2018-11-01T14:44:59.355Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;1-需求&quot;&gt;&lt;a href=&quot;#1-需求&quot; class=&quot;headerlink&quot; title=&quot;1 需求&quot;&gt;&lt;/a&gt;1 需求&lt;/h2&gt;&lt;p&gt;博客之前是wordpress搭建的，也很好用。现在想使用一个基于markdown文件为中心的博客系统，就锁定了hexo这个项目。hexo是基于Node.js的，提供markdown支持，草稿，单页，分类，标签，主题，i18n，永久链接，静态生成，部署等很常用的博客系统功能。其主页地址为：&lt;a href=&quot;https://hexo.io/zh-cn/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;，大家可以获取更详细的信息。&lt;br&gt;下面就和大家说说过程，大致有博客搭建，部署到github，还有另一个git服务器（个人的服务器）上的过程。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;下面的操作的个人电脑为windows系统（win10)。&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-      <category term="hexo" scheme="http://blog.hellokang.net/categories/hexo/"/>
-    
-    
-      <category term="hexo" scheme="http://blog.hellokang.net/tags/hexo/"/>
-    
-      <category term="github" scheme="http://blog.hellokang.net/tags/github/"/>
     
   </entry>
   

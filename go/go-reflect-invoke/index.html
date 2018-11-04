@@ -4,20 +4,22 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Go语言使用类型管道channel处理并发 | 小韩说课</title>
+  <title>Go语言反射之反射调用 | 小韩说课</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="PHP, Python, JavaScript, Go, MySQL, linux, docker, 区块链, 韩忠康, 小韩说课">
-<meta name="keywords" content="PHP, Python, JavaScript, Go, MySQL, linux, docker, 区块链, 韩忠康, 小韩说课">
+  <meta name="description" content="1 概述 2 创建实例 3 调用函数 4 调用方法   1 概述利用反射，不仅可以获取信息，还可以创建实例，执行函数和方法。就是反射代理执行。">
+<meta name="keywords" content="go,goGuide">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Go语言使用类型管道channel处理并发">
-<meta property="og:url" content="http://blog.hellokang.net/go/go-channel/index.html">
+<meta property="og:title" content="Go语言反射之反射调用">
+<meta property="og:url" content="http://blog.hellokang.net/go/go-reflect-invoke/index.html">
 <meta property="og:site_name" content="小韩说课">
-<meta property="og:description" content="PHP, Python, JavaScript, Go, MySQL, linux, docker, 区块链, 韩忠康, 小韩说课">
+<meta property="og:description" content="1 概述 2 创建实例 3 调用函数 4 调用方法   1 概述利用反射，不仅可以获取信息，还可以创建实例，执行函数和方法。就是反射代理执行。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-15T04:14:21.972Z">
+<meta property="og:image" content="http://www.hellokang.net/images/wechat_subscription.jpg">
+<meta property="og:updated_time" content="2018-11-04T17:36:12.734Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Go语言使用类型管道channel处理并发">
-<meta name="twitter:description" content="PHP, Python, JavaScript, Go, MySQL, linux, docker, 区块链, 韩忠康, 小韩说课">
+<meta name="twitter:title" content="Go语言反射之反射调用">
+<meta name="twitter:description" content="1 概述 2 创建实例 3 调用函数 4 调用方法   1 概述利用反射，不仅可以获取信息，还可以创建实例，执行函数和方法。就是反射代理执行。">
+<meta name="twitter:image" content="http://www.hellokang.net/images/wechat_subscription.jpg">
   
     <link rel="alternative" href="/atom.xml" title="小韩说课" type="application/atom+xml">
   
@@ -73,10 +75,10 @@
   </div>
 </header>
     <div class="outer">
-      <section id="main"><article id="post-go-channel" class="article article-type-post" itemscope itemprop="blogPost">
+      <section id="main"><article id="post-go-reflect-invoke" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/go/go-channel/" class="article-date">
-  <time datetime="2018-09-15T03:54:06.000Z" itemprop="datePublished">2018-09-15</time>
+    <a href="/go/go-reflect-invoke/" class="article-date">
+  <time datetime="2018-11-04T17:34:28.000Z" itemprop="datePublished">2018-11-05</time>
 </a>
     
   <div class="article-category">
@@ -91,7 +93,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Go语言使用类型管道channel处理并发
+      Go语言反射之反射调用
     </h1>
   
 
@@ -99,36 +101,47 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <!-- toc -->
+<ul>
+<li><a href="#1-概述">1 概述</a></li>
+<li><a href="#2-创建实例">2 创建实例</a></li>
+<li><a href="#3-调用函数">3 调用函数</a></li>
+<li><a href="#4-调用方法">4 调用方法</a></li>
+</ul>
+<!-- tocstop -->
+<h2><span id="1-概述">1 概述</span></h2><p>利用反射，不仅可以获取信息，还可以创建实例，执行函数和方法。就是反射代理执行。</p>
+<a id="more"></a>
+<h2><span id="2-创建实例">2 创建实例</span></h2><p>创建实例的前提是具有 <code>reflect.Type</code> 对象，基于此创建实例。使用 <code>reflect.TypeOf()</code> 函数，可以获取得到某类型的 <code>reflect.Type</code> 对象，演示如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">typeStu := reflect.TypeOf(Stu&#123;&#125;)</span><br><span class="line">s := reflect.New(typeStu)</span><br><span class="line"></span><br><span class="line">s.Elem().FieldByName(<span class="string">"Name"</span>).SetString(<span class="string">"Hank"</span>) <span class="comment">// 利用反射设置结构体字段值</span></span><br><span class="line">fmt.Println(s.Elem().FieldByName(<span class="string">"Name"</span>).String()) <span class="comment">// Hank</span></span><br></pre></td></tr></table></figure>
+<p>我们创建了实例，一直都是通过反射的方式操作的。</p>
+<h2><span id="3-调用函数">3 调用函数</span></h2><p>如果值反射对象 <code>reflect.Value</code> 反射的是函数时，可以通过 <code>reflect.Value</code> 调用该函数。使用反射调用函数时，需要将参数使用反射值对象的切片 <code>[]reflect.Value</code> 构造后传入 <code>Call()</code> 方法中传参。调用完成时，函数的返回值通过 <code>[]reflect.Value</code> 返回。<br>演示如下:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">fn</span><span class="params">(p1, p2 <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">  <span class="keyword">return</span> p1 + p2</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  valueFunc := reflect.ValueOf(fn)</span><br><span class="line">  paramList := []reflect.Value&#123;</span><br><span class="line">    reflect.ValueOf(<span class="number">22</span>),</span><br><span class="line">    reflect.ValueOf(<span class="number">20</span>),</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 反射调用函数</span></span><br><span class="line">  resultList := valueFunc.Call(paramList)</span><br><span class="line">  <span class="comment">// 获取第一个返回值, 取整数值</span></span><br><span class="line">  fmt.Println(resultList[<span class="number">0</span>].Int()) <span class="comment">// 42</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2><span id="4-调用方法">4 调用方法</span></h2><p>整体与调用函数一致，额外的需要先通过对象的值反射获取对象方法的反射对象，再使用 <code>Call()</code> 调用，示例：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Stu <span class="keyword">struct</span> &#123;</span><br><span class="line">  Name <span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *Stu)</span> <span class="title">Fn</span><span class="params">(p1, p2 <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">  <span class="keyword">return</span> p1 + p2</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  s := &amp;Stu&#123;<span class="string">"Hank"</span>&#125;</span><br><span class="line">  valueS := reflect.ValueOf(s)</span><br><span class="line">  method := valueS.MethodByName(<span class="string">"Fn"</span>)</span><br><span class="line">  paramList := []reflect.Value&#123;</span><br><span class="line">    reflect.ValueOf(<span class="number">22</span>),</span><br><span class="line">    reflect.ValueOf(<span class="number">20</span>),</span><br><span class="line">  &#125;</span><br><span class="line">  resultList := method.Call(paramList)</span><br><span class="line">  fmt.Println(resultList[<span class="number">0</span>].Int()) <span class="comment">// 42</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>完！<br>原文出自：<a href="http://www.hellokang.net/go/go-reflect-inoke/" target="_blank" rel="noopener">小韩说课</a><br>微信关注：小韩说课<br><img src="http://www.hellokang.net/images/wechat_subscription.jpg" alt="小韩说课"></p>
+
       
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-channel/" data-id="cjo35s7ve000008uomfv4dlwy" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-reflect-invoke/" data-id="cjo35s7wu001808uo64ulyhg6" class="article-share-link">分享到</a> -->
       
 
       
 
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
+
     </footer>
   </div>
   
     
 <nav id="article-nav">
   
-    <a href="/go/go-editor-goland/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">
-        
-          使用goland编写Go语言
-        
-      </div>
-    </a>
   
-  
-    <a href="/go/go-memory-model/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/go/go-reflect-value/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">Go语言的内存模型</div>
+      <div class="article-nav-title">Go语言反射之值反射</div>
     </a>
   
 </nav>
@@ -139,7 +152,7 @@
 
   <section class="changyan" id="comments">
 <!--PC和WAP自适应版-->
-<div id="SOHUCS" sid="cjo35s7ve000008uomfv4dlwy"></div> 
+<div id="SOHUCS" sid="cjo35s7wu001808uo64ulyhg6"></div> 
 <script type="text/javascript"> 
 	(function(){ 
 		var appid = 'cyt64TYiv'; 

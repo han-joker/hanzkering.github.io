@@ -4,20 +4,22 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Go语言使用类型管道channel处理并发 | 小韩说课</title>
+  <title>Go语言反射之值反射 | 小韩说课</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="PHP, Python, JavaScript, Go, MySQL, linux, docker, 区块链, 韩忠康, 小韩说课">
-<meta name="keywords" content="PHP, Python, JavaScript, Go, MySQL, linux, docker, 区块链, 韩忠康, 小韩说课">
+  <meta name="description" content="1 概述 2 值反射对象 3 修改值 4 修改结构体字段值   1 概述反射不仅可以获取值的类型信息，还可操作变量的值。使用 reflect.Value 类型操作变量的值。">
+<meta name="keywords" content="go,goGuide">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Go语言使用类型管道channel处理并发">
-<meta property="og:url" content="http://blog.hellokang.net/go/go-channel/index.html">
+<meta property="og:title" content="Go语言反射之值反射">
+<meta property="og:url" content="http://blog.hellokang.net/go/go-reflect-value/index.html">
 <meta property="og:site_name" content="小韩说课">
-<meta property="og:description" content="PHP, Python, JavaScript, Go, MySQL, linux, docker, 区块链, 韩忠康, 小韩说课">
+<meta property="og:description" content="1 概述 2 值反射对象 3 修改值 4 修改结构体字段值   1 概述反射不仅可以获取值的类型信息，还可操作变量的值。使用 reflect.Value 类型操作变量的值。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-15T04:14:21.972Z">
+<meta property="og:image" content="http://www.hellokang.net/images/wechat_subscription.jpg">
+<meta property="og:updated_time" content="2018-11-04T16:56:39.069Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Go语言使用类型管道channel处理并发">
-<meta name="twitter:description" content="PHP, Python, JavaScript, Go, MySQL, linux, docker, 区块链, 韩忠康, 小韩说课">
+<meta name="twitter:title" content="Go语言反射之值反射">
+<meta name="twitter:description" content="1 概述 2 值反射对象 3 修改值 4 修改结构体字段值   1 概述反射不仅可以获取值的类型信息，还可操作变量的值。使用 reflect.Value 类型操作变量的值。">
+<meta name="twitter:image" content="http://www.hellokang.net/images/wechat_subscription.jpg">
   
     <link rel="alternative" href="/atom.xml" title="小韩说课" type="application/atom+xml">
   
@@ -73,10 +75,10 @@
   </div>
 </header>
     <div class="outer">
-      <section id="main"><article id="post-go-channel" class="article article-type-post" itemscope itemprop="blogPost">
+      <section id="main"><article id="post-go-reflect-value" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/go/go-channel/" class="article-date">
-  <time datetime="2018-09-15T03:54:06.000Z" itemprop="datePublished">2018-09-15</time>
+    <a href="/go/go-reflect-value/" class="article-date">
+  <time datetime="2018-11-04T16:51:45.000Z" itemprop="datePublished">2018-11-05</time>
 </a>
     
   <div class="article-category">
@@ -91,7 +93,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Go语言使用类型管道channel处理并发
+      Go语言反射之值反射
     </h1>
   
 
@@ -99,36 +101,62 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <!-- toc -->
+<ul>
+<li><a href="#1-概述">1 概述</a></li>
+<li><a href="#2-值反射对象">2 值反射对象</a></li>
+<li><a href="#3-修改值">3 修改值</a></li>
+<li><a href="#4-修改结构体字段值">4 修改结构体字段值</a></li>
+</ul>
+<!-- tocstop -->
+<h2><span id="1-概述">1 概述</span></h2><p>反射不仅可以获取值的类型信息，还可操作变量的值。使用 <code>reflect.Value</code> 类型操作变量的值。</p>
+<a id="more"></a>
+<h2><span id="2-值反射对象">2 值反射对象</span></h2><p><code>reflect.ValueOf()</code> 方法可以获取一个值的反射对象，之后可以获取值的相关信息，或者获取这个值。示例：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">v := <span class="built_in">make</span>([]<span class="keyword">int</span>, <span class="number">10</span>)</span><br><span class="line">valueV := reflect.ValueOf(v)</span><br><span class="line"></span><br><span class="line">fmt.Println(valueV.IsValid()) <span class="comment">// true</span></span><br><span class="line">fmt.Println(valueV.IsNil()) <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line">fmt.Println(valueV.Interface().([]<span class="keyword">int</span>)) <span class="comment">// [0 0 0 0 0 0 0 0 0 0]</span></span><br><span class="line">fmt.Println(valueV.Slice(<span class="number">0</span>, valueV.Len())) <span class="comment">// [0 0 0 0 0 0 0 0 0 0]</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>.IsValid()</code> 和 <code>.IsNil()</code>，是获取值的信息，判断是否合法和是否为Nil。</li>
+<li><code>.Interface().([]int)</code>，利用类型断言获取原始值。 </li>
+<li><code>.Slice(0, valueV.Len())</code>，通过类型获取原始值。</li>
+</ul>
+<p>获取值的操作支持很多，对应的数据类型都支持。例如 <code>func (v Value) Int() int64</code>， <code>func (v Value) Float() float64</code>，<code>func (v Value) String() string</code> 等。</p>
+<h2><span id="3-修改值">3 修改值</span></h2><p>利用反射可以完成值的修改，<code>func (v Value) Elem() Value</code> 方法获取值反射对应的元素，再利用 <code>类setType</code> 方法完成设置，示例：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">v := <span class="number">42</span></span><br><span class="line">valueV := reflect.ValueOf(&amp;v)</span><br><span class="line">valueV.Elem().SetInt(<span class="number">1024</span>)</span><br><span class="line">fmt.Println(v) <span class="comment">// 1024</span></span><br></pre></td></tr></table></figure>
+<p>注意，修改值需要满足可被寻址的要求，因此我们使用的是 <code>reflect.ValueOf(&amp;v)</code>。</p>
+<h2><span id="4-修改结构体字段值">4 修改结构体字段值</span></h2><p>反射修改结构体字段，需要先获取结构体的值反射对象，再去确定字段，再去修改。演示为：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">s := &amp;Stu&#123;</span><br><span class="line">  <span class="string">"Hank"</span>,</span><br><span class="line">&#125;</span><br><span class="line">valueS := reflect.ValueOf(s)</span><br><span class="line">valueS.Elem().FieldByName(<span class="string">"Name"</span>).SetString(<span class="string">"Kang"</span>)</span><br><span class="line">fmt.Println(s.Name) <span class="comment">// Kang</span></span><br></pre></td></tr></table></figure></p>
+<p>注意，修改结构体字段时，要保证字段能被导出，首字母大写。</p>
+<p>完！<br>原文出自：<a href="http://www.hellokang.net/go/go-reflect-value/" target="_blank" rel="noopener">小韩说课</a><br>微信关注：小韩说课<br><img src="http://www.hellokang.net/images/wechat_subscription.jpg" alt="小韩说课"></p>
+
       
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-channel/" data-id="cjo35s7ve000008uomfv4dlwy" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-reflect-value/" data-id="cjo35s7x2001k08uoa6vi3dtw" class="article-share-link">分享到</a> -->
       
 
       
 
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
+
     </footer>
   </div>
   
     
 <nav id="article-nav">
   
-    <a href="/go/go-editor-goland/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/go/go-reflect-invoke/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
       <div class="article-nav-title">
         
-          使用goland编写Go语言
+          Go语言反射之反射调用
         
       </div>
     </a>
   
   
-    <a href="/go/go-memory-model/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/go/go-reflect-structure/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">Go语言的内存模型</div>
+      <div class="article-nav-title">Go语言反射之类型反射</div>
     </a>
   
 </nav>
@@ -139,7 +167,7 @@
 
   <section class="changyan" id="comments">
 <!--PC和WAP自适应版-->
-<div id="SOHUCS" sid="cjo35s7ve000008uomfv4dlwy"></div> 
+<div id="SOHUCS" sid="cjo35s7x2001k08uoa6vi3dtw"></div> 
 <script type="text/javascript"> 
 	(function(){ 
 		var appid = 'cyt64TYiv'; 
