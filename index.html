@@ -92,7 +92,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/go/go-reflect/">Go语言的反射机制</a>
+      <a class="article-title" href="/go/go-reflect/">Go语言反射之类型反射</a>
     </h1>
   
 
@@ -105,10 +105,14 @@
 <li><a href="#1-概述">1 概述</a></li>
 <li><a href="#2-获取类型">2 获取类型</a></li>
 <li><a href="#3-获取基础类型类别">3 获取基础类型（类别）</a></li>
+<li><a href="#4-指针引用的元素类型">4 指针引用的元素类型</a></li>
+<li><a href="#5-结构体信息">5 结构体信息</a></li>
+<li><a href="#6-结构体标签">6 结构体标签</a></li>
 </ul>
 <!-- tocstop -->
 <h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h2><p>类似于 Java，Go 语言也支持反射。支持反射的语言可以在运行时对程序进行访问和修改。反射的原理是在程序编译期将反射信息（如类型信息、结构体信息等）整合到程序中，并给提供给程序访问反射信息的操作接口，这样在程序运行期间就可以获取该反射信息，甚至支持修改操作。</p>
-<p>Go 语言使用 <code>reflect</code> 包支持反射。本文就阐述反射在 Go 语言中的作用。包括结构获取，代理执行等。<br>
+<p>Go 语言使用 <code>reflect</code> 包支持反射。</p>
+<p>本文介绍与类型结构相关的反射操作。</p>
         
           <p class="article-more-link">
             <a href="/go/go-reflect/#more">Read More</a>
@@ -118,7 +122,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-reflect/" data-id="cjo02tpv500163suop9uixcbv" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-reflect/" data-id="cjo31ada30011t8uobe855yv8" class="article-share-link">分享到</a> -->
       
 
       
@@ -176,7 +180,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/uncategorized/go-interface/" data-id="cjo02tpuu000p3suolfvx4q6a" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/uncategorized/go-interface/" data-id="cjo31ad9z000vt8uoymo4anpw" class="article-share-link">分享到</a> -->
       
 
       
@@ -234,7 +238,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-struct-ii/" data-id="cjo02tpvs00263suogkw1i47z" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-struct-ii/" data-id="cjo31adai001jt8uodlcusi7r" class="article-share-link">分享到</a> -->
       
 
       
@@ -298,7 +302,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-struct-i/" data-id="cjo02tpvd001j3suok75pjnds" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-struct-i/" data-id="cjo31adao001st8uoh7txbv1d" class="article-share-link">分享到</a> -->
       
 
       
@@ -349,7 +353,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-map/" data-id="cjo02tpuq000k3suoeljla2bk" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-map/" data-id="cjo31ada1000yt8uopr56skrw" class="article-share-link">分享到</a> -->
       
 
       
@@ -409,7 +413,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-slice/" data-id="cjo02tpvh001p3suou2kzr7sg" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-slice/" data-id="cjo31adad001dt8uoc244aiun" class="article-share-link">分享到</a> -->
       
 
       
@@ -461,7 +465,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-array/" data-id="cjo02tpug00093suo5pne4lqu" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-array/" data-id="cjo31ad9d0007t8uolsiq0l3w" class="article-share-link">分享到</a> -->
       
 
       
@@ -547,7 +551,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-strconv/" data-id="cjo02tpvb001g3suoml793wrm" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-strconv/" data-id="cjo31adak001mt8uo0l77rfbl" class="article-share-link">分享到</a> -->
       
 
       
@@ -598,7 +602,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-utf8/" data-id="cjo02tpvq00233suo1zm9ptos" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-utf8/" data-id="cjo31adaq001vt8uoimgehq5t" class="article-share-link">分享到</a> -->
       
 
       
@@ -717,7 +721,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-string/" data-id="cjo02tpvf001m3suoyph6xmts" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-string/" data-id="cjo31adag001gt8uo3zj3j3hv" class="article-share-link">分享到</a> -->
       
 
       
@@ -778,7 +782,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-package/" data-id="cjo02tpv600193suozb2xi23a" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-package/" data-id="cjo31ada80017t8uodr22763s" class="article-share-link">分享到</a> -->
       
 
       
@@ -830,7 +834,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-function/" data-id="cjo02tpv300123suo35stf7my" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-function/" data-id="cjo31ad9x000rt8uoszbb0wh5" class="article-share-link">分享到</a> -->
       
 
       
@@ -923,7 +927,7 @@
       <ul>
         
           <li>
-            <a href="/go/go-reflect/">Go语言的反射机制</a>
+            <a href="/go/go-reflect/">Go语言反射之类型反射</a>
           </li>
         
           <li>

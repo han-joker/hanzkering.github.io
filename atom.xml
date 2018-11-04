@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.hellokang.net/"/>
-  <updated>2018-11-03T15:20:48.140Z</updated>
+  <updated>2018-11-04T15:30:26.599Z</updated>
   <id>http://blog.hellokang.net/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Go语言的反射机制</title>
+    <title>Go语言反射之类型反射</title>
     <link href="http://blog.hellokang.net/go/go-reflect/"/>
     <id>http://blog.hellokang.net/go/go-reflect/</id>
     <published>2018-11-03T04:05:48.000Z</published>
-    <updated>2018-11-03T15:20:48.140Z</updated>
+    <updated>2018-11-04T15:30:26.599Z</updated>
     
     <summary type="html">
     
@@ -30,10 +30,14 @@
 &lt;li&gt;&lt;a href=&quot;#1-概述&quot;&gt;1 概述&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#2-获取类型&quot;&gt;2 获取类型&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#3-获取基础类型类别&quot;&gt;3 获取基础类型（类别）&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#4-指针引用的元素类型&quot;&gt;4 指针引用的元素类型&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#5-结构体信息&quot;&gt;5 结构体信息&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#6-结构体标签&quot;&gt;6 结构体标签&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;!-- tocstop --&gt;
 &lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h2&gt;&lt;p&gt;类似于 Java，Go 语言也支持反射。支持反射的语言可以在运行时对程序进行访问和修改。反射的原理是在程序编译期将反射信息（如类型信息、结构体信息等）整合到程序中，并给提供给程序访问反射信息的操作接口，这样在程序运行期间就可以获取该反射信息，甚至支持修改操作。&lt;/p&gt;
-&lt;p&gt;Go 语言使用 &lt;code&gt;reflect&lt;/code&gt; 包支持反射。本文就阐述反射在 Go 语言中的作用。包括结构获取，代理执行等。&lt;br&gt;
+&lt;p&gt;Go 语言使用 &lt;code&gt;reflect&lt;/code&gt; 包支持反射。&lt;/p&gt;
+&lt;p&gt;本文介绍与类型结构相关的反射操作。&lt;/p&gt;
     
     </summary>
     
