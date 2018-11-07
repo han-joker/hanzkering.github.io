@@ -15,7 +15,7 @@
 <meta property="og:description" content="1 字符   语法 说明     . 任意字符，在单行模式（s标志）下，也可以匹配换行   [xyz] 字符类   [^xyz] 否定字符类   \d Perl 字符类   \D 否定 Perl 字符类   [[:alpha:]] ASCII 字符类   [[:^alpha:]] 否定 ASCII 字符类   \pN Unicode 字符类 (one-letter name)   \p{Greek">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://www.hellokang.net/images/wechat_subscription.jpg">
-<meta property="og:updated_time" content="2018-11-07T15:55:24.296Z">
+<meta property="og:updated_time" content="2018-11-07T15:59:39.843Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Go语言支持的正则语法">
 <meta name="twitter:description" content="1 字符   语法 说明     . 任意字符，在单行模式（s标志）下，也可以匹配换行   [xyz] 字符类   [^xyz] 否定字符类   \d Perl 字符类   \D 否定 Perl 字符类   [[:alpha:]] ASCII 字符类   [[:^alpha:]] 否定 ASCII 字符类   \pN Unicode 字符类 (one-letter name)   \p{Greek">
@@ -181,7 +181,6 @@
 </tr>
 </tbody>
 </table>
-<hr>
 <h2><span id="3-重复次数">3 重复次数</span></h2><table>
 <thead>
 <tr>
@@ -270,7 +269,7 @@
 </tr>
 </tbody>
 </table>
-<p>标志语法是</p>
+<p>标志语法是:</p>
 <table>
 <thead>
 <tr>
@@ -293,7 +292,33 @@
 </tr>
 </tbody>
 </table>
-<p>支持的标志<br>|语法|说明|<br>|:—|:—|<br>|i |大小写不敏感，（默认 false）|<br>|m |多行模式: ^ 和 $ 匹配行开始和结束而不是匹配文本的开头和结尾（默认 false）|<br>|s |令 . 匹配 \n （默认 false）|<br>|U |非贪婪：交换 x<em> 和 x\</em>? 的意义，x+ 和 x+?，等 （默认 false）|</p>
+<p>支持的标志:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">语法</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">i</td>
+<td style="text-align:left">大小写不敏感，（默认 false）</td>
+</tr>
+<tr>
+<td style="text-align:left">m</td>
+<td style="text-align:left">多行模式: ^ 和 $ 匹配行开始和结束而不是匹配文本的开头和结尾（默认 false）</td>
+</tr>
+<tr>
+<td style="text-align:left">s</td>
+<td style="text-align:left">令 . 匹配 \n （默认 false）</td>
+</tr>
+<tr>
+<td style="text-align:left">U</td>
+<td style="text-align:left">非贪婪：交换 x<em> 和 x\</em>? 的意义，x+ 和 x+?，等 （默认 false）</td>
+</tr>
+</tbody>
+</table>
 <h2><span id="5-位置零宽字符">5 位置（零宽字符）</span></h2><table>
 <thead>
 <tr>
