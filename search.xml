@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Go语言中正则表达式的处理方法]]></title>
+    <url>%2Fgo%2Fgo-regexp%2F</url>
+    <content type="text"><![CDATA[1 概述正则表达式，又称规则表达式，Regular Expression，在代码中常简写为 regex、regexp 或 RE。正则表达式是对字符串操作的一种逻辑公式，就是用事先定义好的一些特定字符、及这些特定字符的组合，组成一个“规则字符串”，这个“规则字符串”用来表达对字符串的一种过滤逻辑。Perl 语言的正则表达式功能非常强大，很多语言设计正则式支持的时候都参考Perl的正则表达式。因此常用的表达式语法也是 Perl 兼容正则表达式。 Go 语言中使用包 regexp 提供对正则表达式的支持。本文说明 regexp 中常用的正则处理方法。 2 获取正则对象通过编译正则表达式，可以得到正则操作对象，用于完成正则的相关处理：函数： regexp.Compile(expr string) (*Regexp, error)，用于编译一个正则表达式，如果成功返回 Regexp 对象。 regexp.MustCompile(str string) *Regexp，与 Compile 一致，差异是失败时会宕机。 123reg,err := regexp.Compile(`\d+`)或reg := regexp.MustCompile(`\d+`) 3 匹配检测函数: func (re *Regexp) MatchString(s string) bool，测试字符串是否匹配正则。 func (re *Regexp) Match(b []byte) bool，检测字节切片是否匹配正则。 演示字符串的匹配： 1234text := "Hello Gopher，Hello 韩忠康"reg := regexp.MustCompile(`\w+`)fmt.Println(reg.MatchString(text))// true 4 查找函数： func (re *Regexp) FindString(s string) string，查找匹配模式的字符串，返回左侧第一个匹配的结果。 func (re *Regexp) FindAllString(s string, n int) []string，用来查找匹配模式的字符串，返回多个匹配的结果，n 用于限定查找数量，-1不限制。 func (re *Regexp) FindAll(b []byte, n int) [][]byte，用于在 []byte 中查找，返回 [][]byte。 匹配全部结果演示为： 1234text := "Hello Gopher，Hello 韩忠康"reg := regexp.MustCompile(`\w+`)fmt.Println(reg.FindAllString(text))// [Hello Gopher Hello] 5 查找匹配位置以下函数用于获取匹配正则子字符串的位置： func (re *Regexp) FindStringIndex(s string) (loc []int)，返回包含最左侧匹配结果的起止位置的切片。 func (re *Regexp) FindIndex(b []byte) (loc []int)，返回包含最左侧匹配结果的起止位置的切片。 func (re *Regexp) FindAllStringIndex(s string, n int) [][]int 会返回包含全部匹配结果的起止位置的切片的切片。 演示查找字符串最左侧匹配位置：1234text := "Hello Gopher，Hello 韩忠康"reg := regexp.MustCompile("llo")fmt.Println(reg.FindStringIndex(text))// [2 5] 6 查找匹配子模式以下函数可以查找子模式，或查找子模式的位置： func (re *Regexp) FindStringSubmatch(s string) []string，查找字符串中最左侧子匹配结果 func (re *Regexp) FindAllStringSubmatch(s string, n int) [][]string，查找字符串中全部匹配和子模式。 func (re *Regexp) FindStringSubmatchIndex(s string) []int，查找字符串中包含最左侧子匹配结果的起止位置的切片 演示匹配全部子字符串如下： 123re := regexp.MustCompile("Go(\w+)")fmt.Println(re.FindAllStringSubmatch("Hello Gopher，Hello GoLang", -1))// [["Gophoer" "phoer"], ["GoLang", "Lang"]] 7 替换函数： func (re *Regexp) ReplaceAllString(src, repl string) string，将 src 中所有 re 的匹配结果都替换为 repl。 func (re *Regexp) ReplaceAll(src, repl []byte) []byte，一致，针对的是 []byte。替换时可以使用反向引用 $1，$2，来引用匹配的子模式内容。 123re := regexp.MustCompile("Go(\w+)")fmt.Println(re.ReplaceAllString("Hello Gopher，Hello GoLang", "Hank$1"))// Hello Hankpher，Hello HankLang 8 分割函数： func (re *Regexp) Split(s string, n int) []string，使用正则分割字符串 s ，返回字符串切片。n 控制分割的片数，-1为不限制。 123reg := regexp.MustCompile("[\s,]")fmt.Println(reg.Split("Hello Gopher,Hello GoLang", -1))// [Hello Gopher Hello GoLang] 除了以上列举的较为常用的方法外，请参考 godoc -http=:8088 获取更全的信息。 完！原文出自：小韩说课微信关注：小韩说课]]></content>
+      <categories>
+        <category>go</category>
+      </categories>
+      <tags>
+        <tag>go</tag>
+        <tag>goGuide</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Go语言中的模板引擎]]></title>
+    <url>%2Fgo%2Fgo-template%2F</url>
+    <content type="text"><![CDATA[1 概述模板引擎，便于处理HTML与数据间的整合。使用包 html/template 实现。 2 基本使用示例如下： 12345import "html/template"func main() &#123;&#125; 3 总结欢迎关注： 小韩说课]]></content>
+      <categories>
+        <category>go</category>
+      </categories>
+      <tags>
+        <tag>go</tag>
+        <tag>goGuide</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Go语言反射之反射调用]]></title>
     <url>%2Fgo%2Fgo-reflect-invoke%2F</url>
     <content type="text"><![CDATA[1 概述 2 创建实例 3 调用函数 4 调用方法 1 概述利用反射，不仅可以获取信息，还可以创建实例，执行函数和方法。就是反射代理执行。 2 创建实例创建实例的前提是具有 reflect.Type 对象，基于此创建实例。使用 reflect.TypeOf() 函数，可以获取得到某类型的 reflect.Type 对象，演示如下： 12345typeStu := reflect.TypeOf(Stu&#123;&#125;)s := reflect.New(typeStu)s.Elem().FieldByName("Name").SetString("Hank") // 利用反射设置结构体字段值fmt.Println(s.Elem().FieldByName("Name").String()) // Hank 我们创建了实例，一直都是通过反射的方式操作的。 3 调用函数如果值反射对象 reflect.Value 反射的是函数时，可以通过 reflect.Value 调用该函数。使用反射调用函数时，需要将参数使用反射值对象的切片 []reflect.Value 构造后传入 Call() 方法中传参。调用完成时，函数的返回值通过 []reflect.Value 返回。演示如下: 1234567891011121314func fn(p1, p2 int) int &#123; return p1 + p2&#125;func main() &#123; valueFunc := reflect.ValueOf(fn) paramList := []reflect.Value&#123; reflect.ValueOf(22), reflect.ValueOf(20), &#125; // 反射调用函数 resultList := valueFunc.Call(paramList) // 获取第一个返回值, 取整数值 fmt.Println(resultList[0].Int()) // 42&#125; 4 调用方法整体与调用函数一致，额外的需要先通过对象的值反射获取对象方法的反射对象，再使用 Call() 调用，示例： 12345678910111213141516171819type Stu struct &#123; Name string&#125;func (this *Stu) Fn(p1, p2 int) int &#123; return p1 + p2&#125;func main() &#123; s := &amp;Stu&#123;"Hank"&#125; valueS := reflect.ValueOf(s) method := valueS.MethodByName("Fn") paramList := []reflect.Value&#123; reflect.ValueOf(22), reflect.ValueOf(20), &#125; resultList := method.Call(paramList) fmt.Println(resultList[0].Int()) // 42&#125; 完！原文出自：小韩说课微信关注：小韩说课]]></content>
@@ -252,7 +276,7 @@
   <entry>
     <title><![CDATA[go-错误处理]]></title>
     <url>%2Fgo%2Fgo-error%2F</url>
-    <content type="text"><![CDATA[宕机panicGo语言可以在程序中强行宕机。宕机时会将堆栈信息和goroutine信息输出到控制台，便于处理错误。示例语法：1panic(&quot;宕机信息&quot;) 运行后，得到：123456panic: 宕机信息goroutine 1 [running]:main.main() D:/projects/practice/go/syntax.go:45 +0x40exit status 2 宕机后，后续代码不再执行。但已经 defer 入栈的语句会在宕机前完成执行。 宕机恢复 recover当发生宕机时，会被 recover 捕获。执行完对应的 defer 后，从宕机点退出当前函数后继续执行，因此程序不会崩溃。配合使用 defer 和 recover，可以从宕机中恢复并捕获错误。达到宕机后继续运行的目的。无论是由 Runtime 层抛出的 panic 崩溃，还是主动触发的 panic 崩溃。可以理解成：panic 触发宕机类似于抛出异常 thrown，recover 宕机恢复机制就对应 try/catch。原理：语法上，利用 defer 的语句会在宕机前执行的机制，在代码执行前，先定义错误处理恢复方案，加入到defer栈中。再执行需要的代码。如果代码中出现宕机，会执行已经defer的代码，就是我们的宕机恢复处理代码。演示如下：123456789101112131415161718192021222324func main() &#123; func() &#123; // 先定义错误处理恢复方案，加入到defer栈中 defer func() &#123; // 发生宕机时，获取 panic 传递的上下文 err := recover() switch err.(type) &#123; case runtime.Error: // 运行时错误 fmt.Println(&quot;Runtime error:&quot;, err) default: // 非运行时错误 fmt.Println(&quot;User error:&quot;, err) &#125; &#125;() panic(&quot;强行宕机&quot;) // 或者 var pv *int *pv = 42 &#125;() fmt.Println(&quot;after panic&quot;)&#125; 以上代码，无论执行了 panic(&quot;强行宕机&quot;) 还是 *pv = 42 都不会导致系统崩溃，而是会去执行defer的函数，输出错误信息后，继续执行。就是after panic会永远执行。因为 recover 会恢复，结束 recover 所在函数后，代码继续！1234567&gt; go run .\syntax.goUser error: 强行宕机after panic或者&gt; go run .\syntax.goRuntime error: runtime error: invalid memory address or nil pointer dereferenceafter panic]]></content>
+    <content type="text"><![CDATA[宕机panicGo语言可以在程序中强行宕机。宕机时会将堆栈信息和goroutine信息输出到控制台，便于处理错误。示例语法：1panic(&quot;宕机信息&quot;) 运行后，得到：123456panic: 宕机信息goroutine 1 [running]:main.main() D:/projects/practice/go/syntax.go:45 +0x40exit status 2 宕机后，后续代码不再执行。但已经 defer 入栈的语句会在宕机前完成执行。 宕机恢复 recover当发生宕机时，会被 recover 捕获。执行完对应的 defer 后，从宕机点退出当前函数后继续执行，因此程序不会崩溃。配合使用 defer 和 recover，可以从宕机中恢复并捕获错误。达到宕机后继续运行的目的。无论是由 Runtime 层抛出的 panic 崩溃，还是主动触发的 panic 崩溃。可以理解成：panic 触发宕机类似于抛出异常 thrown，recover 宕机恢复机制就对应 try/catch。原理：语法上，利用 defer 的语句会在宕机前执行的机制，在代码执行前，先定义错误处理恢复方案，加入到defer栈中。再执行需要的代码。如果代码中出现宕机，会执行已经defer的代码，就是我们的宕机恢复处理代码。演示如下：123456789101112131415161718192021222324func main() &#123; func() &#123; // 先定义错误处理恢复方案，加入到defer栈中 defer func() &#123; // 发生宕机时，获取 panic 传递的上下文 err := recover() switch err.(type) &#123; case runtime.Error: // 运行时错误 fmt.Println(&quot;Runtime error:&quot;, err) default: // 非运行时错误 fmt.Println(&quot;User error:&quot;, err) &#125; &#125;() panic(&quot;强行宕机&quot;) // 或者 var pv *int *pv = 42 &#125;() fmt.Println(&quot;after panic&quot;)&#125; 以上代码，无论执行了 panic(&quot;强行宕机&quot;) 还是 *pv = 42 都不会导致系统崩溃，而是会去执行defer的函数，输出错误信息后，继续执行。就是after panic会永远执行。因为 recover 会恢复，结束 recover 所在函数后，代码继续！1234567&gt; go run .\syntax.goUser error: 强行宕机after panic或者&gt; go run .\syntax.goRuntime error: runtime error: invalid memory address or nil pointer dereferenceafter panic 完]]></content>
       <categories>
         <category>go</category>
       </categories>

@@ -74,6 +74,176 @@
     <div class="outer">
       <section id="main">
   
+    <article id="post-go-utf8" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/go/go-utf8/" class="article-date">
+  <time datetime="2018-10-26T11:15:53.000Z" itemprop="datePublished">2018-10-26</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/go/">go</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/go/go-utf8/">Go语言中多字节字符的处理</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h2><p>Go语言的字符串是使用 <code>UTF-8</code> 编码的。<code>UTF-8</code> 是 <code>Unicode</code> 的实现方式之一。本文内容包括：<code>UTF-8</code> 和 <code>Unicode</code> 的关系，Go语言提供的 <code>unicode</code> 包和 <code>unicode/utf8</code> 包的使用。</p>
+        
+          <p class="article-more-link">
+            <a href="/go/go-utf8/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+        <!-- <a data-url="http://blog.hellokang.net/go/go-utf8/" data-id="cjo7bj2s700275ouoeaozg9tn" class="article-share-link">分享到</a> -->
+      
+
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+ 
+  
+    <article id="post-go-string" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/go/go-string/" class="article-date">
+  <time datetime="2018-10-25T03:31:03.000Z" itemprop="datePublished">2018-10-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/go/">go</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/go/go-string/">Go语言中的字符串处理</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- toc -->
+<ul>
+<li><a href="#1-概述">1 概述</a></li>
+<li><a href="#2-常规操作">2 常规操作</a><ul>
+<li><a href="#索引访问">[]索引访问</a></li>
+<li><a href="#unicodeutf8-包">unicode/utf8 包</a></li>
+<li><a href="#len字符串占用的字节数">len()，字符串占用的字节数</a></li>
+<li><a href="#字符串连接">+，字符串连接”</a></li>
+<li><a href="#">==, &gt;, &lt;</a></li>
+<li><a href="#stringscomparea-b-string-int">strings.Compare(a, b string) int</a></li>
+<li><a href="#stringscontainss-substr-string-bool">strings.Contains(s, substr string) bool</a></li>
+<li><a href="#stringscontainsanys-chars-string-bool">strings.ContainsAny(s, chars string) bool</a></li>
+<li><a href="#stringscontainsrunes-string-r-rune-bool">strings.ContainsRune(s string, r rune) bool</a></li>
+<li><a href="#stringscounts-substr-string-int">strings.Count(s, substr string) int</a></li>
+<li><a href="#stringsequalfolds-t-string-bool">strings.EqualFold(s, t string) bool</a></li>
+<li><a href="#stringsfieldss-string-string">strings.Fields(s string) []string</a></li>
+<li><a href="#stringsfieldsfuncs-string-f-funcrune-bool-string">strings.FieldsFunc(s string, f func(rune) bool) []string</a></li>
+<li><a href="#stringshasprefixs-prefix-string-bool">strings.HasPrefix(s, prefix string) bool</a></li>
+<li><a href="#stringshassuffixs-suffix-string-bool">strings.HasSuffix(s, suffix string) bool</a></li>
+<li><a href="#stringsindexs-substr-string-int">strings.Index(s, substr string) int</a></li>
+<li><a href="#stringsindexanys-chars-string-int">strings.IndexAny(s, chars string) int</a></li>
+<li><a href="#stringsindexbytes-string-c-byte-int">strings.IndexByte(s string, c byte) int</a></li>
+<li><a href="#stringsindexfuncs-string-f-funcrune-bool-int">strings.IndexFunc(s string, f func(rune) bool) int</a></li>
+<li><a href="#stringsindexrunes-string-r-rune-int">strings.IndexRune(s string, r rune) int</a></li>
+<li><a href="#stringsjoina-string-sep-string-string">strings.Join(a []string, sep string) string</a></li>
+<li><a href="#stringslastindexs-substr-string-int">strings.LastIndex(s, substr string) int</a></li>
+<li><a href="#stringslastindexanys-chars-string-int">strings.LastIndexAny(s, chars string) int</a></li>
+<li><a href="#stringslastindexbytes-string-c-byte-int">strings.LastIndexByte(s string, c byte) int</a></li>
+<li><a href="#stringslastindexfuncs-string-f-funcrune-bool-int">strings.LastIndexFunc(s string, f func(rune) bool) int</a></li>
+<li><a href="#stringsmapmapping-funcrune-rune-s-string-string">strings.Map(mapping func(rune) rune, s string) string</a></li>
+<li><a href="#stringsrepeats-string-count-int-string">strings.Repeat(s string, count int) string</a></li>
+<li><a href="#stringsreplaces-old-new-string-n-int-string">strings.Replace(s, old, new string, n int) string</a></li>
+<li><a href="#stringssplits-sep-string-string">strings.Split(s, sep string) []string</a></li>
+<li><a href="#stringssplitafters-sep-string-string">strings.SplitAfter(s, sep string) []string</a></li>
+<li><a href="#stringssplitafterns-sep-string-n-int-string">strings.SplitAfterN(s, sep string, n int) []string</a></li>
+<li><a href="#stringssplitns-sep-string-n-int-string">strings.SplitN(s, sep string, n int) []string</a></li>
+<li><a href="#stringstitles-string-string">strings.Title(s string) string</a></li>
+<li><a href="#stringstolowers-string-string">strings.ToLower(s string) string</a></li>
+<li><a href="#stringstolowerspecialc-unicodespecialcase-s-string-string">strings.ToLowerSpecial(c unicode.SpecialCase, s string) string</a></li>
+<li><a href="#stringstotitles-string-string">strings.ToTitle(s string) string</a></li>
+<li><a href="#stringstotitlespecialc-unicodespecialcase-s-string-string">strings.ToTitleSpecial(c unicode.SpecialCase, s string) string</a></li>
+<li><a href="#stringstouppers-string-string">strings.ToUpper(s string) string</a></li>
+<li><a href="#stringstoupperspecialc-unicodespecialcase-s-string-string">strings.ToUpperSpecial(c unicode.SpecialCase, s string) string</a></li>
+<li><a href="#stringstrims-string-cutset-string-string">strings.Trim(s string, cutset string) string</a></li>
+<li><a href="#stringstrimfuncs-string-f-funcrune-bool-string">strings.TrimFunc(s string, f func(rune) bool) string</a></li>
+<li><a href="#stringstrimlefts-string-cutset-string-string">strings.TrimLeft(s string, cutset string) string</a></li>
+<li><a href="#stringstrimleftfuncs-string-f-funcrune-bool-string">strings.TrimLeftFunc(s string, f func(rune) bool) string</a></li>
+<li><a href="#stringstrimprefixs-prefix-string-string">strings.TrimPrefix(s, prefix string) string</a></li>
+<li><a href="#stringstrimrights-string-cutset-string-string">strings.TrimRight(s string, cutset string) string</a></li>
+<li><a href="#stringstrimrightfuncs-string-f-funcrune-bool-string">strings.TrimRightFunc(s string, f func(rune) bool) string</a></li>
+<li><a href="#stringstrimspaces-string-string">strings.TrimSpace(s string) string</a></li>
+<li><a href="#stringstrimsuffixs-suffix-string-string">strings.TrimSuffix(s, suffix string) string</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h2><p>字符串，string，一串固定长度的字符连接起来的字符集合。Go语言的字符串是使用UTF-8编码的。UTF-8是Unicode的实现方式之一。</p>
+<p>Go语言原生支持字符串。使用双引号(“”)或反引号(``)定义。<br>双引号：””, 用于单行字符串。<br>反引号：``，用于定义多行字符串，内部会原样解析。<br>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 单行</span><br><span class="line">&quot;心有猛虎，细嗅蔷薇&quot;</span><br><span class="line">// 多行</span><br><span class="line">`</span><br><span class="line">大风歌</span><br><span class="line">大风起兮云飞扬。</span><br><span class="line">威加海内兮归故乡。</span><br><span class="line">安得猛士兮守四方！</span><br><span class="line">`</span><br></pre></td></tr></table></figure></p>
+<p>字符串支持转义字符，列表如下：</p>
+<ul>
+<li>\r  回车符（返回行首）</li>
+<li>\n  换行符（直接跳到下一行的同列位置）</li>
+<li>\t  制表符</li>
+<li>\’  单引号</li>
+<li>\”  双引号</li>
+<li>\\  反斜杠</li>
+<li>\uXXXX  Unicode字符码值转义，例如 <code>&quot;\u5eb7&quot;</code> 就是 “康”</li>
+</ul>
+<p>Go语言中字符串的顶层结构是由一个指针和长度构成的。使用 unsafe.Sizeof(“”) 会得到16长度，其中8个字节是指针，指向字符串的内存地址，8个是存储字符串的长度。</p>
+        
+          <p class="article-more-link">
+            <a href="/go/go-string/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+        <!-- <a data-url="http://blog.hellokang.net/go/go-string/" data-id="cjo7bj2s8002a5ouonrvy5zai" class="article-share-link">分享到</a> -->
+      
+
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+ 
+  
     <article id="post-go-package" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/go/go-package/" class="article-date">
@@ -120,7 +290,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-package/" data-id="cjo35s7ww001b08uohhv4t77j" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-package/" data-id="cjo7bj2s500245ouoc866u1xp" class="article-share-link">分享到</a> -->
       
 
       
@@ -172,7 +342,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-function/" data-id="cjo35s7wf000l08uoxgsa4fbm" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-function/" data-id="cjo7bj2rb000o5ouoj5bw1pjn" class="article-share-link">分享到</a> -->
       
 
       
@@ -245,7 +415,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-flow-control/" data-id="cjo35s7w4000i08uoaqwryr38" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-flow-control/" data-id="cjo7bj2rg000u5ouo1on127zy" class="article-share-link">分享到</a> -->
       
 
       
@@ -310,7 +480,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-operator/" data-id="cjo35s7ws001508uone8zmzjs" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-operator/" data-id="cjo7bj2rs001g5ouod7d2tnnm" class="article-share-link">分享到</a> -->
       
 
       
@@ -397,7 +567,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjo35s7xf002208uobz2638h6" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjo7bj2sc002g5ouocdpr0eay" class="article-share-link">分享到</a> -->
       
 
       
@@ -464,7 +634,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-variable/" data-id="cjo35s7xi002808uoqx6ioyau" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-variable/" data-id="cjo7bj2s400215ouoycpuq92k" class="article-share-link">分享到</a> -->
       
 
       
@@ -528,7 +698,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-constant/" data-id="cjo35s7vu000808uoroycd92k" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-constant/" data-id="cjo7bj2qd00005ouoqwk8vc9l" class="article-share-link">分享到</a> -->
       
 
       
@@ -570,7 +740,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/uncategorized/go-editor-sublime/" data-id="cjo35s7w1000g08uo5gyvm9hv" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/uncategorized/go-editor-sublime/" data-id="cjo7bj2qz00095ouou4v57m0h" class="article-share-link">分享到</a> -->
       
 
       
@@ -619,7 +789,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/git/git-merge-rebase/" data-id="cjo35s7vj000108uoatuxg7ah" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/git/git-merge-rebase/" data-id="cjo7bj2qw00065ouoihrh5cmv" class="article-share-link">分享到</a> -->
       
 
       
@@ -673,7 +843,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/hexo/hexo-github/" data-id="cjo35s7xk002b08uolzhith8g" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/hexo/hexo-github/" data-id="cjo7bj2sd002j5ouol4r8spaf" class="article-share-link">分享到</a> -->
       
 
       
@@ -681,101 +851,6 @@
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/github/">github</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
 
-    </footer>
-  </div>
-  
-</article>
-
- 
-  
-    <article id="post-go-error" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/go/go-error/" class="article-date">
-  <time datetime="2018-10-10T13:54:59.000Z" itemprop="datePublished">2018-10-10</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/go/">go</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/go/go-error/">go-错误处理</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2><span id="宕机panic">宕机panic</span></h2><p>Go语言可以在程序中强行宕机。宕机时会将堆栈信息和goroutine信息输出到控制台，便于处理错误。<br>示例语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">panic(&quot;宕机信息&quot;)</span><br></pre></td></tr></table></figure></p>
-<p>运行后，得到：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">panic: 宕机信息</span><br><span class="line"></span><br><span class="line">goroutine 1 [running]:</span><br><span class="line">main.main()</span><br><span class="line">        D:/projects/practice/go/syntax.go:45 +0x40</span><br><span class="line">exit status 2</span><br></pre></td></tr></table></figure></p>
-<p>宕机后，后续代码不再执行。但已经 defer 入栈的语句会在宕机前完成执行。</p>
-<h2><span id="宕机恢复-recover">宕机恢复 recover</span></h2><p>当发生宕机时，会被 recover 捕获。执行完对应的 defer 后，从宕机点退出当前函数后继续执行，因此程序不会崩溃。配合使用 defer 和 recover，可以从宕机中恢复并捕获错误。达到宕机后继续运行的目的。无论是由 Runtime 层抛出的 panic 崩溃，还是主动触发的 panic 崩溃。<br>可以理解成：panic 触发宕机类似于抛出异常 thrown，recover 宕机恢复机制就对应 try/catch。<br>原理：<br>语法上，利用 defer 的语句会在宕机前执行的机制，在代码执行前，先定义错误处理恢复方案，加入到defer栈中。再执行需要的代码。如果代码中出现宕机，会执行已经defer的代码，就是我们的宕机恢复处理代码。<br>演示如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line"></span><br><span class="line">  func() &#123;</span><br><span class="line">    // 先定义错误处理恢复方案，加入到defer栈中</span><br><span class="line">    defer func() &#123;</span><br><span class="line">      // 发生宕机时，获取 panic 传递的上下文</span><br><span class="line">      err := recover()</span><br><span class="line">      switch err.(type) &#123;</span><br><span class="line">      case runtime.Error:</span><br><span class="line">        // 运行时错误</span><br><span class="line">        fmt.Println(&quot;Runtime error:&quot;, err)</span><br><span class="line">      default:</span><br><span class="line">        // 非运行时错误</span><br><span class="line">        fmt.Println(&quot;User error:&quot;, err)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;()</span><br><span class="line">    panic(&quot;强行宕机&quot;)</span><br><span class="line">    // 或者</span><br><span class="line">    var pv *int</span><br><span class="line">    *pv = 42</span><br><span class="line">  &#125;()</span><br><span class="line"></span><br><span class="line">  fmt.Println(&quot;after panic&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>以上代码，无论执行了 <code>panic(&quot;强行宕机&quot;)</code> 还是 <code>*pv = 42</code> 都不会导致系统崩溃，而是会去执行defer的函数，输出错误信息后，继续执行。就是after panic会永远执行。<br>因为 recover 会恢复，结束 recover 所在函数后，代码继续！<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt; go run .\syntax.go</span><br><span class="line">User error: 强行宕机</span><br><span class="line">after panic</span><br><span class="line">或者</span><br><span class="line">&gt; go run .\syntax.go</span><br><span class="line">Runtime error: runtime error: invalid memory address or nil pointer dereference</span><br><span class="line">after panic</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-        <!-- <a data-url="http://blog.hellokang.net/go/go-error/" data-id="cjo35s7wm000v08uo8ngawqls" class="article-share-link">分享到</a> -->
-      
-
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/error/">error</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
- 
-  
-    <article id="post-go-command" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/go/go-command/" class="article-date">
-  <time datetime="2018-10-10T03:49:27.000Z" itemprop="datePublished">2018-10-10</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/go/">go</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/go/go-command/">Go提供的常用命令</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-        <!-- <a data-url="http://blog.hellokang.net/go/go-command/" data-id="cjo35s7vr000608uohvyxxa2o" class="article-share-link">分享到</a> -->
-      
-
-      
-
-      
     </footer>
   </div>
   
@@ -822,7 +897,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">26</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">28</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -831,7 +906,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">21</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">21</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -849,7 +924,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -861,6 +936,14 @@
       <ul>
         
           <li>
+            <a href="/go/go-regexp/">Go语言中正则表达式的处理方法</a>
+          </li>
+        
+          <li>
+            <a href="/go/go-template/">Go语言中的模板引擎</a>
+          </li>
+        
+          <li>
             <a href="/go/go-reflect-invoke/">Go语言反射之反射调用</a>
           </li>
         
@@ -870,14 +953,6 @@
         
           <li>
             <a href="/go/go-reflect-structure/">Go语言反射之类型反射</a>
-          </li>
-        
-          <li>
-            <a href="/uncategorized/go-interface/">Go语言中接口的使用</a>
-          </li>
-        
-          <li>
-            <a href="/go/go-struct-ii/">Go语言中结构体的使用-第2部分OOP</a>
           </li>
         
       </ul>
