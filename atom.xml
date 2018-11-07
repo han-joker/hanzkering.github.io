@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.hellokang.net/"/>
-  <updated>2018-11-07T15:28:17.850Z</updated>
+  <updated>2018-11-07T15:55:24.296Z</updated>
   <id>http://blog.hellokang.net/</id>
   
   <author>
@@ -17,11 +17,43 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Go语言中正则表达式的处理方法</title>
+    <title>Go语言支持的正则语法</title>
+    <link href="http://blog.hellokang.net/go/go-regexp-syntax/"/>
+    <id>http://blog.hellokang.net/go/go-regexp-syntax/</id>
+    <published>2018-11-07T15:53:09.000Z</published>
+    <updated>2018-11-07T15:55:24.296Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2&gt;&lt;span id=&quot;1-字符&quot;&gt;1 字符&lt;/span&gt;&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&quot;text-align:left&quot;&gt;语法&lt;/th&gt;
+&lt;th
+        
+      
+    
+    </summary>
+    
+      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
+    
+    
+      <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
+    
+      <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Go语言中正则表达式的处理</title>
     <link href="http://blog.hellokang.net/go/go-regexp/"/>
     <id>http://blog.hellokang.net/go/go-regexp/</id>
     <published>2018-11-07T15:26:56.000Z</published>
-    <updated>2018-11-07T15:28:17.850Z</updated>
+    <updated>2018-11-07T15:29:32.772Z</updated>
     
     <summary type="html">
     
@@ -686,44 +718,6 @@
 &lt;li&gt;函数，func()&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;本篇相当于一个类型索引。包含了Go语言中的全部类型。具体每种类型的操作，请参见具体章节！&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
-    
-    
-      <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
-    
-      <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Go语言中的变量</title>
-    <link href="http://blog.hellokang.net/go/go-variable/"/>
-    <id>http://blog.hellokang.net/go/go-variable/</id>
-    <published>2018-10-18T10:51:32.000Z</published>
-    <updated>2018-11-01T14:29:26.121Z</updated>
-    
-    <summary type="html">
-    
-      &lt;!-- toc --&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#1-概述&quot;&gt;1 概述&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#2-定义声明和初始化&quot;&gt;2 定义：声明和初始化&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#3-类型默认值零值&quot;&gt;3 类型默认值（零值）&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#4-强类型&quot;&gt;4 强类型&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#5-类型推导&quot;&gt;5 类型推导&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#6-短声明定义&quot;&gt;6 短声明（定义）&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#7-批量定义&quot;&gt;7 批量定义&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#8-批量赋值&quot;&gt;8 批量赋值&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#9-匿名变量&quot;&gt;9 匿名变量&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#10-变量作用域&quot;&gt;10 变量作用域&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;!-- tocstop --&gt;
-&lt;p&gt;[TOC]&lt;/p&gt;
-&lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h2&gt;&lt;p&gt;变量（Variable）是程序运行过程中，内容可以变化（修改）的量，变量的功能是存储用户的数据，是计算机语言中能储存计算结果或能表示值抽象概念。&lt;br&gt;变量，是通过变量的标识符定位值的过程。变量的内存模拟演示：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://www.hellokang.net/images/posts/go/go-variable.png&quot; alt=&quot;变量的内存模拟演示&quot;&gt;&lt;/p&gt;
     
     </summary>
     

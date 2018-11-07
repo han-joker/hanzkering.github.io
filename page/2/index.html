@@ -74,6 +74,92 @@
     <div class="outer">
       <section id="main">
   
+    <article id="post-go-strconv" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/go/go-strconv/" class="article-date">
+  <time datetime="2018-10-27T09:15:56.000Z" itemprop="datePublished">2018-10-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/go/">go</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/go/go-strconv/">Go语言中其他数据与字符串类型的转换</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- toc -->
+<ul>
+<li><a href="#1-概述">1 概述</a></li>
+<li><a href="#2-与切片的转换">2 与切片的转换</a></li>
+<li><a href="#3-strconv-包">3 strconv 包</a><ul>
+<li><a href="#strconvatois-string-int-error">strconv.Atoi(s string) (int, error)</a></li>
+<li><a href="#strconvitoai-int-string">strconv.Itoa(i int) string</a></li>
+<li><a href="#strconvparsefloats-string-bitsize-int-float64-error">strconv.ParseFloat(s string, bitSize int) (float64, error)</a></li>
+<li><a href="#strconvparseints-string-base-int-bitsize-int-i-int64-err-error">strconv.ParseInt(s string, base int, bitSize int) (i int64, err error)</a></li>
+<li><a href="#strconvformatfloatf-float64-fmt-byte-prec-bitsize-int-string">strconv.FormatFloat(f float64, fmt byte, prec, bitSize int) string</a></li>
+<li><a href="#strconvformatinti-int64-base-int-string">strconv.FormatInt(i int64, base int) string</a></li>
+<li><a href="#strconvappendbooldst-byte-b-bool-byte">strconv.AppendBool(dst []byte, b bool) []byte</a></li>
+<li><a href="#strconvappendfloatdst-byte-f-float64-fmt-byte-prec-bitsize-int-byte">strconv.AppendFloat(dst []byte, f float64, fmt byte, prec, bitSize int) []byte</a></li>
+<li><a href="#strconvappendintdst-byte-i-int64-base-int-byte">strconv.AppendInt(dst []byte, i int64, base int) []byte</a></li>
+<li><a href="#strconvappendquotedst-byte-s-string-byte">strconv.AppendQuote(dst []byte, s string) []byte</a></li>
+<li><a href="#strconvappendquoterunedst-byte-r-rune-byte">strconv.AppendQuoteRune(dst []byte, r rune) []byte</a></li>
+<li><a href="#strconvappendquoterunetoasciidst-byte-r-rune-byte">strconv.AppendQuoteRuneToASCII(dst []byte, r rune) []byte</a></li>
+<li><a href="#strconvappendquotetoasciidst-byte-s-string-byte">strconv.AppendQuoteToASCII(dst []byte, s string) []byte</a></li>
+<li><a href="#strconvappenduintdst-byte-i-uint64-base-int-byte">strconv.AppendUint(dst []byte, i uint64, base int) []byte</a></li>
+<li><a href="#strconvcanbackquotes-string-bool">strconv.CanBackquote(s string) bool</a></li>
+<li><a href="#strconvformatboolb-bool-string">strconv.FormatBool(b bool) string</a></li>
+<li><a href="#strconvformatuinti-uint64-base-int-string">strconv.FormatUint(i uint64, base int) string</a></li>
+<li><a href="#strconvisprintr-rune-bool">strconv.IsPrint(r rune) bool</a></li>
+<li><a href="#strconvparseboolstr-string-bool-error">strconv.ParseBool(str string) (bool, error)</a></li>
+<li><a href="#strconvparseuints-string-base-int-bitsize-int-uint64-error">strconv.ParseUint(s string, base int, bitSize int) (uint64, error)</a></li>
+<li><a href="#strconvquotes-string-string">strconv.Quote(s string) string</a></li>
+<li><a href="#strconvquoteruner-rune-string">strconv.QuoteRune(r rune) string</a></li>
+<li><a href="#strconvquoterunetoasciir-rune-string">strconv.QuoteRuneToASCII(r rune) string</a></li>
+<li><a href="#strconvquotetoasciis-string-string">strconv.QuoteToASCII(s string) string</a></li>
+<li><a href="#strconvunquotes-string-string-error">strconv.Unquote(s string) (string, error)</a></li>
+<li><a href="#strconvunquotechars-string-quote-byte-value-rune-multibyte-bool-tail-string-err-error">strconv.UnquoteChar(s string, quote byte) (value rune, multibyte bool, tail string, err error)</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h2><p>Go语言是强类型语言，因此总会需要将字符串转成需要的类型。比如整型和字符串转换，字符串和布尔型的转换等。本文就介绍如何完成这些转换，以下是Go语言关于字符串转换的整理说明，主要是与切片类型的转换，和 strconv 包的使用。</p>
+        
+          <p class="article-more-link">
+            <a href="/go/go-strconv/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+        <!-- <a data-url="http://blog.hellokang.net/go/go-strconv/" data-id="cjo7chojb001thguoq6mos277" class="article-share-link">分享到</a> -->
+      
+
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+ 
+  
     <article id="post-go-utf8" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/go/go-utf8/" class="article-date">
@@ -110,7 +196,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-utf8/" data-id="cjo7bj2s700275ouoeaozg9tn" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-utf8/" data-id="cjo7chojo002bhguoxsh2ocby" class="article-share-link">分享到</a> -->
       
 
       
@@ -229,7 +315,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-string/" data-id="cjo7bj2s8002a5ouonrvy5zai" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-string/" data-id="cjo7chojg001zhguo473189j9" class="article-share-link">分享到</a> -->
       
 
       
@@ -290,7 +376,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-package/" data-id="cjo7bj2s500245ouoc866u1xp" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-package/" data-id="cjo7choiw0018hguoa3ga6i5z" class="article-share-link">分享到</a> -->
       
 
       
@@ -342,7 +428,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-function/" data-id="cjo7bj2rb000o5ouoj5bw1pjn" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-function/" data-id="cjo7choic000thguo1skrxuy4" class="article-share-link">分享到</a> -->
       
 
       
@@ -415,7 +501,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-flow-control/" data-id="cjo7bj2rg000u5ouo1on127zy" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-flow-control/" data-id="cjo7choi6000mhguoaz6wjure" class="article-share-link">分享到</a> -->
       
 
       
@@ -480,7 +566,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-operator/" data-id="cjo7bj2rs001g5ouod7d2tnnm" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-operator/" data-id="cjo7choiu0015hguotib3xhr6" class="article-share-link">分享到</a> -->
       
 
       
@@ -567,7 +653,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjo7bj2sc002g5ouocdpr0eay" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjo7chojm0028hguowt9k4i6m" class="article-share-link">分享到</a> -->
       
 
       
@@ -634,7 +720,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-variable/" data-id="cjo7bj2s400215ouoycpuq92k" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-variable/" data-id="cjo7chojw002khguoze5obnxd" class="article-share-link">分享到</a> -->
       
 
       
@@ -698,7 +784,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-constant/" data-id="cjo7bj2qd00005ouoqwk8vc9l" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-constant/" data-id="cjo7choi0000ghguokgfmdtti" class="article-share-link">分享到</a> -->
       
 
       
@@ -740,7 +826,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/uncategorized/go-editor-sublime/" data-id="cjo7bj2qz00095ouou4v57m0h" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/uncategorized/go-editor-sublime/" data-id="cjo7chohw000dhguoq3yhtxgm" class="article-share-link">分享到</a> -->
       
 
       
@@ -789,67 +875,13 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/git/git-merge-rebase/" data-id="cjo7bj2qw00065ouoihrh5cmv" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/git/git-merge-rebase/" data-id="cjo7chohm0004hguo713wl4y4" class="article-share-link">分享到</a> -->
       
 
       
 
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
- 
-  
-    <article id="post-hexo-github" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/hexo/hexo-github/" class="article-date">
-  <time datetime="2018-10-11T11:12:21.000Z" itemprop="datePublished">2018-10-11</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/hexo/">hexo</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/hexo/hexo-github/">Hexo搭建博客，发布到GitHub</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-需求"><a href="#1-需求" class="headerlink" title="1 需求"></a>1 需求</h2><p>博客之前是wordpress搭建的，也很好用。现在想使用一个基于markdown文件为中心的博客系统，就锁定了hexo这个项目。hexo是基于Node.js的，提供markdown支持，草稿，单页，分类，标签，主题，i18n，永久链接，静态生成，部署等很常用的博客系统功能。其主页地址为：<a href="https://hexo.io/zh-cn/" target="_blank" rel="noopener">Hexo</a>，大家可以获取更详细的信息。<br>下面就和大家说说过程，大致有博客搭建，部署到github，还有另一个git服务器（个人的服务器）上的过程。</p>
-<blockquote>
-<p>下面的操作的个人电脑为windows系统（win10)。</p>
-</blockquote>
-        
-          <p class="article-more-link">
-            <a href="/hexo/hexo-github/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-        <!-- <a data-url="http://blog.hellokang.net/hexo/hexo-github/" data-id="cjo7bj2sd002j5ouol4r8spaf" class="article-share-link">分享到</a> -->
-      
-
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/github/">github</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
 
     </footer>
   </div>
@@ -897,7 +929,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">28</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -906,7 +938,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">21</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">21</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">22</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">22</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -924,7 +956,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -936,7 +968,11 @@
       <ul>
         
           <li>
-            <a href="/go/go-regexp/">Go语言中正则表达式的处理方法</a>
+            <a href="/go/go-regexp-syntax/">Go语言支持的正则语法</a>
+          </li>
+        
+          <li>
+            <a href="/go/go-regexp/">Go语言中正则表达式的处理</a>
           </li>
         
           <li>
@@ -949,10 +985,6 @@
         
           <li>
             <a href="/go/go-reflect-value/">Go语言反射之值反射</a>
-          </li>
-        
-          <li>
-            <a href="/go/go-reflect-structure/">Go语言反射之类型反射</a>
           </li>
         
       </ul>

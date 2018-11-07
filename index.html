@@ -74,6 +74,430 @@
     <div class="outer">
       <section id="main">
   
+    <article id="post-go-regexp-syntax" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/go/go-regexp-syntax/" class="article-date">
+  <time datetime="2018-11-07T15:53:09.000Z" itemprop="datePublished">2018-11-07</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/go/">go</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/go/go-regexp-syntax/">Go语言支持的正则语法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2><span id="1-字符">1 字符</span></h2><table>
+<thead>
+<tr>
+<th style="text-align:left">语法</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">.</td>
+<td style="text-align:left">任意字符，在单行模式（s标志）下，也可以匹配换行</td>
+</tr>
+<tr>
+<td style="text-align:left">[xyz]</td>
+<td style="text-align:left">字符类</td>
+</tr>
+<tr>
+<td style="text-align:left">[^xyz]</td>
+<td style="text-align:left">否定字符类</td>
+</tr>
+<tr>
+<td style="text-align:left">\d</td>
+<td style="text-align:left">Perl 字符类</td>
+</tr>
+<tr>
+<td style="text-align:left">\D</td>
+<td style="text-align:left">否定 Perl 字符类</td>
+</tr>
+<tr>
+<td style="text-align:left">[[:alpha:]]</td>
+<td style="text-align:left">ASCII 字符类</td>
+</tr>
+<tr>
+<td style="text-align:left">[[:^alpha:]]</td>
+<td style="text-align:left">否定 ASCII 字符类</td>
+</tr>
+<tr>
+<td style="text-align:left">\pN</td>
+<td style="text-align:left">Unicode 字符类 (one-letter name)</td>
+</tr>
+<tr>
+<td style="text-align:left">\p{Greek}</td>
+<td style="text-align:left">Unicode 字符类</td>
+</tr>
+<tr>
+<td style="text-align:left">\PN</td>
+<td style="text-align:left">否定 Unicode 字符类 (one-letter name)</td>
+</tr>
+<tr>
+<td style="text-align:left">\P{Greek}</td>
+<td style="text-align:left">否定 Unicode 字符类</td>
+</tr>
+</tbody>
+</table>
+<p>参考以下附录，获取具体字符类的内容：</p>
+<ul>
+<li><a href="http://go.hellokang.net/regexp-perl.html" target="_blank" rel="noopener">Perl 字符类</a></li>
+<li><a href="http://go.hellokang.net/regexp-ascii.html" target="_blank" rel="noopener">ASCII 字符类</a></li>
+<li><a href="http://go.hellokang.net/regexp-unicode-one-letter.html" target="_blank" rel="noopener">Unicode 字符类 (one-letter name)</a></li>
+<li><a href="http://go.hellokang.net/regexp-unicode.html" target="_blank" rel="noopener">Unicode 字符类</a></li>
+</ul>
+<h2><span id="2-组合">2 组合</span></h2><table>
+<thead>
+<tr>
+<th style="text-align:left">语法</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">xy</td>
+<td style="text-align:left">xy（x 后跟随 y）</td>
+</tr>
+<tr>
+<td style="text-align:left">x\</td>
+<td style="text-align:left">y</td>
+<td>x 或 y （优先匹配 x）</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2><span id="3-重复次数">3 重复次数</span></h2><table>
+<thead>
+<tr>
+<th style="text-align:left">语法</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">x*</td>
+<td style="text-align:left">零个或多个 x，贪婪</td>
+</tr>
+<tr>
+<td style="text-align:left">x+</td>
+<td style="text-align:left">一个或多个 x，贪婪</td>
+</tr>
+<tr>
+<td style="text-align:left">x?</td>
+<td style="text-align:left">零个或一个 x，贪婪</td>
+</tr>
+<tr>
+<td style="text-align:left">x{n,m}</td>
+<td style="text-align:left">n 到 m 个 x，贪婪</td>
+</tr>
+<tr>
+<td style="text-align:left">x{n,}</td>
+<td style="text-align:left">n 个或多个 x，贪婪</td>
+</tr>
+<tr>
+<td style="text-align:left">x{n}</td>
+<td style="text-align:left">n 个 x</td>
+</tr>
+<tr>
+<td style="text-align:left">x*?</td>
+<td style="text-align:left">零个或多个 x，非贪婪</td>
+</tr>
+<tr>
+<td style="text-align:left">x+?</td>
+<td style="text-align:left">一个或多个 x，非贪婪</td>
+</tr>
+<tr>
+<td style="text-align:left">x??</td>
+<td style="text-align:left">零个或一个 x，非贪婪</td>
+</tr>
+<tr>
+<td style="text-align:left">x{n,m}?</td>
+<td style="text-align:left">n 到 m 个 x，非贪婪</td>
+</tr>
+<tr>
+<td style="text-align:left">x{n,}?</td>
+<td style="text-align:left">n 个或多个 x，非贪婪</td>
+</tr>
+<tr>
+<td style="text-align:left">x{n}?</td>
+<td style="text-align:left">n 个 x</td>
+</tr>
+</tbody>
+</table>
+<h2><span id="4-分组子模式">4 分组子模式</span></h2><table>
+<thead>
+<tr>
+<th style="text-align:left">语法</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">(re)</td>
+<td style="text-align:left">编号捕获组（子匹配）</td>
+</tr>
+<tr>
+<td style="text-align:left">(?P&lt;name>re)</td>
+<td style="text-align:left">命名编号捕获组（子匹配）</td>
+</tr>
+<tr>
+<td style="text-align:left">(?:re)</td>
+<td style="text-align:left">非捕获组（子匹配）</td>
+</tr>
+<tr>
+<td style="text-align:left">(?flags)</td>
+<td style="text-align:left">设置标记对组后表达式生效，非捕获</td>
+</tr>
+<tr>
+<td style="text-align:left">(?flags:re)</td>
+<td style="text-align:left">组内设置标记，非捕获</td>
+</tr>
+</tbody>
+</table>
+<p>标志语法是</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">语法</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">xyz</td>
+<td style="text-align:left">设置</td>
+</tr>
+<tr>
+<td style="text-align:left">-xyz</td>
+<td style="text-align:left">清除</td>
+</tr>
+<tr>
+<td style="text-align:left">xy-z</td>
+<td style="text-align:left">设置 xy，清除 z</td>
+</tr>
+</tbody>
+</table>
+<p>支持的标志<br>|语法|说明|<br>|:—|:—|<br>|i |大小写不敏感，（默认 false）|<br>|m |多行模式: ^ 和 $ 匹配行开始和结束而不是匹配文本的开头和结尾（默认 false）|<br>|s |令 . 匹配 \n （默认 false）|<br>|U |非贪婪：交换 x<em> 和 x\</em>? 的意义，x+ 和 x+?，等 （默认 false）|</p>
+<h2><span id="5-位置零宽字符">5 位置（零宽字符）</span></h2><table>
+<thead>
+<tr>
+<th style="text-align:left">语法</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">^</td>
+<td style="text-align:left">设置标记 m 则匹配行首，否则匹配整个文本的开头（m 默认为 false）</td>
+</tr>
+<tr>
+<td style="text-align:left">$</td>
+<td style="text-align:left">设置标记 m 则匹配行尾，否则匹配整个文本的结尾（m 默认为 false）</td>
+</tr>
+<tr>
+<td style="text-align:left">\A</td>
+<td style="text-align:left">整个文本的开头，忽略 m 标记</td>
+</tr>
+<tr>
+<td style="text-align:left">\b</td>
+<td style="text-align:left">单词边界</td>
+</tr>
+<tr>
+<td style="text-align:left">\B</td>
+<td style="text-align:left">非单词边界</td>
+</tr>
+<tr>
+<td style="text-align:left">\z</td>
+<td style="text-align:left">整个文本的结尾，忽略 m 标记</td>
+</tr>
+</tbody>
+</table>
+<h2><span id="6-转义字符类">6 转义字符类</span></h2><table>
+<thead>
+<tr>
+<th style="text-align:left">语法</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">\a</td>
+<td style="text-align:left">响铃符    （相当于 \x07）</td>
+</tr>
+<tr>
+<td style="text-align:left">\f</td>
+<td style="text-align:left">换页符    （相当于 \x0C）</td>
+</tr>
+<tr>
+<td style="text-align:left">\t</td>
+<td style="text-align:left">横向制表符（相当于 \x09）</td>
+</tr>
+<tr>
+<td style="text-align:left">\n</td>
+<td style="text-align:left">换行符    （相当于 \x0A）</td>
+</tr>
+<tr>
+<td style="text-align:left">\r</td>
+<td style="text-align:left">回车符    （相当于 \x0D）</td>
+</tr>
+<tr>
+<td style="text-align:left">\v</td>
+<td style="text-align:left">纵向制表符（相当于 \x0B）</td>
+</tr>
+<tr>
+<td style="text-align:left">\123</td>
+<td style="text-align:left">8  進制编码所代表的字符（必须是 3 位数字）</td>
+</tr>
+<tr>
+<td style="text-align:left">\x7F</td>
+<td style="text-align:left">16 進制编码所代表的字符（必须是 3 位数字）</td>
+</tr>
+<tr>
+<td style="text-align:left">\x{10FFFF}</td>
+<td style="text-align:left">16 進制编码所代表的字符（最大值 10FFFF  ）</td>
+</tr>
+<tr>
+<td style="text-align:left">\Q…\E</td>
+<td style="text-align:left">\Q 和 \E 之间的文本，忽略文本中的正则语法</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">\\</td>
+<td style="text-align:left">\</td>
+</tr>
+<tr>
+<td style="text-align:left">\^</td>
+<td style="text-align:left">^</td>
+</tr>
+<tr>
+<td style="text-align:left">\$</td>
+<td style="text-align:left">$</td>
+</tr>
+<tr>
+<td style="text-align:left">\.</td>
+<td style="text-align:left">.</td>
+</tr>
+<tr>
+<td style="text-align:left">\*</td>
+<td style="text-align:left">*</td>
+</tr>
+<tr>
+<td style="text-align:left">\+</td>
+<td style="text-align:left">+</td>
+</tr>
+<tr>
+<td style="text-align:left">\?</td>
+<td style="text-align:left">?</td>
+</tr>
+<tr>
+<td style="text-align:left">\{</td>
+<td style="text-align:left">{</td>
+</tr>
+<tr>
+<td style="text-align:left">\}</td>
+<td style="text-align:left">}</td>
+</tr>
+<tr>
+<td style="text-align:left">\(</td>
+<td style="text-align:left">(</td>
+</tr>
+<tr>
+<td style="text-align:left">\)</td>
+<td style="text-align:left">)</td>
+</tr>
+<tr>
+<td style="text-align:left">\[</td>
+<td style="text-align:left">[</td>
+</tr>
+<tr>
+<td style="text-align:left">\]</td>
+<td style="text-align:left">]</td>
+</tr>
+<tr>
+<td style="text-align:left">\\</td>
+<td style="text-align:left"></td>
+<td>\</td>
+</tr>
+</tbody>
+</table>
+<h2><span id="7-命名字符类-作为-字符类-的元素">7 <code>命名字符类</code> 作为 <code>字符类</code> 的元素</span></h2><table>
+<thead>
+<tr>
+<th style="text-align:left">语法</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">[\d]</td>
+<td style="text-align:left">数字 (相当于 \d)</td>
+</tr>
+<tr>
+<td style="text-align:left">[^\d]</td>
+<td style="text-align:left">非数字 (相当于 \D)</td>
+</tr>
+<tr>
+<td style="text-align:left">[\D]</td>
+<td style="text-align:left">非数字 (相当于 \D)</td>
+</tr>
+<tr>
+<td style="text-align:left">[^\D]</td>
+<td style="text-align:left">数字 (相当于 \d)</td>
+</tr>
+<tr>
+<td style="text-align:left">[[:name:]]</td>
+<td style="text-align:left">命名的“ASCII 类”包含在“字符类”中 (相当于 [:name:])</td>
+</tr>
+<tr>
+<td style="text-align:left">[^[:name:]]</td>
+<td style="text-align:left">命名的“ASCII 类”不包含在“字符类”中 (相当于 [:^name:])</td>
+</tr>
+<tr>
+<td style="text-align:left">[\p{Name}]</td>
+<td style="text-align:left">命名的“Unicode 类”包含在“字符类”中 (相当于 \p{Name})</td>
+</tr>
+<tr>
+<td style="text-align:left">[^\p{Name}]</td>
+<td style="text-align:left">命名的“Unicode 类”不包含在“字符类”中 (相当于 \P{Name})</td>
+</tr>
+</tbody>
+</table>
+<p>完！<br>原文出自：<a href="http://www.hellokang.net/go/go-regexp-syntax/" target="_blank" rel="noopener">小韩说课</a><br>微信关注：小韩说课<br><img src="http://www.hellokang.net/images/wechat_subscription.jpg" alt="小韩说课"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <!-- <a data-url="http://blog.hellokang.net/go/go-regexp-syntax/" data-id="cjo7choj6001nhguovdwzu3ex" class="article-share-link">分享到</a> -->
+      
+
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+ 
+  
     <article id="post-go-regexp" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/go/go-regexp/" class="article-date">
@@ -92,7 +516,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/go/go-regexp/">Go语言中正则表达式的处理方法</a>
+      <a class="article-title" href="/go/go-regexp/">Go语言中正则表达式的处理</a>
     </h1>
   
 
@@ -156,7 +580,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-regexp/" data-id="cjo7bj2rv001m5ouogcudunno" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-regexp/" data-id="cjo7choj8001qhguovz964lk6" class="article-share-link">分享到</a> -->
       
 
       
@@ -206,7 +630,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-template/" data-id="cjo7bj2sa002d5ouoe91cb11e" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-template/" data-id="cjo7chojk0025hguoq3312mp6" class="article-share-link">分享到</a> -->
       
 
       
@@ -265,7 +689,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-reflect-invoke/" data-id="cjo7bj2rn00175ouojpmepcyc" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-reflect-invoke/" data-id="cjo7choj2001hhguozhybptjo" class="article-share-link">分享到</a> -->
       
 
       
@@ -324,7 +748,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-reflect-value/" data-id="cjo7bj2ro001a5ouojbi7062b" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-reflect-value/" data-id="cjo7choj0001ehguonz8yzd5k" class="article-share-link">分享到</a> -->
       
 
       
@@ -387,7 +811,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-reflect-structure/" data-id="cjo7bj2rt001j5ouoge2tk0rm" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-reflect-structure/" data-id="cjo7choj4001khguoug7l1mxb" class="article-share-link">分享到</a> -->
       
 
       
@@ -445,7 +869,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/uncategorized/go-interface/" data-id="cjo7bj2re000r5ouorjnq5cul" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/uncategorized/go-interface/" data-id="cjo7choim000whguotzc3xrav" class="article-share-link">分享到</a> -->
       
 
       
@@ -503,7 +927,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-struct-ii/" data-id="cjo7bj2s2001y5ouov7954yl8" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-struct-ii/" data-id="cjo7chojq002ehguobqzanlhu" class="article-share-link">分享到</a> -->
       
 
       
@@ -567,7 +991,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-struct-i/" data-id="cjo7bj2rx001p5ouorvrtx0tk" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-struct-i/" data-id="cjo7choji0022hguo5lq1hmsu" class="article-share-link">分享到</a> -->
       
 
       
@@ -618,7 +1042,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-map/" data-id="cjo7bj2rl00145ouo39dn2fpi" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-map/" data-id="cjo7choiq0012hguo9hkgupo8" class="article-share-link">分享到</a> -->
       
 
       
@@ -678,7 +1102,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-slice/" data-id="cjo7bj2ry001s5ouo1wn37g46" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-slice/" data-id="cjo7chojd001whguovdlxdyp6" class="article-share-link">分享到</a> -->
       
 
       
@@ -730,93 +1154,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-array/" data-id="cjo7bj2qm00045ouo4v8iwd7m" class="article-share-link">分享到</a> -->
-      
-
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
- 
-  
-    <article id="post-go-strconv" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/go/go-strconv/" class="article-date">
-  <time datetime="2018-10-27T09:15:56.000Z" itemprop="datePublished">2018-10-27</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/go/">go</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/go/go-strconv/">Go语言中其他数据与字符串类型的转换</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!-- toc -->
-<ul>
-<li><a href="#1-概述">1 概述</a></li>
-<li><a href="#2-与切片的转换">2 与切片的转换</a></li>
-<li><a href="#3-strconv-包">3 strconv 包</a><ul>
-<li><a href="#strconvatois-string-int-error">strconv.Atoi(s string) (int, error)</a></li>
-<li><a href="#strconvitoai-int-string">strconv.Itoa(i int) string</a></li>
-<li><a href="#strconvparsefloats-string-bitsize-int-float64-error">strconv.ParseFloat(s string, bitSize int) (float64, error)</a></li>
-<li><a href="#strconvparseints-string-base-int-bitsize-int-i-int64-err-error">strconv.ParseInt(s string, base int, bitSize int) (i int64, err error)</a></li>
-<li><a href="#strconvformatfloatf-float64-fmt-byte-prec-bitsize-int-string">strconv.FormatFloat(f float64, fmt byte, prec, bitSize int) string</a></li>
-<li><a href="#strconvformatinti-int64-base-int-string">strconv.FormatInt(i int64, base int) string</a></li>
-<li><a href="#strconvappendbooldst-byte-b-bool-byte">strconv.AppendBool(dst []byte, b bool) []byte</a></li>
-<li><a href="#strconvappendfloatdst-byte-f-float64-fmt-byte-prec-bitsize-int-byte">strconv.AppendFloat(dst []byte, f float64, fmt byte, prec, bitSize int) []byte</a></li>
-<li><a href="#strconvappendintdst-byte-i-int64-base-int-byte">strconv.AppendInt(dst []byte, i int64, base int) []byte</a></li>
-<li><a href="#strconvappendquotedst-byte-s-string-byte">strconv.AppendQuote(dst []byte, s string) []byte</a></li>
-<li><a href="#strconvappendquoterunedst-byte-r-rune-byte">strconv.AppendQuoteRune(dst []byte, r rune) []byte</a></li>
-<li><a href="#strconvappendquoterunetoasciidst-byte-r-rune-byte">strconv.AppendQuoteRuneToASCII(dst []byte, r rune) []byte</a></li>
-<li><a href="#strconvappendquotetoasciidst-byte-s-string-byte">strconv.AppendQuoteToASCII(dst []byte, s string) []byte</a></li>
-<li><a href="#strconvappenduintdst-byte-i-uint64-base-int-byte">strconv.AppendUint(dst []byte, i uint64, base int) []byte</a></li>
-<li><a href="#strconvcanbackquotes-string-bool">strconv.CanBackquote(s string) bool</a></li>
-<li><a href="#strconvformatboolb-bool-string">strconv.FormatBool(b bool) string</a></li>
-<li><a href="#strconvformatuinti-uint64-base-int-string">strconv.FormatUint(i uint64, base int) string</a></li>
-<li><a href="#strconvisprintr-rune-bool">strconv.IsPrint(r rune) bool</a></li>
-<li><a href="#strconvparseboolstr-string-bool-error">strconv.ParseBool(str string) (bool, error)</a></li>
-<li><a href="#strconvparseuints-string-base-int-bitsize-int-uint64-error">strconv.ParseUint(s string, base int, bitSize int) (uint64, error)</a></li>
-<li><a href="#strconvquotes-string-string">strconv.Quote(s string) string</a></li>
-<li><a href="#strconvquoteruner-rune-string">strconv.QuoteRune(r rune) string</a></li>
-<li><a href="#strconvquoterunetoasciir-rune-string">strconv.QuoteRuneToASCII(r rune) string</a></li>
-<li><a href="#strconvquotetoasciis-string-string">strconv.QuoteToASCII(s string) string</a></li>
-<li><a href="#strconvunquotes-string-string-error">strconv.Unquote(s string) (string, error)</a></li>
-<li><a href="#strconvunquotechars-string-quote-byte-value-rune-multibyte-bool-tail-string-err-error">strconv.UnquoteChar(s string, quote byte) (value rune, multibyte bool, tail string, err error)</a></li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h2><p>Go语言是强类型语言，因此总会需要将字符串转成需要的类型。比如整型和字符串转换，字符串和布尔型的转换等。本文就介绍如何完成这些转换，以下是Go语言关于字符串转换的整理说明，主要是与切片类型的转换，和 strconv 包的使用。</p>
-        
-          <p class="article-more-link">
-            <a href="/go/go-strconv/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-        <!-- <a data-url="http://blog.hellokang.net/go/go-strconv/" data-id="cjo7bj2rz001v5ouo2xcwxmt2" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-array/" data-id="cjo7choha0000hguo2ohvh5le" class="article-share-link">分享到</a> -->
       
 
       
@@ -870,7 +1208,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">28</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -879,7 +1217,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">21</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">21</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">22</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">22</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -897,7 +1235,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -909,7 +1247,11 @@
       <ul>
         
           <li>
-            <a href="/go/go-regexp/">Go语言中正则表达式的处理方法</a>
+            <a href="/go/go-regexp-syntax/">Go语言支持的正则语法</a>
+          </li>
+        
+          <li>
+            <a href="/go/go-regexp/">Go语言中正则表达式的处理</a>
           </li>
         
           <li>
@@ -922,10 +1264,6 @@
         
           <li>
             <a href="/go/go-reflect-value/">Go语言反射之值反射</a>
-          </li>
-        
-          <li>
-            <a href="/go/go-reflect-structure/">Go语言反射之类型反射</a>
           </li>
         
       </ul>
