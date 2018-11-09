@@ -1,0 +1,317 @@
+
+<!DOCTYPE html>
+<html  xmlns:wb="http://open.weibo.com/wb">
+<head>
+  <meta charset="utf-8">
+  
+  <title>Go语言中处理 HTTP 服务器 | 小韩说课</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1 概述包 net/http 提供了HTTP服务器端（和客户端）的实现。本文说明关于服务器端的部分。 快速开始： 123456789101112131415161718package mainimport (  &quot;log&quot;  &quot;net/http&quot;)func main() &amp;#123;  // 设置 路由  http.HandleFunc(&quot;/&quot;, IndexAction)  // 开启监听  lo">
+<meta name="keywords" content="go,goGuide">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go语言中处理 HTTP 服务器">
+<meta property="og:url" content="http://blog.hellokang.net/go/go-http-server/index.html">
+<meta property="og:site_name" content="小韩说课">
+<meta property="og:description" content="1 概述包 net/http 提供了HTTP服务器端（和客户端）的实现。本文说明关于服务器端的部分。 快速开始： 123456789101112131415161718package mainimport (  &quot;log&quot;  &quot;net/http&quot;)func main() &amp;#123;  // 设置 路由  http.HandleFunc(&quot;/&quot;, IndexAction)  // 开启监听  lo">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://asset.hellokang.net/images/go/server-welcome.png">
+<meta property="og:updated_time" content="2018-11-09T13:32:10.595Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Go语言中处理 HTTP 服务器">
+<meta name="twitter:description" content="1 概述包 net/http 提供了HTTP服务器端（和客户端）的实现。本文说明关于服务器端的部分。 快速开始： 123456789101112131415161718package mainimport (  &quot;log&quot;  &quot;net/http&quot;)func main() &amp;#123;  // 设置 路由  http.HandleFunc(&quot;/&quot;, IndexAction)  // 开启监听  lo">
+<meta name="twitter:image" content="http://asset.hellokang.net/images/go/server-welcome.png">
+  
+    <link rel="alternative" href="/atom.xml" title="小韩说课" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+  <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<div id="container">
+  <div id="wrap">
+    <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">小韩说课</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">PHP，Python，JavaScript，Go，MySQL...</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="http://go.hellokang.net/">Go语言指导</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <!-- <a id="nav-search-btn" class="nav-icon" title="Search"></a> -->
+      </nav>
+<!--       <div id="search-form-wrap">
+        <form action="#" method="get" accept-charset="utf-8" class="search-form" id="local-search-form">
+          <input type="text" id="local-search-input" class="search-form-input" placeholder="Search" /> 
+          <input type="submit" class="search-form-submit">
+          <div id="local-search-result"></div>
+        </form>
+      </div> -->
+    </div>
+  </div>
+</header>
+    <div class="outer">
+      <section id="main"><article id="post-go-http-server" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/go/go-http-server/" class="article-date">
+  <time datetime="2018-11-09T13:30:16.000Z" itemprop="datePublished">2018-11-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/go/">go</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Go语言中处理 HTTP 服务器
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2><span id="1-概述">1 概述</span></h2><p>包 <code>net/http</code> 提供了HTTP服务器端（和客户端）的实现。本文说明关于服务器端的部分。</p>
+<p>快速开始：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">  <span class="string">"log"</span></span><br><span class="line">  <span class="string">"net/http"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  <span class="comment">// 设置 路由</span></span><br><span class="line">  http.HandleFunc(<span class="string">"/"</span>, IndexAction)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 开启监听</span></span><br><span class="line">  log.Fatal(http.ListenAndServe(<span class="string">":8888"</span>, <span class="literal">nil</span>))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">IndexAction</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">  w.Write([]<span class="keyword">byte</span>(<span class="string">`&lt;h1 align="center"&gt;来自小韩说课的问候&lt;/h1&gt;`</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行程序，在浏览器上请求： <code>localhost:8888</code>，你会看到我们的结果：</p>
+<p><img src="http://asset.hellokang.net/images/go/server-welcome.png" alt="第一个服务器程序"></p>
+<p>Go语言构建HTTP服务器还是很容易的。深入说明。</p>
+<a id="more"></a>
+<h2><span id="2-httpserver-类型">2 http.Server 类型</span></h2><p>HTTP 服务器在 Go 语言中是由 <code>http.Server</code> 结构体对象实现的。参考 <code>http.ListenAndServe()</code> 的实现：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 文件：src/net/http/server.go</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ListenAndServe always returns a non-nil error.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">ListenAndServe</span><span class="params">(addr <span class="keyword">string</span>, handler Handler)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">  server := &amp;Server&#123;Addr: addr, Handler: handler&#125;</span><br><span class="line">  <span class="keyword">return</span> server.ListenAndServe()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可见过程是先实例化 <code>Server</code> 对象，再完成 <code>ListenAndServe</code> 。其中 <code>Serve</code> 对象就是表示 HTTP 服务器的对象。其结构如下<br>：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 文件：src/net/http/server.go</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Server <span class="keyword">struct</span> &#123;</span><br><span class="line">  Addr    <span class="keyword">string</span>  <span class="comment">// TCP 监听地址, 留空为：":http"</span></span><br><span class="line">  Handler Handler <span class="comment">// 调用的 handler（路由处理器）, 设为 nil 表示 http.DefaultServeMux</span></span><br><span class="line"></span><br><span class="line">  TLSConfig *tls.Config <span class="comment">// TLS 配置对象</span></span><br><span class="line">  ReadTimeout time.Duration <span class="comment">// 请求超时时长</span></span><br><span class="line">  ReadHeaderTimeout time.Duration <span class="comment">// 请求头超时时长</span></span><br><span class="line">  WriteTimeout time.Duration <span class="comment">// 响应超时时长</span></span><br><span class="line">  IdleTimeout time.Duration <span class="comment">// 请求空闲时长（keep-alive下两个请求间）</span></span><br><span class="line">  MaxHeaderBytes <span class="keyword">int</span> <span class="comment">// 请求头的最大长度</span></span><br><span class="line">  TLSNextProto <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="function"><span class="keyword">func</span><span class="params">(*Server, *tls.Conn, Handler)</span> // <span class="title">NPN</span> 型协议升级出现时接管<span class="title">TLS</span>连接的处理器函数映射表</span></span><br><span class="line"><span class="function">  <span class="title">ConnState</span> <span class="title">func</span><span class="params">(net.Conn, ConnState)</span> // 状态转换事件处理器</span></span><br><span class="line"><span class="function">  <span class="title">ErrorLog</span> *<span class="title">log</span>.<span class="title">Logger</span> // 日志记录对象</span></span><br><span class="line"><span class="function">  <span class="title">disableKeepAlives</span> <span class="title">int32</span>     // <span class="title">accessed</span> <span class="title">atomically</span>.</span></span><br><span class="line">  inShutdown        int32     // accessed atomically (non-zero means we're in Shutdown)</span><br><span class="line">  nextProtoOnce     sync.Once <span class="comment">// guards setupHTTP2_* init</span></span><br><span class="line">  nextProtoErr      error     <span class="comment">// result of http2.ConfigureServer if used</span></span><br><span class="line">  mu         sync.Mutex</span><br><span class="line">  listeners  <span class="keyword">map</span>[*net.Listener]<span class="keyword">struct</span>&#123;&#125;</span><br><span class="line">  activeConn <span class="keyword">map</span>[*conn]<span class="keyword">struct</span>&#123;&#125;</span><br><span class="line">  doneChan   <span class="keyword">chan</span> <span class="keyword">struct</span>&#123;&#125;</span><br><span class="line">  onShutdown []<span class="function"><span class="keyword">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>可见 <code>Server</code> 定义了服务器需要的信息。<br>实例化了 <code>Server</code> 对象后，调用其 <code>(srv *Server) ListenAndServe() error</code> 方法。该方法会监听 <code>srv.Addr</code> 指定的 TCP 地址，并通过 <code>(srv *Server) Serve(l net.Listener) error</code> 方法接收浏览器端连接请求。<code>Serve</code> 方法会接收监听器 l 收到的每一个连接，并为每一个连接创建一个新的服务进程。该 go 进程会读取请求，然后调用 <code>srv.Handler</code> 处理并响应。<code>srv.Handler</code> 是一个路由，针对于请求 path 调用对应的处理器函数。</p>
+<h2><span id="3-serverhandler">3 Server.Handler</span></h2>
+      
+    </div>
+    <footer class="article-footer">
+      
+        <!-- <a data-url="http://blog.hellokang.net/go/go-http-server/" data-id="cjoa293vq000ftguocx0c7ggo" class="article-share-link">分享到</a> -->
+      
+
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/go/go-regexp-syntax/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">Go语言支持的正则语法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+  <section class="changyan" id="comments">
+<!--PC和WAP自适应版-->
+<div id="SOHUCS" sid="cjoa293vq000ftguocx0c7ggo"></div> 
+<script type="text/javascript"> 
+	(function(){ 
+		var appid = 'cyt64TYiv'; 
+		var conf = 'prod_8144667773d887f47faa11a45cb29175'; 
+		var width = window.innerWidth || document.documentElement.clientWidth; 
+		if (width < 960) { 
+			window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })(); </script>
+</section>
+ </section>
+      
+      <aside id="sidebar">
+  
+      <div class="widget-wrap author">
+    <h3 class="widget-title">&nbsp;</h3>
+    <div class="widget">
+      <div class="avatar">
+        <img src="/images/avatar.png" >
+      </div>
+      <div class="info">
+        <ul>
+          <li>
+            <h3>韩忠康</h3>
+            <wb:follow-button uid="5846559498" type="red_1" width="67" height="24" ></wb:follow-button>
+            <a href="https://github.com/hanzkering" class="fa-icon fa-github" > GitHub</a>
+          </li>
+          <li>程序员，培训讲师</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+    <div class="widget-wrap author">
+  <h3 class="widget-title">微信关注</h3>    
+  <div class="widget">
+    <img src="/images/wechat_subscription.jpg">
+  </div>
+</div>
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">30</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">23</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">23</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/error/" style="font-size: 10px;">error</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/go/" style="font-size: 20px;">go</a> <a href="/tags/goGuide/" style="font-size: 20px;">goGuide</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">近期文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/go/go-http-server/">Go语言中处理 HTTP 服务器</a>
+          </li>
+        
+          <li>
+            <a href="/go/go-regexp-syntax/">Go语言支持的正则语法</a>
+          </li>
+        
+          <li>
+            <a href="/go/go-regexp/">Go语言中正则表达式的处理</a>
+          </li>
+        
+          <li>
+            <a href="/go/go-template/">Go语言中的模板引擎</a>
+          </li>
+        
+          <li>
+            <a href="/go/go-reflect-invoke/">Go语言反射之反射调用</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">友情链接</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="https://github.com/hanzkering" target="_blank">GibHub</a>
+          </li>
+        
+          <li>
+            <a href="http://go.hellokang.net/" target="_blank">Go语言指导</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 韩忠康<br>
+      Powered by <a href="//hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+  </div>
+  <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="http://go.hellokang.net/" class="mobile-nav-link">Go语言指导</a>
+  
+</nav>
+  <!-- totop start -->
+<div id="totop">
+<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+</div>
+
+<!-- totop end -->
+
+
+<!-- 百度分享 start -->
+
+<!-- 百度分享 end -->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>
