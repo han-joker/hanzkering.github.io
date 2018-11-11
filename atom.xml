@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.hellokang.net/"/>
-  <updated>2018-11-11T08:55:26.108Z</updated>
+  <updated>2018-11-11T08:57:33.394Z</updated>
   <id>http://blog.hellokang.net/</id>
   
   <author>
@@ -18,10 +18,10 @@
   
   <entry>
     <title>go-http-request</title>
-    <link href="http://blog.hellokang.net/uncategorized/go-http-request/"/>
-    <id>http://blog.hellokang.net/uncategorized/go-http-request/</id>
+    <link href="http://blog.hellokang.net/go/go-http-request/"/>
+    <id>http://blog.hellokang.net/go/go-http-request/</id>
     <published>2018-11-11T08:54:19.000Z</published>
-    <updated>2018-11-11T08:55:26.108Z</updated>
+    <updated>2018-11-11T08:57:33.394Z</updated>
     
     <summary type="html">
     
@@ -40,6 +40,12 @@
     
     </summary>
     
+      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
+    
+    
+      <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
+    
+      <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
     
   </entry>
   
