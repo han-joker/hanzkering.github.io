@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.hellokang.net/"/>
-  <updated>2018-11-11T08:57:33.394Z</updated>
+  <updated>2018-11-11T08:59:13.656Z</updated>
   <id>http://blog.hellokang.net/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>go-http-request</title>
+    <title>Go中处理请求</title>
     <link href="http://blog.hellokang.net/go/go-http-request/"/>
     <id>http://blog.hellokang.net/go/go-http-request/</id>
     <published>2018-11-11T08:54:19.000Z</published>
-    <updated>2018-11-11T08:57:33.394Z</updated>
+    <updated>2018-11-11T08:59:13.656Z</updated>
     
     <summary type="html">
     
