@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.hellokang.net/"/>
-  <updated>2018-11-10T14:04:22.125Z</updated>
+  <updated>2018-11-11T08:55:26.108Z</updated>
   <id>http://blog.hellokang.net/</id>
   
   <author>
@@ -17,11 +17,38 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>go-http-request</title>
+    <link href="http://blog.hellokang.net/uncategorized/go-http-request/"/>
+    <id>http://blog.hellokang.net/uncategorized/go-http-request/</id>
+    <published>2018-11-11T08:54:19.000Z</published>
+    <updated>2018-11-11T08:55:26.108Z</updated>
+    
+    <summary type="html">
+    
+      &lt;!-- toc --&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#1-概述&quot;&gt;1 概述&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#2-httprequest-结构&quot;&gt;2 &lt;code&gt;http.Request&lt;/code&gt; 结构&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#3-请求方式&quot;&gt;3 请求方式&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#4-请求参数&quot;&gt;4 请求参数&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#5-请求头&quot;&gt;5 请求头&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#6-请求-url&quot;&gt;6 请求 URL&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+&lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h2&gt;&lt;p&gt;Go 语言 HTTP 服务器，在启动监听并处理接收的请求时，会将请求相关数据封装成 &lt;code&gt;http.Request&lt;/code&gt; 对象，同时作为参数传递到请求处理器中。处理器函数的第二个参数就是对 &lt;code&gt;http.Request&lt;/code&gt; 对象的一个引用,示例代码为：&lt;/p&gt;
+&lt;figure class=&quot;highlight go&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;comment&quot;&gt;// 设置 路由&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  http.HandleFunc(&lt;span class=&quot;string&quot;&gt;&quot;/&quot;&lt;/span&gt;, IndexAction)·&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;comment&quot;&gt;// 开启监听&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  log.Fatal(http.ListenAndServe(&lt;span class=&quot;string&quot;&gt;&quot;:8888&quot;&lt;/span&gt;, &lt;span class=&quot;literal&quot;&gt;nil&lt;/span&gt;))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;IndexAction&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(w http.ResponseWriter, r *http.Request)&lt;/span&gt;&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  w.Write([]&lt;span class=&quot;keyword&quot;&gt;byte&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;`&amp;lt;h1 align=&quot;center&quot;&amp;gt;来自小韩说课的问候&amp;lt;/h1&amp;gt;`&lt;/span&gt;))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>Go语言中处理 HTTP 服务器</title>
     <link href="http://blog.hellokang.net/go/go-http-server/"/>
     <id>http://blog.hellokang.net/go/go-http-server/</id>
     <published>2018-11-09T13:30:16.000Z</published>
-    <updated>2018-11-10T14:04:22.125Z</updated>
+    <updated>2018-11-11T04:06:12.708Z</updated>
     
     <summary type="html">
     
@@ -646,42 +673,6 @@
 &lt;/ul&gt;
 &lt;!-- tocstop --&gt;
 &lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h2&gt;&lt;p&gt;Go语言提供了条件分支 if，状态分支 switch，循环 for，跳转 goto，延迟执行 defer，这些流程控制语句。分别作说明如下：&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
-    
-    
-      <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
-    
-      <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Go语言中的运算符</title>
-    <link href="http://blog.hellokang.net/go/go-operator/"/>
-    <id>http://blog.hellokang.net/go/go-operator/</id>
-    <published>2018-10-21T12:05:46.000Z</published>
-    <updated>2018-11-01T14:28:35.343Z</updated>
-    
-    <summary type="html">
-    
-      &lt;!-- toc --&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#1-概述&quot;&gt;1 概述&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#2-算术运算&quot;&gt;2 算术运算&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#3-字符串连接运算&quot;&gt;3 字符串连接运算 +&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#4-关系运算&quot;&gt;4 关系运算&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#5-逻辑运算&quot;&gt;5 逻辑运算&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#6-指针运算&quot;&gt;6 指针运算&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#7-位运算&quot;&gt;7 位运算&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#8-赋值运算&quot;&gt;8 赋值运算&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#9-运算符优先级&quot;&gt;9 运算符优先级&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#10-类型转换&quot;&gt;10 类型转换&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;!-- tocstop --&gt;
-&lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h2&gt;&lt;p&gt;Go语言提供了，算术，关系，逻辑，位，指针，赋值运算符。本篇整体说明一下。&lt;/p&gt;
     
     </summary>
     
