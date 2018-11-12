@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.hellokang.net/"/>
-  <updated>2018-11-11T08:59:13.656Z</updated>
+  <updated>2018-11-12T13:45:46.797Z</updated>
   <id>http://blog.hellokang.net/</id>
   
   <author>
@@ -15,6 +15,54 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>go-http-response</title>
+    <link href="http://blog.hellokang.net/go/go-http-response/"/>
+    <id>http://blog.hellokang.net/go/go-http-response/</id>
+    <published>2018-11-12T13:44:54.000Z</published>
+    <updated>2018-11-12T13:45:46.797Z</updated>
+    
+    <summary type="html">
+    
+      &lt;!-- toc --&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#1-概述&quot;&gt;1 概述&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#2-响应主体&quot;&gt;2 响应主体&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#3-响应头信息&quot;&gt;3 响应头信息&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#4-操作cookie&quot;&gt;4 操作cookie&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#5-重定向&quot;&gt;5 重定向&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#6-响应-404&quot;&gt;6 响应 404&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+&lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h2&gt;&lt;p&gt;Go 语言 HTTP 服务器，在启动监听并处理接收的请求时，会将实现了 &lt;code&gt;http.ResponseWriter&lt;/code&gt; 接口的 &lt;code&gt;http.Response&lt;/code&gt; 对象作为第一个参数传递到请求处理器，示例代码：&lt;/p&gt;
+&lt;figure class=&quot;highlight go&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;comment&quot;&gt;// 设置 路由&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  http.HandleFunc(&lt;span class=&quot;string&quot;&gt;&quot;/&quot;&lt;/span&gt;, IndexAction)·&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;comment&quot;&gt;// 开启监听&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  log.Fatal(http.ListenAndServe(&lt;span class=&quot;string&quot;&gt;&quot;:8888&quot;&lt;/span&gt;, &lt;span class=&quot;literal&quot;&gt;nil&lt;/span&gt;))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;IndexAction&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(w http.ResponseWriter, r *http.Request)&lt;/span&gt;&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  w.Write([]&lt;span class=&quot;keyword&quot;&gt;byte&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;`&amp;lt;h1 align=&quot;center&quot;&amp;gt;来自小韩说课的问候&amp;lt;/h1&amp;gt;`&lt;/span&gt;))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;示例代码中的参数 &lt;code&gt;w&lt;/code&gt; 就是这个响应对象。我们通过该对象完成响应的操作。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
+    
+    
+      <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
+    
+      <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>json-bson</title>
+    <link href="http://blog.hellokang.net/uncategorized/json-bson/"/>
+    <id>http://blog.hellokang.net/uncategorized/json-bson/</id>
+    <published>2018-11-12T11:27:44.000Z</published>
+    <updated>2018-11-12T11:27:44.714Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>Go中处理请求</title>
@@ -81,21 +129,71 @@
     <link href="http://blog.hellokang.net/go/go-regexp-syntax/"/>
     <id>http://blog.hellokang.net/go/go-regexp-syntax/</id>
     <published>2018-11-07T15:53:09.000Z</published>
-    <updated>2018-11-07T15:59:39.843Z</updated>
+    <updated>2018-11-12T11:27:00.660Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;h2&gt;&lt;span id=&quot;1-字符&quot;&gt;1 字符&lt;/span&gt;&lt;/h2&gt;&lt;table&gt;
+      &lt;h2 id=&quot;1-字符&quot;&gt;&lt;a href=&quot;#1-字符&quot; class=&quot;headerlink&quot; title=&quot;1 字符&quot;&gt;&lt;/a&gt;1 字符&lt;/h2&gt;&lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
 &lt;th style=&quot;text-align:left&quot;&gt;语法&lt;/th&gt;
-&lt;th
-        
-      
+&lt;th style=&quot;text-align:left&quot;&gt;说明&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;.&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;任意字符，在单行模式（s标志）下，也可以匹配换行&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;[xyz]&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;字符类&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;[^xyz]&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;否定字符类&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\d&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Perl 字符类&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\D&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;否定 Perl 字符类&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;[[:alpha:]]&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;ASCII 字符类&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;[[:^alpha:]]&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;否定 ASCII 字符类&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\pN&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Unicode 字符类 (one-letter name)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\p{Greek}&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Unicode 字符类&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\PN&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;否定 Unicode 字符类 (one-letter name)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\P{Greek}&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;否定 Unicode 字符类&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;参考以下附录，获取具体字符类的内容：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://go.hellokang.net/regexp-perl.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Perl 字符类&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://go.hellokang.net/regexp-ascii.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;ASCII 字符类&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://go.hellokang.net/regexp-unicode-one-letter.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Unicode 字符类 (one-letter name)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://go.hellokang.net/regexp-unicode.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Unicode 字符类&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
     
     </summary>
     
@@ -612,73 +710,6 @@
 &lt;/ul&gt;
 &lt;!-- tocstop --&gt;
 &lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h2&gt;&lt;p&gt;Go 语言的源码复用建立在包（package）基础之上。包通过 package, import, GOPATH 操作完成。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
-    
-    
-      <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
-    
-      <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Go语言中的函数</title>
-    <link href="http://blog.hellokang.net/go/go-function/"/>
-    <id>http://blog.hellokang.net/go/go-function/</id>
-    <published>2018-10-22T04:04:53.000Z</published>
-    <updated>2018-11-01T14:28:16.578Z</updated>
-    
-    <summary type="html">
-    
-      &lt;!-- TOC --&gt;
-&lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h2&gt;&lt;p&gt;函数，function，独立的，用于实现具体功能的代码块。主要目的，是代码的重用（重复使用），更好的管理代码，模块化开发。&lt;br&gt;函数通常使用参数和返回值，与调用者交互数据。参数给函数传递数据，返回值，函数将处理好的数据传递给调用者。&lt;br&gt;Go语言中函数被称为一等公民（first-class）。意味着支持高阶函数，支持匿名函数，支持闭包等特性，可以满足接口等高级函数特性。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
-    
-    
-      <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
-    
-      <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Go语言中的流程控制</title>
-    <link href="http://blog.hellokang.net/go/go-flow-control/"/>
-    <id>http://blog.hellokang.net/go/go-flow-control/</id>
-    <published>2018-10-21T12:15:24.000Z</published>
-    <updated>2018-11-01T14:28:08.570Z</updated>
-    
-    <summary type="html">
-    
-      &lt;!-- toc --&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#1-概述&quot;&gt;1 概述&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#2-条件分支-if&quot;&gt;2 条件分支 if&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#3-状态分支-switch&quot;&gt;3 状态分支 switch&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#31-基础&quot;&gt;3.1 基础&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#32-fallthrough向下穿越&quot;&gt;3.2 fallthrough，向下穿越&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#33-条件型-switch&quot;&gt;3.3 条件型 switch&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#4-循环for&quot;&gt;4 循环for&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#41-基本&quot;&gt;4.1 基本&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#42-省略语句&quot;&gt;4.2 省略语句&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#43-break&quot;&gt;4.3 break&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#44-continue&quot;&gt;4.4 continue&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#45-嵌套循环&quot;&gt;4.5 嵌套循环&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#5-goto&quot;&gt;5 goto&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#6-延迟执行defer&quot;&gt;6 延迟执行defer&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;!-- tocstop --&gt;
-&lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h2&gt;&lt;p&gt;Go语言提供了条件分支 if，状态分支 switch，循环 for，跳转 goto，延迟执行 defer，这些流程控制语句。分别作说明如下：&lt;/p&gt;
     
     </summary>
     

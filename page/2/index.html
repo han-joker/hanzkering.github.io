@@ -21,7 +21,7 @@
     <link rel="alternative" href="/atom.xml" title="小韩说课" type="application/atom+xml">
   
   
-    <link rel="icon" href="/images/favicon.png">
+    <link rel="icon" href="http://asset.hellokang.net/images/common/favicon.png">
   
   <link rel="stylesheet" href="/css/style.css">
   <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
@@ -76,6 +76,121 @@
     <div class="outer">
       <section id="main">
   
+    <article id="post-go-struct-i" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/go/go-struct-i/" class="article-date">
+  <time datetime="2018-10-31T04:08:38.000Z" itemprop="datePublished">2018-10-31</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/go/">go</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/go/go-struct-i/">Go语言中结构体的使用-第1部分结构体</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- toc -->
+<ul>
+<li><a href="#1-概述">1 概述</a></li>
+<li><a href="#2-定义语法">2 定义语法</a></li>
+<li><a href="#3-实例化">3 实例化</a></li>
+<li><a href="#4-值类型">4 值类型</a></li>
+<li><a href="#5-初始化属性">5 初始化属性</a></li>
+<li><a href="#6-成员访问运算符点号">6 <code>.</code> 成员访问运算符点号</a></li>
+<li><a href="#7-匿名结构体">7 匿名结构体</a></li>
+</ul>
+<!-- tocstop -->
+<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h2><p>结构体是由成员构成的复合类型。Go 语言使用结构体和结构体成员来描述真实世界的实体和实体对应的各种属性。<br>结构体成员，也可称之为成员变量，字段，属性。属性要满足唯一性。<br>结构体的概念在软件工程上旧的术语叫 ADT（抽象数据类型：Abstract Data Type）<br>数据层面，结构体是自定义数据类型，可以理解成是由一系列具有相同或不同类型的数据构成的数据集合。因此结构体也被称之为抽象数据类型（ADT，Abstract Data Type）。<br>在Go语言中，结构体承担着面向对象语言中类的作用。</p>
+<p>Go语言中，结构体本身仅用来定义属性。还可以通过接收器函数来定义方法，使用内嵌结构体来定义继承。这样使用结构体相关操作Go语言就可以实现OOP面向对象编程了。</p>
+<p>我们先看结构体相关语法，再看OOP相关的。<br>
+        
+          <p class="article-more-link">
+            <a href="/go/go-struct-i/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+        <!-- <a data-url="http://blog.hellokang.net/go/go-struct-i/" data-id="cjoed2anz002us4uol1dd7wff" class="article-share-link">分享到</a> -->
+      
+
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+ 
+  
+    <article id="post-go-map" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/go/go-map/" class="article-date">
+  <time datetime="2018-10-30T10:29:57.000Z" itemprop="datePublished">2018-10-30</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/go/">go</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/go/go-map/">Go语言中映射表map的使用</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h2><p>Go语言中的键值对(key-&gt;value)集合，称之为映射map。映射map是变长类型，定义时不需要指定长度。映射map是无序的，遍历是的顺序不可期，原因是底层由hash表实现。<br>逻辑结构表示为：<br><img src="http://www.hellokang.net/images/posts/go/go-map.png" alt="map示意"></p>
+        
+          <p class="article-more-link">
+            <a href="/go/go-map/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+        <!-- <a data-url="http://blog.hellokang.net/go/go-map/" data-id="cjoed2amo000qs4uovbilxc1t" class="article-share-link">分享到</a> -->
+      
+
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+ 
+  
     <article id="post-go-slice" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/go/go-slice/" class="article-date">
@@ -121,7 +236,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-slice/" data-id="cjocn92yu001zjguo5jqy4li1" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-slice/" data-id="cjoed2anj0024s4uoiabuko49" class="article-share-link">分享到</a> -->
       
 
       
@@ -173,7 +288,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-array/" data-id="cjocn92xp000djguouhcl6120" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-array/" data-id="cjoed2amg000hs4uo4rj8h5lg" class="article-share-link">分享到</a> -->
       
 
       
@@ -259,7 +374,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-strconv/" data-id="cjocn92yz0028jguo1k259q71" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-strconv/" data-id="cjoed2ang001ys4uob7r7kki0" class="article-share-link">分享到</a> -->
       
 
       
@@ -310,7 +425,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-utf8/" data-id="cjocn92yy0025jguo5s7kprqx" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-utf8/" data-id="cjoed2ann002as4uo1gcywrn0" class="article-share-link">分享到</a> -->
       
 
       
@@ -429,7 +544,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-string/" data-id="cjocn92ys001wjguo6ocf3312" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-string/" data-id="cjoed2anh0021s4uokiq95o5g" class="article-share-link">分享到</a> -->
       
 
       
@@ -490,7 +605,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-package/" data-id="cjocn92yd0019jguothxnkmt5" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-package/" data-id="cjoed2an0001bs4uocmtjxtd9" class="article-share-link">分享到</a> -->
       
 
       
@@ -542,7 +657,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-function/" data-id="cjocn92y80012jguo9ja4u1wv" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-function/" data-id="cjoed2amu0011s4uor4yvkopt" class="article-share-link">分享到</a> -->
       
 
       
@@ -615,7 +730,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-flow-control/" data-id="cjocn92y1000rjguoo1rblqv7" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-flow-control/" data-id="cjoed2amk000ls4uod1mjoskh" class="article-share-link">分享到</a> -->
       
 
       
@@ -680,7 +795,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-operator/" data-id="cjocn92yf001cjguohq7umapg" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-operator/" data-id="cjoed2amw0014s4uorwd9aitf" class="article-share-link">分享到</a> -->
       
 
       
@@ -767,138 +882,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjocn92za002qjguob0ycw07n" class="article-share-link">分享到</a> -->
-      
-
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
- 
-  
-    <article id="post-go-variable" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/go/go-variable/" class="article-date">
-  <time datetime="2018-10-18T10:51:32.000Z" itemprop="datePublished">2018-10-18</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/go/">go</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/go/go-variable/">Go语言中的变量</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!-- toc -->
-<ul>
-<li><a href="#1-概述">1 概述</a></li>
-<li><a href="#2-定义声明和初始化">2 定义：声明和初始化</a></li>
-<li><a href="#3-类型默认值零值">3 类型默认值（零值）</a></li>
-<li><a href="#4-强类型">4 强类型</a></li>
-<li><a href="#5-类型推导">5 类型推导</a></li>
-<li><a href="#6-短声明定义">6 短声明（定义）</a></li>
-<li><a href="#7-批量定义">7 批量定义</a></li>
-<li><a href="#8-批量赋值">8 批量赋值</a></li>
-<li><a href="#9-匿名变量">9 匿名变量</a></li>
-<li><a href="#10-变量作用域">10 变量作用域</a></li>
-</ul>
-<!-- tocstop -->
-<p>[TOC]</p>
-<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h2><p>变量（Variable）是程序运行过程中，内容可以变化（修改）的量，变量的功能是存储用户的数据，是计算机语言中能储存计算结果或能表示值抽象概念。<br>变量，是通过变量的标识符定位值的过程。变量的内存模拟演示：</p>
-<p><img src="http://www.hellokang.net/images/posts/go/go-variable.png" alt="变量的内存模拟演示"></p>
-        
-          <p class="article-more-link">
-            <a href="/go/go-variable/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-        <!-- <a data-url="http://blog.hellokang.net/go/go-variable/" data-id="cjocn92z7002kjguonwlajbik" class="article-share-link">分享到</a> -->
-      
-
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
- 
-  
-    <article id="post-go-constant" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/go/go-constant/" class="article-date">
-  <time datetime="2018-10-17T14:50:38.000Z" itemprop="datePublished">2018-10-17</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/go/">go</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/go/go-constant/">Go语言中的常量</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!-- toc -->
-<ul>
-<li><a href="#1-概述">1 概述</a></li>
-<li><a href="#2-定义单个常量">2 定义单个常量</a></li>
-<li><a href="#3-类型推导">3 类型推导</a></li>
-<li><a href="#4-定义多个常量">4 定义多个常量</a></li>
-<li><a href="#5-iota迭代定义常量">5 iota迭代定义常量</a></li>
-<li><a href="#6-常量在编译时确定">6 常量在编译时确定</a></li>
-<li><a href="#7-常量的作用">7 常量的作用</a></li>
-</ul>
-<!-- tocstop -->
-<p>[TOC]</p>
-<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h2><p>常量，一经定义不可更改的量。功能角度看，当出现不需要被更改的数据时，应该使用常量进行存储，例如圆周率。从语法的角度看，使用常量可以保证数据，在整个运行期间内，不会被更改。例如当前处理器的架构类型，可以保证不被更改。</p>
-<p>语法如下：</p>
-        
-          <p class="article-more-link">
-            <a href="/go/go-constant/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-        <!-- <a data-url="http://blog.hellokang.net/go/go-constant/" data-id="cjocn92xw000kjguo1cg5ollr" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjoed2anu002ms4uo7bu5l5px" class="article-share-link">分享到</a> -->
       
 
       
@@ -916,7 +900,7 @@
 
 
   <nav id="page-nav">
-    <a class="extend prev" rel="prev" href="/">&laquo; 上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">下一页 &raquo;</a>
+    <a class="extend prev" rel="prev" href="/">&laquo; 上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">下一页 &raquo;</a>
   </nav>
 </section>
       
@@ -952,7 +936,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">31</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">32</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -961,7 +945,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">24</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">24</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">25</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">25</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -979,7 +963,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -991,6 +975,14 @@
       <ul>
         
           <li>
+            <a href="/go/go-http-response/">go-http-response</a>
+          </li>
+        
+          <li>
+            <a href="/uncategorized/json-bson/">json-bson</a>
+          </li>
+        
+          <li>
             <a href="/go/go-http-request/">Go中处理请求</a>
           </li>
         
@@ -1000,14 +992,6 @@
         
           <li>
             <a href="/go/go-regexp-syntax/">Go语言支持的正则语法</a>
-          </li>
-        
-          <li>
-            <a href="/go/go-regexp/">Go语言中正则表达式的处理</a>
-          </li>
-        
-          <li>
-            <a href="/go/go-template/">Go语言中的模板引擎</a>
           </li>
         
       </ul>
