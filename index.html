@@ -76,6 +76,106 @@
     <div class="outer">
       <section id="main">
   
+    <article id="post-go-http-template-syntax" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/uncategorized/go-http-template-syntax/" class="article-date">
+  <time datetime="2018-11-13T14:32:46.185Z" itemprop="datePublished">2018-11-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+        <!-- <a data-url="http://blog.hellokang.net/uncategorized/go-http-template-syntax/" data-id="cjofubyv90015p8uoxzmk05va" class="article-share-link">分享到</a> -->
+      
+
+      
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+ 
+  
+    <article id="post-go-http-template" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/go/go-http-template/" class="article-date">
+  <time datetime="2018-11-13T14:32:37.000Z" itemprop="datePublished">2018-11-13</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/go/">go</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/go/go-http-template/">Go语言中使用模板引擎</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- toc -->
+<ul>
+<li><a href="#1-概述">1 概述</a></li>
+<li><a href="#2-解析模板">2 解析模板</a></li>
+<li><a href="#3-应用数据并发送响应">3 应用数据并发送响应</a></li>
+</ul>
+<!-- tocstop -->
+<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h2><p>处理响应主体时，最常见的方式就是发送处理好的 HTML 代码，由于需要将数据嵌入到 HTML 中，那么模板引擎（template engine）就是最好的选择。</p>
+<p>Go语言中，提供了 <code>html/template</code> 包，实现模板引擎的相关功能。快速使用示例：</p>
+<blockquote>
+<p>main.go</p>
+</blockquote>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">  <span class="string">"html/template"</span></span><br><span class="line">  <span class="string">"log"</span></span><br><span class="line">  <span class="string">"net/http"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  <span class="comment">// 设置 处理函数</span></span><br><span class="line">  http.HandleFunc(<span class="string">"/"</span>, TestAction)</span><br><span class="line">  <span class="comment">//// 开启监听（监听浏览器请求）</span></span><br><span class="line">  log.Fatal(http.ListenAndServe(<span class="string">":8084"</span>, <span class="literal">nil</span>))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestAction</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">  <span class="comment">// 解析模板</span></span><br><span class="line">  t, _ := template.ParseFiles(<span class="string">"template/index.html"</span>)</span><br><span class="line">  <span class="comment">// 设置模板数据</span></span><br><span class="line">  data := <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">interface</span>&#123;&#125;&#123;</span><br><span class="line">    <span class="string">"User"</span>: <span class="string">"小韩说课"</span>,</span><br><span class="line">    <span class="string">"List"</span>: []<span class="keyword">string</span>&#123;<span class="string">"Go"</span>, <span class="string">"Python"</span>, <span class="string">"PHP"</span>, <span class="string">"JavaScript"</span>&#125;,</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 渲染模板，发送响应</span></span><br><span class="line">  t.Execute(w, data)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>template/index.html</p>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>小韩说课<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line">Hello, &#123;&#123; .User &#125;&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line"></span><br><span class="line">你熟悉的技术：</span><br><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">&#123;&#123; range .List &#125;&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>&#123;&#123;.&#125;&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">&#123;&#123;end&#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<p><img src="http://asset.hellokang.net/images/go/go-http-template-1.png" alt="执行结果"></p>
+<p>以上代码就完了模板引擎的基本使用，包括解析模板，渲染数据，响应结果操作。接下来详细说明。</p>
+        
+          <p class="article-more-link">
+            <a href="/go/go-http-template/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+        <!-- <a data-url="http://blog.hellokang.net/go/go-http-template/" data-id="cjofubyv1000vp8uos11yaklz" class="article-share-link">分享到</a> -->
+      
+
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+ 
+  
     <article id="post-go-http-response" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/go/go-http-response/" class="article-date">
@@ -124,7 +224,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-http-response/" data-id="cjoed2ami000js4uo9r4n9s0y" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-http-response/" data-id="cjofubyuu000mp8uoyopiye9s" class="article-share-link">分享到</a> -->
       
 
       
@@ -166,7 +266,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/uncategorized/json-bson/" data-id="cjoed2ao1002xs4uovfgf9jqi" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/uncategorized/json-bson/" data-id="cjofubyxb003kp8uoefiuv7lv" class="article-share-link">分享到</a> -->
       
 
       
@@ -212,7 +312,8 @@
 <li><a href="#3-请求方式">3 请求方式</a></li>
 <li><a href="#4-请求参数">4 请求参数</a></li>
 <li><a href="#5-请求头">5 请求头</a></li>
-<li><a href="#6-请求-url">6 请求 URL</a></li>
+<li><a href="#6-获取-cookie">6 获取 cookie</a></li>
+<li><a href="#7-请求-url">7 请求 URL</a></li>
 </ul>
 <!-- tocstop -->
 <h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h2><p>Go 语言 HTTP 服务器，在启动监听并处理接收的请求时，会将请求相关数据封装成 <code>http.Request</code> 对象，同时作为参数传递到请求处理器中。处理器函数的第二个参数就是对 <code>http.Request</code> 对象的一个引用,示例代码为：</p>
@@ -226,7 +327,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-http-request/" data-id="cjoed2amm000os4uo9q1fospn" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-http-request/" data-id="cjofubyuq000jp8uo3vk97kon" class="article-share-link">分享到</a> -->
       
 
       
@@ -282,7 +383,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-http-server/" data-id="cjoed2anb001ss4uo7vsghjiq" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-http-server/" data-id="cjofubyvc0018p8uotp1v05v3" class="article-share-link">分享到</a> -->
       
 
       
@@ -393,7 +494,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-regexp-syntax/" data-id="cjoed2an7001ms4uo6inw9ee2" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-regexp-syntax/" data-id="cjofubywk002ip8uobs5kblt1" class="article-share-link">分享到</a> -->
       
 
       
@@ -445,7 +546,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-regexp/" data-id="cjoed2anl0027s4uogce6ahd3" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-regexp/" data-id="cjofubywn002op8uovdppgo0w" class="article-share-link">分享到</a> -->
       
 
       
@@ -495,7 +596,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-template/" data-id="cjoed2anp002ds4uo1hy6usgo" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-template/" data-id="cjofubywv002xp8uof28qqr16" class="article-share-link">分享到</a> -->
       
 
       
@@ -554,7 +655,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-reflect-invoke/" data-id="cjoed2an9001ps4uodheq0da9" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-reflect-invoke/" data-id="cjofubyvl001kp8uovcg82tl6" class="article-share-link">分享到</a> -->
       
 
       
@@ -613,7 +714,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-reflect-value/" data-id="cjoed2ane001vs4uoqsw587nq" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-reflect-value/" data-id="cjofubywl002lp8uozt3wai2f" class="article-share-link">分享到</a> -->
       
 
       
@@ -676,123 +777,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-reflect-structure/" data-id="cjoed2an3001fs4uoync1pmg1" class="article-share-link">分享到</a> -->
-      
-
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
- 
-  
-    <article id="post-go-interface" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/uncategorized/go-interface/" class="article-date">
-  <time datetime="2018-11-02T13:46:10.000Z" itemprop="datePublished">2018-11-02</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/uncategorized/go-interface/">Go语言中接口的使用</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!-- toc -->
-<ul>
-<li><a href="#1-概述">1 概述</a></li>
-<li><a href="#2-定义语法">2 定义语法</a></li>
-<li><a href="#3-对象实现接口">3 对象实现接口</a></li>
-<li><a href="#4-判断对象是否实现接口">4 判断对象是否实现接口</a></li>
-<li><a href="#5-通过接口调用对象方法">5 通过接口调用对象方法</a></li>
-<li><a href="#6-空接口">6 空接口</a></li>
-<li><a href="#7-接口间的嵌套">7 接口间的嵌套</a></li>
-</ul>
-<!-- tocstop -->
-<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h2><p>接口，interface，是用于规范对象应该具备哪些方法的技术。OOP中与结构体配合使用，对象使用结构体规范应该具有的书写，而对外通过接口暴露方法。Go 语言的接口设计是非侵入式的，接口实现者（也就是结构体）无须指明实现哪一个接口。编译器在编译时来确定使用哪个接口。<br>在 Go 语言中，接口是一种引用的数据类型出现的。但体现的功能是规范，而不是数据。<br>做 OOP 开发时，通常要保证一类操作具有相同的方法调用，此时就需要使用接口实现。<br>
-        
-          <p class="article-more-link">
-            <a href="/uncategorized/go-interface/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-        <!-- <a data-url="http://blog.hellokang.net/uncategorized/go-interface/" data-id="cjoed2amq000us4uoxt006ejh" class="article-share-link">分享到</a> -->
-      
-
-      
-
-      
-    </footer>
-  </div>
-  
-</article>
-
- 
-  
-    <article id="post-go-struct-ii" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/go/go-struct-ii/" class="article-date">
-  <time datetime="2018-10-31T08:39:28.000Z" itemprop="datePublished">2018-10-31</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/go/">go</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/go/go-struct-ii/">Go语言中结构体的使用-第2部分OOP</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!-- toc -->
-<ul>
-<li><a href="#1-概述">1 概述</a></li>
-<li><a href="#2-构造工厂函数">2 构造工厂函数</a></li>
-<li><a href="#3-成员方法接收器">3 成员方法（接收器）</a></li>
-<li><a href="#4-继承内嵌结构体">4 继承，内嵌结构体</a></li>
-<li><a href="#5-重写override">5 重写，override</a></li>
-</ul>
-<!-- tocstop -->
-<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h2><p>结构体的基本语法请参见：<a href="http://www.hellokang.net/go/go-struct-i/" target="_blank" rel="noopener">Go语言中结构体的使用-第1部分结构体</a>。<br>结构体除了是一个复合数据之外，还用来做面向对象编程。Go 语言使用结构体和结构体成员来描述真实世界的实体和实体对应的各种属性。也就意味着结构体类型可以类比为其他语言中的“类class”, 而结构体数据可以类比为其他语言中的 “对象”。<br>本文就说说结构体中，面向对象的部分。</p>
-        
-          <p class="article-more-link">
-            <a href="/go/go-struct-ii/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-        <!-- <a data-url="http://blog.hellokang.net/go/go-struct-ii/" data-id="cjoed2anx002rs4uooni1qtmo" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-reflect-structure/" data-id="cjofubywb002bp8uoqhrxtdl0" class="article-share-link">分享到</a> -->
       
 
       
@@ -846,7 +831,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">32</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">34</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -855,7 +840,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">25</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">25</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -873,7 +858,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -885,6 +870,14 @@
       <ul>
         
           <li>
+            <a href="/uncategorized/go-http-template-syntax/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/go/go-http-template/">Go语言中使用模板引擎</a>
+          </li>
+        
+          <li>
             <a href="/go/go-http-response/">Go中处理响应</a>
           </li>
         
@@ -894,14 +887,6 @@
         
           <li>
             <a href="/go/go-http-request/">Go中处理请求</a>
-          </li>
-        
-          <li>
-            <a href="/go/go-http-server/">Go语言中处理 HTTP 服务器</a>
-          </li>
-        
-          <li>
-            <a href="/go/go-regexp-syntax/">Go语言支持的正则语法</a>
           </li>
         
       </ul>

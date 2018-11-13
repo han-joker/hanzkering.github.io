@@ -76,6 +76,158 @@
     <div class="outer">
       <section id="main">
   
+    <article id="post-go-operator" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/go/go-operator/" class="article-date">
+  <time datetime="2018-10-21T12:05:46.000Z" itemprop="datePublished">2018-10-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/go/">go</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/go/go-operator/">Go语言中的运算符</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- toc -->
+<ul>
+<li><a href="#1-概述">1 概述</a></li>
+<li><a href="#2-算术运算">2 算术运算</a></li>
+<li><a href="#3-字符串连接运算">3 字符串连接运算 +</a></li>
+<li><a href="#4-关系运算">4 关系运算</a></li>
+<li><a href="#5-逻辑运算">5 逻辑运算</a></li>
+<li><a href="#6-指针运算">6 指针运算</a></li>
+<li><a href="#7-位运算">7 位运算</a></li>
+<li><a href="#8-赋值运算">8 赋值运算</a></li>
+<li><a href="#9-运算符优先级">9 运算符优先级</a></li>
+<li><a href="#10-类型转换">10 类型转换</a></li>
+</ul>
+<!-- tocstop -->
+<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h2><p>Go语言提供了，算术，关系，逻辑，位，指针，赋值运算符。本篇整体说明一下。</p>
+        
+          <p class="article-more-link">
+            <a href="/go/go-operator/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+        <!-- <a data-url="http://blog.hellokang.net/go/go-operator/" data-id="cjofubyw9002ap8uos9b3uq27" class="article-share-link">分享到</a> -->
+      
+
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+ 
+  
+    <article id="post-go-type" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/go/go-type/" class="article-date">
+  <time datetime="2018-10-19T09:59:26.000Z" itemprop="datePublished">2018-10-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/go/">go</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/go/go-type/">Go语言的数据类型</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- toc -->
+<ul>
+<li><a href="#1-概述">1 概述</a></li>
+<li><a href="#2-整数int">2 整数，int</a></li>
+<li><a href="#3-浮点数float">3 浮点数，float</a></li>
+<li><a href="#4-复数complex32complex64">4 复数，complex32,complex64</a></li>
+<li><a href="#5-字符byterune">5 字符，byte，rune</a></li>
+<li><a href="#6-字符串string">6 字符串，string</a></li>
+<li><a href="#7-布尔型bool">7 布尔型，bool</a></li>
+<li><a href="#8-指针pointer">8 指针，pointer</a></li>
+<li><a href="#9-数组array">9 数组，array</a></li>
+<li><a href="#10-nil">10 nil</a></li>
+<li><a href="#11-切片slice">11 切片，slice</a></li>
+<li><a href="#12-映射map">12 映射，map</a></li>
+<li><a href="#13-结构体struct">13 结构体，struct</a></li>
+<li><a href="#14-接口interface">14 接口，interface</a></li>
+<li><a href="#15-函数func">15 函数，func()</a></li>
+</ul>
+<!-- tocstop -->
+<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h2><p>Go语言作为类C语言，支持常规的基础数据类型的的同时，支持常用的高级数据类型。他们是：</p>
+<ul>
+<li>整数，int，uint，int8，uint8，int16，uint16，int32，uint32，int64，uint64</li>
+<li>浮点（小数），float32，float64</li>
+<li>复数，complex</li>
+<li>字符，byte，rune</li>
+<li>字符串，string</li>
+<li>布尔，bool</li>
+<li>指针，pointor</li>
+<li>数组，array</li>
+<li>nil</li>
+<li>切片，slice。（引用类型）</li>
+<li>映射，map</li>
+<li>结构体，struct</li>
+<li>接口，interface</li>
+<li>函数，func()</li>
+</ul>
+<p>本篇相当于一个类型索引。包含了Go语言中的全部类型。具体每种类型的操作，请参见具体章节！</p>
+        
+          <p class="article-more-link">
+            <a href="/go/go-type/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjofubyx50039p8uoootdtpzu" class="article-share-link">分享到</a> -->
+      
+
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+ 
+  
     <article id="post-go-variable" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/go/go-variable/" class="article-date">
@@ -128,7 +280,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-variable/" data-id="cjoed2anq002gs4uodkwcuu7y" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-variable/" data-id="cjofubyx9003fp8uov9jk1txv" class="article-share-link">分享到</a> -->
       
 
       
@@ -192,7 +344,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-constant/" data-id="cjoed2ama000as4uoydf6bbbe" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-constant/" data-id="cjofubyuo000gp8uoqelw3n8a" class="article-share-link">分享到</a> -->
       
 
       
@@ -234,7 +386,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/uncategorized/go-editor-sublime/" data-id="cjoed2am90009s4uoqmn1woag" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/uncategorized/go-editor-sublime/" data-id="cjofubyu8000ap8uom886pqw7" class="article-share-link">分享到</a> -->
       
 
       
@@ -283,7 +435,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/git/git-merge-rebase/" data-id="cjoed2am20004s4uoh079tjlx" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/git/git-merge-rebase/" data-id="cjofubyts0000p8uo5y5xkfix" class="article-share-link">分享到</a> -->
       
 
       
@@ -337,7 +489,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/hexo/hexo-github/" data-id="cjoed2ans002js4uox1rkbflq" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/hexo/hexo-github/" data-id="cjofubyx7003cp8uojp3l5dsw" class="article-share-link">分享到</a> -->
       
 
       
@@ -389,7 +541,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-error/" data-id="cjoed2ams000xs4uoecd6179w" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-error/" data-id="cjofubyuz000sp8uo08hglvu6" class="article-share-link">分享到</a> -->
       
 
       
@@ -435,7 +587,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-command/" data-id="cjoed2am60007s4uo4lva2h28" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-command/" data-id="cjofubyu60006p8uolokcdyar" class="article-share-link">分享到</a> -->
       
 
       
@@ -479,7 +631,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-point/" data-id="cjoed2an5001is4uokpfdcp80" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-point/" data-id="cjofubywe002dp8uomkj6wd07" class="article-share-link">分享到</a> -->
       
 
       
@@ -523,7 +675,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-editor-vim/" data-id="cjoed2alx0001s4uojhnci64w" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-editor-vim/" data-id="cjofubyua000bp8uomz6e2uuz" class="article-share-link">分享到</a> -->
       
 
       
@@ -567,95 +719,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-editor-goland/" data-id="cjoed2alz0002s4uo7kocw6zy" class="article-share-link">分享到</a> -->
-      
-
-      
-
-      
-    </footer>
-  </div>
-  
-</article>
-
- 
-  
-    <article id="post-go-channel" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/go/go-channel/" class="article-date">
-  <time datetime="2018-09-15T03:54:06.000Z" itemprop="datePublished">2018-09-15</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/go/">go</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/go/go-channel/">Go语言使用类型管道channel处理并发</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-        <!-- <a data-url="http://blog.hellokang.net/go/go-channel/" data-id="cjoed2am40005s4uo2ywx2t3q" class="article-share-link">分享到</a> -->
-      
-
-      
-
-      
-    </footer>
-  </div>
-  
-</article>
-
- 
-  
-    <article id="post-go-memory-model" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/go/go-memory-model/" class="article-date">
-  <time datetime="2018-08-23T03:51:08.000Z" itemprop="datePublished">2018-08-23</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/go/">go</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/go/go-memory-model/">Go语言的内存模型</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-        <!-- <a data-url="http://blog.hellokang.net/go/go-memory-model/" data-id="cjoed2amy0018s4uo0hxc8jtw" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-editor-goland/" data-id="cjofubyum000fp8uoisv250ta" class="article-share-link">分享到</a> -->
       
 
       
@@ -707,7 +771,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">32</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">34</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -716,7 +780,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">25</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">25</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -734,7 +798,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -746,6 +810,14 @@
       <ul>
         
           <li>
+            <a href="/uncategorized/go-http-template-syntax/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/go/go-http-template/">Go语言中使用模板引擎</a>
+          </li>
+        
+          <li>
             <a href="/go/go-http-response/">Go中处理响应</a>
           </li>
         
@@ -755,14 +827,6 @@
         
           <li>
             <a href="/go/go-http-request/">Go中处理请求</a>
-          </li>
-        
-          <li>
-            <a href="/go/go-http-server/">Go语言中处理 HTTP 服务器</a>
-          </li>
-        
-          <li>
-            <a href="/go/go-regexp-syntax/">Go语言支持的正则语法</a>
           </li>
         
       </ul>

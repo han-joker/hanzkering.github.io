@@ -6,19 +6,19 @@
   
   <title>Go中处理请求 | 小韩说课</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1 概述 2 http.Request 结构 3 请求方式 4 请求参数 5 请求头 6 请求 URL   1 概述Go 语言 HTTP 服务器，在启动监听并处理接收的请求时，会将请求相关数据封装成 http.Request 对象，同时作为参数传递到请求处理器中。处理器函数的第二个参数就是对 http.Request 对象的一个引用,示例代码为： 123456789func main() &amp;#">
+  <meta name="description" content="1 概述 2 http.Request 结构 3 请求方式 4 请求参数 5 请求头 6 获取 cookie 7 请求 URL   1 概述Go 语言 HTTP 服务器，在启动监听并处理接收的请求时，会将请求相关数据封装成 http.Request 对象，同时作为参数传递到请求处理器中。处理器函数的第二个参数就是对 http.Request 对象的一个引用,示例代码为： 123456789fu">
 <meta name="keywords" content="go,goGuide">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go中处理请求">
 <meta property="og:url" content="http://blog.hellokang.net/go/go-http-request/index.html">
 <meta property="og:site_name" content="小韩说课">
-<meta property="og:description" content="1 概述 2 http.Request 结构 3 请求方式 4 请求参数 5 请求头 6 请求 URL   1 概述Go 语言 HTTP 服务器，在启动监听并处理接收的请求时，会将请求相关数据封装成 http.Request 对象，同时作为参数传递到请求处理器中。处理器函数的第二个参数就是对 http.Request 对象的一个引用,示例代码为： 123456789func main() &amp;#">
+<meta property="og:description" content="1 概述 2 http.Request 结构 3 请求方式 4 请求参数 5 请求头 6 获取 cookie 7 请求 URL   1 概述Go 语言 HTTP 服务器，在启动监听并处理接收的请求时，会将请求相关数据封装成 http.Request 对象，同时作为参数传递到请求处理器中。处理器函数的第二个参数就是对 http.Request 对象的一个引用,示例代码为： 123456789fu">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://www.hellokang.net/images/wechat_subscription.jpg">
-<meta property="og:updated_time" content="2018-11-11T08:59:13.656Z">
+<meta property="og:updated_time" content="2018-11-12T14:59:25.728Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Go中处理请求">
-<meta name="twitter:description" content="1 概述 2 http.Request 结构 3 请求方式 4 请求参数 5 请求头 6 请求 URL   1 概述Go 语言 HTTP 服务器，在启动监听并处理接收的请求时，会将请求相关数据封装成 http.Request 对象，同时作为参数传递到请求处理器中。处理器函数的第二个参数就是对 http.Request 对象的一个引用,示例代码为： 123456789func main() &amp;#">
+<meta name="twitter:description" content="1 概述 2 http.Request 结构 3 请求方式 4 请求参数 5 请求头 6 获取 cookie 7 请求 URL   1 概述Go 语言 HTTP 服务器，在启动监听并处理接收的请求时，会将请求相关数据封装成 http.Request 对象，同时作为参数传递到请求处理器中。处理器函数的第二个参数就是对 http.Request 对象的一个引用,示例代码为： 123456789fu">
 <meta name="twitter:image" content="http://www.hellokang.net/images/wechat_subscription.jpg">
   
     <link rel="alternative" href="/atom.xml" title="小韩说课" type="application/atom+xml">
@@ -110,7 +110,8 @@
 <li><a href="#3-请求方式">3 请求方式</a></li>
 <li><a href="#4-请求参数">4 请求参数</a></li>
 <li><a href="#5-请求头">5 请求头</a></li>
-<li><a href="#6-请求-url">6 请求 URL</a></li>
+<li><a href="#6-获取-cookie">6 获取 cookie</a></li>
+<li><a href="#7-请求-url">7 请求 URL</a></li>
 </ul>
 <!-- tocstop -->
 <h2><span id="1-概述">1 概述</span></h2><p>Go 语言 HTTP 服务器，在启动监听并处理接收的请求时，会将请求相关数据封装成 <code>http.Request</code> 对象，同时作为参数传递到请求处理器中。处理器函数的第二个参数就是对 <code>http.Request</code> 对象的一个引用,示例代码为：</p>
@@ -136,7 +137,9 @@
 <li><code>func (h Header) Del(key string)</code> 删除头</li>
 <li><code>func (h Header) Write(w io.Writer) error</code> // 使用线模式（in wire format）写头信息</li>
 </ul>
-<h2><span id="6-请求-url">6 请求 URL</span></h2><p><code>Request.URL</code> 引用的是 <code>url.URL</code> 结构体类型，利用该对象可以获取 URL 相关信息。其定义结构为：</p>
+<h2><span id="6-获取-cookie">6 获取 cookie</span></h2><p>请求对象的 <code>Cookie()</code> 和 <code>Cookies()</code> 方法可以访问到请求携带的 Cookie 数据，<code>Cookies()</code> 获取 http.Cookie 对象切片，<code>Cookie(key)</code> 根据 key 得到具体的 Cookie 对象，演示如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Test</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">  log.Println(r.Cookies())</span><br><span class="line">  c, _ := r.Cookie(<span class="string">"User"</span>)</span><br><span class="line">  log.Println(c.Name)</span><br></pre></td></tr></table></figure>
+<h2><span id="7-请求-url">7 请求 URL</span></h2><p><code>Request.URL</code> 引用的是 <code>url.URL</code> 结构体类型，利用该对象可以获取 URL 相关信息。其定义结构为：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> URL <span class="keyword">struct</span> &#123;</span><br><span class="line">  Scheme     <span class="keyword">string</span> <span class="comment">// 协议</span></span><br><span class="line">  Opaque     <span class="keyword">string</span>    <span class="comment">// 编码数据</span></span><br><span class="line">  User       *Userinfo <span class="comment">// username 和 password 信息</span></span><br><span class="line">  Host       <span class="keyword">string</span>    <span class="comment">// 主机，格式为 host:port</span></span><br><span class="line">  Path       <span class="keyword">string</span>    <span class="comment">// 路径（相对路径会省略前导斜钱）</span></span><br><span class="line">  RawPath    <span class="keyword">string</span>    <span class="comment">// 编码 path (see EscapedPath method)</span></span><br><span class="line">  ForceQuery <span class="keyword">bool</span>      <span class="comment">// 追加查询 ('?') 即使 RawQuery 为空</span></span><br><span class="line">  RawQuery   <span class="keyword">string</span>    <span class="comment">// 编码查询字符串, 不包括 '?'</span></span><br><span class="line">  Fragment   <span class="keyword">string</span>    <span class="comment">// 引用片段, 不包括 '#'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>典型的URL格式为： <code>scheme://[userinfo@]host/path[?query][#fragment]</code>。</p>
 <p>注意，服务器端程序会获取 URI 信息而客户端信息会获取 URL 信息。</p>
@@ -148,7 +151,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-http-request/" data-id="cjoed2amm000os4uo9q1fospn" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-http-request/" data-id="cjofubyuq000jp8uo3vk97kon" class="article-share-link">分享到</a> -->
       
 
       
@@ -185,7 +188,7 @@
 
   <section class="changyan" id="comments">
 <!--PC和WAP自适应版-->
-<div id="SOHUCS" sid="cjoed2amm000os4uo9q1fospn"></div> 
+<div id="SOHUCS" sid="cjofubyuq000jp8uo3vk97kon"></div> 
 <script type="text/javascript"> 
 	(function(){ 
 		var appid = 'cyt64TYiv'; 
@@ -228,7 +231,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">32</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">34</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -237,7 +240,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">25</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">25</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -255,7 +258,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -267,6 +270,14 @@
       <ul>
         
           <li>
+            <a href="/uncategorized/go-http-template-syntax/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/go/go-http-template/">Go语言中使用模板引擎</a>
+          </li>
+        
+          <li>
             <a href="/go/go-http-response/">Go中处理响应</a>
           </li>
         
@@ -276,14 +287,6 @@
         
           <li>
             <a href="/go/go-http-request/">Go中处理请求</a>
-          </li>
-        
-          <li>
-            <a href="/go/go-http-server/">Go语言中处理 HTTP 服务器</a>
-          </li>
-        
-          <li>
-            <a href="/go/go-regexp-syntax/">Go语言支持的正则语法</a>
           </li>
         
       </ul>
