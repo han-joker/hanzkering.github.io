@@ -1,0 +1,414 @@
+
+<!DOCTYPE html>
+<html  xmlns:wb="http://open.weibo.com/wb">
+<head>
+  <meta charset="utf-8">
+  
+  <title>Go语言中使模板引擎的语法 | 小韩说课</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="模板语法 1 模板界定符 2 数据 3 调用函数 4 管道 5 条件分支 6 循环遍历 7 解析子模板 8 定义模板变量 9 注释     模板语法1 模板界定符1&amp;#123;&amp;#123; &amp;#125;&amp;#125; 是默认的模板界定符。用于在 HTML 模板文件中界定模板语法。例如： 12345678Hello, &amp;#123;&amp;#123; .User &amp;#125;&amp;#125;&amp;lt;br&amp;gt">
+<meta name="keywords" content="go,goGuide">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go语言中使模板引擎的语法">
+<meta property="og:url" content="http://blog.hellokang.net/go/go-http-template-syntax/index.html">
+<meta property="og:site_name" content="小韩说课">
+<meta property="og:description" content="模板语法 1 模板界定符 2 数据 3 调用函数 4 管道 5 条件分支 6 循环遍历 7 解析子模板 8 定义模板变量 9 注释     模板语法1 模板界定符1&amp;#123;&amp;#123; &amp;#125;&amp;#125; 是默认的模板界定符。用于在 HTML 模板文件中界定模板语法。例如： 12345678Hello, &amp;#123;&amp;#123; .User &amp;#125;&amp;#125;&amp;lt;br&amp;gt">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.hellokang.net/images/wechat_subscription.jpg">
+<meta property="og:updated_time" content="2018-11-13T14:41:45.912Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Go语言中使模板引擎的语法">
+<meta name="twitter:description" content="模板语法 1 模板界定符 2 数据 3 调用函数 4 管道 5 条件分支 6 循环遍历 7 解析子模板 8 定义模板变量 9 注释     模板语法1 模板界定符1&amp;#123;&amp;#123; &amp;#125;&amp;#125; 是默认的模板界定符。用于在 HTML 模板文件中界定模板语法。例如： 12345678Hello, &amp;#123;&amp;#123; .User &amp;#125;&amp;#125;&amp;lt;br&amp;gt">
+<meta name="twitter:image" content="http://www.hellokang.net/images/wechat_subscription.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="小韩说课" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://asset.hellokang.net/images/common/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+  <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<div id="container">
+  <div id="wrap">
+    <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">小韩说课</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">PHP，Python，JavaScript，Go，MySQL...</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="http://go.hellokang.net/">Go语言指导</a>
+        
+          <a class="main-nav-link" href="http://mysql.hellokang.net/">MySQL指导</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <!-- <a id="nav-search-btn" class="nav-icon" title="Search"></a> -->
+      </nav>
+<!--       <div id="search-form-wrap">
+        <form action="#" method="get" accept-charset="utf-8" class="search-form" id="local-search-form">
+          <input type="text" id="local-search-input" class="search-form-input" placeholder="Search" /> 
+          <input type="submit" class="search-form-submit">
+          <div id="local-search-result"></div>
+        </form>
+      </div> -->
+    </div>
+  </div>
+</header>
+    <div class="outer">
+      <section id="main"><article id="post-go-http-template-syntax" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/go/go-http-template-syntax/" class="article-date">
+  <time datetime="2018-11-13T14:32:46.000Z" itemprop="datePublished">2018-11-13</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/go/">go</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Go语言中使模板引擎的语法
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- toc -->
+<ul>
+<li><a href="#模板语法">模板语法</a><ul>
+<li><a href="#1-模板界定符">1 模板界定符</a></li>
+<li><a href="#2-数据">2 数据</a></li>
+<li><a href="#3-调用函数">3 调用函数</a></li>
+<li><a href="#4-管道">4 管道</a></li>
+<li><a href="#5-条件分支">5 条件分支</a></li>
+<li><a href="#6-循环遍历">6 循环遍历</a></li>
+<li><a href="#7-解析子模板">7 解析子模板</a></li>
+<li><a href="#8-定义模板变量">8 定义模板变量</a></li>
+<li><a href="#9-注释">9 注释</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+<h1><span id="模板语法">模板语法</span></h1><h2><span id="1-模板界定符">1 模板界定符</span></h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; &#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>是默认的模板界定符。用于在 HTML 模板文件中界定模板语法。例如：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Hello, &#123;&#123; .User &#125;&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">你熟悉的技术：</span><br><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">&#123;&#123; range .List &#125;&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>&#123;&#123;.&#125;&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">&#123;&#123;end&#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>若需要使用自定义的界定符，使用 <code>func (t *Template) Delims(left, right string) *Template</code> 方法进行定义。后续的解析会识别新定义的界定符。</p>
+<a id="more"></a>
+<h2><span id="2-数据">2 数据</span></h2><p>分配到模板中的数据使用 <code>.</code> 点可以访问。点会随着所处的上下文变化而变化，例如上面的例子，在 <code>function range(start, stop, step) {
+      if (typeof stop === 'undefined') {
+        stop = start;
+        start = 0;
+        step = 1;
+      } else if (!step) {
+        step = 1;
+      }
+
+      var arr = [];
+
+      if (step > 0) {
+        for (var i = start; i < stop; i += step) {
+          arr.push(i);
+        }
+      } else {
+        for (var _i = start; _i > stop; _i += step) {
+          // eslint-disable-line for-direction
+          arr.push(_i);
+        }
+      }
+
+      return arr;
+    }</code> 内就表示所遍历的每个数据，而在 <code>function range(start, stop, step) {
+      if (typeof stop === 'undefined') {
+        stop = start;
+        start = 0;
+        step = 1;
+      } else if (!step) {
+        step = 1;
+      }
+
+      var arr = [];
+
+      if (step > 0) {
+        for (var i = start; i < stop; i += step) {
+          arr.push(i);
+        }
+      } else {
+        for (var _i = start; _i > stop; _i += step) {
+          // eslint-disable-line for-direction
+          arr.push(_i);
+        }
+      }
+
+      return arr;
+    }</code> 外，就表示分配到模板中的数据整体。</p>
+<p>解析数据时，默认会被 HTML 实体编码，防止 XSS 攻击。若需要原样输出，需要将数据转换为 <code>template.HTML</code> 类型，例如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">t.Execute(w, <span class="string">`&lt;script&gt;alert("Hack")&lt;/script&gt;`</span>)</span><br><span class="line"><span class="comment">// 解析结果： &amp;lt;script&amp;gt;alert(&amp;#34;Hack&amp;#34;)&amp;lt;/script&amp;gt;</span></span><br><span class="line"></span><br><span class="line">t.Execute(w, template.HTML(<span class="string">`&lt;script&gt;alert("Hack")&lt;/script&gt;`</span>))</span><br><span class="line"><span class="comment">// 解析结果： &lt;script&gt;alert("Hack")&lt;/script&gt;</span></span><br></pre></td></tr></table></figure>
+<p>甚至在不同的 HTML 语法上下文中，会有不同的编码方式，例如：</p>
+<p>假设 <code>.</code> 的值为 <code>Hank&#39;s 博客</code>:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a href="&#123;&#123;.&#125;&#125;" 中，会进行 URL 编码，结果为：Hank%27s%20%e5%8d%9a%e5%ae%a2</span><br><span class="line">a title="&#123;&#123;.&#125;&#125;" 中，会进行 ASCII 实体编码，结果为：Hank&amp;#39;s 博客</span><br></pre></td></tr></table></figure>
+<h2><span id="3-调用函数">3 调用函数</span></h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;FuncName1 <span class="string">"参数值1"</span> <span class="string">"参数值2"</span>&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>函数支持模板函数，和全局函数。预定义的全局函数为：</p>
+<ul>
+<li>and，返回第一个 empty参数或者最后一个参数。即 <code>and x y</code> 等价于 <code>if x then y else x</code>，所有参数都会执行</li>
+<li>or，返回第一个非 empty 参数或者最后一个参数。即 <code>or x y</code> 等价于 <code>if x then x else y</code>，所有参数都会执行</li>
+<li>not，返回它的单个参数的布尔值的否定</li>
+<li>len，返回它的参数的整数类型长度</li>
+<li>index，返回第一个参数以剩下的参数为索引/键指向的值，<code>index x 1 2 3</code> 返回 <code>x[1][2][3]</code> 的值；每个被索引的主体必须是数组、切片或者字典。</li>
+<li>print，即 fmt.Sprint</li>
+<li>printf，即 fmt.Sprintf</li>
+<li>println，即 fmt.Sprintln</li>
+<li>html，返回参数的 HTML 实体编码</li>
+<li>urlquery，返回参数的 URL 编码</li>
+<li>js，返回参数的 JavaScript 编码</li>
+</ul>
+<h2><span id="4-管道">4 管道</span></h2><p>可以在变量后使用 | （管道符），将其值作为参数传递给函数，并得到函数的返回值。管道可以连续使用，演示为：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// . 为 `Hank's 博客`</span></span><br><span class="line">&#123;&#123;.|urlquery&#125;&#125;</span><br><span class="line"><span class="comment">// Hank%27s+%E5%8D%9A%E5%AE%A2</span></span><br></pre></td></tr></table></figure>
+<h2><span id="5-条件分支">5 条件分支</span></h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;<span class="keyword">if</span> pipeline&#125;&#125; T1 &#123;&#123; <span class="keyword">else</span> <span class="keyword">if</span> pipeline&#125;&#125; T2 &#123;&#123;<span class="keyword">else</span>&#125;&#125; T3 &#123;&#123;end&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>若 pipeline 的值不为 empty，条件匹配，执行相应分支。</p>
+<p>empty 空值为：false、0、任意nil指针或者nil接口，任意长度为0的数组、切片、字典。</p>
+<h2><span id="6-循环遍历">6 循环遍历</span></h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;<span class="keyword">range</span> pipeline&#125;&#125; T1 &#123;&#123;<span class="keyword">else</span>&#125;&#125; T0 &#123;&#123;end&#125;&#125;</span><br><span class="line">或</span><br><span class="line">&#123;&#123;<span class="keyword">range</span> $index, $element := pipeline&#125;&#125; T1 &#123;&#123;end&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>遍历数组、切片、字典或者通道的每一个成员元素并执行 T1。<br>若 pipeline 为空，执行 T0。else 分支可以省略。<br>empty 空值为：false、0、任意nil指针或者nil接口，任意长度为0的数组、切片、字典。</p>
+<p>若需要同时获取下标和值，需要使用变量赋值语法。</p>
+<h2><span id="7-解析子模板">7 解析子模板</span></h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;template <span class="string">"name"</span> pipeline&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>解析名为 name 的模板，提供给模板的参数为 pipeline。</p>
+<h2><span id="8-定义模板变量">8 定义模板变量</span></h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$variable := pipeline</span><br></pre></td></tr></table></figure>
+<h2><span id="9-注释">9 注释</span></h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;<span class="comment">/* a comment */</span>&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>完！<br>原文出自：<a href="http://blog.hellokang.net/go/go-http-template-syntax/">小韩说课</a><br>微信关注：小韩说课<br><img src="http://www.hellokang.net/images/wechat_subscription.jpg" alt="小韩说课"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <!-- <a data-url="http://blog.hellokang.net/go/go-http-template-syntax/" data-id="cjofubyv90015p8uoxzmk05va" class="article-share-link">分享到</a> -->
+      
+
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/go/go-http-template/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">Go语言中使用模板引擎</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+  <section class="changyan" id="comments">
+<!--PC和WAP自适应版-->
+<div id="SOHUCS" sid="cjofubyv90015p8uoxzmk05va"></div> 
+<script type="text/javascript"> 
+	(function(){ 
+		var appid = 'cyt64TYiv'; 
+		var conf = 'prod_8144667773d887f47faa11a45cb29175'; 
+		var width = window.innerWidth || document.documentElement.clientWidth; 
+		if (width < 960) { 
+			window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })(); </script>
+</section>
+ </section>
+      
+      <aside id="sidebar">
+  
+      <div class="widget-wrap author">
+    <h3 class="widget-title">&nbsp;</h3>
+    <div class="widget">
+      <div class="avatar">
+        <img src="/images/avatar.png" >
+      </div>
+      <div class="info">
+        <ul>
+          <li>
+            <h3>韩忠康</h3>
+            <wb:follow-button uid="5846559498" type="red_1" width="67" height="24" ></wb:follow-button>
+            <a href="https://github.com/hanzkering" class="fa-icon fa-github" > GitHub</a>
+          </li>
+          <li>程序员，培训讲师</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+    <div class="widget-wrap author">
+  <h3 class="widget-title">微信关注</h3>    
+  <div class="widget">
+    <img src="/images/wechat_subscription.jpg">
+  </div>
+</div>
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">35</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">28</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">28</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/error/" style="font-size: 10px;">error</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/go/" style="font-size: 20px;">go</a> <a href="/tags/goGuide/" style="font-size: 20px;">goGuide</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">近期文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/go/go-http-template-syntax/">Go语言中使模板引擎的语法</a>
+          </li>
+        
+          <li>
+            <a href="/go/go-http-template/">Go语言中使用模板引擎</a>
+          </li>
+        
+          <li>
+            <a href="/go/go-http-response/">Go中处理响应</a>
+          </li>
+        
+          <li>
+            <a href="/uncategorized/json-bson/">json-bson</a>
+          </li>
+        
+          <li>
+            <a href="/go/go-http-request/">Go中处理请求</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">友情链接</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="https://github.com/hanzkering" target="_blank">GibHub</a>
+          </li>
+        
+          <li>
+            <a href="http://go.hellokang.net/" target="_blank">Go语言指导</a>
+          </li>
+        
+          <li>
+            <a href="http://mysql.hellokang.net/" target="_blank">MySQL指导</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 韩忠康<br>
+      Powered by <a href="//hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+  </div>
+  <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="http://go.hellokang.net/" class="mobile-nav-link">Go语言指导</a>
+  
+    <a href="http://mysql.hellokang.net/" class="mobile-nav-link">MySQL指导</a>
+  
+</nav>
+  <!-- totop start -->
+<div id="totop">
+<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+</div>
+
+<!-- totop end -->
+
+
+<!-- 百度分享 start -->
+
+<!-- 百度分享 end -->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>

@@ -78,27 +78,67 @@
   
     <article id="post-go-http-template-syntax" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/uncategorized/go-http-template-syntax/" class="article-date">
-  <time datetime="2018-11-13T14:32:46.185Z" itemprop="datePublished">2018-11-13</time>
+    <a href="/go/go-http-template-syntax/" class="article-date">
+  <time datetime="2018-11-13T14:32:46.000Z" itemprop="datePublished">2018-11-13</time>
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/go/">go</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
     
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/go/go-http-template-syntax/">Go语言中使模板引擎的语法</a>
+    </h1>
+  
+
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
+        <!-- toc -->
+<ul>
+<li><a href="#模板语法">模板语法</a><ul>
+<li><a href="#1-模板界定符">1 模板界定符</a></li>
+<li><a href="#2-数据">2 数据</a></li>
+<li><a href="#3-调用函数">3 调用函数</a></li>
+<li><a href="#4-管道">4 管道</a></li>
+<li><a href="#5-条件分支">5 条件分支</a></li>
+<li><a href="#6-循环遍历">6 循环遍历</a></li>
+<li><a href="#7-解析子模板">7 解析子模板</a></li>
+<li><a href="#8-定义模板变量">8 定义模板变量</a></li>
+<li><a href="#9-注释">9 注释</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+<h1 id="模板语法"><a href="#模板语法" class="headerlink" title="模板语法"></a>模板语法</h1><h2 id="1-模板界定符"><a href="#1-模板界定符" class="headerlink" title="1 模板界定符"></a>1 模板界定符</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; &#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>是默认的模板界定符。用于在 HTML 模板文件中界定模板语法。例如：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Hello, &#123;&#123; .User &#125;&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">你熟悉的技术：</span><br><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">&#123;&#123; range .List &#125;&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>&#123;&#123;.&#125;&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">&#123;&#123;end&#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>若需要使用自定义的界定符，使用 <code>func (t *Template) Delims(left, right string) *Template</code> 方法进行定义。后续的解析会识别新定义的界定符。</p>
+        
+          <p class="article-more-link">
+            <a href="/go/go-http-template-syntax/#more">Read More</a>
+          </p>
         
       
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/uncategorized/go-http-template-syntax/" data-id="cjofubyv90015p8uoxzmk05va" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-http-template-syntax/" data-id="cjofubyv90015p8uoxzmk05va" class="article-share-link">分享到</a> -->
       
 
       
 
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
+
     </footer>
   </div>
   
@@ -831,7 +871,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">34</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">35</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -840,7 +880,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">28</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">28</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -870,7 +910,7 @@
       <ul>
         
           <li>
-            <a href="/uncategorized/go-http-template-syntax/">(no title)</a>
+            <a href="/go/go-http-template-syntax/">Go语言中使模板引擎的语法</a>
           </li>
         
           <li>
