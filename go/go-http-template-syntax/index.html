@@ -6,19 +6,19 @@
   
   <title>Go语言中使模板引擎的语法 | 小韩说课</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="模板语法 1 模板界定符 2 数据 3 调用函数 4 管道 5 条件分支 6 循环遍历 7 解析子模板 8 定义模板变量 9 注释     模板语法1 模板界定符1&amp;#123;&amp;#123; &amp;#125;&amp;#125; 是默认的模板界定符。用于在 HTML 模板文件中界定模板语法。例如： 12345678Hello, &amp;#123;&amp;#123; .User &amp;#125;&amp;#125;&amp;lt;br&amp;gt">
+  <meta name="description" content="1 模板界定符 2 数据 3 调用函数 4 管道 5 条件分支 6 循环遍历 7 解析子模板 8 定义模板变量 9 注释   1 模板界定符1&amp;#123;&amp;#123; &amp;#125;&amp;#125; 是默认的模板界定符。用于在 HTML 模板文件中界定模板语法。例如： 12345678Hello, &amp;#123;&amp;#123; .User &amp;#125;&amp;#125;&amp;lt;br&amp;gt;你熟悉的技术：&amp;lt">
 <meta name="keywords" content="go,goGuide">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go语言中使模板引擎的语法">
 <meta property="og:url" content="http://blog.hellokang.net/go/go-http-template-syntax/index.html">
 <meta property="og:site_name" content="小韩说课">
-<meta property="og:description" content="模板语法 1 模板界定符 2 数据 3 调用函数 4 管道 5 条件分支 6 循环遍历 7 解析子模板 8 定义模板变量 9 注释     模板语法1 模板界定符1&amp;#123;&amp;#123; &amp;#125;&amp;#125; 是默认的模板界定符。用于在 HTML 模板文件中界定模板语法。例如： 12345678Hello, &amp;#123;&amp;#123; .User &amp;#125;&amp;#125;&amp;lt;br&amp;gt">
+<meta property="og:description" content="1 模板界定符 2 数据 3 调用函数 4 管道 5 条件分支 6 循环遍历 7 解析子模板 8 定义模板变量 9 注释   1 模板界定符1&amp;#123;&amp;#123; &amp;#125;&amp;#125; 是默认的模板界定符。用于在 HTML 模板文件中界定模板语法。例如： 12345678Hello, &amp;#123;&amp;#123; .User &amp;#125;&amp;#125;&amp;lt;br&amp;gt;你熟悉的技术：&amp;lt">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://www.hellokang.net/images/wechat_subscription.jpg">
-<meta property="og:updated_time" content="2018-11-13T14:41:45.912Z">
+<meta property="og:updated_time" content="2018-11-13T14:42:25.410Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Go语言中使模板引擎的语法">
-<meta name="twitter:description" content="模板语法 1 模板界定符 2 数据 3 调用函数 4 管道 5 条件分支 6 循环遍历 7 解析子模板 8 定义模板变量 9 注释     模板语法1 模板界定符1&amp;#123;&amp;#123; &amp;#125;&amp;#125; 是默认的模板界定符。用于在 HTML 模板文件中界定模板语法。例如： 12345678Hello, &amp;#123;&amp;#123; .User &amp;#125;&amp;#125;&amp;lt;br&amp;gt">
+<meta name="twitter:description" content="1 模板界定符 2 数据 3 调用函数 4 管道 5 条件分支 6 循环遍历 7 解析子模板 8 定义模板变量 9 注释   1 模板界定符1&amp;#123;&amp;#123; &amp;#125;&amp;#125; 是默认的模板界定符。用于在 HTML 模板文件中界定模板语法。例如： 12345678Hello, &amp;#123;&amp;#123; .User &amp;#125;&amp;#125;&amp;lt;br&amp;gt;你熟悉的技术：&amp;lt">
 <meta name="twitter:image" content="http://www.hellokang.net/images/wechat_subscription.jpg">
   
     <link rel="alternative" href="/atom.xml" title="小韩说课" type="application/atom+xml">
@@ -105,7 +105,6 @@
       
         <!-- toc -->
 <ul>
-<li><a href="#模板语法">模板语法</a><ul>
 <li><a href="#1-模板界定符">1 模板界定符</a></li>
 <li><a href="#2-数据">2 数据</a></li>
 <li><a href="#3-调用函数">3 调用函数</a></li>
@@ -116,10 +115,8 @@
 <li><a href="#8-定义模板变量">8 定义模板变量</a></li>
 <li><a href="#9-注释">9 注释</a></li>
 </ul>
-</li>
-</ul>
 <!-- tocstop -->
-<h1><span id="模板语法">模板语法</span></h1><h2><span id="1-模板界定符">1 模板界定符</span></h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; &#125;&#125;</span><br></pre></td></tr></table></figure>
+<h2><span id="1-模板界定符">1 模板界定符</span></h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; &#125;&#125;</span><br></pre></td></tr></table></figure>
 <p>是默认的模板界定符。用于在 HTML 模板文件中界定模板语法。例如：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Hello, &#123;&#123; .User &#125;&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">你熟悉的技术：</span><br><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">&#123;&#123; range .List &#125;&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>&#123;&#123;.&#125;&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">&#123;&#123;end&#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>若需要使用自定义的界定符，使用 <code>func (t *Template) Delims(left, right string) *Template</code> 方法进行定义。后续的解析会识别新定义的界定符。</p>

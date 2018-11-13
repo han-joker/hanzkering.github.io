@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.hellokang.net/"/>
-  <updated>2018-11-13T14:41:45.912Z</updated>
+  <updated>2018-11-13T14:42:25.410Z</updated>
   <id>http://blog.hellokang.net/</id>
   
   <author>
@@ -21,13 +21,12 @@
     <link href="http://blog.hellokang.net/go/go-http-template-syntax/"/>
     <id>http://blog.hellokang.net/go/go-http-template-syntax/</id>
     <published>2018-11-13T14:32:46.000Z</published>
-    <updated>2018-11-13T14:41:45.912Z</updated>
+    <updated>2018-11-13T14:42:25.410Z</updated>
     
     <summary type="html">
     
       &lt;!-- toc --&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#模板语法&quot;&gt;模板语法&lt;/a&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;#1-模板界定符&quot;&gt;1 模板界定符&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#2-数据&quot;&gt;2 数据&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#3-调用函数&quot;&gt;3 调用函数&lt;/a&gt;&lt;/li&gt;
@@ -38,10 +37,8 @@
 &lt;li&gt;&lt;a href=&quot;#8-定义模板变量&quot;&gt;8 定义模板变量&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#9-注释&quot;&gt;9 注释&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
 &lt;!-- tocstop --&gt;
-&lt;h1 id=&quot;模板语法&quot;&gt;&lt;a href=&quot;#模板语法&quot; class=&quot;headerlink&quot; title=&quot;模板语法&quot;&gt;&lt;/a&gt;模板语法&lt;/h1&gt;&lt;h2 id=&quot;1-模板界定符&quot;&gt;&lt;a href=&quot;#1-模板界定符&quot; class=&quot;headerlink&quot; title=&quot;1 模板界定符&quot;&gt;&lt;/a&gt;1 模板界定符&lt;/h2&gt;&lt;figure class=&quot;highlight go&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&amp;#123; &amp;#125;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;1-模板界定符&quot;&gt;&lt;a href=&quot;#1-模板界定符&quot; class=&quot;headerlink&quot; title=&quot;1 模板界定符&quot;&gt;&lt;/a&gt;1 模板界定符&lt;/h2&gt;&lt;figure class=&quot;highlight go&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&amp;#123; &amp;#125;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;p&gt;是默认的模板界定符。用于在 HTML 模板文件中界定模板语法。例如：&lt;/p&gt;
 &lt;figure class=&quot;highlight html&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;Hello, &amp;#123;&amp;#123; .User &amp;#125;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;br&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;你熟悉的技术：&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;ul&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&amp;#123; range .List &amp;#125;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;li&lt;/span&gt;&amp;gt;&lt;/span&gt;&amp;#123;&amp;#123;.&amp;#125;&amp;#125;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;li&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&amp;#123;end&amp;#125;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;ul&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;p&gt;若需要使用自定义的界定符，使用 &lt;code&gt;func (t *Template) Delims(left, right string) *Template&lt;/code&gt; 方法进行定义。后续的解析会识别新定义的界定符。&lt;/p&gt;
