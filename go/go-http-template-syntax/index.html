@@ -15,7 +15,7 @@
 <meta property="og:description" content="1 模板界定符 2 数据 3 调用函数 4 管道 5 条件分支 6 循环遍历 7 解析子模板 8 定义模板变量 9 注释   1 模板界定符1&amp;#123;&amp;#123; &amp;#125;&amp;#125; 是默认的模板界定符。用于在 HTML 模板文件中界定模板语法。例如： 12345678Hello, &amp;#123;&amp;#123; .User &amp;#125;&amp;#125;&amp;lt;br&amp;gt;你熟悉的技术：&amp;lt">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://www.hellokang.net/images/wechat_subscription.jpg">
-<meta property="og:updated_time" content="2018-11-13T14:42:25.410Z">
+<meta property="og:updated_time" content="2018-11-13T14:44:48.626Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Go语言中使模板引擎的语法">
 <meta name="twitter:description" content="1 模板界定符 2 数据 3 调用函数 4 管道 5 条件分支 6 循环遍历 7 解析子模板 8 定义模板变量 9 注释   1 模板界定符1&amp;#123;&amp;#123; &amp;#125;&amp;#125; 是默认的模板界定符。用于在 HTML 模板文件中界定模板语法。例如： 12345678Hello, &amp;#123;&amp;#123; .User &amp;#125;&amp;#125;&amp;lt;br&amp;gt;你熟悉的技术：&amp;lt">
@@ -121,53 +121,7 @@
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Hello, &#123;&#123; .User &#125;&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">你熟悉的技术：</span><br><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">&#123;&#123; range .List &#125;&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>&#123;&#123;.&#125;&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">&#123;&#123;end&#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>若需要使用自定义的界定符，使用 <code>func (t *Template) Delims(left, right string) *Template</code> 方法进行定义。后续的解析会识别新定义的界定符。</p>
 <a id="more"></a>
-<h2><span id="2-数据">2 数据</span></h2><p>分配到模板中的数据使用 <code>.</code> 点可以访问。点会随着所处的上下文变化而变化，例如上面的例子，在 <code>function range(start, stop, step) {
-      if (typeof stop === 'undefined') {
-        stop = start;
-        start = 0;
-        step = 1;
-      } else if (!step) {
-        step = 1;
-      }
-
-      var arr = [];
-
-      if (step > 0) {
-        for (var i = start; i < stop; i += step) {
-          arr.push(i);
-        }
-      } else {
-        for (var _i = start; _i > stop; _i += step) {
-          // eslint-disable-line for-direction
-          arr.push(_i);
-        }
-      }
-
-      return arr;
-    }</code> 内就表示所遍历的每个数据，而在 <code>function range(start, stop, step) {
-      if (typeof stop === 'undefined') {
-        stop = start;
-        start = 0;
-        step = 1;
-      } else if (!step) {
-        step = 1;
-      }
-
-      var arr = [];
-
-      if (step > 0) {
-        for (var i = start; i < stop; i += step) {
-          arr.push(i);
-        }
-      } else {
-        for (var _i = start; _i > stop; _i += step) {
-          // eslint-disable-line for-direction
-          arr.push(_i);
-        }
-      }
-
-      return arr;
-    }</code> 外，就表示分配到模板中的数据整体。</p>
+<h2><span id="2-数据">2 数据</span></h2><p>分配到模板中的数据使用 <code>.</code> 点可以访问。点会随着所处的上下文变化而变化，例如上面的例子，在 <code>range</code> 内就表示所遍历的每个数据，而在 <code>range</code> 外，就表示分配到模板中的数据整体。</p>
 <p>解析数据时，默认会被 HTML 实体编码，防止 XSS 攻击。若需要原样输出，需要将数据转换为 <code>template.HTML</code> 类型，例如：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">t.Execute(w, <span class="string">`&lt;script&gt;alert("Hack")&lt;/script&gt;`</span>)</span><br><span class="line"><span class="comment">// 解析结果： &amp;lt;script&amp;gt;alert(&amp;#34;Hack&amp;#34;)&amp;lt;/script&amp;gt;</span></span><br><span class="line"></span><br><span class="line">t.Execute(w, template.HTML(<span class="string">`&lt;script&gt;alert("Hack")&lt;/script&gt;`</span>))</span><br><span class="line"><span class="comment">// 解析结果： &lt;script&gt;alert("Hack")&lt;/script&gt;</span></span><br></pre></td></tr></table></figure>
 <p>甚至在不同的 HTML 语法上下文中，会有不同的编码方式，例如：</p>
