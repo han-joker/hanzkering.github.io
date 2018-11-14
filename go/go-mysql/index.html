@@ -1,0 +1,409 @@
+
+<!DOCTYPE html>
+<html  xmlns:wb="http://open.weibo.com/wb">
+<head>
+  <meta charset="utf-8">
+  
+  <title>Go语言中操作MySQL | 小韩说课</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1 概述 2 MySQL 驱动安装 2 打开数据库 3 数据源名称 4 查询操作 查询多行 查询单行 NULL处理   5 非查询操作 6 预编译 7 事务   1 概述Go 语言程序可以作为 MySQL 服务器的客户端完成 MySQL 数据库的操作。 Go 语言中，使用 database/sql 包实现类 SQL 数据库的操作。sql 包是一个数据库抽象层，具体的数据库操作的实现要依赖于相应">
+<meta name="keywords" content="go,goGuide">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go语言中操作MySQL">
+<meta property="og:url" content="http://blog.hellokang.net/go/go-mysql/index.html">
+<meta property="og:site_name" content="小韩说课">
+<meta property="og:description" content="1 概述 2 MySQL 驱动安装 2 打开数据库 3 数据源名称 4 查询操作 查询多行 查询单行 NULL处理   5 非查询操作 6 预编译 7 事务   1 概述Go 语言程序可以作为 MySQL 服务器的客户端完成 MySQL 数据库的操作。 Go 语言中，使用 database/sql 包实现类 SQL 数据库的操作。sql 包是一个数据库抽象层，具体的数据库操作的实现要依赖于相应">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://asset.hellokang.net/images/mysql/mysql-abstract-layer.png">
+<meta property="og:image" content="http://asset.hellokang.net/images/common/xiaohanshuoke_258.jpg">
+<meta property="og:updated_time" content="2018-11-14T14:44:06.550Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Go语言中操作MySQL">
+<meta name="twitter:description" content="1 概述 2 MySQL 驱动安装 2 打开数据库 3 数据源名称 4 查询操作 查询多行 查询单行 NULL处理   5 非查询操作 6 预编译 7 事务   1 概述Go 语言程序可以作为 MySQL 服务器的客户端完成 MySQL 数据库的操作。 Go 语言中，使用 database/sql 包实现类 SQL 数据库的操作。sql 包是一个数据库抽象层，具体的数据库操作的实现要依赖于相应">
+<meta name="twitter:image" content="http://asset.hellokang.net/images/mysql/mysql-abstract-layer.png">
+  
+    <link rel="alternative" href="/atom.xml" title="小韩说课" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://asset.hellokang.net/images/common/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+  <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<div id="container">
+  <div id="wrap">
+    <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">小韩说课</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">PHP，Python，JavaScript，Go，MySQL...</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="http://go.hellokang.net/">Go语言指导</a>
+        
+          <a class="main-nav-link" href="http://mysql.hellokang.net/">MySQL指导</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <!-- <a id="nav-search-btn" class="nav-icon" title="Search"></a> -->
+      </nav>
+<!--       <div id="search-form-wrap">
+        <form action="#" method="get" accept-charset="utf-8" class="search-form" id="local-search-form">
+          <input type="text" id="local-search-input" class="search-form-input" placeholder="Search" /> 
+          <input type="submit" class="search-form-submit">
+          <div id="local-search-result"></div>
+        </form>
+      </div> -->
+    </div>
+  </div>
+</header>
+    <div class="outer">
+      <section id="main"><article id="post-go-mysql" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/go/go-mysql/" class="article-date">
+  <time datetime="2018-11-14T14:41:40.000Z" itemprop="datePublished">2018-11-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/go/">go</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Go语言中操作MySQL
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- toc -->
+<ul>
+<li><a href="#1-概述">1 概述</a></li>
+<li><a href="#2-mysql-驱动安装">2 MySQL 驱动安装</a></li>
+<li><a href="#2-打开数据库">2 打开数据库</a></li>
+<li><a href="#3-数据源名称">3 数据源名称</a></li>
+<li><a href="#4-查询操作">4 查询操作</a><ul>
+<li><a href="#查询多行">查询多行</a></li>
+<li><a href="#查询单行">查询单行</a></li>
+<li><a href="#null处理">NULL处理</a></li>
+</ul>
+</li>
+<li><a href="#5-非查询操作">5 非查询操作</a></li>
+<li><a href="#6-预编译">6 预编译</a></li>
+<li><a href="#7-事务">7 事务</a></li>
+</ul>
+<!-- tocstop -->
+<h2><span id="1-概述">1 概述</span></h2><p>Go 语言程序可以作为 MySQL 服务器的客户端完成 MySQL 数据库的操作。</p>
+<p>Go 语言中，使用 <code>database/sql</code> 包实现类 SQL 数据库的操作。<code>sql</code> 包是一个数据库抽象层，具体的数据库操作的实现要依赖于相应的驱动才可以。抽象层与驱动的关系，如下图所示:</p>
+<p><img src="http://asset.hellokang.net/images/mysql/mysql-abstract-layer.png" alt="数据库抽象层"></p>
+<p>Go 支持的驱动列表请参考：<a href="https://github.com/golang/go/wiki/SQLDrivers" target="_blank" rel="noopener">https://github.com/golang/go/wiki/SQLDrivers</a>，或者 <a href="http://go.hellokang.net/sql-drivers.html" target="_blank" rel="noopener">SQL驱动列表</a></p>
+<a id="more"></a>
+<h2><span id="2-mysql-驱动安装">2 MySQL 驱动安装</span></h2><p>MySQL 的驱动由 <code>github.com/go-sql-driver/mysql</code> 实现，使用前保证该驱动正确安装。下面的命令会将 mysql 驱动包安装到环境变量 GOPATH 命令中：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> go get -u github.com/go-sql-driver/mysql</span><br></pre></td></tr></table></figure>
+<h2><span id="2-打开数据库">2 打开数据库</span></h2><p>函数 <code>func sql.Open(driverName, dataSourceName string) (*DB, error)</code> 用于打开一个 dirverName 指定的数据库。打开数据库时，需要指定 dataSourceName 数据源名称，数据源名称中包含所需要连接的数据库服务器信息。一个典型的打开 mysql 驱动的数据库语法为：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db, err := sql.Open(<span class="string">"mysql"</span>, <span class="string">"root:hellokang@tcp(localhost:3306)/test"</span>)</span><br></pre></td></tr></table></figure>
+<p>驱动的名称就是: mysql，数据源名称就是：root:hellokang@tcp(localhost:3306)/test。</p>
+<p>打开数据库后，会获得 <code>sql.DB</code> 类型对象，该对象引用了一个数据库连接池，可以安全的被多个 Go 进程同时使用。同时会维护自身的闲置连接池，因此，通常情况 Open 函数只需调用一次，并很少需要关闭。若需要显式关闭使用函数 <code>func (db *DB) Close() error</code> 完成。</p>
+<p>打开数据库并不是建立连接。指的是 <code>Open</code> 函数可能只是验证其参数，而不创建与数据库的连接。可以调用 <code>func (db *DB) Ping() error</code> 方法来检查数据源的名称的合法性。</p>
+<h2><span id="3-数据源名称">3 数据源名称</span></h2><p>数据源名称：DSN，data Source Name</p>
+<p><code>[username[:password]@][protocol[(address)]]/dbname[?param1=value1&amp;...&amp;paramN=valueN]</code></p>
+<p>其中除了 <code>/dbname</code> 数据库名称外，其余的部分都是可选的。若不需要选择默认数据库，则使用 <code>/</code> 即可（也可留空）。</p>
+<ul>
+<li>username，用户名</li>
+<li>password，密码</li>
+<li>protocol，协议，支持tcp， Unix domain socket</li>
+<li>address，地址。tcp 协议下，使用 <code>host[:port]</code>，端口省略表示默认3306。在 Unix domain sockets 协议下，使用 <code>/var/run/mysqld/mysqld.sock</code> 指定 MySQL-Server 的 socket 文件。</li>
+<li>/dbname，默认数据库名，使用 / 表示不指定默认数据库。</li>
+</ul>
+<p>常用参数为：</p>
+<ul>
+<li>charset，C-S 交互时的字符集（SET NAMES charset）。此参数会额外执行一条 SQL，因此更建议使用 <code>collation</code> 选项。</li>
+<li>collation，C-S 交互时的校对集。</li>
+<li>columnsWithAlias，布尔值，默认为 false。设置为 true 表示获取列名时，会包含表别名部分。</li>
+</ul>
+<p>全部参数请参考：<a href="http://go.hellokang.net/mysql-dsn.html" target="_blank" rel="noopener">http://go.hellokang.net/mysql-dsn.html</a></p>
+<h2><span id="4-查询操作">4 查询操作</span></h2><p>查询操作，通常指的是 <code>select</code>、<code>show</code> 类操作。</p>
+<h3><span id="查询多行">查询多行</span></h3><p>函数 <code>func (db *DB) Query(query string, args ...interface{}) (*Rows, error)</code> 执行查询，返回多行，<code>sql.Rows</code> 类对象，参数 query 为查询 SQL。args 为 query 中占位参数。</p>
+<p>得到的 <code>sql.Rows</code> 对象为结果集，需要使用其 <code>func (rs *Rows) Next() bool</code> 和 <code>func (rs *Rows) Scan(dest ...interface{}) error</code> 方法完成遍历和获取结果集中的每行数据。结果集使用完毕后应该及时关闭，方法 <code>func (rs *Rows) Close() error</code> 关闭结果集。</p>
+<p>示例代码为：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 执行查询</span></span><br><span class="line">rows, err := db.Query(<span class="string">"SELECT ..."</span>)</span><br><span class="line"><span class="comment">// 关闭结果集</span></span><br><span class="line"><span class="keyword">defer</span> rows.Close()</span><br><span class="line"><span class="comment">// 遍历结果集</span></span><br><span class="line"><span class="keyword">for</span> rows.Next() &#123;</span><br><span class="line">    <span class="keyword">var</span> (</span><br><span class="line">      id <span class="keyword">int</span></span><br><span class="line">      name <span class="keyword">string</span></span><br><span class="line">    )</span><br><span class="line">    <span class="comment">// 获取行内字段</span></span><br><span class="line">    err = rows.Scan(&amp;id, &amp;name)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 获取遍历时发生的错误</span></span><br><span class="line">err = rows.Err() </span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>函数 <code>func (rs *Rows) Err() error</code> 返回在遍历时出现的错误。需要在 <code>Close</code> 后调用。</p>
+<h3><span id="查询单行">查询单行</span></h3><p>函数 <code>func (db *DB) QueryRow(query string, args ...interface{}) *Row</code> 执行查询，返回一行，<code>sql,Row</code> 类对象，参数 query 为查询 SQL。args 为 query 中占位参数。</p>
+<p>得到的 <code>sql.Row</code> 对象为单行结果集，需要使用其 <code>func (r *Row) Scan(dest ...interface{}) error</code> 方法完成获取结果集中字段数据。如果该查询匹配多行，Scan 会使用第一行结果并丢弃其余各行，如果没有匹配查询的行，Scan 会返回 ErrNoRows。</p>
+<p>示例代码：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> username <span class="keyword">string</span></span><br><span class="line">err := db.QueryRow(<span class="string">"SELECT ... WHERE id=?"</span>, <span class="number">42</span>).Scan(&amp;username)</span><br><span class="line"><span class="keyword">if</span> sql.ErrNoRows == err &#123;</span><br><span class="line">  log.Println(<span class="string">"No result with that ID"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3><span id="null处理">NULL处理</span></h3><p>若字段允许为 NULL，那么意味着获取的可能为 NULL。应该使用 <code>sql.NullBool</code>、<code>sql.NullInt64</code>、<code>sql.NullFloat64</code>、<code>NullString</code> 类型来读取查询到字段值。这些类型的结构类似，都是：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> NullString <span class="keyword">struct</span> &#123;</span><br><span class="line">    String <span class="keyword">string</span></span><br><span class="line">    Valid  <span class="keyword">bool</span> <span class="comment">// 如果 String 不是 NULL 则 Valid 为真</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>示例如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> s sql.NullString</span><br><span class="line">err := db.QueryRow(<span class="string">"SELECT name FROM foo WHERE id=?"</span>, id).Scan(&amp;s)</span><br><span class="line"><span class="keyword">if</span> s.Valid &#123;</span><br><span class="line">  <span class="comment">// 非 NULL</span></span><br><span class="line">  <span class="comment">// use s.String </span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="comment">// NULL</span></span><br><span class="line">  <span class="comment">// NULL value</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2><span id="5-非查询操作">5 非查询操作</span></h2><p>非查询操作，指的是不返回结果记录的 SQL 操作，例如 <code>INSERT</code>、<code>DELETE</code>、<code>UPDATE</code>、以及 <code>DDL</code> 等。</p>
+<p>函数 <code>func (db *DB) Exec(query string, args ...interface{}) (Result, error)</code> 完成执行 SQL 但不返回结果集，函数的返回值为 <code>sql.Result</code> 类型对象，用于获取影响行数或最新生成的ID。参数 query 为查询 SQL。args 为 query 中占位参数。</p>
+<p>示例为：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">result, err := db.Exec(<span class="string">"INSERT INTO tableName (name) VALUES (?)"</span>, <span class="string">"Hank"</span>)</span><br><span class="line"><span class="keyword">if</span> <span class="literal">nil</span> != err &#123;</span><br><span class="line">  log.Println(err)</span><br><span class="line">&#125;</span><br><span class="line">id, _ := result.LastInsertId()</span><br><span class="line">fmt.Println(<span class="string">"最新的 ID为："</span>, id)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>result.LastInsertId() (int64, error)</code> 方法获取最新的ID</li>
+<li><code>result.RowsAffected() (int64, error)</code> 方法获取影响的记录行数</li>
+</ul>
+<h2><span id="6-预编译">6 预编译</span></h2><p>Go 支持预编译的方式执行 SQL。</p>
+<p>函数 <code>func (db *DB) Prepare(query string) (*Stmt, error)</code> 用于预编译 SQL，会返回 <code>sql.Stmt</code> 对象于之后的执行。预编译时，不需要设置数据，使用问号占位即可。</p>
+<p>预编译完成后，使用以下函数执行：</p>
+<ul>
+<li><code>func (s *Stmt) Exec(args ...interface{}) (Result, error)</code>，执行非查询类语句</li>
+<li><code>func (s *Stmt) Query(args ...interface{}) (*Rows, error)</code>，执行查询类语句，返回多行的 Rows 对象</li>
+<li><code>func (s *Stmt) QueryRow(args ...interface{}) *Row</code>，执行查询类语句，返回单行的 Row 对象</li>
+</ul>
+<p>执行时，需要传递参数，为预编译时的数据占位。执行完毕后，对结果集的操作与普通执行是一致的，遍历，读取等。</p>
+<p>得到的 <code>sql.Stmt</code> 对象可以绑定不同数据反复执行，一次编译，多次执行。</p>
+<p><code>sql.Stmt</code> 对象 使用完毕，需要关闭。函数 <code>func (s *Stmt) Close() error</code> 用来关闭。 </p>
+<p>示例如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">stmt, err := db.Prepare(<span class="string">"SELECT name FROM users WHERE id = ?"</span>)</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">    log.Fatal(err)</span><br><span class="line">&#125;</span><br><span class="line">id := <span class="number">42</span></span><br><span class="line">rows, err := stmt.Query(id)</span><br><span class="line"><span class="comment">// 后续获取数据代码不再赘述</span></span><br></pre></td></tr></table></figure>
+<h2><span id="7-事务">7 事务</span></h2><p>Go 语言支持 MySQL 事务。以下函数用于操作事务：</p>
+<ul>
+<li>func (db *DB) Begin() (*Tx, error)，开启事务，返回 Tx 对象引用</li>
+<li>func (tx *Tx) Commit() error，提交事务</li>
+<li>func (tx *Tx) Rollback() error，回滚事务</li>
+<li>func (tx *Tx) Exec(query string, args …interface{}) (Result, error)，执行非查询类SQL</li>
+<li>func (tx *Tx) Query(query string, args …interface{}) (*Rows, error)，执行查询类SQL，返回多条</li>
+<li>func (tx *Tx) QueryRow(query string, args …interface{}) *Row，执行查询类sQL，返回单条</li>
+<li>func (tx *Tx) Prepare(query string) (*tmt, error)，预编译</li>
+<li>func (tx *Tx) Stmt(stmt *Stmt) *Stmt，将事务外预编译好的语句对象纳入事务</li>
+</ul>
+<p>示例为：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tx,_ := db.Begin()</span><br><span class="line">tx.Exec(<span class="string">"INSERT INTO user(id, username, age) values(?, ?)"</span>, <span class="string">"Hank"</span>, <span class="number">42</span>)</span><br><span class="line">tx.Exec(<span class="string">"UPDATE userCounter set counter=couter+1)"</span>)</span><br><span class="line">tx.Commit()</span><br></pre></td></tr></table></figure>
+<p>完！<br>原文出自：<a href="http://go.hellokang.net/mysql.html" target="_blank" rel="noopener">小韩说课</a><br>微信关注：小韩说课<br><img src="http://asset.hellokang.net/images/common/xiaohanshuoke_258.jpg" alt="小韩说课"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <!-- <a data-url="http://blog.hellokang.net/go/go-mysql/" data-id="cjoha128k0017gcuo6hqr7o7o" class="article-share-link">分享到</a> -->
+      
+
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/go/go-http-template-syntax/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">Go语言中使模板引擎的语法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+  <section class="changyan" id="comments">
+<!--PC和WAP自适应版-->
+<div id="SOHUCS" sid="cjoha128k0017gcuo6hqr7o7o"></div> 
+<script type="text/javascript"> 
+	(function(){ 
+		var appid = 'cyt64TYiv'; 
+		var conf = 'prod_8144667773d887f47faa11a45cb29175'; 
+		var width = window.innerWidth || document.documentElement.clientWidth; 
+		if (width < 960) { 
+			window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })(); </script>
+</section>
+ </section>
+      
+      <aside id="sidebar">
+  
+      <div class="widget-wrap author">
+    <h3 class="widget-title">&nbsp;</h3>
+    <div class="widget">
+      <div class="avatar">
+        <img src="/images/avatar.png" >
+      </div>
+      <div class="info">
+        <ul>
+          <li>
+            <h3>韩忠康</h3>
+            <wb:follow-button uid="5846559498" type="red_1" width="67" height="24" ></wb:follow-button>
+            <a href="https://github.com/hanzkering" class="fa-icon fa-github" > GitHub</a>
+          </li>
+          <li>程序员，培训讲师</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+    <div class="widget-wrap author">
+  <h3 class="widget-title">微信关注</h3>    
+  <div class="widget">
+    <img src="/images/wechat_subscription.jpg">
+  </div>
+</div>
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">36</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">29</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">29</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/error/" style="font-size: 10px;">error</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/go/" style="font-size: 20px;">go</a> <a href="/tags/goGuide/" style="font-size: 20px;">goGuide</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">近期文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/go/go-mysql/">Go语言中操作MySQL</a>
+          </li>
+        
+          <li>
+            <a href="/go/go-http-template-syntax/">Go语言中使模板引擎的语法</a>
+          </li>
+        
+          <li>
+            <a href="/go/go-http-template/">Go语言中使用模板引擎</a>
+          </li>
+        
+          <li>
+            <a href="/go/go-http-response/">Go中处理响应</a>
+          </li>
+        
+          <li>
+            <a href="/uncategorized/json-bson/">json-bson</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">友情链接</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="https://github.com/hanzkering" target="_blank">GibHub</a>
+          </li>
+        
+          <li>
+            <a href="http://go.hellokang.net/" target="_blank">Go语言指导</a>
+          </li>
+        
+          <li>
+            <a href="http://mysql.hellokang.net/" target="_blank">MySQL指导</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 韩忠康<br>
+      Powered by <a href="//hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+  </div>
+  <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="http://go.hellokang.net/" class="mobile-nav-link">Go语言指导</a>
+  
+    <a href="http://mysql.hellokang.net/" class="mobile-nav-link">MySQL指导</a>
+  
+</nav>
+  <!-- totop start -->
+<div id="totop">
+<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+</div>
+
+<!-- totop end -->
+
+
+<!-- 百度分享 start -->
+
+<!-- 百度分享 end -->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>

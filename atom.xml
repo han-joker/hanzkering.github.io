@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.hellokang.net/"/>
-  <updated>2018-11-13T14:44:48.626Z</updated>
+  <updated>2018-11-14T14:44:06.550Z</updated>
   <id>http://blog.hellokang.net/</id>
   
   <author>
@@ -17,11 +17,53 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Go语言中操作MySQL</title>
+    <link href="http://blog.hellokang.net/go/go-mysql/"/>
+    <id>http://blog.hellokang.net/go/go-mysql/</id>
+    <published>2018-11-14T14:41:40.000Z</published>
+    <updated>2018-11-14T14:44:06.550Z</updated>
+    
+    <summary type="html">
+    
+      &lt;!-- toc --&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#1-概述&quot;&gt;1 概述&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#2-mysql-驱动安装&quot;&gt;2 MySQL 驱动安装&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#2-打开数据库&quot;&gt;2 打开数据库&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#3-数据源名称&quot;&gt;3 数据源名称&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#4-查询操作&quot;&gt;4 查询操作&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#查询多行&quot;&gt;查询多行&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#查询单行&quot;&gt;查询单行&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#null处理&quot;&gt;NULL处理&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#5-非查询操作&quot;&gt;5 非查询操作&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#6-预编译&quot;&gt;6 预编译&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#7-事务&quot;&gt;7 事务&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+&lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h2&gt;&lt;p&gt;Go 语言程序可以作为 MySQL 服务器的客户端完成 MySQL 数据库的操作。&lt;/p&gt;
+&lt;p&gt;Go 语言中，使用 &lt;code&gt;database/sql&lt;/code&gt; 包实现类 SQL 数据库的操作。&lt;code&gt;sql&lt;/code&gt; 包是一个数据库抽象层，具体的数据库操作的实现要依赖于相应的驱动才可以。抽象层与驱动的关系，如下图所示:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://asset.hellokang.net/images/mysql/mysql-abstract-layer.png&quot; alt=&quot;数据库抽象层&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Go 支持的驱动列表请参考：&lt;a href=&quot;https://github.com/golang/go/wiki/SQLDrivers&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://github.com/golang/go/wiki/SQLDrivers&lt;/a&gt;，或者 &lt;a href=&quot;http://go.hellokang.net/sql-drivers.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;SQL驱动列表&lt;/a&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
+    
+    
+      <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
+    
+      <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Go语言中使模板引擎的语法</title>
     <link href="http://blog.hellokang.net/go/go-http-template-syntax/"/>
     <id>http://blog.hellokang.net/go/go-http-template-syntax/</id>
     <published>2018-11-13T14:32:46.000Z</published>
-    <updated>2018-11-13T14:44:48.626Z</updated>
+    <updated>2018-11-14T02:01:08.039Z</updated>
     
     <summary type="html">
     
@@ -59,7 +101,7 @@
     <link href="http://blog.hellokang.net/go/go-http-template/"/>
     <id>http://blog.hellokang.net/go/go-http-template/</id>
     <published>2018-11-13T14:32:37.000Z</published>
-    <updated>2018-11-13T14:40:24.440Z</updated>
+    <updated>2018-11-14T01:58:58.173Z</updated>
     
     <summary type="html">
     
@@ -652,28 +694,6 @@
 &lt;/ul&gt;
 &lt;!-- tocstop --&gt;
 &lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h2&gt;&lt;p&gt;Go语言是强类型语言，因此总会需要将字符串转成需要的类型。比如整型和字符串转换，字符串和布尔型的转换等。本文就介绍如何完成这些转换，以下是Go语言关于字符串转换的整理说明，主要是与切片类型的转换，和 strconv 包的使用。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
-    
-    
-      <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
-    
-      <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Go语言中多字节字符的处理</title>
-    <link href="http://blog.hellokang.net/go/go-utf8/"/>
-    <id>http://blog.hellokang.net/go/go-utf8/</id>
-    <published>2018-10-26T11:15:53.000Z</published>
-    <updated>2018-11-01T14:29:21.874Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h2&gt;&lt;p&gt;Go语言的字符串是使用 &lt;code&gt;UTF-8&lt;/code&gt; 编码的。&lt;code&gt;UTF-8&lt;/code&gt; 是 &lt;code&gt;Unicode&lt;/code&gt; 的实现方式之一。本文内容包括：&lt;code&gt;UTF-8&lt;/code&gt; 和 &lt;code&gt;Unicode&lt;/code&gt; 的关系，Go语言提供的 &lt;code&gt;unicode&lt;/code&gt; 包和 &lt;code&gt;unicode/utf8&lt;/code&gt; 包的使用。&lt;/p&gt;
     
     </summary>
     

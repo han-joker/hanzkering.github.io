@@ -76,6 +76,77 @@
     <div class="outer">
       <section id="main">
   
+    <article id="post-go-mysql" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/go/go-mysql/" class="article-date">
+  <time datetime="2018-11-14T14:41:40.000Z" itemprop="datePublished">2018-11-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/go/">go</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/go/go-mysql/">Go语言中操作MySQL</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- toc -->
+<ul>
+<li><a href="#1-概述">1 概述</a></li>
+<li><a href="#2-mysql-驱动安装">2 MySQL 驱动安装</a></li>
+<li><a href="#2-打开数据库">2 打开数据库</a></li>
+<li><a href="#3-数据源名称">3 数据源名称</a></li>
+<li><a href="#4-查询操作">4 查询操作</a><ul>
+<li><a href="#查询多行">查询多行</a></li>
+<li><a href="#查询单行">查询单行</a></li>
+<li><a href="#null处理">NULL处理</a></li>
+</ul>
+</li>
+<li><a href="#5-非查询操作">5 非查询操作</a></li>
+<li><a href="#6-预编译">6 预编译</a></li>
+<li><a href="#7-事务">7 事务</a></li>
+</ul>
+<!-- tocstop -->
+<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h2><p>Go 语言程序可以作为 MySQL 服务器的客户端完成 MySQL 数据库的操作。</p>
+<p>Go 语言中，使用 <code>database/sql</code> 包实现类 SQL 数据库的操作。<code>sql</code> 包是一个数据库抽象层，具体的数据库操作的实现要依赖于相应的驱动才可以。抽象层与驱动的关系，如下图所示:</p>
+<p><img src="http://asset.hellokang.net/images/mysql/mysql-abstract-layer.png" alt="数据库抽象层"></p>
+<p>Go 支持的驱动列表请参考：<a href="https://github.com/golang/go/wiki/SQLDrivers" target="_blank" rel="noopener">https://github.com/golang/go/wiki/SQLDrivers</a>，或者 <a href="http://go.hellokang.net/sql-drivers.html" target="_blank" rel="noopener">SQL驱动列表</a></p>
+        
+          <p class="article-more-link">
+            <a href="/go/go-mysql/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+        <!-- <a data-url="http://blog.hellokang.net/go/go-mysql/" data-id="cjoha128k0017gcuo6hqr7o7o" class="article-share-link">分享到</a> -->
+      
+
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+ 
+  
     <article id="post-go-http-template-syntax" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/go/go-http-template-syntax/" class="article-date">
@@ -128,7 +199,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-http-template-syntax/" data-id="cjofubyv90015p8uoxzmk05va" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-http-template-syntax/" data-id="cjoha1283000pgcuosh7fk77w" class="article-share-link">分享到</a> -->
       
 
       
@@ -198,7 +269,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-http-template/" data-id="cjofubyv1000vp8uos11yaklz" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-http-template/" data-id="cjoha1287000tgcuo6l5zy1vb" class="article-share-link">分享到</a> -->
       
 
       
@@ -261,7 +332,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-http-response/" data-id="cjofubyuu000mp8uoyopiye9s" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-http-response/" data-id="cjoha128o001egcuoffzljs8b" class="article-share-link">分享到</a> -->
       
 
       
@@ -303,7 +374,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/uncategorized/json-bson/" data-id="cjofubyxb003kp8uoefiuv7lv" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/uncategorized/json-bson/" data-id="cjoha12b8003mgcuosoabf2bd" class="article-share-link">分享到</a> -->
       
 
       
@@ -364,7 +435,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-http-request/" data-id="cjofubyuq000jp8uo3vk97kon" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-http-request/" data-id="cjoha1288000wgcuo8j0c160f" class="article-share-link">分享到</a> -->
       
 
       
@@ -420,7 +491,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-http-server/" data-id="cjofubyvc0018p8uotp1v05v3" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-http-server/" data-id="cjoha128q001hgcuornm2n2hx" class="article-share-link">分享到</a> -->
       
 
       
@@ -531,7 +602,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-regexp-syntax/" data-id="cjofubywk002ip8uobs5kblt1" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-regexp-syntax/" data-id="cjoha12a9002pgcuo81d171fm" class="article-share-link">分享到</a> -->
       
 
       
@@ -583,7 +654,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-regexp/" data-id="cjofubywn002op8uovdppgo0w" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-regexp/" data-id="cjoha12ae002vgcuovbtzrrmq" class="article-share-link">分享到</a> -->
       
 
       
@@ -633,7 +704,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-template/" data-id="cjofubywv002xp8uof28qqr16" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-template/" data-id="cjoha12aw003agcuov7mpazus" class="article-share-link">分享到</a> -->
       
 
       
@@ -692,7 +763,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-reflect-invoke/" data-id="cjofubyvl001kp8uovcg82tl6" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-reflect-invoke/" data-id="cjoha12a6002mgcuoea6jobse" class="article-share-link">分享到</a> -->
       
 
       
@@ -751,70 +822,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-reflect-value/" data-id="cjofubywl002lp8uozt3wai2f" class="article-share-link">分享到</a> -->
-      
-
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
- 
-  
-    <article id="post-go-reflect-structure" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/go/go-reflect-structure/" class="article-date">
-  <time datetime="2018-11-03T04:05:48.000Z" itemprop="datePublished">2018-11-03</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/go/">go</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/go/go-reflect-structure/">Go语言反射之类型反射</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!-- toc -->
-<ul>
-<li><a href="#1-概述">1 概述</a></li>
-<li><a href="#2-获取类型">2 获取类型</a></li>
-<li><a href="#3-获取基础类型类别">3 获取基础类型（类别）</a></li>
-<li><a href="#4-指针引用的元素类型">4 指针引用的元素类型</a></li>
-<li><a href="#5-结构体信息">5 结构体信息</a></li>
-<li><a href="#6-结构体标签">6 结构体标签</a></li>
-</ul>
-<!-- tocstop -->
-<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h2><p>类似于 Java，Go 语言也支持反射。支持反射的语言可以在运行时对程序进行访问和修改。反射的原理是在程序编译期将反射信息（如类型信息、结构体信息等）整合到程序中，并给提供给程序访问反射信息的操作接口，这样在程序运行期间就可以获取该反射信息，甚至支持修改操作。</p>
-<p>Go 语言使用 <code>reflect</code> 包支持反射。</p>
-<p>本文介绍与类型结构相关的反射操作。</p>
-        
-          <p class="article-more-link">
-            <a href="/go/go-reflect-structure/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-        <!-- <a data-url="http://blog.hellokang.net/go/go-reflect-structure/" data-id="cjofubywb002bp8uoqhrxtdl0" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-reflect-value/" data-id="cjoha12a1002hgcuon9ocez4j" class="article-share-link">分享到</a> -->
       
 
       
@@ -868,7 +876,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">35</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">36</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -877,7 +885,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">28</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">28</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">29</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">29</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -895,7 +903,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -905,6 +913,10 @@
     <h3 class="widget-title">近期文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/go/go-mysql/">Go语言中操作MySQL</a>
+          </li>
         
           <li>
             <a href="/go/go-http-template-syntax/">Go语言中使模板引擎的语法</a>
@@ -920,10 +932,6 @@
         
           <li>
             <a href="/uncategorized/json-bson/">json-bson</a>
-          </li>
-        
-          <li>
-            <a href="/go/go-http-request/">Go中处理请求</a>
           </li>
         
       </ul>
