@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.hellokang.net/"/>
-  <updated>2018-11-14T14:44:06.550Z</updated>
+  <updated>2018-11-15T14:43:40.524Z</updated>
   <id>http://blog.hellokang.net/</id>
   
   <author>
@@ -15,6 +15,46 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Go语言解析markdown</title>
+    <link href="http://blog.hellokang.net/go/go-markdown/"/>
+    <id>http://blog.hellokang.net/go/go-markdown/</id>
+    <published>2018-11-15T14:41:34.000Z</published>
+    <updated>2018-11-15T14:43:40.524Z</updated>
+    
+    <summary type="html">
+    
+      &lt;!-- toc --&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#1-概述&quot;&gt;1 概述&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#2-安装-blackfriday&quot;&gt;2 安装 Blackfriday&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#3-解析-markdown-内容&quot;&gt;3 解析 MarkDown 内容&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#4-安全过滤&quot;&gt;4 安全过滤&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#安装&quot;&gt;安装&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#使用&quot;&gt;使用&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+&lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h2&gt;&lt;p&gt;Markdown 是一种轻量级的标记语言。设计的目的是通过简单、轻量级的方式来添加格式，而不需要使用 HTML。&lt;/p&gt;
+&lt;p&gt;相关文档如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.hellokang.net/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Markdown语法文档&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://daringfireball.net/projects/markdown/syntax/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Markdown语法文档（官方）&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://alfred-sun.github.io/markdown-syntax-zhtw/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Markdown语法文档（翻译）&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
+    
+    
+      <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
+    
+      <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
+    
+  </entry>
   
   <entry>
     <title>Go语言中操作MySQL</title>
@@ -637,63 +677,6 @@
     
       &lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h2&gt;&lt;p&gt;数组，切片，map是容器数据类型。都是可以存储多个值的符合类型。&lt;br&gt;其中数组是相同类型的一组已编号且长度固定的数据项序列，不用类型和长度是不同的数据类型，例如[5]int, [3]int, [5]byte是不同的类型。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://www.hellokang.net/images/posts/go/go-array.png&quot; alt=&quot;数组&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
-    
-    
-      <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
-    
-      <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Go语言中其他数据与字符串类型的转换</title>
-    <link href="http://blog.hellokang.net/go/go-strconv/"/>
-    <id>http://blog.hellokang.net/go/go-strconv/</id>
-    <published>2018-10-27T09:15:56.000Z</published>
-    <updated>2018-11-01T14:28:59.839Z</updated>
-    
-    <summary type="html">
-    
-      &lt;!-- toc --&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#1-概述&quot;&gt;1 概述&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#2-与切片的转换&quot;&gt;2 与切片的转换&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#3-strconv-包&quot;&gt;3 strconv 包&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#strconvatois-string-int-error&quot;&gt;strconv.Atoi(s string) (int, error)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#strconvitoai-int-string&quot;&gt;strconv.Itoa(i int) string&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#strconvparsefloats-string-bitsize-int-float64-error&quot;&gt;strconv.ParseFloat(s string, bitSize int) (float64, error)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#strconvparseints-string-base-int-bitsize-int-i-int64-err-error&quot;&gt;strconv.ParseInt(s string, base int, bitSize int) (i int64, err error)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#strconvformatfloatf-float64-fmt-byte-prec-bitsize-int-string&quot;&gt;strconv.FormatFloat(f float64, fmt byte, prec, bitSize int) string&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#strconvformatinti-int64-base-int-string&quot;&gt;strconv.FormatInt(i int64, base int) string&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#strconvappendbooldst-byte-b-bool-byte&quot;&gt;strconv.AppendBool(dst []byte, b bool) []byte&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#strconvappendfloatdst-byte-f-float64-fmt-byte-prec-bitsize-int-byte&quot;&gt;strconv.AppendFloat(dst []byte, f float64, fmt byte, prec, bitSize int) []byte&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#strconvappendintdst-byte-i-int64-base-int-byte&quot;&gt;strconv.AppendInt(dst []byte, i int64, base int) []byte&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#strconvappendquotedst-byte-s-string-byte&quot;&gt;strconv.AppendQuote(dst []byte, s string) []byte&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#strconvappendquoterunedst-byte-r-rune-byte&quot;&gt;strconv.AppendQuoteRune(dst []byte, r rune) []byte&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#strconvappendquoterunetoasciidst-byte-r-rune-byte&quot;&gt;strconv.AppendQuoteRuneToASCII(dst []byte, r rune) []byte&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#strconvappendquotetoasciidst-byte-s-string-byte&quot;&gt;strconv.AppendQuoteToASCII(dst []byte, s string) []byte&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#strconvappenduintdst-byte-i-uint64-base-int-byte&quot;&gt;strconv.AppendUint(dst []byte, i uint64, base int) []byte&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#strconvcanbackquotes-string-bool&quot;&gt;strconv.CanBackquote(s string) bool&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#strconvformatboolb-bool-string&quot;&gt;strconv.FormatBool(b bool) string&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#strconvformatuinti-uint64-base-int-string&quot;&gt;strconv.FormatUint(i uint64, base int) string&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#strconvisprintr-rune-bool&quot;&gt;strconv.IsPrint(r rune) bool&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#strconvparseboolstr-string-bool-error&quot;&gt;strconv.ParseBool(str string) (bool, error)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#strconvparseuints-string-base-int-bitsize-int-uint64-error&quot;&gt;strconv.ParseUint(s string, base int, bitSize int) (uint64, error)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#strconvquotes-string-string&quot;&gt;strconv.Quote(s string) string&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#strconvquoteruner-rune-string&quot;&gt;strconv.QuoteRune(r rune) string&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#strconvquoterunetoasciir-rune-string&quot;&gt;strconv.QuoteRuneToASCII(r rune) string&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#strconvquotetoasciis-string-string&quot;&gt;strconv.QuoteToASCII(s string) string&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#strconvunquotes-string-string-error&quot;&gt;strconv.Unquote(s string) (string, error)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#strconvunquotechars-string-quote-byte-value-rune-multibyte-bool-tail-string-err-error&quot;&gt;strconv.UnquoteChar(s string, quote byte) (value rune, multibyte bool, tail string, err error)&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;!-- tocstop --&gt;
-&lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h2&gt;&lt;p&gt;Go语言是强类型语言，因此总会需要将字符串转成需要的类型。比如整型和字符串转换，字符串和布尔型的转换等。本文就介绍如何完成这些转换，以下是Go语言关于字符串转换的整理说明，主要是与切片类型的转换，和 strconv 包的使用。&lt;/p&gt;
     
     </summary>
     
