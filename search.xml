@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Go语言解析YAML]]></title>
+    <url>%2Fgo%2Fgo-yaml%2F</url>
+    <content type="text"><![CDATA[1 概述 2 安装 go-yaml/yaml 3 解析 YAML 4 构建 YAML 1 概述YAML是”YAML Ain’t a Markup Language”（YAML不是一种置标语言）的递归缩写。YAML 以数据为中心，使用空白，缩进，分行组织数据，从而使得表示更加简洁易读。一个典型的 YAML 如下： 12345title: 小韩说课category: gotag:- OOP- GoLang 基本语法为： 使用缩进表示层级关系 禁止使用tab缩进，只能使用空格键 缩进长度没有限制，只要元素对齐就表示这些元素属于一个层级 在项目中，配置文件选择 YAML 是常见的选择。 参考文档： The Official YAML Web Site 语法参考 本文介绍在 Go 语言中解析 YAML。 2 安装 go-yaml/yamlGo 语言中解析 YAML 最出名的应该是 go-yaml/yaml。github地址为： https://github.com/go-yaml/yaml 下面的命令将其安装在 GOPATH 目录中： 1go get gopkg.in/yaml.v2 3 解析 YAMLyaml.Unmarshal 函数负责将 YAML 格式文本解析，演示如下： 1234567891011121314151617181920import ( "gopkg.in/yaml.v2")// 待解析数据yamlContent := `field1: 小韩说课field2: field3: value field4: [42, 1024]`// 存储解析数据result := make(map[string]interface&#123;&#125;)// 执行解析 err = yaml.Unmarshal([]byte(data), &amp;result)if err != nil &#123; log.Fatalf("error: %v", err)&#125;// result// map[field1:小韩说课 field2:map[field3:value field4:[42 1024]]] 4 构建 YAMLyaml.Marshal 函数可以利用 map 数据构建 YAML 文本，演示如下： 1234567891011121314151617181920212223import ( "gopkg.in/yaml.v2")// map数据data := map[string]interface&#123;&#125;&#123; "field1": "小韩说课", "field2": map[string]interface&#123;&#125;&#123; "field3": "value", "field4": []int&#123;42, 1024&#125; &#125; &#125;text, err = yaml.Marshal(&amp;data)if err != nil &#123; log.Fatalf("error: %v", err)&#125;// textfield1: 小韩说课field2: field3: value field4: - 42 - 1024 完！原文出自：小韩说课微信关注：小韩说课]]></content>
+      <categories>
+        <category>go</category>
+      </categories>
+      <tags>
+        <tag>go</tag>
+        <tag>goGuide</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Go语言解析markdown]]></title>
     <url>%2Fgo%2Fgo-markdown%2F</url>
-    <content type="text"><![CDATA[1 概述 2 安装 Blackfriday 3 解析 MarkDown 内容 4 安全过滤 安装 使用 1 概述Markdown 是一种轻量级的标记语言。设计的目的是通过简单、轻量级的方式来添加格式，而不需要使用 HTML。 相关文档如下： Markdown语法文档 Markdown语法文档（官方） Markdown语法文档（翻译） 2 安装 BlackfridayGo 语言中解析 MarkDown 最知名的库就是 russross/blackfriday 了。github 地址为：russross/blackfriday。 下面的命令可以将 russross/blackfriday 安装到 GOPATH 所设置的目录： 1go get -u gopkg.in/russross/blackfriday.v2 3 解析 MarkDown 内容使用函数 func Run(input []byte, opts ...Option) []byte 完成 MarkDown 的解析，演示如下： 12345// 通用的解析方式output := blackfriday.Run(input)// 若仅需要最基本的功能，使用 blackfriday.WithNoExtensions() 选项output := blackfriday.Run(input, blackfriday.WithNoExtensions()) 4 安全过滤blackfriday 库仅实现了 MarkDown 的解析，没有做关于安全注入方面的过滤。若不能保证待解析的内容安全性，例如来自于用户提供的内容，则需要进行内容过滤来保证安全。推荐使用 microcosm-cc/bluemonday 完成。项目 github 地址：microcosm-cc/bluemonday 安装下面的命令可以将 microcosm-cc/bluemonday 安装到 GOPATH 所设置的目录： 1go get -u github.com/microcosm-cc/bluemonday 使用使用过程如下： 1234567import ( "github.com/microcosm-cc/bluemonday" "gopkg.in/russross/blackfriday.v2")// 利用 bluemonday 解析html := bluemonday.UGCPolicy().SanitizeBytes(unsafe) 完！原文出自：小韩说课微信关注：小韩说课]]></content>
+    <content type="text"><![CDATA[1 概述 2 安装 Blackfriday 3 解析 MarkDown 内容 4 安全过滤 安装 使用 1 概述Markdown 是一种轻量级的标记语言。设计的目的是通过简单、轻量级的方式来添加格式，而不需要使用 HTML。 相关文档如下： Markdown语法文档 Markdown语法文档（官方） Markdown语法文档（翻译） 2 安装 BlackfridayGo 语言中解析 MarkDown 最知名的库就是 russross/blackfriday 了。github 地址为：russross/blackfriday。 下面的命令可以将 russross/blackfriday 安装到 GOPATH 所设置的目录： 1go get -u gopkg.in/russross/blackfriday.v2 3 解析 MarkDown 内容使用函数 func Run(input []byte, opts ...Option) []byte 完成 MarkDown 的解析，演示如下： 123456789import ( "gopkg.in/russross/blackfriday.v2")// 通用的解析方式output := blackfriday.Run(input)// 若仅需要最基本的功能，使用 blackfriday.WithNoExtensions() 选项output := blackfriday.Run(input, blackfriday.WithNoExtensions()) 4 安全过滤blackfriday 库仅实现了 MarkDown 的解析，没有做关于安全注入方面的过滤。若不能保证待解析的内容安全性，例如来自于用户提供的内容，则需要进行内容过滤来保证安全。推荐使用 microcosm-cc/bluemonday 完成。项目 github 地址：microcosm-cc/bluemonday 安装下面的命令可以将 microcosm-cc/bluemonday 安装到 GOPATH 所设置的目录： 1go get -u github.com/microcosm-cc/bluemonday 使用使用过程如下： 1234567import ( "github.com/microcosm-cc/bluemonday" "gopkg.in/russross/blackfriday.v2")// 利用 bluemonday 解析html := bluemonday.UGCPolicy().SanitizeBytes(unsafe) 完！原文出自：小韩说课微信关注：小韩说课]]></content>
       <categories>
         <category>go</category>
       </categories>

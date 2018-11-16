@@ -4,21 +4,21 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Go语言解析markdown | 小韩说课</title>
+  <title>Go语言解析YAML | 小韩说课</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1 概述 2 安装 Blackfriday 3 解析 MarkDown 内容 4 安全过滤 安装 使用     1 概述Markdown 是一种轻量级的标记语言。设计的目的是通过简单、轻量级的方式来添加格式，而不需要使用 HTML。 相关文档如下：  Markdown语法文档 Markdown语法文档（官方） Markdown语法文档（翻译）">
+  <meta name="description" content="1 概述 2 安装 go-yaml/yaml 3 解析 YAML 4 构建 YAML   1 概述YAML是”YAML Ain’t a Markup Language”（YAML不是一种置标语言）的递归缩写。YAML 以数据为中心，使用空白，缩进，分行组织数据，从而使得表示更加简洁易读。一个典型的 YAML 如下： 12345title: 小韩说课category: gotag:- OOP-">
 <meta name="keywords" content="go,goGuide">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Go语言解析markdown">
-<meta property="og:url" content="http://blog.hellokang.net/go/go-markdown/index.html">
+<meta property="og:title" content="Go语言解析YAML">
+<meta property="og:url" content="http://blog.hellokang.net/go/go-yaml/index.html">
 <meta property="og:site_name" content="小韩说课">
-<meta property="og:description" content="1 概述 2 安装 Blackfriday 3 解析 MarkDown 内容 4 安全过滤 安装 使用     1 概述Markdown 是一种轻量级的标记语言。设计的目的是通过简单、轻量级的方式来添加格式，而不需要使用 HTML。 相关文档如下：  Markdown语法文档 Markdown语法文档（官方） Markdown语法文档（翻译）">
+<meta property="og:description" content="1 概述 2 安装 go-yaml/yaml 3 解析 YAML 4 构建 YAML   1 概述YAML是”YAML Ain’t a Markup Language”（YAML不是一种置标语言）的递归缩写。YAML 以数据为中心，使用空白，缩进，分行组织数据，从而使得表示更加简洁易读。一个典型的 YAML 如下： 12345title: 小韩说课category: gotag:- OOP-">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://asset.hellokang.net/images/common/xiaohanshuoke_258.jpg">
-<meta property="og:updated_time" content="2018-11-15T15:08:07.448Z">
+<meta property="og:updated_time" content="2018-11-16T15:19:32.751Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Go语言解析markdown">
-<meta name="twitter:description" content="1 概述 2 安装 Blackfriday 3 解析 MarkDown 内容 4 安全过滤 安装 使用     1 概述Markdown 是一种轻量级的标记语言。设计的目的是通过简单、轻量级的方式来添加格式，而不需要使用 HTML。 相关文档如下：  Markdown语法文档 Markdown语法文档（官方） Markdown语法文档（翻译）">
+<meta name="twitter:title" content="Go语言解析YAML">
+<meta name="twitter:description" content="1 概述 2 安装 go-yaml/yaml 3 解析 YAML 4 构建 YAML   1 概述YAML是”YAML Ain’t a Markup Language”（YAML不是一种置标语言）的递归缩写。YAML 以数据为中心，使用空白，缩进，分行组织数据，从而使得表示更加简洁易读。一个典型的 YAML 如下： 12345title: 小韩说课category: gotag:- OOP-">
 <meta name="twitter:image" content="http://asset.hellokang.net/images/common/xiaohanshuoke_258.jpg">
   
     <link rel="alternative" href="/atom.xml" title="小韩说课" type="application/atom+xml">
@@ -77,10 +77,10 @@
   </div>
 </header>
     <div class="outer">
-      <section id="main"><article id="post-go-markdown" class="article article-type-post" itemscope itemprop="blogPost">
+      <section id="main"><article id="post-go-yaml" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/go/go-markdown/" class="article-date">
-  <time datetime="2018-11-15T14:41:34.000Z" itemprop="datePublished">2018-11-15</time>
+    <a href="/go/go-yaml/" class="article-date">
+  <time datetime="2018-11-16T15:17:09.000Z" itemprop="datePublished">2018-11-16</time>
 </a>
     
   <div class="article-category">
@@ -95,7 +95,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Go语言解析markdown
+      Go语言解析YAML
     </h1>
   
 
@@ -106,40 +106,41 @@
         <!-- toc -->
 <ul>
 <li><a href="#1-概述">1 概述</a></li>
-<li><a href="#2-安装-blackfriday">2 安装 Blackfriday</a></li>
-<li><a href="#3-解析-markdown-内容">3 解析 MarkDown 内容</a></li>
-<li><a href="#4-安全过滤">4 安全过滤</a><ul>
-<li><a href="#安装">安装</a></li>
-<li><a href="#使用">使用</a></li>
-</ul>
-</li>
+<li><a href="#2-安装-go-yamlyaml">2 安装 <code>go-yaml/yaml</code></a></li>
+<li><a href="#3-解析-yaml">3 解析 YAML</a></li>
+<li><a href="#4-构建-yaml">4 构建 YAML</a></li>
 </ul>
 <!-- tocstop -->
-<h2><span id="1-概述">1 概述</span></h2><p>Markdown 是一种轻量级的标记语言。设计的目的是通过简单、轻量级的方式来添加格式，而不需要使用 HTML。</p>
-<p>相关文档如下：</p>
+<h2><span id="1-概述">1 概述</span></h2><p>YAML是”YAML Ain’t a Markup Language”（YAML不是一种置标语言）的递归缩写。YAML 以数据为中心，使用空白，缩进，分行组织数据，从而使得表示更加简洁易读。一个典型的 YAML 如下：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">title:</span> <span class="string">小韩说课</span></span><br><span class="line"><span class="attr">category:</span> <span class="string">go</span></span><br><span class="line"><span class="attr">tag:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">OOP</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">GoLang</span></span><br></pre></td></tr></table></figure>
+<p>基本语法为：</p>
 <ul>
-<li><a href="http://www.hellokang.net/" target="_blank" rel="noopener">Markdown语法文档</a></li>
-<li><a href="https://daringfireball.net/projects/markdown/syntax/" target="_blank" rel="noopener">Markdown语法文档（官方）</a></li>
-<li><a href="http://alfred-sun.github.io/markdown-syntax-zhtw/" target="_blank" rel="noopener">Markdown语法文档（翻译）</a></li>
+<li>使用缩进表示层级关系</li>
+<li>禁止使用tab缩进，只能使用空格键</li>
+<li>缩进长度没有限制，只要元素对齐就表示这些元素属于一个层级</li>
 </ul>
+<p>在项目中，配置文件选择 YAML 是常见的选择。</p>
+<p>参考文档：</p>
+<ul>
+<li><a href="http://www.yaml.org/" target="_blank" rel="noopener">The Official YAML Web Site</a></li>
+<li><a href="http://docs.hellokang.net/yaml/" target="_blank" rel="noopener">语法参考</a></li>
+</ul>
+<p>本文介绍在 Go 语言中解析 YAML。</p>
 <a id="more"></a>
-<h2><span id="2-安装-blackfriday">2 安装 Blackfriday</span></h2><p>Go 语言中解析 MarkDown 最知名的库就是 <code>russross/blackfriday</code> 了。github 地址为：<a href="https://github.com/russross/blackfriday" target="_blank" rel="noopener">russross/blackfriday</a>。</p>
-<p>下面的命令可以将 <code>russross/blackfriday</code> 安装到 GOPATH 所设置的目录：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get -u gopkg.in/russross/blackfriday.v2</span><br></pre></td></tr></table></figure>
-<h2><span id="3-解析-markdown-内容">3 解析 MarkDown 内容</span></h2><p>使用函数 <code>func Run(input []byte, opts ...Option) []byte</code> 完成 MarkDown 的解析，演示如下：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">"gopkg.in/russross/blackfriday.v2"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通用的解析方式</span></span><br><span class="line">output := blackfriday.Run(input)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 若仅需要最基本的功能，使用 blackfriday.WithNoExtensions() 选项</span></span><br><span class="line">output := blackfriday.Run(input, blackfriday.WithNoExtensions())</span><br></pre></td></tr></table></figure>
-<h2><span id="4-安全过滤">4 安全过滤</span></h2><p><code>blackfriday</code> 库仅实现了 MarkDown 的解析，没有做关于安全注入方面的过滤。若不能保证待解析的内容安全性，例如来自于用户提供的内容，则需要进行内容过滤来保证安全。推荐使用 <code>microcosm-cc/bluemonday</code> 完成。项目 github 地址：<a href="https://github.com/microcosm-cc/bluemonday" target="_blank" rel="noopener">microcosm-cc/bluemonday</a></p>
-<h3><span id="安装">安装</span></h3><p>下面的命令可以将 <code>microcosm-cc/bluemonday</code> 安装到 GOPATH 所设置的目录：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">go</span> get -u github.com/microcosm-cc/bluemonday</span><br></pre></td></tr></table></figure>
-<h3><span id="使用">使用</span></h3><p>使用过程如下：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">"github.com/microcosm-cc/bluemonday"</span></span><br><span class="line">    <span class="string">"gopkg.in/russross/blackfriday.v2"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 利用 bluemonday 解析</span></span><br><span class="line">html := bluemonday.UGCPolicy().SanitizeBytes(unsafe)</span><br></pre></td></tr></table></figure>
-<p>完！<br>原文出自：<a href="http://go.hellokang.net/marshal-markdown.html" target="_blank" rel="noopener">小韩说课</a><br>微信关注：小韩说课<br><img src="http://asset.hellokang.net/images/common/xiaohanshuoke_258.jpg" alt="小韩说课"></p>
+<h2><span id="2-安装-go-yamlyaml">2 安装 <code>go-yaml/yaml</code></span></h2><p>Go 语言中解析 YAML 最出名的应该是 <code>go-yaml/yaml</code>。github地址为： <a href="https://github.com/go-yaml/yaml" target="_blank" rel="noopener">https://github.com/go-yaml/yaml</a></p>
+<p>下面的命令将其安装在 GOPATH 目录中：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">go</span> get gopkg.in/yaml.v2</span><br></pre></td></tr></table></figure>
+<h2><span id="3-解析-yaml">3 解析 YAML</span></h2><p><code>yaml.Unmarshal</code> 函数负责将 YAML 格式文本解析，演示如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">  <span class="string">"gopkg.in/yaml.v2"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 待解析数据</span></span><br><span class="line">yamlContent := <span class="string">`</span></span><br><span class="line"><span class="string">field1: 小韩说课</span></span><br><span class="line"><span class="string">field2:</span></span><br><span class="line"><span class="string">  field3: value</span></span><br><span class="line"><span class="string">  field4: [42, 1024]</span></span><br><span class="line"><span class="string">`</span></span><br><span class="line"><span class="comment">// 存储解析数据</span></span><br><span class="line">result := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">interface</span>&#123;&#125;)</span><br><span class="line"><span class="comment">// 执行解析   </span></span><br><span class="line">err = yaml.Unmarshal([]<span class="keyword">byte</span>(data), &amp;result)</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">  log.Fatalf(<span class="string">"error: %v"</span>, err)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// result</span></span><br><span class="line"><span class="comment">// map[field1:小韩说课 field2:map[field3:value field4:[42 1024]]]</span></span><br></pre></td></tr></table></figure>
+<h2><span id="4-构建-yaml">4 构建 YAML</span></h2><p><code>yaml.Marshal</code> 函数可以利用 map 数据构建 YAML 文本，演示如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">  <span class="string">"gopkg.in/yaml.v2"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// map数据</span></span><br><span class="line">data := <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">interface</span>&#123;&#125;&#123;</span><br><span class="line">    <span class="string">"field1"</span>: <span class="string">"小韩说课"</span>,</span><br><span class="line">    <span class="string">"field2"</span>: <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">interface</span>&#123;&#125;&#123;</span><br><span class="line">      <span class="string">"field3"</span>: <span class="string">"value"</span>,</span><br><span class="line">      <span class="string">"field4"</span>: []<span class="keyword">int</span>&#123;<span class="number">42</span>, <span class="number">1024</span>&#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">text, err = yaml.Marshal(&amp;data)</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">  log.Fatalf(<span class="string">"error: %v"</span>, err)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// text</span></span><br><span class="line">field1: 小韩说课</span><br><span class="line">field2:</span><br><span class="line">  field3: value</span><br><span class="line">  field4:</span><br><span class="line">  - <span class="number">42</span></span><br><span class="line">  - <span class="number">1024</span></span><br></pre></td></tr></table></figure>
+<p>完！<br>原文出自：<a href="http://go.hellokang.net/marshal-yaml.html" target="_blank" rel="noopener">小韩说课</a><br>微信关注：小韩说课<br><img src="http://asset.hellokang.net/images/common/xiaohanshuoke_258.jpg" alt="小韩说课"></p>
 
       
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-markdown/" data-id="cjok667gl0011mcuo74t3ys1x" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-yaml/" data-id="cjok667hm002mmcuop0s070wc" class="article-share-link">分享到</a> -->
       
 
       
@@ -153,19 +154,10 @@
     
 <nav id="article-nav">
   
-    <a href="/go/go-yaml/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">
-        
-          Go语言解析YAML
-        
-      </div>
-    </a>
   
-  
-    <a href="/go/go-mysql/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/go/go-markdown/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">Go语言中操作MySQL</div>
+      <div class="article-nav-title">Go语言解析markdown</div>
     </a>
   
 </nav>
@@ -176,7 +168,7 @@
 
   <section class="changyan" id="comments">
 <!--PC和WAP自适应版-->
-<div id="SOHUCS" sid="cjok667gl0011mcuo74t3ys1x"></div> 
+<div id="SOHUCS" sid="cjok667hm002mmcuop0s070wc"></div> 
 <script type="text/javascript"> 
 	(function(){ 
 		var appid = 'cyt64TYiv'; 

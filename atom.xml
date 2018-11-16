@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.hellokang.net/"/>
-  <updated>2018-11-15T14:47:50.527Z</updated>
+  <updated>2018-11-16T15:19:32.751Z</updated>
   <id>http://blog.hellokang.net/</id>
   
   <author>
@@ -17,11 +17,55 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Go语言解析YAML</title>
+    <link href="http://blog.hellokang.net/go/go-yaml/"/>
+    <id>http://blog.hellokang.net/go/go-yaml/</id>
+    <published>2018-11-16T15:17:09.000Z</published>
+    <updated>2018-11-16T15:19:32.751Z</updated>
+    
+    <summary type="html">
+    
+      &lt;!-- toc --&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#1-概述&quot;&gt;1 概述&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#2-安装-go-yamlyaml&quot;&gt;2 安装 &lt;code&gt;go-yaml/yaml&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#3-解析-yaml&quot;&gt;3 解析 YAML&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#4-构建-yaml&quot;&gt;4 构建 YAML&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+&lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h2&gt;&lt;p&gt;YAML是”YAML Ain’t a Markup Language”（YAML不是一种置标语言）的递归缩写。YAML 以数据为中心，使用空白，缩进，分行组织数据，从而使得表示更加简洁易读。一个典型的 YAML 如下：&lt;/p&gt;
+&lt;figure class=&quot;highlight yaml&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;attr&quot;&gt;title:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;小韩说课&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;attr&quot;&gt;category:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;go&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;attr&quot;&gt;tag:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;bullet&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;OOP&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;bullet&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;GoLang&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;基本语法为：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;使用缩进表示层级关系&lt;/li&gt;
+&lt;li&gt;禁止使用tab缩进，只能使用空格键&lt;/li&gt;
+&lt;li&gt;缩进长度没有限制，只要元素对齐就表示这些元素属于一个层级&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在项目中，配置文件选择 YAML 是常见的选择。&lt;/p&gt;
+&lt;p&gt;参考文档：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.yaml.org/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;The Official YAML Web Site&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://docs.hellokang.net/yaml/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;语法参考&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;本文介绍在 Go 语言中解析 YAML。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
+    
+    
+      <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
+    
+      <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Go语言解析markdown</title>
     <link href="http://blog.hellokang.net/go/go-markdown/"/>
     <id>http://blog.hellokang.net/go/go-markdown/</id>
     <published>2018-11-15T14:41:34.000Z</published>
-    <updated>2018-11-15T14:47:50.527Z</updated>
+    <updated>2018-11-15T15:08:07.448Z</updated>
     
     <summary type="html">
     
@@ -654,29 +698,6 @@
 &lt;/ul&gt;
 &lt;p&gt;当使用不定数量参数时，函数得到的参数也是切片类型。&lt;/p&gt;
 &lt;p&gt;切片为引用类型，因此切片的默认初始值为nil。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
-    
-    
-      <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
-    
-      <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Go语言中数组的使用</title>
-    <link href="http://blog.hellokang.net/go/go-array/"/>
-    <id>http://blog.hellokang.net/go/go-array/</id>
-    <published>2018-10-28T12:41:02.000Z</published>
-    <updated>2018-11-01T14:27:50.517Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h2&gt;&lt;p&gt;数组，切片，map是容器数据类型。都是可以存储多个值的符合类型。&lt;br&gt;其中数组是相同类型的一组已编号且长度固定的数据项序列，不用类型和长度是不同的数据类型，例如[5]int, [3]int, [5]byte是不同的类型。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://www.hellokang.net/images/posts/go/go-array.png&quot; alt=&quot;数组&quot;&gt;&lt;/p&gt;
     
     </summary>
     
