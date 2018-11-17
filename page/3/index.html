@@ -76,6 +76,125 @@
     <div class="outer">
       <section id="main">
   
+    <article id="post-go-string" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/go/go-string/" class="article-date">
+  <time datetime="2018-10-25T03:31:03.000Z" itemprop="datePublished">2018-10-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/go/">go</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/go/go-string/">Go语言中的字符串处理</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- toc -->
+<ul>
+<li><a href="#1-概述">1 概述</a></li>
+<li><a href="#2-常规操作">2 常规操作</a><ul>
+<li><a href="#索引访问">[]索引访问</a></li>
+<li><a href="#unicodeutf8-包">unicode/utf8 包</a></li>
+<li><a href="#len字符串占用的字节数">len()，字符串占用的字节数</a></li>
+<li><a href="#字符串连接">+，字符串连接”</a></li>
+<li><a href="#">==, &gt;, &lt;</a></li>
+<li><a href="#stringscomparea-b-string-int">strings.Compare(a, b string) int</a></li>
+<li><a href="#stringscontainss-substr-string-bool">strings.Contains(s, substr string) bool</a></li>
+<li><a href="#stringscontainsanys-chars-string-bool">strings.ContainsAny(s, chars string) bool</a></li>
+<li><a href="#stringscontainsrunes-string-r-rune-bool">strings.ContainsRune(s string, r rune) bool</a></li>
+<li><a href="#stringscounts-substr-string-int">strings.Count(s, substr string) int</a></li>
+<li><a href="#stringsequalfolds-t-string-bool">strings.EqualFold(s, t string) bool</a></li>
+<li><a href="#stringsfieldss-string-string">strings.Fields(s string) []string</a></li>
+<li><a href="#stringsfieldsfuncs-string-f-funcrune-bool-string">strings.FieldsFunc(s string, f func(rune) bool) []string</a></li>
+<li><a href="#stringshasprefixs-prefix-string-bool">strings.HasPrefix(s, prefix string) bool</a></li>
+<li><a href="#stringshassuffixs-suffix-string-bool">strings.HasSuffix(s, suffix string) bool</a></li>
+<li><a href="#stringsindexs-substr-string-int">strings.Index(s, substr string) int</a></li>
+<li><a href="#stringsindexanys-chars-string-int">strings.IndexAny(s, chars string) int</a></li>
+<li><a href="#stringsindexbytes-string-c-byte-int">strings.IndexByte(s string, c byte) int</a></li>
+<li><a href="#stringsindexfuncs-string-f-funcrune-bool-int">strings.IndexFunc(s string, f func(rune) bool) int</a></li>
+<li><a href="#stringsindexrunes-string-r-rune-int">strings.IndexRune(s string, r rune) int</a></li>
+<li><a href="#stringsjoina-string-sep-string-string">strings.Join(a []string, sep string) string</a></li>
+<li><a href="#stringslastindexs-substr-string-int">strings.LastIndex(s, substr string) int</a></li>
+<li><a href="#stringslastindexanys-chars-string-int">strings.LastIndexAny(s, chars string) int</a></li>
+<li><a href="#stringslastindexbytes-string-c-byte-int">strings.LastIndexByte(s string, c byte) int</a></li>
+<li><a href="#stringslastindexfuncs-string-f-funcrune-bool-int">strings.LastIndexFunc(s string, f func(rune) bool) int</a></li>
+<li><a href="#stringsmapmapping-funcrune-rune-s-string-string">strings.Map(mapping func(rune) rune, s string) string</a></li>
+<li><a href="#stringsrepeats-string-count-int-string">strings.Repeat(s string, count int) string</a></li>
+<li><a href="#stringsreplaces-old-new-string-n-int-string">strings.Replace(s, old, new string, n int) string</a></li>
+<li><a href="#stringssplits-sep-string-string">strings.Split(s, sep string) []string</a></li>
+<li><a href="#stringssplitafters-sep-string-string">strings.SplitAfter(s, sep string) []string</a></li>
+<li><a href="#stringssplitafterns-sep-string-n-int-string">strings.SplitAfterN(s, sep string, n int) []string</a></li>
+<li><a href="#stringssplitns-sep-string-n-int-string">strings.SplitN(s, sep string, n int) []string</a></li>
+<li><a href="#stringstitles-string-string">strings.Title(s string) string</a></li>
+<li><a href="#stringstolowers-string-string">strings.ToLower(s string) string</a></li>
+<li><a href="#stringstolowerspecialc-unicodespecialcase-s-string-string">strings.ToLowerSpecial(c unicode.SpecialCase, s string) string</a></li>
+<li><a href="#stringstotitles-string-string">strings.ToTitle(s string) string</a></li>
+<li><a href="#stringstotitlespecialc-unicodespecialcase-s-string-string">strings.ToTitleSpecial(c unicode.SpecialCase, s string) string</a></li>
+<li><a href="#stringstouppers-string-string">strings.ToUpper(s string) string</a></li>
+<li><a href="#stringstoupperspecialc-unicodespecialcase-s-string-string">strings.ToUpperSpecial(c unicode.SpecialCase, s string) string</a></li>
+<li><a href="#stringstrims-string-cutset-string-string">strings.Trim(s string, cutset string) string</a></li>
+<li><a href="#stringstrimfuncs-string-f-funcrune-bool-string">strings.TrimFunc(s string, f func(rune) bool) string</a></li>
+<li><a href="#stringstrimlefts-string-cutset-string-string">strings.TrimLeft(s string, cutset string) string</a></li>
+<li><a href="#stringstrimleftfuncs-string-f-funcrune-bool-string">strings.TrimLeftFunc(s string, f func(rune) bool) string</a></li>
+<li><a href="#stringstrimprefixs-prefix-string-string">strings.TrimPrefix(s, prefix string) string</a></li>
+<li><a href="#stringstrimrights-string-cutset-string-string">strings.TrimRight(s string, cutset string) string</a></li>
+<li><a href="#stringstrimrightfuncs-string-f-funcrune-bool-string">strings.TrimRightFunc(s string, f func(rune) bool) string</a></li>
+<li><a href="#stringstrimspaces-string-string">strings.TrimSpace(s string) string</a></li>
+<li><a href="#stringstrimsuffixs-suffix-string-string">strings.TrimSuffix(s, suffix string) string</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h2><p>字符串，string，一串固定长度的字符连接起来的字符集合。Go语言的字符串是使用UTF-8编码的。UTF-8是Unicode的实现方式之一。</p>
+<p>Go语言原生支持字符串。使用双引号(“”)或反引号(``)定义。<br>双引号：””, 用于单行字符串。<br>反引号：``，用于定义多行字符串，内部会原样解析。<br>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 单行</span><br><span class="line">&quot;心有猛虎，细嗅蔷薇&quot;</span><br><span class="line">// 多行</span><br><span class="line">`</span><br><span class="line">大风歌</span><br><span class="line">大风起兮云飞扬。</span><br><span class="line">威加海内兮归故乡。</span><br><span class="line">安得猛士兮守四方！</span><br><span class="line">`</span><br></pre></td></tr></table></figure></p>
+<p>字符串支持转义字符，列表如下：</p>
+<ul>
+<li>\r  回车符（返回行首）</li>
+<li>\n  换行符（直接跳到下一行的同列位置）</li>
+<li>\t  制表符</li>
+<li>\’  单引号</li>
+<li>\”  双引号</li>
+<li>\\  反斜杠</li>
+<li>\uXXXX  Unicode字符码值转义，例如 <code>&quot;\u5eb7&quot;</code> 就是 “康”</li>
+</ul>
+<p>Go语言中字符串的顶层结构是由一个指针和长度构成的。使用 unsafe.Sizeof(“”) 会得到16长度，其中8个字节是指针，指向字符串的内存地址，8个是存储字符串的长度。</p>
+        
+          <p class="article-more-link">
+            <a href="/go/go-string/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+        <!-- <a data-url="http://blog.hellokang.net/go/go-string/" data-id="cjolhf4t2002va4uo2umb9izt" class="article-share-link">分享到</a> -->
+      
+
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+ 
+  
     <article id="post-go-package" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/go/go-package/" class="article-date">
@@ -122,7 +241,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-package/" data-id="cjok667h1001pmcuozd5vsg4g" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-package/" data-id="cjolhf4sn0027a4uo057sqjpu" class="article-share-link">分享到</a> -->
       
 
       
@@ -174,7 +293,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-function/" data-id="cjok667ge000rmcuowj7cu2f2" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-function/" data-id="cjolhf4rf000ha4uo6snm3v0p" class="article-share-link">分享到</a> -->
       
 
       
@@ -247,7 +366,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-flow-control/" data-id="cjok667g0000imcuo37nuhgnu" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-flow-control/" data-id="cjolhf4rl000oa4uomtgz0aau" class="article-share-link">分享到</a> -->
       
 
       
@@ -312,7 +431,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-operator/" data-id="cjok667gz001mmcuorejk9wew" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-operator/" data-id="cjolhf4sh001ya4uo8z0hvuga" class="article-share-link">分享到</a> -->
       
 
       
@@ -399,7 +518,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjok667hv0031mcuogvvgftbh" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-type/" data-id="cjolhf4t60031a4uov9lc07yx" class="article-share-link">分享到</a> -->
       
 
       
@@ -466,7 +585,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-variable/" data-id="cjok667hn002pmcuontfmt2bz" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-variable/" data-id="cjolhf4tb0037a4uon670hco9" class="article-share-link">分享到</a> -->
       
 
       
@@ -530,7 +649,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-constant/" data-id="cjok667fx000fmcuo932xfwod" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-constant/" data-id="cjolhf4r7000ba4uoc85ry3nw" class="article-share-link">分享到</a> -->
       
 
       
@@ -572,7 +691,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/uncategorized/go-editor-sublime/" data-id="cjok667fq0009mcuoaf5hn9h4" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/uncategorized/go-editor-sublime/" data-id="cjolhf4rh000la4uouxapxuza" class="article-share-link">分享到</a> -->
       
 
       
@@ -621,7 +740,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/git/git-merge-rebase/" data-id="cjok667fi0002mcuojbfrvop5" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/git/git-merge-rebase/" data-id="cjolhf4ql0001a4uokh5suvv4" class="article-share-link">分享到</a> -->
       
 
       
@@ -675,7 +794,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/hexo/hexo-github/" data-id="cjok667ii0048mcuoe7ch7uts" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/hexo/hexo-github/" data-id="cjolhf4tg003ga4uoage6yzzs" class="article-share-link">分享到</a> -->
       
 
       
@@ -727,7 +846,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-error/" data-id="cjok667g2000kmcuokfzj9bha" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-error/" data-id="cjolhf4r9000ca4uougs5k4hl" class="article-share-link">分享到</a> -->
       
 
       
@@ -735,50 +854,6 @@
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/error/">error</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
 
-    </footer>
-  </div>
-  
-</article>
-
- 
-  
-    <article id="post-go-command" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/go/go-command/" class="article-date">
-  <time datetime="2018-10-10T03:49:27.000Z" itemprop="datePublished">2018-10-10</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/go/">go</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/go/go-command/">Go提供的常用命令</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-        <!-- <a data-url="http://blog.hellokang.net/go/go-command/" data-id="cjok667ft000cmcuo5nd5haw1" class="article-share-link">分享到</a> -->
-      
-
-      
-
-      
     </footer>
   </div>
   
@@ -825,7 +900,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">38</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">39</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -834,7 +909,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">31</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">31</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">32</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">32</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yaml/">yaml</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -843,7 +918,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/error/" style="font-size: 10px;">error</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/go/" style="font-size: 20px;">go</a> <a href="/tags/goGuide/" style="font-size: 20px;">goGuide</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a>
+      <a href="/tags/error/" style="font-size: 10px;">error</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/go/" style="font-size: 20px;">go</a> <a href="/tags/goGuide/" style="font-size: 20px;">goGuide</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/yaml/" style="font-size: 10px;">yaml</a>
     </div>
   </div>
 
@@ -852,7 +927,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -862,6 +937,10 @@
     <h3 class="widget-title">近期文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/go/go-blog-analysis/">Go实现Markdown博客分析设计</a>
+          </li>
         
           <li>
             <a href="/go/go-yaml/">Go语言解析YAML</a>
@@ -877,10 +956,6 @@
         
           <li>
             <a href="/go/go-http-template-syntax/">Go语言中使模板引擎的语法</a>
-          </li>
-        
-          <li>
-            <a href="/go/go-http-template/">Go语言中使用模板引擎</a>
           </li>
         
       </ul>

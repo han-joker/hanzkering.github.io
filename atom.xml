@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.hellokang.net/"/>
-  <updated>2018-11-16T15:19:32.751Z</updated>
+  <updated>2018-11-17T13:22:10.985Z</updated>
   <id>http://blog.hellokang.net/</id>
   
   <author>
@@ -17,11 +17,45 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Go实现Markdown博客分析设计</title>
+    <link href="http://blog.hellokang.net/go/go-blog-analysis/"/>
+    <id>http://blog.hellokang.net/go/go-blog-analysis/</id>
+    <published>2018-11-17T13:14:17.000Z</published>
+    <updated>2018-11-17T13:22:10.985Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2&gt;&lt;span id=&quot;1-功能需求&quot;&gt;1 功能需求&lt;/span&gt;&lt;/h2&gt;&lt;p&gt;一个基于 markdown 格式的文档博客系统。提供的功能：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;markdown
+        
+      
+    
+    </summary>
+    
+      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
+    
+    
+      <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
+    
+      <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
+    
+      <category term="markdown" scheme="http://blog.hellokang.net/tags/markdown/"/>
+    
+      <category term="yaml" scheme="http://blog.hellokang.net/tags/yaml/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Go语言解析YAML</title>
     <link href="http://blog.hellokang.net/go/go-yaml/"/>
     <id>http://blog.hellokang.net/go/go-yaml/</id>
     <published>2018-11-16T15:17:09.000Z</published>
-    <updated>2018-11-16T15:19:32.751Z</updated>
+    <updated>2018-11-17T12:53:17.161Z</updated>
     
     <summary type="html">
     
@@ -667,37 +701,6 @@
     <summary type="html">
     
       &lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h2&gt;&lt;p&gt;Go语言中的键值对(key-&amp;gt;value)集合，称之为映射map。映射map是变长类型，定义时不需要指定长度。映射map是无序的，遍历是的顺序不可期，原因是底层由hash表实现。&lt;br&gt;逻辑结构表示为：&lt;br&gt;&lt;img src=&quot;http://www.hellokang.net/images/posts/go/go-map.png&quot; alt=&quot;map示意&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
-    
-    
-      <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
-    
-      <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Go语言中切片的使用</title>
-    <link href="http://blog.hellokang.net/go/go-slice/"/>
-    <id>http://blog.hellokang.net/go/go-slice/</id>
-    <published>2018-10-28T13:03:49.000Z</published>
-    <updated>2018-11-01T14:28:54.952Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h2&gt;&lt;p&gt;其中切片是基于数据中连续片段的引用，是一个引用类型。与数组不同的是，切片的长度可以在运行时修改。使用上可以将切片看作是长度可变的数组。即使超过了底层数组的最大长度，也可以继续扩容。&lt;/p&gt;
-&lt;p&gt;图例为：&lt;br&gt;&lt;img src=&quot;http://www.hellokang.net/images/posts/go/go-slice.png&quot; alt=&quot;slice示意&quot;&gt;&lt;/p&gt;
-&lt;p&gt;切片的实现是由一个底层数组以及其上面的动态位置，尺寸来实现。由内部由指向起始元素的指针、元素数量length和容量capacity组成。其中：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;指针ptr，用于指向切片在底层数组的起始位置。&lt;/li&gt;
-&lt;li&gt;尺寸len，用于记录切片内元素数量。&lt;/li&gt;
-&lt;li&gt;容量cap，当前切片最大容量，也就是底层数组的容量。可以动态分配。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;当使用不定数量参数时，函数得到的参数也是切片类型。&lt;/p&gt;
-&lt;p&gt;切片为引用类型，因此切片的默认初始值为nil。&lt;/p&gt;
     
     </summary>
     

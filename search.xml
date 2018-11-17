@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Go实现Markdown博客分析设计]]></title>
+    <url>%2Fgo%2Fgo-blog-analysis%2F</url>
+    <content type="text"><![CDATA[1 功能需求一个基于 markdown 格式的文档博客系统。提供的功能： markdown 写作 分类 标签 时间归档 配置 主题模板 静态化 部署 2 技术需求 Go 核心语法 Go HTTP服务器搭建 HTTP 相关知识 文件管理 正则，字符串处理 时间操作 markdown 解析 yaml 解析 HTML/CSS/Js 前端基本知识 3 目的通过此项目，对 Go 的基本语法强化练习，会使用第三方包完成具体功能，掌握项目开发流程，github管理代码 等。 4 效果图]]></content>
+      <categories>
+        <category>go</category>
+      </categories>
+      <tags>
+        <tag>go</tag>
+        <tag>goGuide</tag>
+        <tag>markdown</tag>
+        <tag>yaml</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Go语言解析YAML]]></title>
     <url>%2Fgo%2Fgo-yaml%2F</url>
     <content type="text"><![CDATA[1 概述 2 安装 go-yaml/yaml 3 解析 YAML 4 构建 YAML 1 概述YAML是”YAML Ain’t a Markup Language”（YAML不是一种置标语言）的递归缩写。YAML 以数据为中心，使用空白，缩进，分行组织数据，从而使得表示更加简洁易读。一个典型的 YAML 如下： 12345title: 小韩说课category: gotag:- OOP- GoLang 基本语法为： 使用缩进表示层级关系 禁止使用tab缩进，只能使用空格键 缩进长度没有限制，只要元素对齐就表示这些元素属于一个层级 在项目中，配置文件选择 YAML 是常见的选择。 参考文档： The Official YAML Web Site 语法参考 本文介绍在 Go 语言中解析 YAML。 2 安装 go-yaml/yamlGo 语言中解析 YAML 最出名的应该是 go-yaml/yaml。github地址为： https://github.com/go-yaml/yaml 下面的命令将其安装在 GOPATH 目录中： 1go get gopkg.in/yaml.v2 3 解析 YAMLyaml.Unmarshal 函数负责将 YAML 格式文本解析，演示如下： 1234567891011121314151617181920import ( "gopkg.in/yaml.v2")// 待解析数据yamlContent := `field1: 小韩说课field2: field3: value field4: [42, 1024]`// 存储解析数据result := make(map[string]interface&#123;&#125;)// 执行解析 err = yaml.Unmarshal([]byte(data), &amp;result)if err != nil &#123; log.Fatalf("error: %v", err)&#125;// result// map[field1:小韩说课 field2:map[field3:value field4:[42 1024]]] 4 构建 YAMLyaml.Marshal 函数可以利用 map 数据构建 YAML 文本，演示如下： 1234567891011121314151617181920212223import ( "gopkg.in/yaml.v2")// map数据data := map[string]interface&#123;&#125;&#123; "field1": "小韩说课", "field2": map[string]interface&#123;&#125;&#123; "field3": "value", "field4": []int&#123;42, 1024&#125; &#125; &#125;text, err = yaml.Marshal(&amp;data)if err != nil &#123; log.Fatalf("error: %v", err)&#125;// textfield1: 小韩说课field2: field3: value field4: - 42 - 1024 完！原文出自：小韩说课微信关注：小韩说课]]></content>
