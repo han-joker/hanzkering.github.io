@@ -6,20 +6,20 @@
   
   <title>Go实现Markdown博客分析设计 | 小韩说课</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1 功能需求一个基于 markdown 格式的文档博客系统。提供的功能：  markdown 写作 分类 标签 时间归档 配置 主题模板 静态化 部署  2 技术需求 Go 核心语法 Go HTTP服务器搭建 HTTP 相关知识 文件管理 正则，字符串处理 时间操作 markdown 解析 yaml 解析 HTML/CSS/Js 前端基本知识  3 目的通过此项目，对 Go 的基本语法强化练习，会">
+  <meta name="description" content="1 功能需求 2 技术需求 3 目的 4 效果图   1 功能需求一个基于 markdown 格式的文档博客系统。提供的功能：  markdown 写作 分类 标签 时间归档 配置 友情链接 主题模板 静态化 部署">
 <meta name="keywords" content="go,goGuide,markdown,yaml">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go实现Markdown博客分析设计">
 <meta property="og:url" content="http://blog.hellokang.net/go/go-blog-analysis/index.html">
 <meta property="og:site_name" content="小韩说课">
-<meta property="og:description" content="1 功能需求一个基于 markdown 格式的文档博客系统。提供的功能：  markdown 写作 分类 标签 时间归档 配置 主题模板 静态化 部署  2 技术需求 Go 核心语法 Go HTTP服务器搭建 HTTP 相关知识 文件管理 正则，字符串处理 时间操作 markdown 解析 yaml 解析 HTML/CSS/Js 前端基本知识  3 目的通过此项目，对 Go 的基本语法强化练习，会">
+<meta property="og:description" content="1 功能需求 2 技术需求 3 目的 4 效果图   1 功能需求一个基于 markdown 格式的文档博客系统。提供的功能：  markdown 写作 分类 标签 时间归档 配置 友情链接 主题模板 静态化 部署">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://asset.hellokang.net/images/go/go-blog-thumbnail.png">
 <meta property="og:image" content="http://asset.hellokang.net/images/common/xiaohanshuoke_258.jpg">
-<meta property="og:updated_time" content="2018-11-17T13:24:42.751Z">
+<meta property="og:updated_time" content="2018-11-17T13:26:45.082Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Go实现Markdown博客分析设计">
-<meta name="twitter:description" content="1 功能需求一个基于 markdown 格式的文档博客系统。提供的功能：  markdown 写作 分类 标签 时间归档 配置 主题模板 静态化 部署  2 技术需求 Go 核心语法 Go HTTP服务器搭建 HTTP 相关知识 文件管理 正则，字符串处理 时间操作 markdown 解析 yaml 解析 HTML/CSS/Js 前端基本知识  3 目的通过此项目，对 Go 的基本语法强化练习，会">
+<meta name="twitter:description" content="1 功能需求 2 技术需求 3 目的 4 效果图   1 功能需求一个基于 markdown 格式的文档博客系统。提供的功能：  markdown 写作 分类 标签 时间归档 配置 友情链接 主题模板 静态化 部署">
 <meta name="twitter:image" content="http://asset.hellokang.net/images/go/go-blog-thumbnail.png">
   
     <link rel="alternative" href="/atom.xml" title="小韩说课" type="application/atom+xml">
@@ -104,17 +104,27 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2><span id="1-功能需求">1 功能需求</span></h2><p>一个基于 markdown 格式的文档博客系统。提供的功能：</p>
+        <!-- toc -->
+<ul>
+<li><a href="#1-功能需求">1 功能需求</a></li>
+<li><a href="#2-技术需求">2 技术需求</a></li>
+<li><a href="#3-目的">3 目的</a></li>
+<li><a href="#4-效果图">4 效果图</a></li>
+</ul>
+<!-- tocstop -->
+<h2><span id="1-功能需求">1 功能需求</span></h2><p>一个基于 markdown 格式的文档博客系统。提供的功能：</p>
 <ul>
 <li>markdown 写作</li>
 <li>分类</li>
 <li>标签</li>
 <li>时间归档</li>
 <li>配置</li>
+<li>友情链接</li>
 <li>主题模板</li>
 <li>静态化</li>
 <li>部署</li>
 </ul>
+<a id="more"></a>
 <h2><span id="2-技术需求">2 技术需求</span></h2><ul>
 <li>Go 核心语法</li>
 <li>Go HTTP服务器搭建</li>
