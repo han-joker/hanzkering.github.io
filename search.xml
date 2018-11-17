@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[Go实现Markdown博客分析设计]]></title>
     <url>%2Fgo%2Fgo-blog-analysis%2F</url>
-    <content type="text"><![CDATA[1 功能需求一个基于 markdown 格式的文档博客系统。提供的功能： markdown 写作 分类 标签 时间归档 配置 主题模板 静态化 部署 2 技术需求 Go 核心语法 Go HTTP服务器搭建 HTTP 相关知识 文件管理 正则，字符串处理 时间操作 markdown 解析 yaml 解析 HTML/CSS/Js 前端基本知识 3 目的通过此项目，对 Go 的基本语法强化练习，会使用第三方包完成具体功能，掌握项目开发流程，github管理代码 等。 4 效果图]]></content>
+    <content type="text"><![CDATA[1 功能需求一个基于 markdown 格式的文档博客系统。提供的功能： markdown 写作 分类 标签 时间归档 配置 主题模板 静态化 部署 2 技术需求 Go 核心语法 Go HTTP服务器搭建 HTTP 相关知识 文件管理 正则，字符串处理 时间操作 markdown 解析 yaml 解析 HTML/CSS/Js 前端基本知识 3 目的通过此项目，对 Go 的基本语法强化练习，会使用第三方包完成具体功能，掌握项目开发流程，github管理代码 等。 4 效果图 完！原文出自：小韩说课微信关注：小韩说课]]></content>
       <categories>
         <category>go</category>
       </categories>
