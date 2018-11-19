@@ -76,6 +76,159 @@
     <div class="outer">
       <section id="main">
   
+    <article id="post-go-blog-write-marshal" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/go/go-blog-write-marshal/" class="article-date">
+  <time datetime="2018-11-19T14:44:26.000Z" itemprop="datePublished">2018-11-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/go/">go</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/go/go-blog-write-marshal/">Go语言博客写作与文档解析</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- toc -->
+<ul>
+<li><a href="#1-文档存储">1 文档存储</a></li>
+<li><a href="#2-markdown-文件格式">2 markdown 文件格式</a></li>
+<li><a href="#3-文章对象">3 文章对象</a></li>
+<li><a href="#4-文章对象构造方法">4 文章对象构造方法</a></li>
+</ul>
+<!-- tocstop -->
+<h2 id="1-文档存储"><a href="#1-文档存储" class="headerlink" title="1 文档存储"></a>1 文档存储</h2><p><code>/source/</code> 目录，数据源目录，用于存放与文章相关的原始数据，例如 markdown 文件，文章内容使用的图像文件等。可能的子目录有 <code>post</code>、<code>image</code>、<code>draft</code> 等。</p>
+<p>其中 <code>/source/post/</code> 目录用于存储创建的 markdown 文件，就是文章内容。写作的第一个步骤，就是在该目录中创建后缀为 <code>.md</code> 格式的文件，例如 <code>/source/post/hello.md</code>。此处我们先手动创建，后面会使用定义一个命令来创建文章内容模板。</p>
+        
+          <p class="article-more-link">
+            <a href="/go/go-blog-write-marshal/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+        <!-- <a data-url="http://blog.hellokang.net/go/go-blog-write-marshal/" data-id="cjoofby7g0001uguokogk47zi" class="article-share-link">分享到</a> -->
+      
+
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/markdown/">markdown</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/yaml/">yaml</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+ 
+  
+    <article id="post-go-blog-init" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/go/go-blog-init/" class="article-date">
+  <time datetime="2018-11-18T15:27:38.000Z" itemprop="datePublished">2018-11-18</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/go/">go</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/go/go-blog-init/">Go语言博客的目录结构与初始化代码</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- toc -->
+<ul>
+<li><a href="#1-目录结构">1 目录结构</a></li>
+<li><a href="#2-http服务器监听">2 HTTP服务器监听</a></li>
+<li><a href="#3-初始首页动作">3 初始首页动作</a></li>
+<li><a href="#4-运行项目">4 运行项目</a></li>
+<li><a href="#5-浏览器请求">5 浏览器请求</a></li>
+</ul>
+<!-- tocstop -->
+<h2 id="1-目录结构"><a href="#1-目录结构" class="headerlink" title="1 目录结构"></a>1 目录结构</h2><table>
+<thead>
+<tr>
+<th style="text-align:left">目录</th>
+<th style="text-align:left">功能说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">/</td>
+<td style="text-align:left">根目录</td>
+</tr>
+<tr>
+<td style="text-align:left">/src/</td>
+<td style="text-align:left">go源码目录</td>
+</tr>
+<tr>
+<td style="text-align:left">/src/main/main.go</td>
+<td style="text-align:left">主入口程序</td>
+</tr>
+<tr>
+<td style="text-align:left">/config/</td>
+<td style="text-align:left">配置文件目录</td>
+</tr>
+<tr>
+<td style="text-align:left">/theme/</td>
+<td style="text-align:left">主题模板目录</td>
+</tr>
+<tr>
+<td style="text-align:left">/dist/</td>
+<td style="text-align:left">发布目录</td>
+</tr>
+</tbody>
+</table>
+        
+          <p class="article-more-link">
+            <a href="/go/go-blog-init/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+        <!-- <a data-url="http://blog.hellokang.net/go/go-blog-init/" data-id="cjoofby790000uguoreo1znv1" class="article-share-link">分享到</a> -->
+      
+
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/markdown/">markdown</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/yaml/">yaml</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+ 
+  
     <article id="post-go-blog-analysis" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/go/go-blog-analysis/" class="article-date">
@@ -718,169 +871,6 @@
 
  
   
-    <article id="post-go-regexp-syntax" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/go/go-regexp-syntax/" class="article-date">
-  <time datetime="2018-11-07T15:53:09.000Z" itemprop="datePublished">2018-11-07</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/go/">go</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/go/go-regexp-syntax/">Go语言支持的正则语法</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-字符"><a href="#1-字符" class="headerlink" title="1 字符"></a>1 字符</h2><table>
-<thead>
-<tr>
-<th style="text-align:left">语法</th>
-<th style="text-align:left">说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">.</td>
-<td style="text-align:left">任意字符，在单行模式（s标志）下，也可以匹配换行</td>
-</tr>
-<tr>
-<td style="text-align:left">[xyz]</td>
-<td style="text-align:left">字符类</td>
-</tr>
-<tr>
-<td style="text-align:left">[^xyz]</td>
-<td style="text-align:left">否定字符类</td>
-</tr>
-<tr>
-<td style="text-align:left">\d</td>
-<td style="text-align:left">Perl 字符类</td>
-</tr>
-<tr>
-<td style="text-align:left">\D</td>
-<td style="text-align:left">否定 Perl 字符类</td>
-</tr>
-<tr>
-<td style="text-align:left">[[:alpha:]]</td>
-<td style="text-align:left">ASCII 字符类</td>
-</tr>
-<tr>
-<td style="text-align:left">[[:^alpha:]]</td>
-<td style="text-align:left">否定 ASCII 字符类</td>
-</tr>
-<tr>
-<td style="text-align:left">\pN</td>
-<td style="text-align:left">Unicode 字符类 (one-letter name)</td>
-</tr>
-<tr>
-<td style="text-align:left">\p{Greek}</td>
-<td style="text-align:left">Unicode 字符类</td>
-</tr>
-<tr>
-<td style="text-align:left">\PN</td>
-<td style="text-align:left">否定 Unicode 字符类 (one-letter name)</td>
-</tr>
-<tr>
-<td style="text-align:left">\P{Greek}</td>
-<td style="text-align:left">否定 Unicode 字符类</td>
-</tr>
-</tbody>
-</table>
-<p>参考以下附录，获取具体字符类的内容：</p>
-<ul>
-<li><a href="http://go.hellokang.net/regexp-perl.html" target="_blank" rel="noopener">Perl 字符类</a></li>
-<li><a href="http://go.hellokang.net/regexp-ascii.html" target="_blank" rel="noopener">ASCII 字符类</a></li>
-<li><a href="http://go.hellokang.net/regexp-unicode-one-letter.html" target="_blank" rel="noopener">Unicode 字符类 (one-letter name)</a></li>
-<li><a href="http://go.hellokang.net/regexp-unicode.html" target="_blank" rel="noopener">Unicode 字符类</a></li>
-</ul>
-        
-          <p class="article-more-link">
-            <a href="/go/go-regexp-syntax/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-        <!-- <a data-url="http://blog.hellokang.net/go/go-regexp-syntax/" data-id="cjoofapl70025bouolva5xxf2" class="article-share-link">分享到</a> -->
-      
-
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
- 
-  
-    <article id="post-go-regexp" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/go/go-regexp/" class="article-date">
-  <time datetime="2018-11-07T15:26:56.000Z" itemprop="datePublished">2018-11-07</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/go/">go</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/go/go-regexp/">Go语言中正则表达式的处理</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h2><p>正则表达式，又称规则表达式，Regular Expression，在代码中常简写为 regex、regexp 或 RE。正则表达式是对字符串操作的一种逻辑公式，就是用事先定义好的一些特定字符、及这些特定字符的组合，组成一个“规则字符串”，这个“规则字符串”用来表达对字符串的一种过滤逻辑。<br>Perl 语言的正则表达式功能非常强大，很多语言设计正则式支持的时候都参考Perl的正则表达式。因此常用的表达式语法也是 Perl 兼容正则表达式。</p>
-<p>Go 语言中使用包 <code>regexp</code> 提供对正则表达式的支持。本文说明 <code>regexp</code> 中常用的正则处理方法。</p>
-        
-          <p class="article-more-link">
-            <a href="/go/go-regexp/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-        <!-- <a data-url="http://blog.hellokang.net/go/go-regexp/" data-id="cjoofaple002ebouocyxngheh" class="article-share-link">分享到</a> -->
-      
-
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
- 
-  
 
 
   <nav id="page-nav">
@@ -920,7 +910,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">39</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">41</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -929,7 +919,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">32</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">32</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yaml/">yaml</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">34</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">34</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yaml/">yaml</a><span class="tag-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -938,7 +928,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/error/" style="font-size: 10px;">error</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/go/" style="font-size: 20px;">go</a> <a href="/tags/goGuide/" style="font-size: 20px;">goGuide</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/yaml/" style="font-size: 10px;">yaml</a>
+      <a href="/tags/error/" style="font-size: 10px;">error</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/go/" style="font-size: 20px;">go</a> <a href="/tags/goGuide/" style="font-size: 20px;">goGuide</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/markdown/" style="font-size: 15px;">markdown</a> <a href="/tags/yaml/" style="font-size: 15px;">yaml</a>
     </div>
   </div>
 
@@ -947,7 +937,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -959,6 +949,14 @@
       <ul>
         
           <li>
+            <a href="/go/go-blog-write-marshal/">Go语言博客写作与文档解析</a>
+          </li>
+        
+          <li>
+            <a href="/go/go-blog-init/">Go语言博客的目录结构与初始化代码</a>
+          </li>
+        
+          <li>
             <a href="/go/go-blog-analysis/">Go实现Markdown博客分析设计</a>
           </li>
         
@@ -968,14 +966,6 @@
         
           <li>
             <a href="/go/go-markdown/">Go语言解析markdown</a>
-          </li>
-        
-          <li>
-            <a href="/go/go-mysql/">Go语言中操作MySQL</a>
-          </li>
-        
-          <li>
-            <a href="/go/go-http-template-syntax/">Go语言中使模板引擎的语法</a>
           </li>
         
       </ul>

@@ -4,20 +4,23 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Go语言使用类型管道channel处理并发 | 小韩说课</title>
+  <title>Go语言博客的目录结构与初始化代码 | 小韩说课</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="PHP, Python, JavaScript, Go, MySQL, linux, docker, 区块链, 韩忠康, 小韩说课">
-<meta name="keywords" content="PHP, Python, JavaScript, Go, MySQL, linux, docker, 区块链, 韩忠康, 小韩说课">
+  <meta name="description" content="1 目录结构 2 HTTP服务器监听 3 初始首页动作 4 运行项目 5 浏览器请求   1 目录结构   目录 功能说明     / 根目录   /src/ go源码目录   /src/main/main.go 主入口程序   /config/ 配置文件目录   /theme/ 主题模板目录   /dist/ 发布目录">
+<meta name="keywords" content="go,goGuide,markdown,yaml">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Go语言使用类型管道channel处理并发">
-<meta property="og:url" content="http://blog.hellokang.net/go/go-channel/index.html">
+<meta property="og:title" content="Go语言博客的目录结构与初始化代码">
+<meta property="og:url" content="http://blog.hellokang.net/go/go-blog-init/index.html">
 <meta property="og:site_name" content="小韩说课">
-<meta property="og:description" content="PHP, Python, JavaScript, Go, MySQL, linux, docker, 区块链, 韩忠康, 小韩说课">
+<meta property="og:description" content="1 目录结构 2 HTTP服务器监听 3 初始首页动作 4 运行项目 5 浏览器请求   1 目录结构   目录 功能说明     / 根目录   /src/ go源码目录   /src/main/main.go 主入口程序   /config/ 配置文件目录   /theme/ 主题模板目录   /dist/ 发布目录">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-15T04:14:21.972Z">
+<meta property="og:image" content="http://asset.hellokang.net/images/go/go-blog-1.png">
+<meta property="og:image" content="http://asset.hellokang.net/images/common/xiaohanshuoke_258.jpg">
+<meta property="og:updated_time" content="2018-11-19T14:47:07.858Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Go语言使用类型管道channel处理并发">
-<meta name="twitter:description" content="PHP, Python, JavaScript, Go, MySQL, linux, docker, 区块链, 韩忠康, 小韩说课">
+<meta name="twitter:title" content="Go语言博客的目录结构与初始化代码">
+<meta name="twitter:description" content="1 目录结构 2 HTTP服务器监听 3 初始首页动作 4 运行项目 5 浏览器请求   1 目录结构   目录 功能说明     / 根目录   /src/ go源码目录   /src/main/main.go 主入口程序   /config/ 配置文件目录   /theme/ 主题模板目录   /dist/ 发布目录">
+<meta name="twitter:image" content="http://asset.hellokang.net/images/go/go-blog-1.png">
   
     <link rel="alternative" href="/atom.xml" title="小韩说课" type="application/atom+xml">
   
@@ -75,10 +78,10 @@
   </div>
 </header>
     <div class="outer">
-      <section id="main"><article id="post-go-channel" class="article article-type-post" itemscope itemprop="blogPost">
+      <section id="main"><article id="post-go-blog-init" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/go/go-channel/" class="article-date">
-  <time datetime="2018-09-15T03:54:06.000Z" itemprop="datePublished">2018-09-15</time>
+    <a href="/go/go-blog-init/" class="article-date">
+  <time datetime="2018-11-18T15:27:38.000Z" itemprop="datePublished">2018-11-18</time>
 </a>
     
   <div class="article-category">
@@ -93,7 +96,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Go语言使用类型管道channel处理并发
+      Go语言博客的目录结构与初始化代码
     </h1>
   
 
@@ -101,36 +104,94 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <!-- toc -->
+<ul>
+<li><a href="#1-目录结构">1 目录结构</a></li>
+<li><a href="#2-http服务器监听">2 HTTP服务器监听</a></li>
+<li><a href="#3-初始首页动作">3 初始首页动作</a></li>
+<li><a href="#4-运行项目">4 运行项目</a></li>
+<li><a href="#5-浏览器请求">5 浏览器请求</a></li>
+</ul>
+<!-- tocstop -->
+<h2><span id="1-目录结构">1 目录结构</span></h2><table>
+<thead>
+<tr>
+<th style="text-align:left">目录</th>
+<th style="text-align:left">功能说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">/</td>
+<td style="text-align:left">根目录</td>
+</tr>
+<tr>
+<td style="text-align:left">/src/</td>
+<td style="text-align:left">go源码目录</td>
+</tr>
+<tr>
+<td style="text-align:left">/src/main/main.go</td>
+<td style="text-align:left">主入口程序</td>
+</tr>
+<tr>
+<td style="text-align:left">/config/</td>
+<td style="text-align:left">配置文件目录</td>
+</tr>
+<tr>
+<td style="text-align:left">/theme/</td>
+<td style="text-align:left">主题模板目录</td>
+</tr>
+<tr>
+<td style="text-align:left">/dist/</td>
+<td style="text-align:left">发布目录</td>
+</tr>
+</tbody>
+</table>
+<a id="more"></a>
+<h2><span id="2-http服务器监听">2 HTTP服务器监听</span></h2><p><code>src/main/main.go</code> 主入口文件用于启动 HTTP 服务器监听，设定 URL 路由。具体代码如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/main/main.go</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">  <span class="string">"log"</span></span><br><span class="line">  <span class="string">"net/http"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 路由处理</span></span><br><span class="line">  <span class="comment">// 处理 首页</span></span><br><span class="line">  http.HandleFunc(<span class="string">"/"</span>, IndexAction)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 开启监听</span></span><br><span class="line">  log.Fatal(http.ListenAndServe(<span class="string">":8081"</span>, <span class="literal">nil</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2><span id="3-初始首页动作">3 初始首页动作</span></h2><p><code>src/main/controller.go</code> 用于定义动作函数，就是路由处理器 <code>IndexAction</code> 之类，示例代码为：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">src/main/controller.<span class="keyword">go</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 首页处理器</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">IndexAction</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">  w.Write([]<span class="keyword">byte</span>(<span class="string">"&lt;h1&gt;欢迎来到小韩说理的博客&lt;/h1&gt;"</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2><span id="4-运行项目">4 运行项目</span></h2><p>配置环境变量 GOPATH 为项目目录，然后运行 main 即可：</p>
+<p>powershell</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span>$env:GOPATH="D:\projects\hank\goBlog"</span><br><span class="line"><span class="meta">&gt;</span>go run main</span><br></pre></td></tr></table></figure>
+<p>CMD</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span>set GOPATH=D:\projects\hank\goBlog</span><br><span class="line"><span class="meta">&gt;</span>go run main</span><br></pre></td></tr></table></figure>
+<h2><span id="5-浏览器请求">5 浏览器请求</span></h2><p>地址栏输入：<code>localhost:8081</code>，即看到我们的结果！</p>
+<p><img src="http://asset.hellokang.net/images/go/go-blog-1.png" alt="第一个动作"></p>
+<p>完！<br>原文出自：<a href="http://go.hellokang.net/blog-structure.html" target="_blank" rel="noopener">小韩说课</a><br>微信关注：小韩说课<br><img src="http://asset.hellokang.net/images/common/xiaohanshuoke_258.jpg" alt="小韩说课"></p>
+
       
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-channel/" data-id="cjoofapjm0004bouo902f9ymf" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-blog-init/" data-id="cjoofby790000uguoreo1znv1" class="article-share-link">分享到</a> -->
       
 
       
 
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/markdown/">markdown</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/yaml/">yaml</a></li></ul>
+
     </footer>
   </div>
   
     
 <nav id="article-nav">
   
-    <a href="/go/go-editor-goland/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/go/go-blog-write-marshal/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
       <div class="article-nav-title">
         
-          使用goland编写Go语言
+          Go语言博客写作与文档解析
         
       </div>
     </a>
   
   
-    <a href="/go/go-memory-model/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/go/go-blog-analysis/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">Go语言的内存模型</div>
+      <div class="article-nav-title">Go实现Markdown博客分析设计</div>
     </a>
   
 </nav>
@@ -141,7 +202,7 @@
 
   <section class="changyan" id="comments">
 <!--PC和WAP自适应版-->
-<div id="SOHUCS" sid="cjoofapjm0004bouo902f9ymf"></div> 
+<div id="SOHUCS" sid="cjoofby790000uguoreo1znv1"></div> 
 <script type="text/javascript"> 
 	(function(){ 
 		var appid = 'cyt64TYiv'; 

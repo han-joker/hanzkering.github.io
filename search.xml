@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Go语言博客写作与文档解析]]></title>
+    <url>%2Fgo%2Fgo-blog-write-marshal%2F</url>
+    <content type="text"><![CDATA[1 文档存储 2 markdown 文件格式 3 文章对象 4 文章对象构造方法 1 文档存储/source/ 目录，数据源目录，用于存放与文章相关的原始数据，例如 markdown 文件，文章内容使用的图像文件等。可能的子目录有 post、image、draft 等。 其中 /source/post/ 目录用于存储创建的 markdown 文件，就是文章内容。写作的第一个步骤，就是在该目录中创建后缀为 .md 格式的文件，例如 /source/post/hello.md。此处我们先手动创建，后面会使用定义一个命令来创建文章内容模板。 2 markdown 文件格式文章内容分为两部分，文章元信息和文章内容。演示如下： 123456789101112131415161718------title: 第一篇博客category: gotag:- markdown- yaml- go------## 摘要在这里是文章摘要&lt;!-- more --&gt;## 标题 2文章内容### 标题 3章节内容 元信息在文章开头，使用 ——（6个-） 来包裹。 元信息部分使用 YAML 格式，用于表示文章属性，例如标题，作者，分类，标签，封面图片，发布时间等。 内容使用 markdown 格式。 3 文章对象定义 Post 结构体对象用于存储解析后的文章内容，结构体定义如下： 将 该结构体定义在 post 包中，就是 post.Post 是我们的文章类型。 1234567891011121314151617181920212223/src/post/post.gopackage post// Post 文章结构体的结构type Post struct &#123; // 对应的文件名例如，hello.md file string // 标题 Title string // 作者 Author string // 封面图片 Cover string // 分类 Category string // 标签 Tags []string // 发布时间 Date string // 内容 Content template.HTML&#125; 4 文章对象构造方法为文章对象提供构造方法，用来解析文章内容，实例化文章对象，代码如下： 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970/src/post/post.goimport ( "errors" "gopkg.in/russross/blackfriday.v2" "gopkg.in/yaml.v2" "html/template" "io/ioutil" "regexp")//构造方法func New(f string) (*Post, error) &#123; // 读取文件内容，得到切片 content, err := ioutil.ReadFile(f) if nil != err &#123; return nil, errors.New("文章读取失败") &#125; // 拆解内容，获取元信息和内容主体部分，使用 regexp完成 // 元信息：以6个-开头，匹配任意字符串（包括换行）的子模式，到6个-结束。 pattern:=`(?s)^-&#123;6&#125;(.*)-&#123;6&#125;\s*(.*)$` reg, err := regexp.Compile(pattern) if nil != err &#123; return nil, err &#125; // 查找内容 result := reg.FindAllStringSubmatch(string(content), -1) if len(result) &lt; 1 &#123; return nil, errors.New("文章解析失败") &#125; mateInfo := result[0][1] contentBody := result[0][2] // 解析元信息 yaml var mates map[string]interface&#123;&#125; err = yaml.Unmarshal([]byte(mateInfo), &amp;mates) if nil != err &#123; return nil, err &#125; // 转换到需要的类型。通过空接口的类型断言获取数据 t, _ := mates["title"].(string) a, _ := mates["author"].(string) cov, _ := mates["cover"].(string) d, _ := mates["date"].(string) cat, _ := mates["category"].(string) var ts []string // 遍历每个tag重新赋值,转换为切片才能遍历 for _, v :=range mates["tags"].([]interface&#123;&#125;) &#123; ts = append(ts, v.(string)) &#125; // 解析 markdown 格式，生成 html 格式内容 c := blackfriday.Run([]byte(contentBody)) // 获取Post对象 p := &amp;Post &#123; file: f, Title: t, Author: a, Cover: cov, Date: d, Category: cat, Tags: ts, Content:template.HTML(string(c)), &#125; return p, nil&#125; 完！原文出自：小韩说课微信关注：小韩说课]]></content>
+      <categories>
+        <category>go</category>
+      </categories>
+      <tags>
+        <tag>go</tag>
+        <tag>goGuide</tag>
+        <tag>markdown</tag>
+        <tag>yaml</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Go语言博客的目录结构与初始化代码]]></title>
+    <url>%2Fgo%2Fgo-blog-init%2F</url>
+    <content type="text"><![CDATA[1 目录结构 2 HTTP服务器监听 3 初始首页动作 4 运行项目 5 浏览器请求 1 目录结构 目录 功能说明 / 根目录 /src/ go源码目录 /src/main/main.go 主入口程序 /config/ 配置文件目录 /theme/ 主题模板目录 /dist/ 发布目录 2 HTTP服务器监听src/main/main.go 主入口文件用于启动 HTTP 服务器监听，设定 URL 路由。具体代码如下： 123456789101112131415161718// src/main/main.gopackage mainimport ( "log" "net/http")func main() &#123; // 路由处理 // 处理 首页 http.HandleFunc("/", IndexAction) // 开启监听 log.Fatal(http.ListenAndServe(":8081", nil))&#125; 3 初始首页动作src/main/controller.go 用于定义动作函数，就是路由处理器 IndexAction 之类，示例代码为： 12345678910src/main/controller.gopackage main/** * 首页处理器 */func IndexAction(w http.ResponseWriter, r *http.Request) &#123; w.Write([]byte("&lt;h1&gt;欢迎来到小韩说理的博客&lt;/h1&gt;"))&#125; 4 运行项目配置环境变量 GOPATH 为项目目录，然后运行 main 即可： powershell 12&gt;$env:GOPATH="D:\projects\hank\goBlog"&gt;go run main CMD 12&gt;set GOPATH=D:\projects\hank\goBlog&gt;go run main 5 浏览器请求地址栏输入：localhost:8081，即看到我们的结果！ 完！原文出自：小韩说课微信关注：小韩说课]]></content>
+      <categories>
+        <category>go</category>
+      </categories>
+      <tags>
+        <tag>go</tag>
+        <tag>goGuide</tag>
+        <tag>markdown</tag>
+        <tag>yaml</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Go实现Markdown博客分析设计]]></title>
     <url>%2Fgo%2Fgo-blog-analysis%2F</url>
     <content type="text"><![CDATA[1 功能需求 2 技术需求 3 目的 4 效果图 1 功能需求一个基于 markdown 格式的文档博客系统。提供的功能： markdown 写作 分类 标签 时间归档 配置 友情链接 主题模板 静态化 部署 2 技术需求 Go 核心语法 Go HTTP服务器搭建 HTTP 相关知识 文件管理 正则，字符串处理 时间操作 markdown 解析 yaml 解析 HTML/CSS/Js 前端基本知识 3 目的通过此项目，对 Go 的基本语法强化练习，会使用第三方包完成具体功能，掌握项目开发流程，github管理代码 等。 4 效果图 完！原文出自：小韩说课微信关注：小韩说课]]></content>

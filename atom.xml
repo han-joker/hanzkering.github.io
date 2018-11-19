@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.hellokang.net/"/>
-  <updated>2018-11-17T13:26:45.082Z</updated>
+  <updated>2018-11-19T14:47:10.254Z</updated>
   <id>http://blog.hellokang.net/</id>
   
   <author>
@@ -15,6 +15,109 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Go语言博客写作与文档解析</title>
+    <link href="http://blog.hellokang.net/go/go-blog-write-marshal/"/>
+    <id>http://blog.hellokang.net/go/go-blog-write-marshal/</id>
+    <published>2018-11-19T14:44:26.000Z</published>
+    <updated>2018-11-19T14:47:10.254Z</updated>
+    
+    <summary type="html">
+    
+      &lt;!-- toc --&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#1-文档存储&quot;&gt;1 文档存储&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#2-markdown-文件格式&quot;&gt;2 markdown 文件格式&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#3-文章对象&quot;&gt;3 文章对象&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#4-文章对象构造方法&quot;&gt;4 文章对象构造方法&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+&lt;h2 id=&quot;1-文档存储&quot;&gt;&lt;a href=&quot;#1-文档存储&quot; class=&quot;headerlink&quot; title=&quot;1 文档存储&quot;&gt;&lt;/a&gt;1 文档存储&lt;/h2&gt;&lt;p&gt;&lt;code&gt;/source/&lt;/code&gt; 目录，数据源目录，用于存放与文章相关的原始数据，例如 markdown 文件，文章内容使用的图像文件等。可能的子目录有 &lt;code&gt;post&lt;/code&gt;、&lt;code&gt;image&lt;/code&gt;、&lt;code&gt;draft&lt;/code&gt; 等。&lt;/p&gt;
+&lt;p&gt;其中 &lt;code&gt;/source/post/&lt;/code&gt; 目录用于存储创建的 markdown 文件，就是文章内容。写作的第一个步骤，就是在该目录中创建后缀为 &lt;code&gt;.md&lt;/code&gt; 格式的文件，例如 &lt;code&gt;/source/post/hello.md&lt;/code&gt;。此处我们先手动创建，后面会使用定义一个命令来创建文章内容模板。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
+    
+    
+      <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
+    
+      <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
+    
+      <category term="markdown" scheme="http://blog.hellokang.net/tags/markdown/"/>
+    
+      <category term="yaml" scheme="http://blog.hellokang.net/tags/yaml/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Go语言博客的目录结构与初始化代码</title>
+    <link href="http://blog.hellokang.net/go/go-blog-init/"/>
+    <id>http://blog.hellokang.net/go/go-blog-init/</id>
+    <published>2018-11-18T15:27:38.000Z</published>
+    <updated>2018-11-19T14:47:07.858Z</updated>
+    
+    <summary type="html">
+    
+      &lt;!-- toc --&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#1-目录结构&quot;&gt;1 目录结构&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#2-http服务器监听&quot;&gt;2 HTTP服务器监听&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#3-初始首页动作&quot;&gt;3 初始首页动作&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#4-运行项目&quot;&gt;4 运行项目&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#5-浏览器请求&quot;&gt;5 浏览器请求&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+&lt;h2 id=&quot;1-目录结构&quot;&gt;&lt;a href=&quot;#1-目录结构&quot; class=&quot;headerlink&quot; title=&quot;1 目录结构&quot;&gt;&lt;/a&gt;1 目录结构&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&quot;text-align:left&quot;&gt;目录&lt;/th&gt;
+&lt;th style=&quot;text-align:left&quot;&gt;功能说明&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;/&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;根目录&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;/src/&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;go源码目录&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;/src/main/main.go&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;主入口程序&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;/config/&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;配置文件目录&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;/theme/&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;主题模板目录&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;/dist/&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;发布目录&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+    
+    </summary>
+    
+      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
+    
+    
+      <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
+    
+      <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
+    
+      <category term="markdown" scheme="http://blog.hellokang.net/tags/markdown/"/>
+    
+      <category term="yaml" scheme="http://blog.hellokang.net/tags/yaml/"/>
+    
+  </entry>
   
   <entry>
     <title>Go实现Markdown博客分析设计</title>
@@ -655,63 +758,6 @@
 &lt;/ul&gt;
 &lt;!-- tocstop --&gt;
 &lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h2&gt;&lt;p&gt;结构体的基本语法请参见：&lt;a href=&quot;http://www.hellokang.net/go/go-struct-i/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Go语言中结构体的使用-第1部分结构体&lt;/a&gt;。&lt;br&gt;结构体除了是一个复合数据之外，还用来做面向对象编程。Go 语言使用结构体和结构体成员来描述真实世界的实体和实体对应的各种属性。也就意味着结构体类型可以类比为其他语言中的“类class”, 而结构体数据可以类比为其他语言中的 “对象”。&lt;br&gt;本文就说说结构体中，面向对象的部分。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
-    
-    
-      <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
-    
-      <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Go语言中结构体的使用-第1部分结构体</title>
-    <link href="http://blog.hellokang.net/go/go-struct-i/"/>
-    <id>http://blog.hellokang.net/go/go-struct-i/</id>
-    <published>2018-10-31T04:08:38.000Z</published>
-    <updated>2018-11-01T14:27:34.468Z</updated>
-    
-    <summary type="html">
-    
-      &lt;!-- toc --&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#1-概述&quot;&gt;1 概述&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#2-定义语法&quot;&gt;2 定义语法&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#3-实例化&quot;&gt;3 实例化&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#4-值类型&quot;&gt;4 值类型&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#5-初始化属性&quot;&gt;5 初始化属性&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#6-成员访问运算符点号&quot;&gt;6 &lt;code&gt;.&lt;/code&gt; 成员访问运算符点号&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#7-匿名结构体&quot;&gt;7 匿名结构体&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;!-- tocstop --&gt;
-&lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h2&gt;&lt;p&gt;结构体是由成员构成的复合类型。Go 语言使用结构体和结构体成员来描述真实世界的实体和实体对应的各种属性。&lt;br&gt;结构体成员，也可称之为成员变量，字段，属性。属性要满足唯一性。&lt;br&gt;结构体的概念在软件工程上旧的术语叫 ADT（抽象数据类型：Abstract Data Type）&lt;br&gt;数据层面，结构体是自定义数据类型，可以理解成是由一系列具有相同或不同类型的数据构成的数据集合。因此结构体也被称之为抽象数据类型（ADT，Abstract Data Type）。&lt;br&gt;在Go语言中，结构体承担着面向对象语言中类的作用。&lt;/p&gt;
-&lt;p&gt;Go语言中，结构体本身仅用来定义属性。还可以通过接收器函数来定义方法，使用内嵌结构体来定义继承。这样使用结构体相关操作Go语言就可以实现OOP面向对象编程了。&lt;/p&gt;
-&lt;p&gt;我们先看结构体相关语法，再看OOP相关的。&lt;br&gt;
-    
-    </summary>
-    
-      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
-    
-    
-      <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
-    
-      <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Go语言中映射表map的使用</title>
-    <link href="http://blog.hellokang.net/go/go-map/"/>
-    <id>http://blog.hellokang.net/go/go-map/</id>
-    <published>2018-10-30T10:29:57.000Z</published>
-    <updated>2018-11-01T14:28:24.227Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h2&gt;&lt;p&gt;Go语言中的键值对(key-&amp;gt;value)集合，称之为映射map。映射map是变长类型，定义时不需要指定长度。映射map是无序的，遍历是的顺序不可期，原因是底层由hash表实现。&lt;br&gt;逻辑结构表示为：&lt;br&gt;&lt;img src=&quot;http://www.hellokang.net/images/posts/go/go-map.png&quot; alt=&quot;map示意&quot;&gt;&lt;/p&gt;
     
     </summary>
     

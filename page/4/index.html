@@ -76,6 +76,112 @@
     <div class="outer">
       <section id="main">
   
+    <article id="post-hexo-github" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo/hexo-github/" class="article-date">
+  <time datetime="2018-10-11T11:12:21.000Z" itemprop="datePublished">2018-10-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/hexo/">hexo</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo/hexo-github/">Hexo搭建博客，发布到GitHub</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-需求"><a href="#1-需求" class="headerlink" title="1 需求"></a>1 需求</h2><p>博客之前是wordpress搭建的，也很好用。现在想使用一个基于markdown文件为中心的博客系统，就锁定了hexo这个项目。hexo是基于Node.js的，提供markdown支持，草稿，单页，分类，标签，主题，i18n，永久链接，静态生成，部署等很常用的博客系统功能。其主页地址为：<a href="https://hexo.io/zh-cn/" target="_blank" rel="noopener">Hexo</a>，大家可以获取更详细的信息。<br>下面就和大家说说过程，大致有博客搭建，部署到github，还有另一个git服务器（个人的服务器）上的过程。</p>
+<blockquote>
+<p>下面的操作的个人电脑为windows系统（win10)。</p>
+</blockquote>
+        
+          <p class="article-more-link">
+            <a href="/hexo/hexo-github/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+        <!-- <a data-url="http://blog.hellokang.net/hexo/hexo-github/" data-id="cjoofaply003ebouol722iesp" class="article-share-link">分享到</a> -->
+      
+
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/github/">github</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+ 
+  
+    <article id="post-go-error" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/go/go-error/" class="article-date">
+  <time datetime="2018-10-10T13:54:59.000Z" itemprop="datePublished">2018-10-10</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/go/">go</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/go/go-error/">go-错误处理</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2><span id="宕机panic">宕机panic</span></h2><p>Go语言可以在程序中强行宕机。宕机时会将堆栈信息和goroutine信息输出到控制台，便于处理错误。<br>示例语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">panic(&quot;宕机信息&quot;)</span><br></pre></td></tr></table></figure></p>
+<p>运行后，得到：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">panic: 宕机信息</span><br><span class="line"></span><br><span class="line">goroutine 1 [running]:</span><br><span class="line">main.main()</span><br><span class="line">        D:/projects/practice/go/syntax.go:45 +0x40</span><br><span class="line">exit status 2</span><br></pre></td></tr></table></figure></p>
+<p>宕机后，后续代码不再执行。但已经 defer 入栈的语句会在宕机前完成执行。</p>
+<h2><span id="宕机恢复-recover">宕机恢复 recover</span></h2><p>当发生宕机时，会被 recover 捕获。执行完对应的 defer 后，从宕机点退出当前函数后继续执行，因此程序不会崩溃。配合使用 defer 和 recover，可以从宕机中恢复并捕获错误。达到宕机后继续运行的目的。无论是由 Runtime 层抛出的 panic 崩溃，还是主动触发的 panic 崩溃。<br>可以理解成：panic 触发宕机类似于抛出异常 thrown，recover 宕机恢复机制就对应 try/catch。<br>原理：<br>语法上，利用 defer 的语句会在宕机前执行的机制，在代码执行前，先定义错误处理恢复方案，加入到defer栈中。再执行需要的代码。如果代码中出现宕机，会执行已经defer的代码，就是我们的宕机恢复处理代码。<br>演示如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line"></span><br><span class="line">  func() &#123;</span><br><span class="line">    // 先定义错误处理恢复方案，加入到defer栈中</span><br><span class="line">    defer func() &#123;</span><br><span class="line">      // 发生宕机时，获取 panic 传递的上下文</span><br><span class="line">      err := recover()</span><br><span class="line">      switch err.(type) &#123;</span><br><span class="line">      case runtime.Error:</span><br><span class="line">        // 运行时错误</span><br><span class="line">        fmt.Println(&quot;Runtime error:&quot;, err)</span><br><span class="line">      default:</span><br><span class="line">        // 非运行时错误</span><br><span class="line">        fmt.Println(&quot;User error:&quot;, err)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;()</span><br><span class="line">    panic(&quot;强行宕机&quot;)</span><br><span class="line">    // 或者</span><br><span class="line">    var pv *int</span><br><span class="line">    *pv = 42</span><br><span class="line">  &#125;()</span><br><span class="line"></span><br><span class="line">  fmt.Println(&quot;after panic&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>以上代码，无论执行了 <code>panic(&quot;强行宕机&quot;)</code> 还是 <code>*pv = 42</code> 都不会导致系统崩溃，而是会去执行defer的函数，输出错误信息后，继续执行。就是after panic会永远执行。<br>因为 recover 会恢复，结束 recover 所在函数后，代码继续！<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt; go run .\syntax.go</span><br><span class="line">User error: 强行宕机</span><br><span class="line">after panic</span><br><span class="line">或者</span><br><span class="line">&gt; go run .\syntax.go</span><br><span class="line">Runtime error: runtime error: invalid memory address or nil pointer dereference</span><br><span class="line">after panic</span><br></pre></td></tr></table></figure></p>
+<p>完</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <!-- <a data-url="http://blog.hellokang.net/go/go-error/" data-id="cjoofapk6000nbouoctyeive4" class="article-share-link">分享到</a> -->
+      
+
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/error/">error</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+ 
+  
     <article id="post-go-command" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/go/go-command/" class="article-date">
@@ -423,7 +529,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">39</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">41</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -432,7 +538,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">32</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">32</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yaml/">yaml</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">34</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">34</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yaml/">yaml</a><span class="tag-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -441,7 +547,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/error/" style="font-size: 10px;">error</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/go/" style="font-size: 20px;">go</a> <a href="/tags/goGuide/" style="font-size: 20px;">goGuide</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/yaml/" style="font-size: 10px;">yaml</a>
+      <a href="/tags/error/" style="font-size: 10px;">error</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/go/" style="font-size: 20px;">go</a> <a href="/tags/goGuide/" style="font-size: 20px;">goGuide</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/markdown/" style="font-size: 15px;">markdown</a> <a href="/tags/yaml/" style="font-size: 15px;">yaml</a>
     </div>
   </div>
 
@@ -450,7 +556,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -462,6 +568,14 @@
       <ul>
         
           <li>
+            <a href="/go/go-blog-write-marshal/">Go语言博客写作与文档解析</a>
+          </li>
+        
+          <li>
+            <a href="/go/go-blog-init/">Go语言博客的目录结构与初始化代码</a>
+          </li>
+        
+          <li>
             <a href="/go/go-blog-analysis/">Go实现Markdown博客分析设计</a>
           </li>
         
@@ -471,14 +585,6 @@
         
           <li>
             <a href="/go/go-markdown/">Go语言解析markdown</a>
-          </li>
-        
-          <li>
-            <a href="/go/go-mysql/">Go语言中操作MySQL</a>
-          </li>
-        
-          <li>
-            <a href="/go/go-http-template-syntax/">Go语言中使模板引擎的语法</a>
           </li>
         
       </ul>
