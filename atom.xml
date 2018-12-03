@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.hellokang.net/"/>
-  <updated>2018-11-19T14:47:10.254Z</updated>
+  <updated>2018-12-03T15:02:37.435Z</updated>
   <id>http://blog.hellokang.net/</id>
   
   <author>
@@ -17,11 +17,44 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Go语言的Markdown博客制作教程</title>
+    <link href="http://blog.hellokang.net/go/go-blogmarkdown/"/>
+    <id>http://blog.hellokang.net/go/go-blogmarkdown/</id>
+    <published>2018-12-03T14:56:20.000Z</published>
+    <updated>2018-12-03T15:02:37.435Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2&gt;&lt;span id=&quot;广而告之&quot;&gt;广而告之&lt;/span&gt;&lt;/h2&gt;&lt;p&gt;Go的Markdown博客制作视频上线了&lt;/p&gt;
+&lt;h2&gt;&lt;span id=&quot;视频百度网盘地址&quot;&gt;视频百度网盘地址&lt;/span&gt;&lt;/h2&gt;&lt;p&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
+    
+    
+      <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
+    
+      <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
+    
+      <category term="markdown" scheme="http://blog.hellokang.net/tags/markdown/"/>
+    
+      <category term="yaml" scheme="http://blog.hellokang.net/tags/yaml/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Go语言博客写作与文档解析</title>
     <link href="http://blog.hellokang.net/go/go-blog-write-marshal/"/>
     <id>http://blog.hellokang.net/go/go-blog-write-marshal/</id>
     <published>2018-11-19T14:44:26.000Z</published>
-    <updated>2018-11-19T14:47:10.254Z</updated>
+    <updated>2018-11-19T14:50:42.350Z</updated>
     
     <summary type="html">
     
@@ -727,37 +760,6 @@
 &lt;/ul&gt;
 &lt;!-- tocstop --&gt;
 &lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h2&gt;&lt;p&gt;接口，interface，是用于规范对象应该具备哪些方法的技术。OOP中与结构体配合使用，对象使用结构体规范应该具有的书写，而对外通过接口暴露方法。Go 语言的接口设计是非侵入式的，接口实现者（也就是结构体）无须指明实现哪一个接口。编译器在编译时来确定使用哪个接口。&lt;br&gt;在 Go 语言中，接口是一种引用的数据类型出现的。但体现的功能是规范，而不是数据。&lt;br&gt;做 OOP 开发时，通常要保证一类操作具有相同的方法调用，此时就需要使用接口实现。&lt;br&gt;
-    
-    </summary>
-    
-      <category term="go" scheme="http://blog.hellokang.net/categories/go/"/>
-    
-    
-      <category term="go" scheme="http://blog.hellokang.net/tags/go/"/>
-    
-      <category term="goGuide" scheme="http://blog.hellokang.net/tags/goGuide/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Go语言中结构体的使用-第2部分OOP</title>
-    <link href="http://blog.hellokang.net/go/go-struct-ii/"/>
-    <id>http://blog.hellokang.net/go/go-struct-ii/</id>
-    <published>2018-10-31T08:39:28.000Z</published>
-    <updated>2018-11-01T07:44:01.543Z</updated>
-    
-    <summary type="html">
-    
-      &lt;!-- toc --&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#1-概述&quot;&gt;1 概述&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#2-构造工厂函数&quot;&gt;2 构造工厂函数&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#3-成员方法接收器&quot;&gt;3 成员方法（接收器）&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#4-继承内嵌结构体&quot;&gt;4 继承，内嵌结构体&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#5-重写override&quot;&gt;5 重写，override&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;!-- tocstop --&gt;
-&lt;h2 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h2&gt;&lt;p&gt;结构体的基本语法请参见：&lt;a href=&quot;http://www.hellokang.net/go/go-struct-i/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Go语言中结构体的使用-第1部分结构体&lt;/a&gt;。&lt;br&gt;结构体除了是一个复合数据之外，还用来做面向对象编程。Go 语言使用结构体和结构体成员来描述真实世界的实体和实体对应的各种属性。也就意味着结构体类型可以类比为其他语言中的“类class”, 而结构体数据可以类比为其他语言中的 “对象”。&lt;br&gt;本文就说说结构体中，面向对象的部分。&lt;/p&gt;
     
     </summary>
     

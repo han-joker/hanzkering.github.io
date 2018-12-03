@@ -15,7 +15,7 @@
 <meta property="og:description" content="1 文档存储 2 markdown 文件格式 3 文章对象 4 文章对象构造方法   1 文档存储/source/ 目录，数据源目录，用于存放与文章相关的原始数据，例如 markdown 文件，文章内容使用的图像文件等。可能的子目录有 post、image、draft 等。 其中 /source/post/ 目录用于存储创建的 markdown 文件，就是文章内容。写作的第一个步骤，就是在该目">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://asset.hellokang.net/images/common/xiaohanshuoke_258.jpg">
-<meta property="og:updated_time" content="2018-11-19T14:47:10.254Z">
+<meta property="og:updated_time" content="2018-11-19T14:50:42.350Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Go语言博客写作与文档解析">
 <meta name="twitter:description" content="1 文档存储 2 markdown 文件格式 3 文章对象 4 文章对象构造方法   1 文档存储/source/ 目录，数据源目录，用于存放与文章相关的原始数据，例如 markdown 文件，文章内容使用的图像文件等。可能的子目录有 post、image、draft 等。 其中 /source/post/ 目录用于存储创建的 markdown 文件，就是文章内容。写作的第一个步骤，就是在该目">
@@ -123,6 +123,7 @@
 <p>将 该结构体定义在 post 包中，就是 post.Post 是我们的文章类型。</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">/src/post/post.<span class="keyword">go</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> post</span><br><span class="line"></span><br><span class="line"><span class="comment">// Post 文章结构体的结构</span></span><br><span class="line"><span class="keyword">type</span> Post <span class="keyword">struct</span> &#123;</span><br><span class="line">  <span class="comment">// 对应的文件名例如，hello.md</span></span><br><span class="line">  file <span class="keyword">string</span></span><br><span class="line">  <span class="comment">// 标题</span></span><br><span class="line">  Title <span class="keyword">string</span></span><br><span class="line">  <span class="comment">// 作者</span></span><br><span class="line">  Author <span class="keyword">string</span></span><br><span class="line">  <span class="comment">// 封面图片</span></span><br><span class="line">  Cover <span class="keyword">string</span></span><br><span class="line">  <span class="comment">// 分类</span></span><br><span class="line">  Category <span class="keyword">string</span></span><br><span class="line">  <span class="comment">// 标签</span></span><br><span class="line">  Tags []<span class="keyword">string</span></span><br><span class="line">  <span class="comment">// 发布时间</span></span><br><span class="line">  Date <span class="keyword">string</span></span><br><span class="line">  <span class="comment">// 内容</span></span><br><span class="line">  Content template.HTML</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2><span id="4-文章对象构造方法">4 文章对象构造方法</span></h2><p>为文章对象提供构造方法，用来解析文章内容，实例化文章对象，代码如下：</p>
+<p>思路是：读取文件内容，使用正则剥离元信息和内容部分，通过 <code>gopkg.in/yaml.v2</code> 包解析元信息，通过 <code>gopkg.in/russross/blackfriday.v2</code> 包解析文章内容，最后实例化 Post 结构体对象。</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line">/src/post/post.<span class="keyword">go</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">  <span class="string">"errors"</span></span><br><span class="line">  <span class="string">"gopkg.in/russross/blackfriday.v2"</span></span><br><span class="line">  <span class="string">"gopkg.in/yaml.v2"</span></span><br><span class="line">  <span class="string">"html/template"</span></span><br><span class="line">  <span class="string">"io/ioutil"</span></span><br><span class="line">  <span class="string">"regexp"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">//构造方法</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">New</span><span class="params">(f <span class="keyword">string</span>)</span> <span class="params">(*Post, error)</span></span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 读取文件内容，得到切片</span></span><br><span class="line">  content, err := ioutil.ReadFile(f)</span><br><span class="line">  <span class="keyword">if</span> <span class="literal">nil</span> != err &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span>, errors.New(<span class="string">"文章读取失败"</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 拆解内容，获取元信息和内容主体部分，使用 regexp完成</span></span><br><span class="line">  <span class="comment">// 元信息：以6个-开头，匹配任意字符串（包括换行）的子模式，到6个-结束。</span></span><br><span class="line">  pattern:=<span class="string">`(?s)^-&#123;6&#125;(.*)-&#123;6&#125;\s*(.*)$`</span></span><br><span class="line">  reg, err := regexp.Compile(pattern)</span><br><span class="line">  <span class="keyword">if</span> <span class="literal">nil</span> != err &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span>, err</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 查找内容</span></span><br><span class="line">  result := reg.FindAllStringSubmatch(<span class="keyword">string</span>(content), <span class="number">-1</span>)</span><br><span class="line">  <span class="keyword">if</span> <span class="built_in">len</span>(result) &lt; <span class="number">1</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span>, errors.New(<span class="string">"文章解析失败"</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  mateInfo := result[<span class="number">0</span>][<span class="number">1</span>]</span><br><span class="line">  contentBody := result[<span class="number">0</span>][<span class="number">2</span>]</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 解析元信息 yaml</span></span><br><span class="line">  <span class="keyword">var</span> mates <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">interface</span>&#123;&#125;</span><br><span class="line">  err = yaml.Unmarshal([]<span class="keyword">byte</span>(mateInfo), &amp;mates)</span><br><span class="line">  <span class="keyword">if</span> <span class="literal">nil</span> != err &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span>, err</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 转换到需要的类型。通过空接口的类型断言获取数据</span></span><br><span class="line">  t, _ := mates[<span class="string">"title"</span>].(<span class="keyword">string</span>)</span><br><span class="line">  a, _ := mates[<span class="string">"author"</span>].(<span class="keyword">string</span>)</span><br><span class="line">  cov, _ := mates[<span class="string">"cover"</span>].(<span class="keyword">string</span>)</span><br><span class="line">  d, _ := mates[<span class="string">"date"</span>].(<span class="keyword">string</span>)</span><br><span class="line">  cat, _ := mates[<span class="string">"category"</span>].(<span class="keyword">string</span>)</span><br><span class="line">  <span class="keyword">var</span> ts []<span class="keyword">string</span></span><br><span class="line">  <span class="comment">// 遍历每个tag重新赋值,转换为切片才能遍历</span></span><br><span class="line">  <span class="keyword">for</span> _, v :=<span class="keyword">range</span> mates[<span class="string">"tags"</span>].([]<span class="keyword">interface</span>&#123;&#125;) &#123;</span><br><span class="line">    ts = <span class="built_in">append</span>(ts, v.(<span class="keyword">string</span>))</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 解析 markdown 格式，生成 html 格式内容</span></span><br><span class="line">  c := blackfriday.Run([]<span class="keyword">byte</span>(contentBody))</span><br><span class="line">  <span class="comment">// 获取Post对象</span></span><br><span class="line">  p := &amp;Post &#123;</span><br><span class="line">    file: f,</span><br><span class="line">    Title: t,</span><br><span class="line">    Author: a,</span><br><span class="line">    Cover: cov,</span><br><span class="line">    Date: d,</span><br><span class="line">    Category: cat,</span><br><span class="line">    Tags: ts,</span><br><span class="line">    Content:template.HTML(<span class="keyword">string</span>(c)),</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> p, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>完！<br>原文出自：<a href="http://go.hellokang.net/blog-write-marshal.html" target="_blank" rel="noopener">小韩说课</a><br>微信关注：小韩说课<br><img src="http://asset.hellokang.net/images/common/xiaohanshuoke_258.jpg" alt="小韩说课"></p>
 
@@ -130,7 +131,7 @@
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-blog-write-marshal/" data-id="cjoofby7g0001uguokogk47zi" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-blog-write-marshal/" data-id="cjp8g29j50001mkuookukbud6" class="article-share-link">分享到</a> -->
       
 
       
@@ -143,6 +144,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/go/go-blogmarkdown/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">
+        
+          Go语言的Markdown博客制作教程
+        
+      </div>
+    </a>
   
   
     <a href="/go/go-blog-init/" id="article-nav-older" class="article-nav-link-wrap">
@@ -158,7 +168,7 @@
 
   <section class="changyan" id="comments">
 <!--PC和WAP自适应版-->
-<div id="SOHUCS" sid="cjoofby7g0001uguokogk47zi"></div> 
+<div id="SOHUCS" sid="cjp8g29j50001mkuookukbud6"></div> 
 <script type="text/javascript"> 
 	(function(){ 
 		var appid = 'cyt64TYiv'; 
@@ -201,7 +211,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">41</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">42</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -210,7 +220,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">34</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">34</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yaml/">yaml</a><span class="tag-list-count">3</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">35</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goGuide/">goGuide</a><span class="tag-list-count">35</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yaml/">yaml</a><span class="tag-list-count">4</span></li></ul>
     </div>
   </div>
 
@@ -228,7 +238,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -238,6 +248,10 @@
     <h3 class="widget-title">近期文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/go/go-blogmarkdown/">Go语言的Markdown博客制作教程</a>
+          </li>
         
           <li>
             <a href="/go/go-blog-write-marshal/">Go语言博客写作与文档解析</a>
@@ -253,10 +267,6 @@
         
           <li>
             <a href="/go/go-yaml/">Go语言解析YAML</a>
-          </li>
-        
-          <li>
-            <a href="/go/go-markdown/">Go语言解析markdown</a>
           </li>
         
       </ul>

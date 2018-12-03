@@ -4,22 +4,20 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Go语言中的运算符 | 小韩说课</title>
+  <title>Go语言的Markdown博客制作教程 | 小韩说课</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1 概述 2 算术运算 3 字符串连接运算 + 4 关系运算 5 逻辑运算 6 指针运算 7 位运算 8 赋值运算 9 运算符优先级 10 类型转换   1 概述Go语言提供了，算术，关系，逻辑，位，指针，赋值运算符。本篇整体说明一下。">
-<meta name="keywords" content="go,goGuide">
+  <meta name="description" content="广而告之Go的Markdown博客制作视频上线了 视频百度网盘地址https://pan.baidu.com/s/13-iG4Op9iz7d0Rjd9LIXyg 文档http://go.hellokang.net/blog-analysis.html githubhttps://github.com/hanzkering/goBlogMarkdown 联系作者&amp;amp;纠错可以关注微信 小韩说课，">
+<meta name="keywords" content="go,goGuide,markdown,yaml">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Go语言中的运算符">
-<meta property="og:url" content="http://blog.hellokang.net/go/go-operator/index.html">
+<meta property="og:title" content="Go语言的Markdown博客制作教程">
+<meta property="og:url" content="http://blog.hellokang.net/go/go-blogmarkdown/index.html">
 <meta property="og:site_name" content="小韩说课">
-<meta property="og:description" content="1 概述 2 算术运算 3 字符串连接运算 + 4 关系运算 5 逻辑运算 6 指针运算 7 位运算 8 赋值运算 9 运算符优先级 10 类型转换   1 概述Go语言提供了，算术，关系，逻辑，位，指针，赋值运算符。本篇整体说明一下。">
+<meta property="og:description" content="广而告之Go的Markdown博客制作视频上线了 视频百度网盘地址https://pan.baidu.com/s/13-iG4Op9iz7d0Rjd9LIXyg 文档http://go.hellokang.net/blog-analysis.html githubhttps://github.com/hanzkering/goBlogMarkdown 联系作者&amp;amp;纠错可以关注微信 小韩说课，">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://www.hellokang.net/images/wechat_subscription.jpg">
-<meta property="og:updated_time" content="2018-11-01T14:28:35.343Z">
+<meta property="og:updated_time" content="2018-12-03T15:02:37.435Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Go语言中的运算符">
-<meta name="twitter:description" content="1 概述 2 算术运算 3 字符串连接运算 + 4 关系运算 5 逻辑运算 6 指针运算 7 位运算 8 赋值运算 9 运算符优先级 10 类型转换   1 概述Go语言提供了，算术，关系，逻辑，位，指针，赋值运算符。本篇整体说明一下。">
-<meta name="twitter:image" content="http://www.hellokang.net/images/wechat_subscription.jpg">
+<meta name="twitter:title" content="Go语言的Markdown博客制作教程">
+<meta name="twitter:description" content="广而告之Go的Markdown博客制作视频上线了 视频百度网盘地址https://pan.baidu.com/s/13-iG4Op9iz7d0Rjd9LIXyg 文档http://go.hellokang.net/blog-analysis.html githubhttps://github.com/hanzkering/goBlogMarkdown 联系作者&amp;amp;纠错可以关注微信 小韩说课，">
   
     <link rel="alternative" href="/atom.xml" title="小韩说课" type="application/atom+xml">
   
@@ -77,10 +75,10 @@
   </div>
 </header>
     <div class="outer">
-      <section id="main"><article id="post-go-operator" class="article article-type-post" itemscope itemprop="blogPost">
+      <section id="main"><article id="post-go-blogmarkdown" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/go/go-operator/" class="article-date">
-  <time datetime="2018-10-21T12:05:46.000Z" itemprop="datePublished">2018-10-21</time>
+    <a href="/go/go-blogmarkdown/" class="article-date">
+  <time datetime="2018-12-03T14:56:20.000Z" itemprop="datePublished">2018-12-03</time>
 </a>
     
   <div class="article-category">
@@ -95,7 +93,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Go语言中的运算符
+      Go语言的Markdown博客制作教程
     </h1>
   
 
@@ -103,111 +101,23 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <!-- toc -->
-<ul>
-<li><a href="#1-概述">1 概述</a></li>
-<li><a href="#2-算术运算">2 算术运算</a></li>
-<li><a href="#3-字符串连接运算">3 字符串连接运算 +</a></li>
-<li><a href="#4-关系运算">4 关系运算</a></li>
-<li><a href="#5-逻辑运算">5 逻辑运算</a></li>
-<li><a href="#6-指针运算">6 指针运算</a></li>
-<li><a href="#7-位运算">7 位运算</a></li>
-<li><a href="#8-赋值运算">8 赋值运算</a></li>
-<li><a href="#9-运算符优先级">9 运算符优先级</a></li>
-<li><a href="#10-类型转换">10 类型转换</a></li>
-</ul>
-<!-- tocstop -->
-<h2><span id="1-概述">1 概述</span></h2><p>Go语言提供了，算术，关系，逻辑，位，指针，赋值运算符。本篇整体说明一下。</p>
-<a id="more"></a>
-<h2><span id="2-算术运算">2 算术运算</span></h2><ul>
-<li>+ 相加</li>
-<li>- 相减</li>
-<li>* 相乘</li>
-<li>/ 相除</li>
-<li>% 求余</li>
-<li>++ 自增</li>
-<li>-- 自减</li>
-</ul>
-<p>几个细节，需要留意一下。</p>
-<ul>
-<li>整数与浮点数进行运算，会将整数转化为浮点数，再运算。</li>
-<li>两个整数相除，结果是整数，取整数部分。5/3 结果会是 1。</li>
-<li>求余，如果被除数或除数存在负数，那么余数与被除数保持一致。此处是求余不是取模。</li>
-<li>++/–，不区分前后，只有变量后的语法，就是 v++。同时++/–构成语句而不是表达式，意味着不能直接赋值。</li>
-</ul>
-<h2><span id="3-字符串连接运算">3 字符串连接运算 +</span></h2><p>+运算符，也可以完成字符串的连接运算。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;Hello&quot; + &quot; &quot; + &quot;Hank!&quot;</span><br></pre></td></tr></table></figure></p>
-<h2><span id="4-关系运算">4 关系运算</span></h2><ul>
-<li>== 检查两个值是否相等</li>
-<li>!= 检查两个值是否不相等</li>
-<li>> 检查左边值是否大于右边值</li>
-<li>&lt; 检查左边值是否小于右边值</li>
-<li>>= 检查左边值是否大于等于右边值</li>
-<li>&lt;= 检查左边值是否小于等于右边值</li>
-</ul>
-<p>关系运算时用于判断两个运算数的关系是否成立。返回布尔值。</p>
-<h2><span id="5-逻辑运算">5 逻辑运算</span></h2><ul>
-<li>&amp;&amp; 逻辑与，参与运算的两个关系必须同时成立，结果为true，否则为false</li>
-<li>|| 逻辑或，参与运算的两个关系成立一个（或都成立）结果为true，全部关系为false，结果为false。</li>
-<li>! 逻辑非，用于取反某个关系。非真既假，非假既真。只有一个运算数参与运算</li>
-</ul>
-<p>用来判断多个关系是否成立。运算结果为：<br>&amp;&amp;<br>true &amp;&amp; true = true<br>true &amp;&amp; false = false<br>false &amp;&amp; true = false<br>false &amp;&amp; false = false<br>||<br>true || true = true<br>true || false = true<br>false || true = true<br>false || false = false<br>!<br>!true = false<br>!false = true</p>
-<h2><span id="6-指针运算">6 指针运算</span></h2><ul>
-<li>&amp; 取得变量的内存地址。pv := &amp;v</li>
-<li>* 获取指针地址对应的值。*pv<br>示例为：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">v:=42</span><br><span class="line">pv:=&amp;v</span><br><span class="line">fmt.Printf(&quot;%T(%v)&quot;, pv, pv)// *int 0xc000048b68，*int就是指针类型 值为一个类似规则的地址，就是一个号码，标识内存的一个空间区域</span><br><span class="line">fmt.Println(*pv)// 42，通过地址获取对应的变量值</span><br><span class="line">*pv ++ // 通过地址更改对应变量</span><br><span class="line">fmt.Println(*pv, v)// 42 42变量和指针操作的同一变量（内存地址）。</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>Go语言的指针不可以操作。不能执行偏移这类的操作.</p>
-<p>理解指针的几个概念：<br>变量：标识符与值（内存中存储空间）引用。<br>地址：内存中存储空间的位置（门牌号）<br>指针：一种类型，其值为某个地址。</p>
-<p>一个数据（变量），我们可以通过变量标识符找到他。也可以将他的地址记录下来，通过这个地址找到他。能够记录地址的数据类型就是指针。指针通过&amp;运算符来获取变量的地址。</p>
-<h2><span id="7-位运算">7 位运算</span></h2><ul>
-<li>&amp; 按位与运算</li>
-<li>| 按位或运算</li>
-<li>^ 按位异或运算</li>
-<li>&lt;&lt;  左移运算符，由”&lt;&lt;”右边的数指定移动的位数，高位丢弃，低位补0。左移n位就是乘以2的n次方。</li>
-<li>>&gt;  右移运算符，”&gt;&gt;”右边的数指定移动的位数，低位舍弃，高位补0。右移n位就是除以2的n次方。</li>
-</ul>
-<p>用于运算构成整数的每个二进制位，就是位上0，1的运算。</p>
-<h2><span id="8-赋值运算">8 赋值运算</span></h2><ul>
-<li>= 简单的赋值运算符，将一个表达式的值赋给一个左值</li>
-<li>+=  相加后再赋值</li>
-<li>-=  相减后再赋值</li>
-<li>*=  相乘后再赋值</li>
-<li>/=  相除后再赋值</li>
-<li>%=  求余后再赋值</li>
-<li>&lt;&lt;= 左移后赋值</li>
-<li>>&gt;= 右移后赋值</li>
-<li>&amp;=  按位与后赋值</li>
-<li>^=  按位异或后赋值</li>
-<li>|=  按位或后赋值</li>
-</ul>
-<p>变量 = 表达式<br>=左边的变量，称之为左值。通常只能是变量。<br>=右边的表达式，称之为右值。表达式是右值。</p>
-<p>自赋值运算，一些运算符，可以与赋值运算符结合，完成快捷自运算赋值，就是上面的+=….|=，逻辑是：<br>v += 1 相当于 v = v + 1<br>其他的逻辑相同！</p>
-<h2><span id="9-运算符优先级">9 运算符优先级</span></h2><p>由高到低，列表如下：</p>
-<ul>
-<li>^ !</li>
-<li>* / % &lt;&lt; &gt;&gt; &amp; &amp;^</li>
-<li>+ - | ^</li>
-<li>== != &lt; &lt;= &gt;= &gt;</li>
-<li>&lt;-</li>
-<li>&amp;&amp;</li>
-<li>||</li>
-</ul>
-<p>建议使用()小括号，明确调整优先级。</p>
-<h2><span id="10-类型转换">10 类型转换</span></h2><p>类型不同的数据不能完成运算。如果需要，则要将类型转换为一致的类型。<br>自动转换，有些转换Go语言自动完成，例如 <code>5/4.0</code> 5整型会被自动转换为浮点数。<br>强制转换，使用语法 <code>type(数据)</code> 的形式转换，例如：<code>float64(5)</code>。</p>
-<p>Go语言对类型要求比较严格，类型可以相互转换的场景不多，主要集中在数值上。就是要类型兼容，才可以转换。</p>
-<p>完！<br>原文出自：<a href="http://www.hellokang.net/go/go-operator/" target="_blank" rel="noopener">小韩说课</a><br>微信关注：小韩说课<br><img src="http://www.hellokang.net/images/wechat_subscription.jpg" alt="小韩说课"></p>
+        <h2><span id="广而告之">广而告之</span></h2><p>Go的Markdown博客制作视频上线了</p>
+<h2><span id="视频百度网盘地址">视频百度网盘地址</span></h2><p><a href="https://pan.baidu.com/s/13-iG4Op9iz7d0Rjd9LIXyg" target="_blank" rel="noopener">https://pan.baidu.com/s/13-iG4Op9iz7d0Rjd9LIXyg</a></p>
+<h2><span id="文档">文档</span></h2><p><a href="http://go.hellokang.net/blog-analysis.html" target="_blank" rel="noopener">http://go.hellokang.net/blog-analysis.html</a></p>
+<h2><span id="github">github</span></h2><p><a href="https://github.com/hanzkering/goBlogMarkdown" target="_blank" rel="noopener">https://github.com/hanzkering/goBlogMarkdown</a></p>
+<h2><span id="联系作者amp纠错">联系作者&amp;纠错</span></h2><p>可以关注微信 小韩说课，或者 <a href="http://www.hellokang.net" target="_blank" rel="noopener">www.hellokang.net</a> 联系作者。</p>
 
       
     </div>
     <footer class="article-footer">
       
-        <!-- <a data-url="http://blog.hellokang.net/go/go-operator/" data-id="cjp8g29ln002xmkuoq144z5zf" class="article-share-link">分享到</a> -->
+        <!-- <a data-url="http://blog.hellokang.net/go/go-blogmarkdown/" data-id="cjp8g29jh000amkuo6p87wm9z" class="article-share-link">分享到</a> -->
       
 
       
 
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goGuide/">goGuide</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/markdown/">markdown</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/yaml/">yaml</a></li></ul>
 
     </footer>
   </div>
@@ -215,19 +125,10 @@
     
 <nav id="article-nav">
   
-    <a href="/go/go-flow-control/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">
-        
-          Go语言中的流程控制
-        
-      </div>
-    </a>
   
-  
-    <a href="/go/go-type/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/go/go-blog-write-marshal/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">Go语言的数据类型</div>
+      <div class="article-nav-title">Go语言博客写作与文档解析</div>
     </a>
   
 </nav>
@@ -238,7 +139,7 @@
 
   <section class="changyan" id="comments">
 <!--PC和WAP自适应版-->
-<div id="SOHUCS" sid="cjp8g29ln002xmkuoq144z5zf"></div> 
+<div id="SOHUCS" sid="cjp8g29jh000amkuo6p87wm9z"></div> 
 <script type="text/javascript"> 
 	(function(){ 
 		var appid = 'cyt64TYiv'; 
